@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysParamExt extends DLEntity{
+public class SysParamExt extends BaseEntity{
 
 	private Integer paramid;    //参数ID
 	private String paramname;    //参数名称

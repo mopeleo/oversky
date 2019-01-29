@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysRoleMenuDTO extends BaseDTO {
+public class SysRoleMenuDto extends BaseDto {
 
 	private Integer roleid;    //roleid
 	private String menuid;    //menuid

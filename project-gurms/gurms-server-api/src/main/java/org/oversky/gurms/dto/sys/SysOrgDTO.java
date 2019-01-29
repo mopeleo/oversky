@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysOrgDTO extends BaseDTO {
+public class SysOrgDto extends BaseDto {
 
 	private String orgid;    //机构ID
 	private String unioncode;    //unioncode

@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysDictValue extends DLEntity{
+public class SysDictValue extends BaseEntity{
 
 	private String unioncode;    //unioncode
 	private Integer dictcode;    //字典代码

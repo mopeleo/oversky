@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysRoleDTO extends BaseDTO {
+public class SysRoleDto extends BaseDto {
 
 	private String unioncode;    //unioncode
 	private Integer roleid;    //角色ID

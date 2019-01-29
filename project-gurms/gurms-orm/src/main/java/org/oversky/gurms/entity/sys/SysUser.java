@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysUser extends DLEntity{
+public class SysUser extends BaseEntity{
 
 	private Long userid;    //用户ID,内部自动生成
 	private String unioncode;    //unioncode

@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysMenu extends DLEntity{
+public class SysMenu extends BaseEntity{
 
 	private String menuid;    //菜单ID
 	private String menuname;    //菜单名称

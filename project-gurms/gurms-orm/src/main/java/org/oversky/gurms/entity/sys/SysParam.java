@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysParam extends DLEntity{
+public class SysParam extends BaseEntity{
 
 	private String unioncode;    //unioncode
 	private Integer paramid;    //paramid

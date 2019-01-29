@@ -1,9 +1,9 @@
 <#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
 package ${package};
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class ${table.code} extends DLEntity{
+public class ${table.code} extends BaseEntity{
 
 <#list table.columns as column>
 	private <@type datatype=column.datatype /> ${column.code};    //${column.comment}

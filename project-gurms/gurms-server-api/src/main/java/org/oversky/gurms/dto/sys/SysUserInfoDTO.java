@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysUserInfoDTO extends BaseDTO {
+public class SysUserInfoDto extends BaseDto {
 
 	private Long userid;    //用户ID,内部自动生成
 	private String unioncode;    //unioncode

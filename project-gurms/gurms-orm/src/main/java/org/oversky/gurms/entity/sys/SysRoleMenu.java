@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysRoleMenu extends DLEntity{
+public class SysRoleMenu extends BaseEntity{
 
 	private Integer roleid;    //roleid
 	private String menuid;    //menuid

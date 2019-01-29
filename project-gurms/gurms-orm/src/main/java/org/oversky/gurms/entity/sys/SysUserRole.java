@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysUserRole extends DLEntity{
+public class SysUserRole extends BaseEntity{
 
 	private Long userid;    //userid
 	private Integer roleid;    //roleid

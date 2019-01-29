@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysOrg extends DLEntity{
+public class SysOrg extends BaseEntity{
 
 	private String orgid;    //机构ID
 	private String unioncode;    //unioncode

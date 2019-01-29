@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysParamDTO extends BaseDTO {
+public class SysParamDto extends BaseDto {
 
 	private String unioncode;    //unioncode
 	private Integer paramid;    //paramid

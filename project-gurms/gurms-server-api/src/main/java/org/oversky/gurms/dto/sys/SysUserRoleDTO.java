@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysUserRoleDTO extends BaseDTO {
+public class SysUserRoleDto extends BaseDto {
 
 	private Long userid;    //userid
 	private Integer roleid;    //roleid

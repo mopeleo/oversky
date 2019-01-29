@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysDictValueDTO extends BaseDTO {
+public class SysDictValueDto extends BaseDto {
 
 	private String unioncode;    //unioncode
 	private Integer dictcode;    //字典代码

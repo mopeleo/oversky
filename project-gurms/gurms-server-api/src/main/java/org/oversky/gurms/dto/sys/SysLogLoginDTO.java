@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysLogLoginDTO extends BaseDTO {
+public class SysLogLoginDto extends BaseDto {
 
 	private String logid;    //logid
 	private Long userid;    //userid

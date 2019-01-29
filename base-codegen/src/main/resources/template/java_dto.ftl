@@ -1,9 +1,9 @@
 <#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
 package ${package};
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class ${table.code}DTO extends BaseDTO {
+public class ${table.code}Dto extends BaseDto {
 
 <#list table.columns as column>
 	private <@type datatype=column.datatype /> ${column.code};    //${column.comment}

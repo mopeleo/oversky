@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysParamExtDTO extends BaseDTO {
+public class SysParamExtDto extends BaseDto {
 
 	private Integer paramid;    //参数ID
 	private String paramname;    //参数名称

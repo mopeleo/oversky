@@ -1,8 +1,8 @@
 package org.oversky.gurms.dto.sys;
 
-import com.dl.server.dto.BaseDTO;
+import org.oversky.base.service.BaseDto;
 
-public class SysMenuDTO extends BaseDTO {
+public class SysMenuDto extends BaseDto {
 
 	private String menuid;    //菜单ID
 	private String menuname;    //菜单名称

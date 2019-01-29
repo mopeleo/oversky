@@ -1,8 +1,8 @@
 package org.oversky.gurms.entity.sys;
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class SysRole extends DLEntity{
+public class SysRole extends BaseEntity{
 
 	private String unioncode;    //unioncode
 	private Integer roleid;    //角色ID
