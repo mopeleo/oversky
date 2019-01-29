@@ -1,0 +1,15 @@
+﻿1.在执行的时候执行完一个mvn 目标后窗口自动退出，pause命令也无效，分析原因为mvn本身是一个bat命令，因此在exit退出的时候，整个脚本进程将退出，加入call命令调用即可，如：
+@echo off
+set localdir=%~dp0
+call mvn  install:install-file -DgroupId=org.zhixun  -DartifactId=IKAnalyzer  -Dversion=3.2.3  -Dpackaging=jar  -Dfile=%localdir%/libs/IKAnalyzer3.2.3Stable.jar
+pause
+
+
+2.手工添加maven库，有一些自己的jar或商业jar无法从maven库更新，可以手工添加到maven配置库
+mvn install:install-file "-DgroupId=com.ibm.db2.jcc" "-DartifactId=db2jcc4" "-Dversion=10.1" "-Dpackaging=jar" "-Dfile=db2jcc4.jar"
+
+
+3.命令行创建项目：
+mvn archetype:generate -DgroupId=org.oversky -DartifactId=base-util -DinteractiveMode=false
+
+

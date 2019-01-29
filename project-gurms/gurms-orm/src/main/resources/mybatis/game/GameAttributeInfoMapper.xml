@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.dao.game.GameAttributeInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.entity.game.GameAttributeInfo">
+        <id column="attrid" jdbcType="DECIMAL" property="attrid" />
+        <result column="attrtype" jdbcType="INTEGER" property="attrtype" />
+        <result column="attrfield" jdbcType="INTEGER" property="attrfield" />
+        <result column="unlock" jdbcType="INTEGER" property="unlock" />
+        <result column="act" jdbcType="INTEGER" property="act" />
+        <result column="valtype" jdbcType="INTEGER" property="valtype" />
+        <result column="valmin" jdbcType="DOUBLE" property="valmin" />
+        <result column="valmax" jdbcType="DOUBLE" property="valmax" />
+        <result column="initval" jdbcType="DOUBLE" property="initval" />
+        <result column="upval" jdbcType="DOUBLE" property="upval" />
+        <result column="position" jdbcType="VARCHAR" property="position" />
+    </resultMap>
+	
+	<sql id="column_list">
+        attrid, attrtype, attrfield, unlock, act, valtype, valmin, valmax, initval, upval, position
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.entity.game.GameAttributeInfo">
+        insert into game_attribute_info (attrid, attrtype, attrfield, unlock, act, valtype, valmin, valmax, initval, upval, position)
+        values (#{attrid, jdbcType=DECIMAL}, #{attrtype, jdbcType=INTEGER}, #{attrfield, jdbcType=INTEGER}, #{unlock, jdbcType=INTEGER}, #{act, jdbcType=INTEGER}, #{valtype, jdbcType=INTEGER}, #{valmin, jdbcType=DOUBLE}, #{valmax, jdbcType=DOUBLE}, #{initval, jdbcType=DOUBLE}, #{upval, jdbcType=DOUBLE}, #{position, jdbcType=VARCHAR})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.entity.game.GameAttributeInfo" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_attribute_info
+		<where>
+			<if test="attrid != null ">
+				and attrid = #{attrid, jdbcType=DECIMAL}
+			</if>
+			<if test="attrtype != null ">
+				and attrtype = #{attrtype, jdbcType=INTEGER}
+			</if>
+			<if test="attrfield != null ">
+				and attrfield = #{attrfield, jdbcType=INTEGER}
+			</if>
+			<if test="unlock != null ">
+				and unlock = #{unlock, jdbcType=INTEGER}
+			</if>
+			<if test="act != null ">
+				and act = #{act, jdbcType=INTEGER}
+			</if>
+			<if test="valtype != null ">
+				and valtype = #{valtype, jdbcType=INTEGER}
+			</if>
+			<if test="valmin != null ">
+				and valmin = #{valmin, jdbcType=DOUBLE}
+			</if>
+			<if test="valmax != null ">
+				and valmax = #{valmax, jdbcType=DOUBLE}
+			</if>
+			<if test="initval != null ">
+				and initval = #{initval, jdbcType=DOUBLE}
+			</if>
+			<if test="upval != null ">
+				and upval = #{upval, jdbcType=DOUBLE}
+			</if>
+			<if test="position != null ">
+				and position = #{position, jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into game_attribute_info (attrid, attrtype, attrfield, unlock, act, valtype, valmin, valmax, initval, upval, position) 
+		values (#{item.attrid, jdbcType=DECIMAL}, #{item.attrtype, jdbcType=INTEGER}, #{item.attrfield, jdbcType=INTEGER}, #{item.unlock, jdbcType=INTEGER}, #{item.act, jdbcType=INTEGER}, #{item.valtype, jdbcType=INTEGER}, #{item.valmin, jdbcType=DOUBLE}, #{item.valmax, jdbcType=DOUBLE}, #{item.initval, jdbcType=DOUBLE}, #{item.upval, jdbcType=DOUBLE}, #{item.position, jdbcType=VARCHAR})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_attribute_info
+         where 1=1 and attrid = #{0}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_attribute_info
+         where 1=1 and attrid = #{0}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.entity.game.GameAttributeInfo">
+        update game_attribute_info set 
+               attrtype = #{attrtype, jdbcType=INTEGER}, 
+               attrfield = #{attrfield, jdbcType=INTEGER}, 
+               unlock = #{unlock, jdbcType=INTEGER}, 
+               act = #{act, jdbcType=INTEGER}, 
+               valtype = #{valtype, jdbcType=INTEGER}, 
+               valmin = #{valmin, jdbcType=DOUBLE}, 
+               valmax = #{valmax, jdbcType=DOUBLE}, 
+               initval = #{initval, jdbcType=DOUBLE}, 
+               upval = #{upval, jdbcType=DOUBLE}, 
+               position = #{position, jdbcType=VARCHAR}
+         where 1=1 and attrid = #{attrid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.entity.game.GameAttributeInfo">
+		update game_attribute_info
+		<set>
+		    <if test="attrtype != null">
+				attrtype = #{attrtype, jdbcType=INTEGER},
+		    </if>
+		    <if test="attrfield != null">
+				attrfield = #{attrfield, jdbcType=INTEGER},
+		    </if>
+		    <if test="unlock != null">
+				unlock = #{unlock, jdbcType=INTEGER},
+		    </if>
+		    <if test="act != null">
+				act = #{act, jdbcType=INTEGER},
+		    </if>
+		    <if test="valtype != null">
+				valtype = #{valtype, jdbcType=INTEGER},
+		    </if>
+		    <if test="valmin != null">
+				valmin = #{valmin, jdbcType=DOUBLE},
+		    </if>
+		    <if test="valmax != null">
+				valmax = #{valmax, jdbcType=DOUBLE},
+		    </if>
+		    <if test="initval != null">
+				initval = #{initval, jdbcType=DOUBLE},
+		    </if>
+		    <if test="upval != null">
+				upval = #{upval, jdbcType=DOUBLE},
+		    </if>
+		    <if test="position != null">
+				position = #{position, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where 1=1 and attrid = #{attrid, jdbcType=DECIMAL}
+	</update>
+</mapper>

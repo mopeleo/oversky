@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.dao.cust.CustInfoExtDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.entity.cust.CustInfoExt">
+        <id column="custno" jdbcType="DECIMAL" property="custno" />
+        <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+        <result column="province" jdbcType="VARCHAR" property="province" />
+        <result column="city" jdbcType="VARCHAR" property="city" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="profession" jdbcType="VARCHAR" property="profession" />
+    </resultMap>
+	
+	<sql id="column_list">
+        custno, birthday, province, city, address, profession
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.entity.cust.CustInfoExt">
+        insert into cust_info_ext (custno, birthday, province, city, address, profession)
+        values (#{custno, jdbcType=DECIMAL}, #{birthday, jdbcType=VARCHAR}, #{province, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.entity.cust.CustInfoExt" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from cust_info_ext
+		<where>
+			<if test="custno != null ">
+				and custno = #{custno, jdbcType=DECIMAL}
+			</if>
+			<if test="birthday != null ">
+				and birthday = #{birthday, jdbcType=VARCHAR}
+			</if>
+			<if test="province != null ">
+				and province = #{province, jdbcType=VARCHAR}
+			</if>
+			<if test="city != null ">
+				and city = #{city, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null ">
+				and address = #{address, jdbcType=VARCHAR}
+			</if>
+			<if test="profession != null ">
+				and profession = #{profession, jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into cust_info_ext (custno, birthday, province, city, address, profession) 
+		values (#{item.custno, jdbcType=DECIMAL}, #{item.birthday, jdbcType=VARCHAR}, #{item.province, jdbcType=VARCHAR}, #{item.city, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from cust_info_ext
+         where 1=1 and custno = #{0}
+    </select>
+
+    <delete id="deleteById">
+        delete from cust_info_ext
+         where 1=1 and custno = #{0}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.entity.cust.CustInfoExt">
+        update cust_info_ext set 
+               birthday = #{birthday, jdbcType=VARCHAR}, 
+               province = #{province, jdbcType=VARCHAR}, 
+               city = #{city, jdbcType=VARCHAR}, 
+               address = #{address, jdbcType=VARCHAR}, 
+               profession = #{profession, jdbcType=VARCHAR}
+         where 1=1 and custno = #{custno, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.entity.cust.CustInfoExt">
+		update cust_info_ext
+		<set>
+		    <if test="birthday != null">
+				birthday = #{birthday, jdbcType=VARCHAR},
+		    </if>
+		    <if test="province != null">
+				province = #{province, jdbcType=VARCHAR},
+		    </if>
+		    <if test="city != null">
+				city = #{city, jdbcType=VARCHAR},
+		    </if>
+		    <if test="address != null">
+				address = #{address, jdbcType=VARCHAR},
+		    </if>
+		    <if test="profession != null">
+				profession = #{profession, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where 1=1 and custno = #{custno, jdbcType=DECIMAL}
+	</update>
+</mapper>

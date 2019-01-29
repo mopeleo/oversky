@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.dao.server.ServerPlayerEquipAttributeDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.entity.server.ServerPlayerEquipAttribute">
+        <id column="peid" jdbcType="DECIMAL" property="peid" />
+        <id column="attrid" jdbcType="VARCHAR" property="attrid" />
+        <result column="attrval" jdbcType="DOUBLE" property="attrval" />
+    </resultMap>
+	
+	<sql id="column_list">
+        peid, attrid, attrval
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.entity.server.ServerPlayerEquipAttribute">
+        insert into server_player_equip_attribute (peid, attrid, attrval)
+        values (#{peid, jdbcType=DECIMAL}, #{attrid, jdbcType=VARCHAR}, #{attrval, jdbcType=DOUBLE})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.entity.server.ServerPlayerEquipAttribute" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from server_player_equip_attribute
+		<where>
+			<if test="peid != null ">
+				and peid = #{peid, jdbcType=DECIMAL}
+			</if>
+			<if test="attrid != null ">
+				and attrid = #{attrid, jdbcType=VARCHAR}
+			</if>
+			<if test="attrval != null ">
+				and attrval = #{attrval, jdbcType=DOUBLE}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into server_player_equip_attribute (peid, attrid, attrval) 
+		values (#{item.peid, jdbcType=DECIMAL}, #{item.attrid, jdbcType=VARCHAR}, #{item.attrval, jdbcType=DOUBLE})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from server_player_equip_attribute
+         where 1=1 and peid = #{0} and attrid = #{1}
+    </select>
+
+    <delete id="deleteById">
+        delete from server_player_equip_attribute
+         where 1=1 and peid = #{0} and attrid = #{1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.entity.server.ServerPlayerEquipAttribute">
+        update server_player_equip_attribute set 
+               attrval = #{attrval, jdbcType=DOUBLE}
+         where 1=1 and peid = #{peid, jdbcType=DECIMAL} and attrid = #{attrid, jdbcType=VARCHAR}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.entity.server.ServerPlayerEquipAttribute">
+		update server_player_equip_attribute
+		<set>
+		    <if test="attrval != null">
+				attrval = #{attrval, jdbcType=DOUBLE},
+		    </if>
+		</set>
+		where 1=1 and peid = #{peid, jdbcType=DECIMAL} and attrid = #{attrid, jdbcType=VARCHAR}
+	</update>
+</mapper>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.dao.sys.SysUserDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.entity.sys.SysUser">
+        <id column="userid" jdbcType="DECIMAL" property="userid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="loginid" jdbcType="VARCHAR" property="loginid" />
+        <result column="loginpasswd" jdbcType="VARCHAR" property="loginpasswd" />
+        <result column="salt" jdbcType="VARCHAR" property="salt" />
+        <result column="mobileno" jdbcType="VARCHAR" property="mobileno" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="orgid" jdbcType="VARCHAR" property="orgid" />
+        <result column="idtype" jdbcType="VARCHAR" property="idtype" />
+        <result column="idcode" jdbcType="VARCHAR" property="idcode" />
+        <result column="logindate" jdbcType="VARCHAR" property="logindate" />
+        <result column="logintime" jdbcType="VARCHAR" property="logintime" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="loginerror" jdbcType="INTEGER" property="loginerror" />
+        <result column="passwdvaliddate" jdbcType="VARCHAR" property="passwdvaliddate" />
+    </resultMap>
+	
+	<sql id="column_list">
+        userid, unioncode, username, loginid, loginpasswd, salt, mobileno, email, orgid, idtype, idcode, logindate, logintime, status, loginerror, passwdvaliddate
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.entity.sys.SysUser">
+        insert into sys_user (userid, unioncode, username, loginid, loginpasswd, salt, mobileno, email, orgid, idtype, idcode, logindate, logintime, status, loginerror, passwdvaliddate)
+        values (#{userid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=VARCHAR}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{loginerror, jdbcType=INTEGER}, #{passwdvaliddate, jdbcType=VARCHAR})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.entity.sys.SysUser" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_user
+		<where>
+			<if test="userid != null ">
+				and userid = #{userid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null ">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="username != null ">
+				and username = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="loginid != null ">
+				and loginid = #{loginid, jdbcType=VARCHAR}
+			</if>
+			<if test="loginpasswd != null ">
+				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
+			</if>
+			<if test="salt != null ">
+				and salt = #{salt, jdbcType=VARCHAR}
+			</if>
+			<if test="mobileno != null ">
+				and mobileno = #{mobileno, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null ">
+				and email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="orgid != null ">
+				and orgid = #{orgid, jdbcType=VARCHAR}
+			</if>
+			<if test="idtype != null ">
+				and idtype = #{idtype, jdbcType=VARCHAR}
+			</if>
+			<if test="idcode != null ">
+				and idcode = #{idcode, jdbcType=VARCHAR}
+			</if>
+			<if test="logindate != null ">
+				and logindate = #{logindate, jdbcType=VARCHAR}
+			</if>
+			<if test="logintime != null ">
+				and logintime = #{logintime, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null ">
+				and status = #{status, jdbcType=INTEGER}
+			</if>
+			<if test="loginerror != null ">
+				and loginerror = #{loginerror, jdbcType=INTEGER}
+			</if>
+			<if test="passwdvaliddate != null ">
+				and passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into sys_user (userid, unioncode, username, loginid, loginpasswd, salt, mobileno, email, orgid, idtype, idcode, logindate, logintime, status, loginerror, passwdvaliddate) 
+		values (#{item.userid, jdbcType=DECIMAL}, #{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=VARCHAR}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.loginerror, jdbcType=INTEGER}, #{item.passwdvaliddate, jdbcType=VARCHAR})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_user
+         where 1=1 and userid = #{0}
+    </select>
+
+    <delete id="deleteById">
+        delete from sys_user
+         where 1=1 and userid = #{0}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.entity.sys.SysUser">
+        update sys_user set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
+               username = #{username, jdbcType=VARCHAR}, 
+               loginid = #{loginid, jdbcType=VARCHAR}, 
+               loginpasswd = #{loginpasswd, jdbcType=VARCHAR}, 
+               salt = #{salt, jdbcType=VARCHAR}, 
+               mobileno = #{mobileno, jdbcType=VARCHAR}, 
+               email = #{email, jdbcType=VARCHAR}, 
+               orgid = #{orgid, jdbcType=VARCHAR}, 
+               idtype = #{idtype, jdbcType=VARCHAR}, 
+               idcode = #{idcode, jdbcType=VARCHAR}, 
+               logindate = #{logindate, jdbcType=VARCHAR}, 
+               logintime = #{logintime, jdbcType=VARCHAR}, 
+               status = #{status, jdbcType=INTEGER}, 
+               loginerror = #{loginerror, jdbcType=INTEGER}, 
+               passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
+         where 1=1 and userid = #{userid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.entity.sys.SysUser">
+		update sys_user
+		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="username != null">
+				username = #{username, jdbcType=VARCHAR},
+		    </if>
+		    <if test="loginid != null">
+				loginid = #{loginid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="loginpasswd != null">
+				loginpasswd = #{loginpasswd, jdbcType=VARCHAR},
+		    </if>
+		    <if test="salt != null">
+				salt = #{salt, jdbcType=VARCHAR},
+		    </if>
+		    <if test="mobileno != null">
+				mobileno = #{mobileno, jdbcType=VARCHAR},
+		    </if>
+		    <if test="email != null">
+				email = #{email, jdbcType=VARCHAR},
+		    </if>
+		    <if test="orgid != null">
+				orgid = #{orgid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="idtype != null">
+				idtype = #{idtype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="idcode != null">
+				idcode = #{idcode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="logindate != null">
+				logindate = #{logindate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="logintime != null">
+				logintime = #{logintime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="status != null">
+				status = #{status, jdbcType=INTEGER},
+		    </if>
+		    <if test="loginerror != null">
+				loginerror = #{loginerror, jdbcType=INTEGER},
+		    </if>
+		    <if test="passwdvaliddate != null">
+				passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where 1=1 and userid = #{userid, jdbcType=DECIMAL}
+	</update>
+</mapper>

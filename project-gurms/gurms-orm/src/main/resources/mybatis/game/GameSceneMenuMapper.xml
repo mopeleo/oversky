@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.dao.game.GameSceneMenuDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.entity.game.GameSceneMenu">
+        <id column="sceneid" jdbcType="INTEGER" property="sceneid" />
+        <id column="menuid" jdbcType="VARCHAR" property="menuid" />
+    </resultMap>
+	
+	<sql id="column_list">
+        sceneid, menuid
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.entity.game.GameSceneMenu">
+        insert into game_scene_menu (sceneid, menuid)
+        values (#{sceneid, jdbcType=INTEGER}, #{menuid, jdbcType=VARCHAR})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.entity.game.GameSceneMenu" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_scene_menu
+		<where>
+			<if test="sceneid != null ">
+				and sceneid = #{sceneid, jdbcType=INTEGER}
+			</if>
+			<if test="menuid != null ">
+				and menuid = #{menuid, jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into game_scene_menu (sceneid, menuid) 
+		values (#{item.sceneid, jdbcType=INTEGER}, #{item.menuid, jdbcType=VARCHAR})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_scene_menu
+         where 1=1 and sceneid = #{0} and menuid = #{1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_scene_menu
+         where 1=1 and sceneid = #{0} and menuid = #{1}
+    </delete>
+  
+</mapper>

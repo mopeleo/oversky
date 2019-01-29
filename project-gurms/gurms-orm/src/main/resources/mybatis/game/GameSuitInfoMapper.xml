@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.dao.game.GameSuitInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.entity.game.GameSuitInfo">
+        <id column="suitid" jdbcType="VARCHAR" property="suitid" />
+        <result column="suitname" jdbcType="VARCHAR" property="suitname" />
+        <result column="profession" jdbcType="VARCHAR" property="profession" />
+        <result column="unlocklevel" jdbcType="INTEGER" property="unlocklevel" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+    </resultMap>
+	
+	<sql id="column_list">
+        suitid, suitname, profession, unlocklevel, summary
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.entity.game.GameSuitInfo">
+        insert into game_suit_info (suitid, suitname, profession, unlocklevel, summary)
+        values (#{suitid, jdbcType=VARCHAR}, #{suitname, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{unlocklevel, jdbcType=INTEGER}, #{summary, jdbcType=VARCHAR})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.entity.game.GameSuitInfo" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_suit_info
+		<where>
+			<if test="suitid != null ">
+				and suitid = #{suitid, jdbcType=VARCHAR}
+			</if>
+			<if test="suitname != null ">
+				and suitname = #{suitname, jdbcType=VARCHAR}
+			</if>
+			<if test="profession != null ">
+				and profession = #{profession, jdbcType=VARCHAR}
+			</if>
+			<if test="unlocklevel != null ">
+				and unlocklevel = #{unlocklevel, jdbcType=INTEGER}
+			</if>
+			<if test="summary != null ">
+				and summary = #{summary, jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into game_suit_info (suitid, suitname, profession, unlocklevel, summary) 
+		values (#{item.suitid, jdbcType=VARCHAR}, #{item.suitname, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.unlocklevel, jdbcType=INTEGER}, #{item.summary, jdbcType=VARCHAR})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_suit_info
+         where 1=1 and suitid = #{0}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_suit_info
+         where 1=1 and suitid = #{0}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.entity.game.GameSuitInfo">
+        update game_suit_info set 
+               suitname = #{suitname, jdbcType=VARCHAR}, 
+               profession = #{profession, jdbcType=VARCHAR}, 
+               unlocklevel = #{unlocklevel, jdbcType=INTEGER}, 
+               summary = #{summary, jdbcType=VARCHAR}
+         where 1=1 and suitid = #{suitid, jdbcType=VARCHAR}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.entity.game.GameSuitInfo">
+		update game_suit_info
+		<set>
+		    <if test="suitname != null">
+				suitname = #{suitname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="profession != null">
+				profession = #{profession, jdbcType=VARCHAR},
+		    </if>
+		    <if test="unlocklevel != null">
+				unlocklevel = #{unlocklevel, jdbcType=INTEGER},
+		    </if>
+		    <if test="summary != null">
+				summary = #{summary, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where 1=1 and suitid = #{suitid, jdbcType=VARCHAR}
+	</update>
+</mapper>

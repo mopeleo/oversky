@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.dao.game.GameSuitEquipDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.entity.game.GameSuitEquip">
+        <id column="suitid" jdbcType="VARCHAR" property="suitid" />
+        <id column="equipid" jdbcType="VARCHAR" property="equipid" />
+    </resultMap>
+	
+	<sql id="column_list">
+        suitid, equipid
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.entity.game.GameSuitEquip">
+        insert into game_suit_equip (suitid, equipid)
+        values (#{suitid, jdbcType=VARCHAR}, #{equipid, jdbcType=VARCHAR})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.entity.game.GameSuitEquip" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_suit_equip
+		<where>
+			<if test="suitid != null ">
+				and suitid = #{suitid, jdbcType=VARCHAR}
+			</if>
+			<if test="equipid != null ">
+				and equipid = #{equipid, jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into game_suit_equip (suitid, equipid) 
+		values (#{item.suitid, jdbcType=VARCHAR}, #{item.equipid, jdbcType=VARCHAR})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from game_suit_equip
+         where 1=1 and suitid = #{0} and equipid = #{1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_suit_equip
+         where 1=1 and suitid = #{0} and equipid = #{1}
+    </delete>
+  
+</mapper>
