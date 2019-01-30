@@ -174,9 +174,10 @@ public class CodeGenerator {
             for(String type : types){
                 String template = type + ".ftl";
                 String pkg = getPackage(type);
-                if(table.getGroup() != null && !table.getGroup().equals("")){
-                    pkg = pkg + "." + table.getGroup();
-                }
+                //潜规则不要用！！！
+//                if(table.getGroup() != null && !table.getGroup().equals("")){
+//                    pkg = pkg + "." + table.getGroup();
+//                }
                 params.put("package", pkg);
                 params.put(type + "_package", pkg);
                 outFile = getOutPath(getOutput(type), pkg, table.getCode() + getFilesuffix(type));
