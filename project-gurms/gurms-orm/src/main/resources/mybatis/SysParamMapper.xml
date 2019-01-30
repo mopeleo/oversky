@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.system.dao.SysParamDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysParam">
+        <id column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <id column="paramid" jdbcType="INTEGER" property="paramid" />
+        <result column="paramvalue" jdbcType="VARCHAR" property="paramvalue" />
+    </resultMap>
+	
+	<sql id="column_list">
+        unioncode, paramid, paramvalue
+	</sql>
+  
+    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParam">
+        insert into sys_param (unioncode, paramid, paramvalue)
+        values (#{unioncode, jdbcType=VARCHAR}, #{paramid, jdbcType=INTEGER}, #{paramvalue, jdbcType=VARCHAR})
+    </insert>
+  
+    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysParam" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_param
+		<where>
+			<if test="unioncode != null ">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="paramid != null ">
+				and paramid = #{paramid, jdbcType=INTEGER}
+			</if>
+			<if test="paramvalue != null ">
+				and paramvalue = #{paramvalue, jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert all
+		<foreach item="item" index="index" collection="list">
+		into sys_param (unioncode, paramid, paramvalue) 
+		values (#{item.unioncode, jdbcType=VARCHAR}, #{item.paramid, jdbcType=INTEGER}, #{item.paramvalue, jdbcType=VARCHAR})
+		</foreach>
+		select 1 from dual
+	</insert>
+	
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_param
+         where 1=1 and unioncode = #{0} and paramid = #{1}
+    </select>
+
+    <delete id="deleteById">
+        delete from sys_param
+         where 1=1 and unioncode = #{0} and paramid = #{1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysParam">
+        update sys_param set 
+               paramvalue = #{paramvalue, jdbcType=VARCHAR}
+         where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and paramid = #{paramid, jdbcType=INTEGER}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysParam">
+		update sys_param
+		<set>
+		    <if test="paramvalue != null">
+				paramvalue = #{paramvalue, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and paramid = #{paramid, jdbcType=INTEGER}
+	</update>
+</mapper>
