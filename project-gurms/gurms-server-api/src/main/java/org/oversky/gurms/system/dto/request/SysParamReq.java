@@ -4,8 +4,10 @@ import org.oversky.base.service.BaseReqDto;
 
 public class SysParamReq extends BaseReqDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private String unioncode;    //unioncode
-	private Integer paramid;    //paramid
+	private Long paramid;    //paramid
 	private String paramvalue;    //paramvalue
 
 	public String getUnioncode() {
@@ -16,11 +18,11 @@ public class SysParamReq extends BaseReqDto {
 		this.unioncode = unioncode;
 	}
 
-	public Integer getParamid() {
+	public Long getParamid() {
 		return this.paramid;
 	}
 
-	public void setParamid(Integer paramid) {
+	public void setParamid(Long paramid) {
 		this.paramid = paramid;
 	}
 
@@ -32,12 +34,6 @@ public class SysParamReq extends BaseReqDto {
 		this.paramvalue = paramvalue;
 	}
 
-
-	public void clear(){
-		this.unioncode = null;
-		this.paramid = null;
-		this.paramvalue = null;
-	}
 
     @Override
     public String toString() {

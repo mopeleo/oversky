@@ -7,11 +7,13 @@ public interface SysDictIndexDao{
 
     int insert(SysDictIndex entity);
 
-    List<SysDictIndex> selectAll(SysDictIndex where);
+    List<SysDictIndex> selectWhere(SysDictIndex where);
 
-    SysDictIndex selectById(String unioncode, Integer dictcode);
+    List<SysDictIndex> selectAll();
 
-    int deleteById(String unioncode, Integer dictcode);
+    SysDictIndex selectById(String unioncode, Long dictcode);
+
+    int deleteById(String unioncode, Long dictcode);
 
     int updateById(SysDictIndex entity);
 	

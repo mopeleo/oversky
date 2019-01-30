@@ -15,7 +15,7 @@
         values (#{roleid, jdbcType=INTEGER}, #{menuid, jdbcType=VARCHAR})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysRoleMenu" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysRoleMenu" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_role_menu
 		<where>
@@ -26,6 +26,11 @@
 				and menuid = #{menuid, jdbcType=VARCHAR}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_role_menu
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

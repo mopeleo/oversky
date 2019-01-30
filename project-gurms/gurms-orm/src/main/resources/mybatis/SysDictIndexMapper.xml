@@ -18,7 +18,7 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{dictname, jdbcType=VARCHAR}, #{dictgroup, jdbcType=VARCHAR}, #{editflag, jdbcType=INTEGER})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysDictIndex" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysDictIndex" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_dict_index
 		<where>
@@ -38,6 +38,11 @@
 				and editflag = #{editflag, jdbcType=INTEGER}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_dict_index
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

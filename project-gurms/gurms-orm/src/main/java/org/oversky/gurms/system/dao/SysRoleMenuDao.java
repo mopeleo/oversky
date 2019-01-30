@@ -7,10 +7,12 @@ public interface SysRoleMenuDao{
 
     int insert(SysRoleMenu entity);
 
-    List<SysRoleMenu> selectAll(SysRoleMenu where);
+    List<SysRoleMenu> selectWhere(SysRoleMenu where);
 
-    SysRoleMenu selectById(Integer roleid, String menuid);
+    List<SysRoleMenu> selectAll();
 
-    int deleteById(Integer roleid, String menuid);
+    SysRoleMenu selectById(Long roleid, String menuid);
+
+    int deleteById(Long roleid, String menuid);
 
 }

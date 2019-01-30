@@ -4,6 +4,8 @@ import org.oversky.base.service.BaseReqDto;
 
 public class SysUserReq extends BaseReqDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private Long userid;    //用户ID,内部自动生成
 	private String unioncode;    //unioncode
 	private String username;    //用户名称
@@ -17,8 +19,8 @@ public class SysUserReq extends BaseReqDto {
 	private String idcode;    //证件号码
 	private String logindate;    //登录日期
 	private String logintime;    //登录时间
-	private Integer status;    //用户状态，0，已删除；1，正常；2，锁定
-	private Integer loginerror;    //连续登录失败次数
+	private int status;    //用户状态，0，已删除；1，正常；2，锁定
+	private int loginerror;    //连续登录失败次数
 	private String passwdvaliddate;    //密码失效日期
 
 	public Long getUserid() {
@@ -125,19 +127,19 @@ public class SysUserReq extends BaseReqDto {
 		this.logintime = logintime;
 	}
 
-	public Integer getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
-	public Integer getLoginerror() {
+	public int getLoginerror() {
 		return this.loginerror;
 	}
 
-	public void setLoginerror(Integer loginerror) {
+	public void setLoginerror(int loginerror) {
 		this.loginerror = loginerror;
 	}
 
@@ -149,25 +151,6 @@ public class SysUserReq extends BaseReqDto {
 		this.passwdvaliddate = passwdvaliddate;
 	}
 
-
-	public void clear(){
-		this.userid = null;
-		this.unioncode = null;
-		this.username = null;
-		this.loginid = null;
-		this.loginpasswd = null;
-		this.salt = null;
-		this.mobileno = null;
-		this.email = null;
-		this.orgid = null;
-		this.idtype = null;
-		this.idcode = null;
-		this.logindate = null;
-		this.logintime = null;
-		this.status = null;
-		this.loginerror = null;
-		this.passwdvaliddate = null;
-	}
 
     @Override
     public String toString() {

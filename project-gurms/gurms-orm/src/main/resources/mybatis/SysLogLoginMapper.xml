@@ -21,7 +21,7 @@
         values (#{logid, jdbcType=VARCHAR}, #{userid, jdbcType=DECIMAL}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{loginip, jdbcType=VARCHAR}, #{logintype, jdbcType=INTEGER}, #{loginresult, jdbcType=INTEGER})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysLogLogin" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysLogLogin" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_log_login
 		<where>
@@ -50,6 +50,11 @@
 				and loginresult = #{loginresult, jdbcType=INTEGER}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_log_login
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

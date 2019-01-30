@@ -7,7 +7,9 @@ public interface SysMenuDao{
 
     int insert(SysMenu entity);
 
-    List<SysMenu> selectAll(SysMenu where);
+    List<SysMenu> selectWhere(SysMenu where);
+
+    List<SysMenu> selectAll();
 
     SysMenu selectById(String menuid);
 

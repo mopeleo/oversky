@@ -4,14 +4,16 @@ import org.oversky.base.service.BaseReqDto;
 
 public class SysRoleMenuReq extends BaseReqDto {
 
-	private Integer roleid;    //roleid
+	private static final long serialVersionUID = 1L;
+
+	private Long roleid;    //roleid
 	private String menuid;    //menuid
 
-	public Integer getRoleid() {
+	public Long getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Integer roleid) {
+	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
 	}
 
@@ -23,11 +25,6 @@ public class SysRoleMenuReq extends BaseReqDto {
 		this.menuid = menuid;
 	}
 
-
-	public void clear(){
-		this.roleid = null;
-		this.menuid = null;
-	}
 
     @Override
     public String toString() {

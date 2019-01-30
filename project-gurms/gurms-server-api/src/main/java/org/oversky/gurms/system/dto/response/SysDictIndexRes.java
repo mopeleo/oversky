@@ -4,11 +4,13 @@ import org.oversky.base.service.BaseResDto;
 
 public class SysDictIndexRes extends BaseResDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private String unioncode;    //unioncode
-	private Integer dictcode;    //字典代码
+	private Long dictcode;    //字典代码
 	private String dictname;    //字典名称
 	private String dictgroup;    //所属分组
-	private Integer editflag;    //是否可编辑（0-不可见，1-只读，2-读写）
+	private int editflag;    //是否可编辑（0-不可见，1-只读，2-读写）
 
 	public String getUnioncode() {
 		return this.unioncode;
@@ -18,11 +20,11 @@ public class SysDictIndexRes extends BaseResDto {
 		this.unioncode = unioncode;
 	}
 
-	public Integer getDictcode() {
+	public Long getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(Integer dictcode) {
+	public void setDictcode(Long dictcode) {
 		this.dictcode = dictcode;
 	}
 
@@ -42,22 +44,14 @@ public class SysDictIndexRes extends BaseResDto {
 		this.dictgroup = dictgroup;
 	}
 
-	public Integer getEditflag() {
+	public int getEditflag() {
 		return this.editflag;
 	}
 
-	public void setEditflag(Integer editflag) {
+	public void setEditflag(int editflag) {
 		this.editflag = editflag;
 	}
 
-
-	public void clear(){
-		this.unioncode = null;
-		this.dictcode = null;
-		this.dictname = null;
-		this.dictgroup = null;
-		this.editflag = null;
-	}
 
     @Override
     public String toString() {

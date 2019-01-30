@@ -1,4 +1,4 @@
-<#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
+<#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Long<#elseif datatype=="double">Double<#else>Long</#if></#macro>
 package ${package};
 
 import ${java_entity_package}.${table.code};
@@ -8,7 +8,9 @@ public interface ${table.code}Dao{
 
     int insert(${table.code} entity);
 
-    List<${table.code}> selectAll(${table.code} where);
+    List<${table.code}> selectWhere(${table.code} where);
+
+    List<${table.code}> selectAll();
 
 <#if (table.keys?size > 0)>
     ${table.code} selectById(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>);

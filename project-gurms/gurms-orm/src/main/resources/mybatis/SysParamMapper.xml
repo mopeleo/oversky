@@ -16,7 +16,7 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{paramid, jdbcType=INTEGER}, #{paramvalue, jdbcType=VARCHAR})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysParam" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParam" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_param
 		<where>
@@ -30,6 +30,11 @@
 				and paramvalue = #{paramvalue, jdbcType=VARCHAR}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_param
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

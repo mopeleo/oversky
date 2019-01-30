@@ -4,21 +4,23 @@ import org.oversky.base.entity.BaseEntity;
 
 public class SysParamExt extends BaseEntity{
 
-	private Integer paramid;    //参数ID
+	private static final long serialVersionUID = 1L;
+
+	private Long paramid;    //参数ID
 	private String paramname;    //参数名称
 	private String texttitle;    //描述头
 	private String texttail;    //描述尾
-	private Integer distype;    //0 text 无法修改；1 input 可以修改；2 select 可以修改
-	private Integer dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
+	private int distype;    //0 text 无法修改；1 input 可以修改；2 select 可以修改
+	private int dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
 	private String valuelist;    //控件显示的值列表，如“0|否;1|是”
 	private String initvalue;    //初始值
-	private Integer valuelength;    //输入值长度
+	private int valuelength;    //输入值长度
 
-	public Integer getParamid() {
+	public Long getParamid() {
 		return this.paramid;
 	}
 
-	public void setParamid(Integer paramid) {
+	public void setParamid(Long paramid) {
 		this.paramid = paramid;
 	}
 
@@ -46,19 +48,19 @@ public class SysParamExt extends BaseEntity{
 		this.texttail = texttail;
 	}
 
-	public Integer getDistype() {
+	public int getDistype() {
 		return this.distype;
 	}
 
-	public void setDistype(Integer distype) {
+	public void setDistype(int distype) {
 		this.distype = distype;
 	}
 
-	public Integer getDictcode() {
+	public int getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(Integer dictcode) {
+	public void setDictcode(int dictcode) {
 		this.dictcode = dictcode;
 	}
 
@@ -78,39 +80,23 @@ public class SysParamExt extends BaseEntity{
 		this.initvalue = initvalue;
 	}
 
-	public Integer getValuelength() {
+	public int getValuelength() {
 		return this.valuelength;
 	}
 
-	public void setValuelength(Integer valuelength) {
+	public void setValuelength(int valuelength) {
 		this.valuelength = valuelength;
 	}
 
-    public boolean existId(){
-        return true;
-    }
-    
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysParamExt");
 		return build.append(this.paramid).toString();
 	}
 
-    public static String buildEntityKey(Integer paramid){
+    public static String buildEntityKey(Long paramid){
         StringBuilder build = new StringBuilder("SysParamExt");
         return build.append(paramid).toString();
     }
-	
-	public void clear(){
-		this.paramid = null;
-		this.paramname = null;
-		this.texttitle = null;
-		this.texttail = null;
-		this.distype = null;
-		this.dictcode = null;
-		this.valuelist = null;
-		this.initvalue = null;
-		this.valuelength = null;
-	}
 
 	@Override
     public String toString() {

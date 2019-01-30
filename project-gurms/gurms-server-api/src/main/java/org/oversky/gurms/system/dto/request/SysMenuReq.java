@@ -4,13 +4,15 @@ import org.oversky.base.service.BaseReqDto;
 
 public class SysMenuReq extends BaseReqDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private String menuid;    //菜单ID
 	private String menuname;    //菜单名称
 	private String menuurl;    //菜单地址
 	private String parentmenu;    //上级菜单
-	private Integer menutype;    //菜单类型0-目录，1-菜单，2-页面链接
-	private Integer opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
-	private Integer status;    //菜单状态，0-无效，1-有效
+	private int menutype;    //菜单类型0-目录，1-菜单，2-页面链接
+	private int opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
+	private int status;    //菜单状态，0-无效，1-有效
 
 	public String getMenuid() {
 		return this.menuid;
@@ -44,40 +46,30 @@ public class SysMenuReq extends BaseReqDto {
 		this.parentmenu = parentmenu;
 	}
 
-	public Integer getMenutype() {
+	public int getMenutype() {
 		return this.menutype;
 	}
 
-	public void setMenutype(Integer menutype) {
+	public void setMenutype(int menutype) {
 		this.menutype = menutype;
 	}
 
-	public Integer getOpentype() {
+	public int getOpentype() {
 		return this.opentype;
 	}
 
-	public void setOpentype(Integer opentype) {
+	public void setOpentype(int opentype) {
 		this.opentype = opentype;
 	}
 
-	public Integer getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
-
-	public void clear(){
-		this.menuid = null;
-		this.menuname = null;
-		this.menuurl = null;
-		this.parentmenu = null;
-		this.menutype = null;
-		this.opentype = null;
-		this.status = null;
-	}
 
     @Override
     public String toString() {

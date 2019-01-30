@@ -4,6 +4,8 @@ import org.oversky.base.entity.BaseEntity;
 
 public class SysOrg extends BaseEntity{
 
+	private static final long serialVersionUID = 1L;
+
 	private String orgid;    //机构ID
 	private String unioncode;    //unioncode
 	private String shortname;    //机构简称
@@ -15,7 +17,7 @@ public class SysOrg extends BaseEntity{
 	private String postcode;    //邮政编码
 	private String email;    //电子邮件
 	private String parentorg;    //上级机构
-	private Integer orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
+	private int orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
 	private String remark;    //备注
 
 	public String getOrgid() {
@@ -106,11 +108,11 @@ public class SysOrg extends BaseEntity{
 		this.parentorg = parentorg;
 	}
 
-	public Integer getOrgtype() {
+	public int getOrgtype() {
 		return this.orgtype;
 	}
 
-	public void setOrgtype(Integer orgtype) {
+	public void setOrgtype(int orgtype) {
 		this.orgtype = orgtype;
 	}
 
@@ -122,10 +124,6 @@ public class SysOrg extends BaseEntity{
 		this.remark = remark;
 	}
 
-    public boolean existId(){
-        return true;
-    }
-    
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysOrg");
 		return build.append(this.orgid).toString();
@@ -135,22 +133,6 @@ public class SysOrg extends BaseEntity{
         StringBuilder build = new StringBuilder("SysOrg");
         return build.append(orgid).toString();
     }
-	
-	public void clear(){
-		this.orgid = null;
-		this.unioncode = null;
-		this.shortname = null;
-		this.fullname = null;
-		this.linkman = null;
-		this.linktel = null;
-		this.faxno = null;
-		this.address = null;
-		this.postcode = null;
-		this.email = null;
-		this.parentorg = null;
-		this.orgtype = null;
-		this.remark = null;
-	}
 
 	@Override
     public String toString() {

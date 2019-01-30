@@ -4,6 +4,8 @@ import org.oversky.base.service.BaseResDto;
 
 public class SysUserInfoRes extends BaseResDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private Long userid;    //用户ID,内部自动生成
 	private String unioncode;    //unioncode
 	private String sex;    //性别（0-女，1-男）
@@ -86,18 +88,6 @@ public class SysUserInfoRes extends BaseResDto {
 		this.education = education;
 	}
 
-
-	public void clear(){
-		this.userid = null;
-		this.unioncode = null;
-		this.sex = null;
-		this.birthday = null;
-		this.address = null;
-		this.postcode = null;
-		this.province = null;
-		this.city = null;
-		this.education = null;
-	}
 
     @Override
     public String toString() {

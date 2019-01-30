@@ -7,7 +7,9 @@ public interface SysUserInfoDao{
 
     int insert(SysUserInfo entity);
 
-    List<SysUserInfo> selectAll(SysUserInfo where);
+    List<SysUserInfo> selectWhere(SysUserInfo where);
+
+    List<SysUserInfo> selectAll();
 
     SysUserInfo selectById(Long userid);
 

@@ -6,5 +6,13 @@ import org.oversky.gurms.system.dto.response.SysUserRes;
 
 public interface SysUserService extends BaseService{
 
-	public SysUserRes login(SysUserReq userDto);
+	public boolean insert(SysUserReq userReq);
+	
+	public boolean delete(Long userid);
+	
+	public boolean update(SysUserReq userReq);
+	
+	public SysUserRes query(SysUserReq userReq);
+	
+	public SysUserRes login(SysUserReq userReq);
 }

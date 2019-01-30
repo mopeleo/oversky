@@ -4,8 +4,10 @@ import org.oversky.base.service.BaseResDto;
 
 public class SysDictValueRes extends BaseResDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private String unioncode;    //unioncode
-	private Integer dictcode;    //字典代码
+	private Long dictcode;    //字典代码
 	private String itemcode;    //选项代码
 	private String itemname;    //选项名称
 
@@ -17,11 +19,11 @@ public class SysDictValueRes extends BaseResDto {
 		this.unioncode = unioncode;
 	}
 
-	public Integer getDictcode() {
+	public Long getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(Integer dictcode) {
+	public void setDictcode(Long dictcode) {
 		this.dictcode = dictcode;
 	}
 
@@ -41,13 +43,6 @@ public class SysDictValueRes extends BaseResDto {
 		this.itemname = itemname;
 	}
 
-
-	public void clear(){
-		this.unioncode = null;
-		this.dictcode = null;
-		this.itemcode = null;
-		this.itemname = null;
-	}
 
     @Override
     public String toString() {

@@ -4,14 +4,16 @@ import org.oversky.base.service.BaseReqDto;
 
 public class SysLogLoginReq extends BaseReqDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private String logid;    //logid
-	private Long userid;    //userid
+	private long userid;    //userid
 	private String logindate;    //登录日期
 	private String logintime;    //登录时间
 	private String loginpasswd;    //登录密码
 	private String loginip;    //登录IP
-	private Integer logintype;    //登录方式（1-pc，2-手机）
-	private Integer loginresult;    //登录是否成功 0-失败，1-成功
+	private int logintype;    //登录方式（1-pc，2-手机）
+	private int loginresult;    //登录是否成功 0-失败，1-成功
 
 	public String getLogid() {
 		return this.logid;
@@ -21,11 +23,11 @@ public class SysLogLoginReq extends BaseReqDto {
 		this.logid = logid;
 	}
 
-	public Long getUserid() {
+	public long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(Long userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 
@@ -61,33 +63,22 @@ public class SysLogLoginReq extends BaseReqDto {
 		this.loginip = loginip;
 	}
 
-	public Integer getLogintype() {
+	public int getLogintype() {
 		return this.logintype;
 	}
 
-	public void setLogintype(Integer logintype) {
+	public void setLogintype(int logintype) {
 		this.logintype = logintype;
 	}
 
-	public Integer getLoginresult() {
+	public int getLoginresult() {
 		return this.loginresult;
 	}
 
-	public void setLoginresult(Integer loginresult) {
+	public void setLoginresult(int loginresult) {
 		this.loginresult = loginresult;
 	}
 
-
-	public void clear(){
-		this.logid = null;
-		this.userid = null;
-		this.logindate = null;
-		this.logintime = null;
-		this.loginpasswd = null;
-		this.loginip = null;
-		this.logintype = null;
-		this.loginresult = null;
-	}
 
     @Override
     public String toString() {

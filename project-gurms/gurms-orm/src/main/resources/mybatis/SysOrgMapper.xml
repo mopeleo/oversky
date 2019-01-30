@@ -26,7 +26,7 @@
         values (#{orgid, jdbcType=VARCHAR}, #{unioncode, jdbcType=VARCHAR}, #{shortname, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR}, #{linkman, jdbcType=VARCHAR}, #{linktel, jdbcType=VARCHAR}, #{faxno, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{parentorg, jdbcType=VARCHAR}, #{orgtype, jdbcType=INTEGER}, #{remark, jdbcType=VARCHAR})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysOrg" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysOrg" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_org
 		<where>
@@ -70,6 +70,11 @@
 				and remark = #{remark, jdbcType=VARCHAR}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_org
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

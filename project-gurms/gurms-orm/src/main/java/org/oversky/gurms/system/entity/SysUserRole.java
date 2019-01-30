@@ -4,8 +4,10 @@ import org.oversky.base.entity.BaseEntity;
 
 public class SysUserRole extends BaseEntity{
 
+	private static final long serialVersionUID = 1L;
+
 	private Long userid;    //userid
-	private Integer roleid;    //roleid
+	private Long roleid;    //roleid
 
 	public Long getUserid() {
 		return this.userid;
@@ -15,32 +17,23 @@ public class SysUserRole extends BaseEntity{
 		this.userid = userid;
 	}
 
-	public Integer getRoleid() {
+	public Long getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Integer roleid) {
+	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
 	}
 
-    public boolean existId(){
-        return true;
-    }
-    
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysUserRole");
 		return build.append(this.userid).append(this.roleid).toString();
 	}
 
-    public static String buildEntityKey(Long userid, Integer roleid){
+    public static String buildEntityKey(Long userid, Long roleid){
         StringBuilder build = new StringBuilder("SysUserRole");
         return build.append(userid).append(roleid).toString();
     }
-	
-	public void clear(){
-		this.userid = null;
-		this.roleid = null;
-	}
 
 	@Override
     public String toString() {

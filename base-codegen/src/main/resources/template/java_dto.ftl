@@ -5,6 +5,8 @@ import org.oversky.base.service.BaseDto;
 
 public class ${table.code}Dto extends BaseDto {
 
+	private static final long serialVersionUID = 1L;
+
 <#list table.columns as column>
 	private <@type datatype=column.datatype /> ${column.code};    //${column.comment}
 </#list>

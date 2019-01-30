@@ -22,7 +22,7 @@
         values (<#list table.columns as column>#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
     </insert>
   
-    <select id="selectAll" parameterType="${java_entity_package}.${table.code}" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="${java_entity_package}.${table.code}" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from ${table.originCode?lower_case}
 		<where>
@@ -32,6 +32,11 @@
 			</if>
 </#list>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from ${table.originCode?lower_case}
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

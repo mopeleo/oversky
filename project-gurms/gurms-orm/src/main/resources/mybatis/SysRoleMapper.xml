@@ -21,7 +21,7 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{roleid, jdbcType=INTEGER}, #{rolename, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{roletype, jdbcType=INTEGER}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{creator, jdbcType=DECIMAL})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysRole" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysRole" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_role
 		<where>
@@ -50,6 +50,11 @@
 				and creator = #{creator, jdbcType=DECIMAL}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_role
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

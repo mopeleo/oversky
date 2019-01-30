@@ -7,11 +7,13 @@ public interface SysParamExtDao{
 
     int insert(SysParamExt entity);
 
-    List<SysParamExt> selectAll(SysParamExt where);
+    List<SysParamExt> selectWhere(SysParamExt where);
 
-    SysParamExt selectById(Integer paramid);
+    List<SysParamExt> selectAll();
 
-    int deleteById(Integer paramid);
+    SysParamExt selectById(Long paramid);
+
+    int deleteById(Long paramid);
 
     int updateById(SysParamExt entity);
 	

@@ -22,7 +22,7 @@
         values (#{userid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{sex, jdbcType=VARCHAR}, #{birthday, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{province, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{education, jdbcType=VARCHAR})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysUserInfo" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUserInfo" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_user_info
 		<where>
@@ -54,6 +54,11 @@
 				and education = #{education, jdbcType=VARCHAR}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_user_info
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

@@ -1,5 +1,7 @@
 package org.oversky.base.entity;
 
-public class BaseEntity {
+import java.io.Serializable;
+
+public abstract class BaseEntity implements Serializable{
 
 }

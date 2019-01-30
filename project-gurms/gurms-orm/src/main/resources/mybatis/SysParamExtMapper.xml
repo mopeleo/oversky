@@ -22,7 +22,7 @@
         values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{distype, jdbcType=INTEGER}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysParamExt" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParamExt" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_param_ext
 		<where>
@@ -54,6 +54,11 @@
 				and valuelength = #{valuelength, jdbcType=INTEGER}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_param_ext
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

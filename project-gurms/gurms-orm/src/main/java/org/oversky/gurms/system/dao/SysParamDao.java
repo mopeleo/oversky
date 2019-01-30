@@ -7,11 +7,13 @@ public interface SysParamDao{
 
     int insert(SysParam entity);
 
-    List<SysParam> selectAll(SysParam where);
+    List<SysParam> selectWhere(SysParam where);
 
-    SysParam selectById(String unioncode, Integer paramid);
+    List<SysParam> selectAll();
 
-    int deleteById(String unioncode, Integer paramid);
+    SysParam selectById(String unioncode, Long paramid);
+
+    int deleteById(String unioncode, Long paramid);
 
     int updateById(SysParam entity);
 	

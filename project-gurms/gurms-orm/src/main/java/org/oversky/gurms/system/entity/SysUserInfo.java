@@ -4,6 +4,8 @@ import org.oversky.base.entity.BaseEntity;
 
 public class SysUserInfo extends BaseEntity{
 
+	private static final long serialVersionUID = 1L;
+
 	private Long userid;    //用户ID,内部自动生成
 	private String unioncode;    //unioncode
 	private String sex;    //性别（0-女，1-男）
@@ -86,10 +88,6 @@ public class SysUserInfo extends BaseEntity{
 		this.education = education;
 	}
 
-    public boolean existId(){
-        return true;
-    }
-    
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysUserInfo");
 		return build.append(this.userid).toString();
@@ -99,18 +97,6 @@ public class SysUserInfo extends BaseEntity{
         StringBuilder build = new StringBuilder("SysUserInfo");
         return build.append(userid).toString();
     }
-	
-	public void clear(){
-		this.userid = null;
-		this.unioncode = null;
-		this.sex = null;
-		this.birthday = null;
-		this.address = null;
-		this.postcode = null;
-		this.province = null;
-		this.city = null;
-		this.education = null;
-	}
 
 	@Override
     public String toString() {

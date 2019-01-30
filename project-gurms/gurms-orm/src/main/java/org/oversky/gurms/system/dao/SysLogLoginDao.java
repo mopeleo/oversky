@@ -7,7 +7,9 @@ public interface SysLogLoginDao{
 
     int insert(SysLogLogin entity);
 
-    List<SysLogLogin> selectAll(SysLogLogin where);
+    List<SysLogLogin> selectWhere(SysLogLogin where);
+
+    List<SysLogLogin> selectAll();
 
     SysLogLogin selectById(String logid);
 

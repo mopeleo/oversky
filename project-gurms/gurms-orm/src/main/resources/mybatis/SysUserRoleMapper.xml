@@ -15,7 +15,7 @@
         values (#{userid, jdbcType=DECIMAL}, #{roleid, jdbcType=INTEGER})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysUserRole" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUserRole" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_user_role
 		<where>
@@ -26,6 +26,11 @@
 				and roleid = #{roleid, jdbcType=INTEGER}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_user_role
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

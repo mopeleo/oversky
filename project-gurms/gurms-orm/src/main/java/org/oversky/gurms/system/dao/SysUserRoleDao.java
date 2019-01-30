@@ -7,10 +7,12 @@ public interface SysUserRoleDao{
 
     int insert(SysUserRole entity);
 
-    List<SysUserRole> selectAll(SysUserRole where);
+    List<SysUserRole> selectWhere(SysUserRole where);
 
-    SysUserRole selectById(Long userid, Integer roleid);
+    List<SysUserRole> selectAll();
 
-    int deleteById(Long userid, Integer roleid);
+    SysUserRole selectById(Long userid, Long roleid);
+
+    int deleteById(Long userid, Long roleid);
 
 }

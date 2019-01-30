@@ -20,7 +20,7 @@
         values (#{menuid, jdbcType=VARCHAR}, #{menuname, jdbcType=VARCHAR}, #{menuurl, jdbcType=VARCHAR}, #{parentmenu, jdbcType=VARCHAR}, #{menutype, jdbcType=INTEGER}, #{opentype, jdbcType=INTEGER}, #{status, jdbcType=INTEGER})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysMenu" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysMenu" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_menu
 		<where>
@@ -46,6 +46,11 @@
 				and status = #{status, jdbcType=INTEGER}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_menu
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

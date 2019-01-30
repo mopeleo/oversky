@@ -4,8 +4,10 @@ import org.oversky.base.entity.BaseEntity;
 
 public class SysParam extends BaseEntity{
 
+	private static final long serialVersionUID = 1L;
+
 	private String unioncode;    //unioncode
-	private Integer paramid;    //paramid
+	private Long paramid;    //paramid
 	private String paramvalue;    //paramvalue
 
 	public String getUnioncode() {
@@ -16,11 +18,11 @@ public class SysParam extends BaseEntity{
 		this.unioncode = unioncode;
 	}
 
-	public Integer getParamid() {
+	public Long getParamid() {
 		return this.paramid;
 	}
 
-	public void setParamid(Integer paramid) {
+	public void setParamid(Long paramid) {
 		this.paramid = paramid;
 	}
 
@@ -32,25 +34,15 @@ public class SysParam extends BaseEntity{
 		this.paramvalue = paramvalue;
 	}
 
-    public boolean existId(){
-        return true;
-    }
-    
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysParam");
 		return build.append(this.unioncode).append(this.paramid).toString();
 	}
 
-    public static String buildEntityKey(String unioncode, Integer paramid){
+    public static String buildEntityKey(String unioncode, Long paramid){
         StringBuilder build = new StringBuilder("SysParam");
         return build.append(unioncode).append(paramid).toString();
     }
-	
-	public void clear(){
-		this.unioncode = null;
-		this.paramid = null;
-		this.paramvalue = null;
-	}
 
 	@Override
     public String toString() {

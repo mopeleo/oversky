@@ -4,14 +4,16 @@ import org.oversky.base.entity.BaseEntity;
 
 public class SysRoleMenu extends BaseEntity{
 
-	private Integer roleid;    //roleid
+	private static final long serialVersionUID = 1L;
+
+	private Long roleid;    //roleid
 	private String menuid;    //menuid
 
-	public Integer getRoleid() {
+	public Long getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Integer roleid) {
+	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
 	}
 
@@ -23,24 +25,15 @@ public class SysRoleMenu extends BaseEntity{
 		this.menuid = menuid;
 	}
 
-    public boolean existId(){
-        return true;
-    }
-    
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysRoleMenu");
 		return build.append(this.roleid).append(this.menuid).toString();
 	}
 
-    public static String buildEntityKey(Integer roleid, String menuid){
+    public static String buildEntityKey(Long roleid, String menuid){
         StringBuilder build = new StringBuilder("SysRoleMenu");
         return build.append(roleid).append(menuid).toString();
     }
-	
-	public void clear(){
-		this.roleid = null;
-		this.menuid = null;
-	}
 
 	@Override
     public String toString() {

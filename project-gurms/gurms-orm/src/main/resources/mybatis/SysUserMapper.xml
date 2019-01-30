@@ -29,7 +29,7 @@
         values (#{userid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=VARCHAR}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{loginerror, jdbcType=INTEGER}, #{passwdvaliddate, jdbcType=VARCHAR})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysUser" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUser" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_user
 		<where>
@@ -82,6 +82,11 @@
 				and passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_user
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

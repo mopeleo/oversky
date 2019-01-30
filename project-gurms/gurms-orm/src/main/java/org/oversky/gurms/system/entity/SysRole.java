@@ -4,14 +4,16 @@ import org.oversky.base.entity.BaseEntity;
 
 public class SysRole extends BaseEntity{
 
+	private static final long serialVersionUID = 1L;
+
 	private String unioncode;    //unioncode
-	private Integer roleid;    //角色ID
+	private Long roleid;    //角色ID
 	private String rolename;    //角色名称
-	private Integer status;    //角色状态，0-无效，1-有效
-	private Integer roletype;    //角色类型，0-公共，1-私有
+	private int status;    //角色状态，0-无效，1-有效
+	private int roletype;    //角色类型，0-公共，1-私有
 	private String startdate;    //角色生效日期
 	private String enddate;    //角色失效日期
-	private Long creator;    //创建人
+	private long creator;    //创建人
 
 	public String getUnioncode() {
 		return this.unioncode;
@@ -21,11 +23,11 @@ public class SysRole extends BaseEntity{
 		this.unioncode = unioncode;
 	}
 
-	public Integer getRoleid() {
+	public Long getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Integer roleid) {
+	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
 	}
 
@@ -37,19 +39,19 @@ public class SysRole extends BaseEntity{
 		this.rolename = rolename;
 	}
 
-	public Integer getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
-	public Integer getRoletype() {
+	public int getRoletype() {
 		return this.roletype;
 	}
 
-	public void setRoletype(Integer roletype) {
+	public void setRoletype(int roletype) {
 		this.roletype = roletype;
 	}
 
@@ -69,38 +71,23 @@ public class SysRole extends BaseEntity{
 		this.enddate = enddate;
 	}
 
-	public Long getCreator() {
+	public long getCreator() {
 		return this.creator;
 	}
 
-	public void setCreator(Long creator) {
+	public void setCreator(long creator) {
 		this.creator = creator;
 	}
 
-    public boolean existId(){
-        return true;
-    }
-    
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysRole");
 		return build.append(this.roleid).toString();
 	}
 
-    public static String buildEntityKey(Integer roleid){
+    public static String buildEntityKey(Long roleid){
         StringBuilder build = new StringBuilder("SysRole");
         return build.append(roleid).toString();
     }
-	
-	public void clear(){
-		this.unioncode = null;
-		this.roleid = null;
-		this.rolename = null;
-		this.status = null;
-		this.roletype = null;
-		this.startdate = null;
-		this.enddate = null;
-		this.creator = null;
-	}
 
 	@Override
     public String toString() {

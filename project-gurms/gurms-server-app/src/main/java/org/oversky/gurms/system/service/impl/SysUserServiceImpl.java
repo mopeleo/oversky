@@ -1,15 +1,49 @@
 package org.oversky.gurms.system.service.impl;
 
+import org.oversky.base.util.BeanPropertyCopy;
+import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
+import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.service.SysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SysUserServiceImpl implements SysUserService{
+	
+	@Autowired
+	private SysUserDao sysUserDao;
 
 	@Override
-	public SysUserRes login(SysUserReq userDto) {
+	public SysUserRes login(SysUserReq userReq) {
 		// TODO Auto-generated method stub
+		SysUser user = BeanPropertyCopy.convert(userReq, SysUser.class);
+		System.out.println(userReq.getPasswdvaliddate());
+		sysUserDao.insert(user);
 		return null;
+	}
+
+	@Override
+	public boolean insert(SysUserReq userReq) {
+		SysUser user = BeanPropertyCopy.convert(userReq, SysUser.class);
+		return sysUserDao.insert(user) == 1;
+	}
+
+	@Override
+	public boolean delete(Long userid) {
+		return sysUserDao.deleteById(userid) == 1;
+	}
+
+	@Override
+	public boolean update(SysUserReq userReq) {
+		return false;
+	}
+
+	@Override
+	public SysUserRes query(SysUserReq userReq) {
+		SysUser user = sysUserDao.selectById(userReq.getUserid());
+		return BeanPropertyCopy.convert(user, SysUserRes.class);
 	}
 
 }

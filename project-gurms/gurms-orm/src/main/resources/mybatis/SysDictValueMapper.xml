@@ -17,7 +17,7 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{itemcode, jdbcType=VARCHAR}, #{itemname, jdbcType=VARCHAR})
     </insert>
   
-    <select id="selectAll" parameterType="org.oversky.gurms.system.entity.SysDictValue" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysDictValue" resultMap="BaseResultMap">
         select <include refid="column_list" />
           from sys_dict_value
 		<where>
@@ -34,6 +34,11 @@
 				and itemname = #{itemname, jdbcType=VARCHAR}
 			</if>
 		</where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list" />
+          from sys_dict_value
     </select>
 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">

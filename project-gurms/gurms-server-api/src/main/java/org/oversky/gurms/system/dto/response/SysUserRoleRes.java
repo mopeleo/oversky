@@ -4,8 +4,10 @@ import org.oversky.base.service.BaseResDto;
 
 public class SysUserRoleRes extends BaseResDto {
 
+	private static final long serialVersionUID = 1L;
+
 	private Long userid;    //userid
-	private Integer roleid;    //roleid
+	private Long roleid;    //roleid
 
 	public Long getUserid() {
 		return this.userid;
@@ -15,19 +17,14 @@ public class SysUserRoleRes extends BaseResDto {
 		this.userid = userid;
 	}
 
-	public Integer getRoleid() {
+	public Long getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Integer roleid) {
+	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
 	}
 
-
-	public void clear(){
-		this.userid = null;
-		this.roleid = null;
-	}
 
     @Override
     public String toString() {

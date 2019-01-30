@@ -7,7 +7,9 @@ public interface SysOrgDao{
 
     int insert(SysOrg entity);
 
-    List<SysOrg> selectAll(SysOrg where);
+    List<SysOrg> selectWhere(SysOrg where);
+
+    List<SysOrg> selectAll();
 
     SysOrg selectById(String orgid);
 
