@@ -1,5 +1,7 @@
 package org.oversky.gurms.system.service.impl;
 
+import java.util.List;
+
 import org.oversky.base.util.BeanPropertyCopy;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
@@ -7,9 +9,11 @@ import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Component
+@Transactional
 public class SysUserServiceImpl implements SysUserService{
 	
 	@Autowired
@@ -41,9 +45,14 @@ public class SysUserServiceImpl implements SysUserService{
 	}
 
 	@Override
-	public SysUserRes query(SysUserReq userReq) {
-		SysUser user = sysUserDao.selectById(userReq.getUserid());
+	public SysUserRes getById(Long userid) {
+		SysUser user = sysUserDao.selectById(userid);
 		return BeanPropertyCopy.convert(user, SysUserRes.class);
 	}
 
+	public List<SysUserRes> find(SysUserReq userReq){
+		SysUser where = BeanPropertyCopy.convert(userReq, SysUser.class);
+		List<SysUser> userList = sysUserDao.selectWhere(where);
+		return BeanPropertyCopy.convertList(userList, SysUserRes.class);
+	}
 }
