@@ -23,9 +23,10 @@ export default function ({
         headers,
         opts
     } = {}) {
+        var baseUrl = 'http://localhost:8080' + path;
         var options = {
             method : type,
-            url    : path,
+            url    : baseUrl,
             headers: headers && typeof headers === 'object' ? headers : {}
         };
         options[type === 'get' ? 'params' : 'data'] = data;
@@ -36,13 +37,18 @@ export default function ({
                 options[f] = opts[f];
             }
         }
-
         //发送请求  一般请求，还是表格类型的请求.因为其返回的数据结构是根据api中设定的，这里只需返回就行；
         Vue.axios(options).then((res) => {
             fn(res.data);
         }).catch((error) => {
-            errFn(error);
+            if(errFn){
+                errFn(error);
+            }else{
+                console.log(error);
+            }
         }).finally(() => {
-            finalFn();
+            if(finalFn){
+                finalFn();
+            }
         });
 }

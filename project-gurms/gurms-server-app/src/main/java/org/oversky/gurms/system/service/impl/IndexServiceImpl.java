@@ -32,7 +32,7 @@ public class IndexServiceImpl implements IndexService{
 
 	@Override
 	public UserLoginRes login(UserLoginReq loginReq) {
-		logger.debug("login(UserLoginReq loginReq) => {}", loginReq);
+		logger.debug("begin login(UserLoginReq loginReq => {})", loginReq);
 		UserLoginRes res = new UserLoginRes();
 		if(loginReq == null) {
 			res.failure("请求对象为空");

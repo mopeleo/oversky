@@ -5,8 +5,8 @@
         </div>
 
         <el-form ref="loginForm" :model="login" :rules="rules">
-            <el-form-item label="用户名" prop="userid">
-                <el-input v-model="login.userid"></el-input>
+            <el-form-item label="用户名" prop="loginid">
+                <el-input v-model="login.loginid"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="passwd">
                 <el-input v-model="login.passwd"></el-input>
@@ -21,15 +21,17 @@
 </template>
 
 <script>
+import axios from '@/utils/axios'
+
 export default {
     data() {
         return {
             login:{
-                userid:'',
+                loginid:'',
                 passwd:''
             },
             rules:{
-                userid:[
+                loginid:[
                     {required:true, message:'用户名不能为空', trigger:'blur'},
                     {min:3, max:8, message:'输入长度在3-8之间', trigger:'blur'}
                 ],
@@ -43,16 +45,16 @@ export default {
         onSubmit(formName){
             this.$refs[formName].validate((valid)=>{
                 if(valid){
-                    alert("valid success");
-                    this.axios({
+                    alert("valid success ： " + this.login.loginid);
+                    axios({
                         type: 'post',
                         path: '/login',
                         data: this.login,
                         fn: data=>{
-
+                            alert(JSON.stringify(data));
                         },
                         errFn: err=>{
-
+                            alert(err);
                         }
                     });
                 }else{

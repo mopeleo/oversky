@@ -21,4 +21,14 @@ public class UserLoginReq extends BaseReqDto {
 		this.passwd = passwd;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+		sb.append(", loginid=").append(loginid);
+		sb.append(", passwd=").append(passwd);
+		sb.append(" ]");
+		return sb.toString();
+	}
 }
