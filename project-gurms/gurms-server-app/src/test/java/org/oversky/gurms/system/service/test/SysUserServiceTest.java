@@ -1,10 +1,14 @@
 package org.oversky.gurms.system.service.test;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.service.SysUserService;
@@ -19,7 +23,10 @@ public class SysUserServiceTest {
 	@Autowired
 	private SysUserService sysUserService;
 	
-	@Test
+	@Autowired
+	private SysUserDaoExt userDaoExt;
+	
+//	@Test
 	public void insert() {
 		SysUserReq userDto = new SysUserReq();
 		userDto.setUserid(2L);
@@ -49,6 +56,20 @@ public class SysUserServiceTest {
 		List<SysUserRes> res = sysUserService.find(userDto);
 		Assert.assertSame("不一样呀", 1, res.size());
 		System.out.println(res);
+	}
+	
+	@Test
+	public void testDaoExt() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userid", 1L);
+		List<Map<String, Object>> list = userDaoExt.getUserRole(map);
+		for(Map<String, Object> result : list) {
+			for(Iterator<String> i = result.keySet().iterator();i.hasNext();) {
+				String key = i.next();
+				System.out.print(key + ":" + result.get(key) + ", ");
+			}
+			System.out.println();
+		}
 	}
 	
 }

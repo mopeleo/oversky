@@ -18,76 +18,122 @@
     </resultMap>
 	
 	<sql id="column_list">
-        orgid, unioncode, shortname, fullname, linkman, linktel, faxno, address, postcode, email, parentorg, orgtype, remark
+        ${tab}orgid, ${tab}unioncode, ${tab}shortname, ${tab}fullname, ${tab}linkman, ${tab}linktel, ${tab}faxno, ${tab}address, ${tab}postcode, ${tab}email, ${tab}parentorg, ${tab}orgtype, ${tab}remark
 	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysOrg">
-        insert into sys_org (orgid, unioncode, shortname, fullname, linkman, linktel, faxno, address, postcode, email, parentorg, orgtype, remark)
+        insert into sys_org (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{orgid, jdbcType=VARCHAR}, #{unioncode, jdbcType=VARCHAR}, #{shortname, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR}, #{linkman, jdbcType=VARCHAR}, #{linktel, jdbcType=VARCHAR}, #{faxno, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{parentorg, jdbcType=VARCHAR}, #{orgtype, jdbcType=INTEGER}, #{remark, jdbcType=VARCHAR})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysOrg" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_org
 		<where>
-			<if test="orgid != null ">
+			<if test="orgid != null  and orgid !='' ">
 				and orgid = #{orgid, jdbcType=VARCHAR}
 			</if>
-			<if test="unioncode != null ">
+			<if test="unioncode != null  and unioncode !='' ">
 				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
-			<if test="shortname != null ">
+			<if test="shortname != null  and shortname !='' ">
 				and shortname = #{shortname, jdbcType=VARCHAR}
 			</if>
-			<if test="fullname != null ">
+			<if test="fullname != null  and fullname !='' ">
 				and fullname = #{fullname, jdbcType=VARCHAR}
 			</if>
-			<if test="linkman != null ">
+			<if test="linkman != null  and linkman !='' ">
 				and linkman = #{linkman, jdbcType=VARCHAR}
 			</if>
-			<if test="linktel != null ">
+			<if test="linktel != null  and linktel !='' ">
 				and linktel = #{linktel, jdbcType=VARCHAR}
 			</if>
-			<if test="faxno != null ">
+			<if test="faxno != null  and faxno !='' ">
 				and faxno = #{faxno, jdbcType=VARCHAR}
 			</if>
-			<if test="address != null ">
+			<if test="address != null  and address !='' ">
 				and address = #{address, jdbcType=VARCHAR}
 			</if>
-			<if test="postcode != null ">
+			<if test="postcode != null  and postcode !='' ">
 				and postcode = #{postcode, jdbcType=VARCHAR}
 			</if>
-			<if test="email != null ">
+			<if test="email != null  and email !='' ">
 				and email = #{email, jdbcType=VARCHAR}
 			</if>
-			<if test="parentorg != null ">
+			<if test="parentorg != null  and parentorg !='' ">
 				and parentorg = #{parentorg, jdbcType=VARCHAR}
 			</if>
 			<if test="orgtype != null ">
 				and orgtype = #{orgtype, jdbcType=INTEGER}
 			</if>
-			<if test="remark != null ">
+			<if test="remark != null  and remark !='' ">
 				and remark = #{remark, jdbcType=VARCHAR}
 			</if>
 		</where>
     </select>
 
+	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysOrg">
+        select count(1) from sys_org
+		<where>
+			<if test="orgid != null  and orgid !='' ">
+				and orgid = #{orgid, jdbcType=VARCHAR}
+			</if>
+			<if test="unioncode != null  and unioncode !='' ">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="shortname != null  and shortname !='' ">
+				and shortname = #{shortname, jdbcType=VARCHAR}
+			</if>
+			<if test="fullname != null  and fullname !='' ">
+				and fullname = #{fullname, jdbcType=VARCHAR}
+			</if>
+			<if test="linkman != null  and linkman !='' ">
+				and linkman = #{linkman, jdbcType=VARCHAR}
+			</if>
+			<if test="linktel != null  and linktel !='' ">
+				and linktel = #{linktel, jdbcType=VARCHAR}
+			</if>
+			<if test="faxno != null  and faxno !='' ">
+				and faxno = #{faxno, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null  and address !='' ">
+				and address = #{address, jdbcType=VARCHAR}
+			</if>
+			<if test="postcode != null  and postcode !='' ">
+				and postcode = #{postcode, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null  and email !='' ">
+				and email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="parentorg != null  and parentorg !='' ">
+				and parentorg = #{parentorg, jdbcType=VARCHAR}
+			</if>
+			<if test="orgtype != null ">
+				and orgtype = #{orgtype, jdbcType=INTEGER}
+			</if>
+			<if test="remark != null  and remark !='' ">
+				and remark = #{remark, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_org
     </select>
 
+	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert all
 		<foreach item="item" index="index" collection="list">
-		into sys_org (orgid, unioncode, shortname, fullname, linkman, linktel, faxno, address, postcode, email, parentorg, orgtype, remark) 
+		into sys_org (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values (#{item.orgid, jdbcType=VARCHAR}, #{item.unioncode, jdbcType=VARCHAR}, #{item.shortname, jdbcType=VARCHAR}, #{item.fullname, jdbcType=VARCHAR}, #{item.linkman, jdbcType=VARCHAR}, #{item.linktel, jdbcType=VARCHAR}, #{item.faxno, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.postcode, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.parentorg, jdbcType=VARCHAR}, #{item.orgtype, jdbcType=INTEGER}, #{item.remark, jdbcType=VARCHAR})
 		</foreach>
 		select 1 from dual
 	</insert>
 	
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_org
          where 1=1 and orgid = #{0}
     </select>

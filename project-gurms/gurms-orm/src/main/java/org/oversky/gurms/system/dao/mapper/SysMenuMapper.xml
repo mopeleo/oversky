@@ -12,28 +12,28 @@
     </resultMap>
 	
 	<sql id="column_list">
-        menuid, menuname, menuurl, parentmenu, menutype, opentype, status
+        ${tab}menuid, ${tab}menuname, ${tab}menuurl, ${tab}parentmenu, ${tab}menutype, ${tab}opentype, ${tab}status
 	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysMenu">
-        insert into sys_menu (menuid, menuname, menuurl, parentmenu, menutype, opentype, status)
+        insert into sys_menu (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{menuid, jdbcType=VARCHAR}, #{menuname, jdbcType=VARCHAR}, #{menuurl, jdbcType=VARCHAR}, #{parentmenu, jdbcType=VARCHAR}, #{menutype, jdbcType=INTEGER}, #{opentype, jdbcType=INTEGER}, #{status, jdbcType=INTEGER})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysMenu" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_menu
 		<where>
-			<if test="menuid != null ">
+			<if test="menuid != null  and menuid !='' ">
 				and menuid = #{menuid, jdbcType=VARCHAR}
 			</if>
-			<if test="menuname != null ">
+			<if test="menuname != null  and menuname !='' ">
 				and menuname = #{menuname, jdbcType=VARCHAR}
 			</if>
-			<if test="menuurl != null ">
+			<if test="menuurl != null  and menuurl !='' ">
 				and menuurl = #{menuurl, jdbcType=VARCHAR}
 			</if>
-			<if test="parentmenu != null ">
+			<if test="parentmenu != null  and parentmenu !='' ">
 				and parentmenu = #{parentmenu, jdbcType=VARCHAR}
 			</if>
 			<if test="menutype != null ">
@@ -48,22 +48,50 @@
 		</where>
     </select>
 
+	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysMenu">
+        select count(1) from sys_menu
+		<where>
+			<if test="menuid != null  and menuid !='' ">
+				and menuid = #{menuid, jdbcType=VARCHAR}
+			</if>
+			<if test="menuname != null  and menuname !='' ">
+				and menuname = #{menuname, jdbcType=VARCHAR}
+			</if>
+			<if test="menuurl != null  and menuurl !='' ">
+				and menuurl = #{menuurl, jdbcType=VARCHAR}
+			</if>
+			<if test="parentmenu != null  and parentmenu !='' ">
+				and parentmenu = #{parentmenu, jdbcType=VARCHAR}
+			</if>
+			<if test="menutype != null ">
+				and menutype = #{menutype, jdbcType=INTEGER}
+			</if>
+			<if test="opentype != null ">
+				and opentype = #{opentype, jdbcType=INTEGER}
+			</if>
+			<if test="status != null ">
+				and status = #{status, jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_menu
     </select>
 
+	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert all
 		<foreach item="item" index="index" collection="list">
-		into sys_menu (menuid, menuname, menuurl, parentmenu, menutype, opentype, status) 
+		into sys_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values (#{item.menuid, jdbcType=VARCHAR}, #{item.menuname, jdbcType=VARCHAR}, #{item.menuurl, jdbcType=VARCHAR}, #{item.parentmenu, jdbcType=VARCHAR}, #{item.menutype, jdbcType=INTEGER}, #{item.opentype, jdbcType=INTEGER}, #{item.status, jdbcType=INTEGER})
 		</foreach>
 		select 1 from dual
 	</insert>
 	
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_menu
          where 1=1 and menuid = #{0}
     </select>

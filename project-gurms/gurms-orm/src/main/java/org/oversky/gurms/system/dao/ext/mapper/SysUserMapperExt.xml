@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.system.dao.ext.SysUserDaoExt">
+
+	<sql id="sysuser_column_list">
+        <include refid="org.oversky.gurms.system.dao.SysUserDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="getUserRole" parameterType="hashmap" resultType="hashmap">
+		select <include refid="sysuser_column_list"/> ,c.roleid, c.rolename
+		  from sys_user a, sys_user_role b, sys_role c 
+		 where a.userid = b.userid and b.roleid = c.roleid and a.userid = #{userid} 
+    </select>
+  
+</mapper>

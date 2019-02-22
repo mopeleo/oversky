@@ -14,28 +14,28 @@
     </resultMap>
 	
 	<sql id="column_list">
-        paramid, paramname, texttitle, texttail, distype, dictcode, valuelist, initvalue, valuelength
+        ${tab}paramid, ${tab}paramname, ${tab}texttitle, ${tab}texttail, ${tab}distype, ${tab}dictcode, ${tab}valuelist, ${tab}initvalue, ${tab}valuelength
 	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParamExt">
-        insert into sys_param_ext (paramid, paramname, texttitle, texttail, distype, dictcode, valuelist, initvalue, valuelength)
+        insert into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{distype, jdbcType=INTEGER}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParamExt" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param_ext
 		<where>
 			<if test="paramid != null ">
 				and paramid = #{paramid, jdbcType=INTEGER}
 			</if>
-			<if test="paramname != null ">
+			<if test="paramname != null  and paramname !='' ">
 				and paramname = #{paramname, jdbcType=VARCHAR}
 			</if>
-			<if test="texttitle != null ">
+			<if test="texttitle != null  and texttitle !='' ">
 				and texttitle = #{texttitle, jdbcType=VARCHAR}
 			</if>
-			<if test="texttail != null ">
+			<if test="texttail != null  and texttail !='' ">
 				and texttail = #{texttail, jdbcType=VARCHAR}
 			</if>
 			<if test="distype != null ">
@@ -44,10 +44,10 @@
 			<if test="dictcode != null ">
 				and dictcode = #{dictcode, jdbcType=INTEGER}
 			</if>
-			<if test="valuelist != null ">
+			<if test="valuelist != null  and valuelist !='' ">
 				and valuelist = #{valuelist, jdbcType=VARCHAR}
 			</if>
-			<if test="initvalue != null ">
+			<if test="initvalue != null  and initvalue !='' ">
 				and initvalue = #{initvalue, jdbcType=VARCHAR}
 			</if>
 			<if test="valuelength != null ">
@@ -56,22 +56,56 @@
 		</where>
     </select>
 
+	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParamExt">
+        select count(1) from sys_param_ext
+		<where>
+			<if test="paramid != null ">
+				and paramid = #{paramid, jdbcType=INTEGER}
+			</if>
+			<if test="paramname != null  and paramname !='' ">
+				and paramname = #{paramname, jdbcType=VARCHAR}
+			</if>
+			<if test="texttitle != null  and texttitle !='' ">
+				and texttitle = #{texttitle, jdbcType=VARCHAR}
+			</if>
+			<if test="texttail != null  and texttail !='' ">
+				and texttail = #{texttail, jdbcType=VARCHAR}
+			</if>
+			<if test="distype != null ">
+				and distype = #{distype, jdbcType=INTEGER}
+			</if>
+			<if test="dictcode != null ">
+				and dictcode = #{dictcode, jdbcType=INTEGER}
+			</if>
+			<if test="valuelist != null  and valuelist !='' ">
+				and valuelist = #{valuelist, jdbcType=VARCHAR}
+			</if>
+			<if test="initvalue != null  and initvalue !='' ">
+				and initvalue = #{initvalue, jdbcType=VARCHAR}
+			</if>
+			<if test="valuelength != null ">
+				and valuelength = #{valuelength, jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param_ext
     </select>
 
+	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert all
 		<foreach item="item" index="index" collection="list">
-		into sys_param_ext (paramid, paramname, texttitle, texttail, distype, dictcode, valuelist, initvalue, valuelength) 
+		into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values (#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.distype, jdbcType=INTEGER}, #{item.dictcode, jdbcType=INTEGER}, #{item.valuelist, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER})
 		</foreach>
 		select 1 from dual
 	</insert>
 	
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param_ext
          where 1=1 and paramid = #{0}
     </select>

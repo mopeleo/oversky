@@ -14,35 +14,47 @@
     </resultMap>
 	
 	<sql id="column_list">
-        <#list table.columns as column>${column.originCode}<#if column_has_next>, </#if></#list>
+        <#list table.columns as column>${r'${'}tab}${column.originCode}<#if column_has_next>, </#if></#list>
 	</sql>
   
     <insert id="insert" parameterType="${java_entity_package}.${table.code}">
-        insert into ${table.originCode?lower_case} (<#list table.columns as column>${column.originCode}<#if column_has_next>, </#if></#list>)
+        insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>)
         values (<#list table.columns as column>#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
     </insert>
   
     <select id="selectWhere" parameterType="${java_entity_package}.${table.code}" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
 		<where>
 <#list table.columns as column>
-			<if test="${column.code} != null ">
+			<if test="${column.code} != null <#if column.datatype == "string"> and ${column.code} !='' </#if>">
 				and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}
 			</if>
 </#list>
 		</where>
     </select>
 
+	<select id="getTotal" resultType="int" parameterType="${java_entity_package}.${table.code}">
+        select count(1) from ${table.originCode?lower_case}
+		<where>
+<#list table.columns as column>
+			<if test="${column.code} != null <#if column.datatype == "string"> and ${column.code} !='' </#if>">
+				and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}
+			</if>
+</#list>
+		</where>
+	</select>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
     </select>
 
+	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert all
 		<foreach item="item" index="index" collection="list">
-		into ${table.originCode?lower_case} (<#list table.columns as column>${column.originCode}<#if column_has_next>, </#if></#list>) 
+		into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values (<#list table.columns as column>#${r'{'}item.${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
 		</foreach>
 		select 1 from dual
@@ -50,7 +62,7 @@
 	
 <#if (table.keys?size > 0)>
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
          where 1=1<#list table.keys as column> and ${column.originCode} = #${r'{'}${column_index}}</#list>
     </select>

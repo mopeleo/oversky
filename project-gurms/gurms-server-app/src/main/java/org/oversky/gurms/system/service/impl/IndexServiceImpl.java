@@ -32,7 +32,7 @@ public class IndexServiceImpl implements IndexService{
 
 	@Override
 	public UserLoginRes login(UserLoginReq loginReq) {
-		logger.debug("begin login(UserLoginReq loginReq => {})", loginReq);
+		logger.debug("=== begin login(UserLoginReq loginReq => {})", loginReq);
 		UserLoginRes res = new UserLoginRes();
 		if(loginReq == null) {
 			res.failure("请求对象为空");
@@ -44,12 +44,14 @@ public class IndexServiceImpl implements IndexService{
 		}
 		if(StringUtils.isEmpty(loginReq.getPasswd())) {
 			res.failure("密码不能为空");
+			return res;
 		}
 		SysUser where = new SysUser();
 		where.setLoginid(loginReq.getLoginid());
 		List<SysUser> userList = sysUserDao.selectWhere(where);
 		if(userList == null || userList.size() != 1) {
 			res.failure("用户名不存在");
+			return res;
 		}
 		SysUser user = userList.get(0);
 //		String md5Passwd = EncryptUtil.md5Encode(loginReq.getPasswd() + user.getSalt());

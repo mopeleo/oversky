@@ -10,28 +10,28 @@
     </resultMap>
 	
 	<sql id="column_list">
-        unioncode, dictcode, dictname, dictgroup, editflag
+        ${tab}unioncode, ${tab}dictcode, ${tab}dictname, ${tab}dictgroup, ${tab}editflag
 	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
-        insert into sys_dict_index (unioncode, dictcode, dictname, dictgroup, editflag)
+        insert into sys_dict_index (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{dictname, jdbcType=VARCHAR}, #{dictgroup, jdbcType=VARCHAR}, #{editflag, jdbcType=INTEGER})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysDictIndex" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_dict_index
 		<where>
-			<if test="unioncode != null ">
+			<if test="unioncode != null  and unioncode !='' ">
 				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
 			<if test="dictcode != null ">
 				and dictcode = #{dictcode, jdbcType=INTEGER}
 			</if>
-			<if test="dictname != null ">
+			<if test="dictname != null  and dictname !='' ">
 				and dictname = #{dictname, jdbcType=VARCHAR}
 			</if>
-			<if test="dictgroup != null ">
+			<if test="dictgroup != null  and dictgroup !='' ">
 				and dictgroup = #{dictgroup, jdbcType=VARCHAR}
 			</if>
 			<if test="editflag != null ">
@@ -40,22 +40,44 @@
 		</where>
     </select>
 
+	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
+        select count(1) from sys_dict_index
+		<where>
+			<if test="unioncode != null  and unioncode !='' ">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="dictcode != null ">
+				and dictcode = #{dictcode, jdbcType=INTEGER}
+			</if>
+			<if test="dictname != null  and dictname !='' ">
+				and dictname = #{dictname, jdbcType=VARCHAR}
+			</if>
+			<if test="dictgroup != null  and dictgroup !='' ">
+				and dictgroup = #{dictgroup, jdbcType=VARCHAR}
+			</if>
+			<if test="editflag != null ">
+				and editflag = #{editflag, jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_dict_index
     </select>
 
+	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert all
 		<foreach item="item" index="index" collection="list">
-		into sys_dict_index (unioncode, dictcode, dictname, dictgroup, editflag) 
+		into sys_dict_index (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values (#{item.unioncode, jdbcType=VARCHAR}, #{item.dictcode, jdbcType=INTEGER}, #{item.dictname, jdbcType=VARCHAR}, #{item.dictgroup, jdbcType=VARCHAR}, #{item.editflag, jdbcType=INTEGER})
 		</foreach>
 		select 1 from dual
 	</insert>
 	
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_dict_index
          where 1=1 and unioncode = #{0} and dictcode = #{1}
     </select>

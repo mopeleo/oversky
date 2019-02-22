@@ -14,64 +14,98 @@
     </resultMap>
 	
 	<sql id="column_list">
-        userid, unioncode, sex, birthday, address, postcode, province, city, education
+        ${tab}userid, ${tab}unioncode, ${tab}sex, ${tab}birthday, ${tab}address, ${tab}postcode, ${tab}province, ${tab}city, ${tab}education
 	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserInfo">
-        insert into sys_user_info (userid, unioncode, sex, birthday, address, postcode, province, city, education)
+        insert into sys_user_info (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{userid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{sex, jdbcType=VARCHAR}, #{birthday, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{province, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{education, jdbcType=VARCHAR})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUserInfo" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user_info
 		<where>
 			<if test="userid != null ">
 				and userid = #{userid, jdbcType=DECIMAL}
 			</if>
-			<if test="unioncode != null ">
+			<if test="unioncode != null  and unioncode !='' ">
 				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
-			<if test="sex != null ">
+			<if test="sex != null  and sex !='' ">
 				and sex = #{sex, jdbcType=VARCHAR}
 			</if>
-			<if test="birthday != null ">
+			<if test="birthday != null  and birthday !='' ">
 				and birthday = #{birthday, jdbcType=VARCHAR}
 			</if>
-			<if test="address != null ">
+			<if test="address != null  and address !='' ">
 				and address = #{address, jdbcType=VARCHAR}
 			</if>
-			<if test="postcode != null ">
+			<if test="postcode != null  and postcode !='' ">
 				and postcode = #{postcode, jdbcType=VARCHAR}
 			</if>
-			<if test="province != null ">
+			<if test="province != null  and province !='' ">
 				and province = #{province, jdbcType=VARCHAR}
 			</if>
-			<if test="city != null ">
+			<if test="city != null  and city !='' ">
 				and city = #{city, jdbcType=VARCHAR}
 			</if>
-			<if test="education != null ">
+			<if test="education != null  and education !='' ">
 				and education = #{education, jdbcType=VARCHAR}
 			</if>
 		</where>
     </select>
 
+	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysUserInfo">
+        select count(1) from sys_user_info
+		<where>
+			<if test="userid != null ">
+				and userid = #{userid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null  and unioncode !='' ">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null  and sex !='' ">
+				and sex = #{sex, jdbcType=VARCHAR}
+			</if>
+			<if test="birthday != null  and birthday !='' ">
+				and birthday = #{birthday, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null  and address !='' ">
+				and address = #{address, jdbcType=VARCHAR}
+			</if>
+			<if test="postcode != null  and postcode !='' ">
+				and postcode = #{postcode, jdbcType=VARCHAR}
+			</if>
+			<if test="province != null  and province !='' ">
+				and province = #{province, jdbcType=VARCHAR}
+			</if>
+			<if test="city != null  and city !='' ">
+				and city = #{city, jdbcType=VARCHAR}
+			</if>
+			<if test="education != null  and education !='' ">
+				and education = #{education, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user_info
     </select>
 
+	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert all
 		<foreach item="item" index="index" collection="list">
-		into sys_user_info (userid, unioncode, sex, birthday, address, postcode, province, city, education) 
+		into sys_user_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values (#{item.userid, jdbcType=DECIMAL}, #{item.unioncode, jdbcType=VARCHAR}, #{item.sex, jdbcType=VARCHAR}, #{item.birthday, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.postcode, jdbcType=VARCHAR}, #{item.province, jdbcType=VARCHAR}, #{item.city, jdbcType=VARCHAR}, #{item.education, jdbcType=VARCHAR})
 		</foreach>
 		select 1 from dual
 	</insert>
 	
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user_info
          where 1=1 and userid = #{0}
     </select>

@@ -8,46 +8,62 @@
     </resultMap>
 	
 	<sql id="column_list">
-        unioncode, paramid, paramvalue
+        ${tab}unioncode, ${tab}paramid, ${tab}paramvalue
 	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParam">
-        insert into sys_param (unioncode, paramid, paramvalue)
+        insert into sys_param (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{unioncode, jdbcType=VARCHAR}, #{paramid, jdbcType=INTEGER}, #{paramvalue, jdbcType=VARCHAR})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParam" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param
 		<where>
-			<if test="unioncode != null ">
+			<if test="unioncode != null  and unioncode !='' ">
 				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
 			<if test="paramid != null ">
 				and paramid = #{paramid, jdbcType=INTEGER}
 			</if>
-			<if test="paramvalue != null ">
+			<if test="paramvalue != null  and paramvalue !='' ">
 				and paramvalue = #{paramvalue, jdbcType=VARCHAR}
 			</if>
 		</where>
     </select>
 
+	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParam">
+        select count(1) from sys_param
+		<where>
+			<if test="unioncode != null  and unioncode !='' ">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="paramid != null ">
+				and paramid = #{paramid, jdbcType=INTEGER}
+			</if>
+			<if test="paramvalue != null  and paramvalue !='' ">
+				and paramvalue = #{paramvalue, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param
     </select>
 
+	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert all
 		<foreach item="item" index="index" collection="list">
-		into sys_param (unioncode, paramid, paramvalue) 
+		into sys_param (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values (#{item.unioncode, jdbcType=VARCHAR}, #{item.paramid, jdbcType=INTEGER}, #{item.paramvalue, jdbcType=VARCHAR})
 		</foreach>
 		select 1 from dual
 	</insert>
 	
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="column_list" />
+        select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param
          where 1=1 and unioncode = #{0} and paramid = #{1}
     </select>

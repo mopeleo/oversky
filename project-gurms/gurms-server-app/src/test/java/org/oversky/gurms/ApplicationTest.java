@@ -5,7 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("org.oversky.gurms.system.dao")
+//这里指定的包名是包含子目录的
+@MapperScan({"org.oversky.gurms.system.dao"})
 public class ApplicationTest {
 
 	public static void main(String[] args) {
