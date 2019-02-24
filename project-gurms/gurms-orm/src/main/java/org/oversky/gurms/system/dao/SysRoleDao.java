@@ -5,17 +5,19 @@ import java.util.List;
 
 public interface SysRoleDao{
 
-    int insert(SysRole entity);
-
-    List<SysRole> selectWhere(SysRole where);
-
-    List<SysRole> selectAll();
-
-    SysRole selectById(Long roleid);
+    SysRole getById(Long roleid);
 
     int deleteById(Long roleid);
 
     int updateById(SysRole entity);
 	
     int dynamicUpdateById(SysRole entity);
+    
+    int count(SysRole where);
+    
+    int insert(SysRole entity);
+
+    List<SysRole> selectWhere(SysRole where);
+
+    List<SysRole> selectAll();
 }

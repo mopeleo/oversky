@@ -14,7 +14,7 @@ public class SysUserRes extends BaseResDto {
 	private String salt;    //密码盐
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
-	private String orgid;    //所属机构
+	private int orgid;    //所属机构
 	private String idtype;    //证件类型
 	private String idcode;    //证件号码
 	private String logindate;    //登录日期
@@ -87,11 +87,11 @@ public class SysUserRes extends BaseResDto {
 		this.email = email;
 	}
 
-	public String getOrgid() {
+	public int getOrgid() {
 		return this.orgid;
 	}
 
-	public void setOrgid(String orgid) {
+	public void setOrgid(int orgid) {
 		this.orgid = orgid;
 	}
 

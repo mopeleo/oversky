@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.oversky.gurms.system.dao.SysOrgDao">
     <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysOrg">
-        <id column="orgid" jdbcType="VARCHAR" property="orgid" />
+        <id column="orgid" jdbcType="INTEGER" property="orgid" />
         <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
         <result column="shortname" jdbcType="VARCHAR" property="shortname" />
         <result column="fullname" jdbcType="VARCHAR" property="fullname" />
@@ -12,7 +12,7 @@
         <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="postcode" jdbcType="VARCHAR" property="postcode" />
         <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="parentorg" jdbcType="VARCHAR" property="parentorg" />
+        <result column="parentorg" jdbcType="INTEGER" property="parentorg" />
         <result column="orgtype" jdbcType="INTEGER" property="orgtype" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
@@ -23,15 +23,15 @@
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysOrg">
         insert into sys_org (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{orgid, jdbcType=VARCHAR}, #{unioncode, jdbcType=VARCHAR}, #{shortname, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR}, #{linkman, jdbcType=VARCHAR}, #{linktel, jdbcType=VARCHAR}, #{faxno, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{parentorg, jdbcType=VARCHAR}, #{orgtype, jdbcType=INTEGER}, #{remark, jdbcType=VARCHAR})
+        values (#{orgid, jdbcType=INTEGER}, #{unioncode, jdbcType=VARCHAR}, #{shortname, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR}, #{linkman, jdbcType=VARCHAR}, #{linktel, jdbcType=VARCHAR}, #{faxno, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{parentorg, jdbcType=INTEGER}, #{orgtype, jdbcType=INTEGER}, #{remark, jdbcType=VARCHAR})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysOrg" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_org
 		<where>
-			<if test="orgid != null  and orgid !='' ">
-				and orgid = #{orgid, jdbcType=VARCHAR}
+			<if test="orgid != null ">
+				and orgid = #{orgid, jdbcType=INTEGER}
 			</if>
 			<if test="unioncode != null  and unioncode !='' ">
 				and unioncode = #{unioncode, jdbcType=VARCHAR}
@@ -60,8 +60,8 @@
 			<if test="email != null  and email !='' ">
 				and email = #{email, jdbcType=VARCHAR}
 			</if>
-			<if test="parentorg != null  and parentorg !='' ">
-				and parentorg = #{parentorg, jdbcType=VARCHAR}
+			<if test="parentorg != null ">
+				and parentorg = #{parentorg, jdbcType=INTEGER}
 			</if>
 			<if test="orgtype != null ">
 				and orgtype = #{orgtype, jdbcType=INTEGER}
@@ -72,11 +72,11 @@
 		</where>
     </select>
 
-	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysOrg">
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysOrg">
         select count(1) from sys_org
 		<where>
-			<if test="orgid != null  and orgid !='' ">
-				and orgid = #{orgid, jdbcType=VARCHAR}
+			<if test="orgid != null ">
+				and orgid = #{orgid, jdbcType=INTEGER}
 			</if>
 			<if test="unioncode != null  and unioncode !='' ">
 				and unioncode = #{unioncode, jdbcType=VARCHAR}
@@ -105,8 +105,8 @@
 			<if test="email != null  and email !='' ">
 				and email = #{email, jdbcType=VARCHAR}
 			</if>
-			<if test="parentorg != null  and parentorg !='' ">
-				and parentorg = #{parentorg, jdbcType=VARCHAR}
+			<if test="parentorg != null ">
+				and parentorg = #{parentorg, jdbcType=INTEGER}
 			</if>
 			<if test="orgtype != null ">
 				and orgtype = #{orgtype, jdbcType=INTEGER}
@@ -127,12 +127,12 @@
 		insert all
 		<foreach item="item" index="index" collection="list">
 		into sys_org (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (#{item.orgid, jdbcType=VARCHAR}, #{item.unioncode, jdbcType=VARCHAR}, #{item.shortname, jdbcType=VARCHAR}, #{item.fullname, jdbcType=VARCHAR}, #{item.linkman, jdbcType=VARCHAR}, #{item.linktel, jdbcType=VARCHAR}, #{item.faxno, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.postcode, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.parentorg, jdbcType=VARCHAR}, #{item.orgtype, jdbcType=INTEGER}, #{item.remark, jdbcType=VARCHAR})
+		values (#{item.orgid, jdbcType=INTEGER}, #{item.unioncode, jdbcType=VARCHAR}, #{item.shortname, jdbcType=VARCHAR}, #{item.fullname, jdbcType=VARCHAR}, #{item.linkman, jdbcType=VARCHAR}, #{item.linktel, jdbcType=VARCHAR}, #{item.faxno, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.postcode, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.parentorg, jdbcType=INTEGER}, #{item.orgtype, jdbcType=INTEGER}, #{item.remark, jdbcType=VARCHAR})
 		</foreach>
 		select 1 from dual
 	</insert>
 	
-    <select id="selectById" resultMap="BaseResultMap">
+    <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_org
          where 1=1 and orgid = #{0}
@@ -154,10 +154,10 @@
                address = #{address, jdbcType=VARCHAR}, 
                postcode = #{postcode, jdbcType=VARCHAR}, 
                email = #{email, jdbcType=VARCHAR}, 
-               parentorg = #{parentorg, jdbcType=VARCHAR}, 
+               parentorg = #{parentorg, jdbcType=INTEGER}, 
                orgtype = #{orgtype, jdbcType=INTEGER}, 
                remark = #{remark, jdbcType=VARCHAR}
-         where 1=1 and orgid = #{orgid, jdbcType=VARCHAR}
+         where 1=1 and orgid = #{orgid, jdbcType=INTEGER}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysOrg">
@@ -191,7 +191,7 @@
 				email = #{email, jdbcType=VARCHAR},
 		    </if>
 		    <if test="parentorg != null">
-				parentorg = #{parentorg, jdbcType=VARCHAR},
+				parentorg = #{parentorg, jdbcType=INTEGER},
 		    </if>
 		    <if test="orgtype != null">
 				orgtype = #{orgtype, jdbcType=INTEGER},
@@ -200,6 +200,6 @@
 				remark = #{remark, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where 1=1 and orgid = #{orgid, jdbcType=VARCHAR}
+		where 1=1 and orgid = #{orgid, jdbcType=INTEGER}
 	</update>
 </mapper>

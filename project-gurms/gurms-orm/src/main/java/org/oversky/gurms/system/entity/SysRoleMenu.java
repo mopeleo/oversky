@@ -6,14 +6,14 @@ public class SysRoleMenu extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long roleid;    //roleid
+	private Integer roleid;    //roleid
 	private String menuid;    //menuid
 
-	public Long getRoleid() {
+	public Integer getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Long roleid) {
+	public void setRoleid(Integer roleid) {
 		this.roleid = roleid;
 	}
 
@@ -27,12 +27,12 @@ public class SysRoleMenu extends BaseEntity{
 
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysRoleMenu");
-		return build.append(this.roleid).append(this.menuid).toString();
+		return build.append("#").append(this.roleid).append("#").append(this.menuid).toString();
 	}
 
-    public static String buildEntityKey(Long roleid, String menuid){
+    public static String buildEntityKey(Integer roleid, String menuid){
         StringBuilder build = new StringBuilder("SysRoleMenu");
-        return build.append(roleid).append(menuid).toString();
+        return build.append("#").append(roleid).append("#").append(menuid).toString();
     }
 
 	@Override

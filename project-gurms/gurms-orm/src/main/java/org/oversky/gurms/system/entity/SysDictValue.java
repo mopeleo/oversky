@@ -7,7 +7,7 @@ public class SysDictValue extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private String unioncode;    //unioncode
-	private Long dictcode;    //字典代码
+	private Integer dictcode;    //字典代码
 	private String itemcode;    //选项代码
 	private String itemname;    //选项名称
 
@@ -19,11 +19,11 @@ public class SysDictValue extends BaseEntity{
 		this.unioncode = unioncode;
 	}
 
-	public Long getDictcode() {
+	public Integer getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(Long dictcode) {
+	public void setDictcode(Integer dictcode) {
 		this.dictcode = dictcode;
 	}
 
@@ -45,12 +45,12 @@ public class SysDictValue extends BaseEntity{
 
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysDictValue");
-		return build.append(this.unioncode).append(this.dictcode).append(this.itemcode).toString();
+		return build.append("#").append(this.unioncode).append("#").append(this.dictcode).append("#").append(this.itemcode).toString();
 	}
 
-    public static String buildEntityKey(String unioncode, Long dictcode, String itemcode){
+    public static String buildEntityKey(String unioncode, Integer dictcode, String itemcode){
         StringBuilder build = new StringBuilder("SysDictValue");
-        return build.append(unioncode).append(dictcode).append(itemcode).toString();
+        return build.append("#").append(unioncode).append("#").append(dictcode).append("#").append(itemcode).toString();
     }
 
 	@Override

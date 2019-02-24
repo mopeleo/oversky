@@ -6,14 +6,8 @@ import java.util.List;
 
 public interface ${table.code}Dao{
 
-    int insert(${table.code} entity);
-
-    List<${table.code}> selectWhere(${table.code} where);
-
-    List<${table.code}> selectAll();
-
 <#if (table.keys?size > 0)>
-    ${table.code} selectById(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>);
+    ${table.code} getById(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>);
 
     int deleteById(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>);
 
@@ -21,6 +15,14 @@ public interface ${table.code}Dao{
     int updateById(${table.code} entity);
 	
     int dynamicUpdateById(${table.code} entity);
+    
 </#if>
 </#if>
+    int count(${table.code} where);
+    
+    int insert(${table.code} entity);
+
+    List<${table.code}> selectWhere(${table.code} where);
+
+    List<${table.code}> selectAll();
 }

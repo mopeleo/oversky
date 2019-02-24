@@ -5,14 +5,15 @@ import java.util.List;
 
 public interface SysRoleMenuDao{
 
+    SysRoleMenu getById(Long roleid, String menuid);
+
+    int deleteById(Long roleid, String menuid);
+
+    int count(SysRoleMenu where);
+    
     int insert(SysRoleMenu entity);
 
     List<SysRoleMenu> selectWhere(SysRoleMenu where);
 
     List<SysRoleMenu> selectAll();
-
-    SysRoleMenu selectById(Long roleid, String menuid);
-
-    int deleteById(Long roleid, String menuid);
-
 }

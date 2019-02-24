@@ -5,17 +5,19 @@ import java.util.List;
 
 public interface SysParamExtDao{
 
-    int insert(SysParamExt entity);
-
-    List<SysParamExt> selectWhere(SysParamExt where);
-
-    List<SysParamExt> selectAll();
-
-    SysParamExt selectById(Long paramid);
+    SysParamExt getById(Long paramid);
 
     int deleteById(Long paramid);
 
     int updateById(SysParamExt entity);
 	
     int dynamicUpdateById(SysParamExt entity);
+    
+    int count(SysParamExt where);
+    
+    int insert(SysParamExt entity);
+
+    List<SysParamExt> selectWhere(SysParamExt where);
+
+    List<SysParamExt> selectAll();
 }

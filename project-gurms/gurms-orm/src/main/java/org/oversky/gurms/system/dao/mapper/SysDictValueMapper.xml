@@ -36,7 +36,7 @@
 		</where>
     </select>
 
-	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysDictValue">
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysDictValue">
         select count(1) from sys_dict_value
 		<where>
 			<if test="unioncode != null  and unioncode !='' ">
@@ -69,7 +69,7 @@
 		select 1 from dual
 	</insert>
 	
-    <select id="selectById" resultMap="BaseResultMap">
+    <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_dict_value
          where 1=1 and unioncode = #{0} and dictcode = #{1} and itemcode = #{2}

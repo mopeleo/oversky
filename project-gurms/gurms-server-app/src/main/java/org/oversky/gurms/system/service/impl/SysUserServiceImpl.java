@@ -46,7 +46,7 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	public SysUserRes getById(Long userid) {
-		SysUser user = sysUserDao.selectById(userid);
+		SysUser user = sysUserDao.getById(userid);
 		return BeanPropertyCopy.convert(user, SysUserRes.class);
 	}
 

@@ -56,7 +56,7 @@
 		</where>
     </select>
 
-	<select id="getTotal" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParamExt">
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParamExt">
         select count(1) from sys_param_ext
 		<where>
 			<if test="paramid != null ">
@@ -104,7 +104,7 @@
 		select 1 from dual
 	</insert>
 	
-    <select id="selectById" resultMap="BaseResultMap">
+    <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param_ext
          where 1=1 and paramid = #{0}

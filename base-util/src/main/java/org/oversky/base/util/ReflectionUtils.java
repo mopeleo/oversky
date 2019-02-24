@@ -20,13 +20,13 @@ import org.oversky.base.exception.BaseUtilException;
  * 提供访问私有变量,获取泛型类型Class,提取集合中元素的属性等Utils函数.
  * 
  */
-public class ReflectionUtil {
+public class ReflectionUtils {
 
 	private static final String SETTER_PREFIX = "set";
 	private static final String GETTER_PREFIX = "get";
 	public static final String CGLIB_CLASS_SEPARATOR = "$$";
 
-	private ReflectionUtil(){}
+	private ReflectionUtils(){}
 	
 	/**
 	 * 调用Getter方法.

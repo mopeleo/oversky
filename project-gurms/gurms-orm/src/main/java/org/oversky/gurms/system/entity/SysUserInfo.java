@@ -90,12 +90,12 @@ public class SysUserInfo extends BaseEntity{
 
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysUserInfo");
-		return build.append(this.userid).toString();
+		return build.append("#").append(this.userid).toString();
 	}
 
     public static String buildEntityKey(Long userid){
         StringBuilder build = new StringBuilder("SysUserInfo");
-        return build.append(userid).toString();
+        return build.append("#").append(userid).toString();
     }
 
 	@Override

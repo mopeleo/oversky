@@ -1,6 +1,6 @@
 package org.oversky.base.constant;
 
-public class PubDefine {
+public final class PubDefine {
 
 	private PubDefine() {}
 	

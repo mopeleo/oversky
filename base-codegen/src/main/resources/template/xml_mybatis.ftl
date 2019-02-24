@@ -34,7 +34,7 @@
 		</where>
     </select>
 
-	<select id="getTotal" resultType="int" parameterType="${java_entity_package}.${table.code}">
+	<select id="count" resultType="int" parameterType="${java_entity_package}.${table.code}">
         select count(1) from ${table.originCode?lower_case}
 		<where>
 <#list table.columns as column>
@@ -61,7 +61,7 @@
 	</insert>
 	
 <#if (table.keys?size > 0)>
-    <select id="selectById" resultMap="BaseResultMap">
+    <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
          where 1=1<#list table.keys as column> and ${column.originCode} = #${r'{'}${column_index}}</#list>

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.oversky.base.util.BeanPropertyCopy;
-import org.oversky.base.util.EncryptUtil;
+import org.oversky.base.util.EncryptUtils;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
@@ -36,14 +36,17 @@ public class IndexServiceImpl implements IndexService{
 		UserLoginRes res = new UserLoginRes();
 		if(loginReq == null) {
 			res.failure("请求对象为空");
+			logger.warn("请求对象为空");
 			return res;
 		}
 		if(StringUtils.isEmpty(loginReq.getLoginid())) {
 			res.failure("用户名不能为空");
+			logger.warn("用户名为空 [{}]", loginReq.getLoginid());
 			return res;
 		}
 		if(StringUtils.isEmpty(loginReq.getPasswd())) {
 			res.failure("密码不能为空");
+			logger.warn("密码为空 [{}]", loginReq.getPasswd());
 			return res;
 		}
 		SysUser where = new SysUser();

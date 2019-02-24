@@ -7,10 +7,10 @@ public class BaseResult<T> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String returncode;
-	private String returnmsg;
-	private boolean success;
-	private List<T> results;
+	protected String returncode;
+	protected String returnmsg;
+	protected boolean success;
+	protected List<T> results;
 	public String getReturncode() {
 		return returncode;
 	}

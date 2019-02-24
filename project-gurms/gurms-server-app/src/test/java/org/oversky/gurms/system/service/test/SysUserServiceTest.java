@@ -29,24 +29,24 @@ public class SysUserServiceTest {
 //	@Test
 	public void insert() {
 		SysUserReq userDto = new SysUserReq();
-		userDto.setUserid(2L);
-		userDto.setEmail("tt@126.com");
+		userDto.setUserid(3L);
+		userDto.setEmail("test@126.com");
 		userDto.setIdcode("421001297608160946");
 		userDto.setIdtype("1");
 		userDto.setLogindate("20190130");
 		userDto.setLoginerror(0);
-		userDto.setLoginid("tt");
+		userDto.setLoginid("test");
 		userDto.setLoginpasswd("1");
 		userDto.setLogintime("150000");
 		userDto.setMobileno("13554600998");
-		userDto.setOrgid("0001");
+		userDto.setOrgid(10000);
 		userDto.setPasswdvaliddate("20190909");
 		userDto.setSalt("123");
 		userDto.setStatus(1);
 		userDto.setUnioncode("0000");
-		userDto.setUsername("天天");
+		userDto.setUsername("test");
 		boolean flag = sysUserService.insert(userDto);
-		Assert.assertEquals(false, flag);
+		Assert.assertEquals(true, flag);
 	}
 	
 	@Test
@@ -64,9 +64,11 @@ public class SysUserServiceTest {
 		map.put("userid", 1L);
 		List<Map<String, Object>> list = userDaoExt.getUserRole(map);
 		for(Map<String, Object> result : list) {
-			for(Iterator<String> i = result.keySet().iterator();i.hasNext();) {
-				String key = i.next();
-				System.out.print(key + ":" + result.get(key) + ", ");
+			result.forEach((k, v) -> {
+				System.out.print(k + ":" + v + ", ");
+			});
+			for(Map.Entry<String, Object> entry : result.entrySet()) {
+				System.out.print(entry.getKey() + ":" + entry.getValue() + ", ");
 			}
 			System.out.println();
 		}

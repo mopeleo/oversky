@@ -8,7 +8,7 @@ import javax.crypto.Cipher;
 
 import org.oversky.base.exception.BaseUtilException;
 
-public class EncryptUtil {
+public class EncryptUtils {
 
 	private final static String DESKEY = "oversky"; // 默认密钥
 	private final static String MD5 = "MD5";
@@ -16,7 +16,7 @@ public class EncryptUtil {
 	private final static char hexDigits[] = { '0', '1', '2', '3', '4', '5',
 			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
-	private EncryptUtil(){}
+	private EncryptUtils(){}
 	
 	private static Key getDesKey(){
 //		Security.addProvider(new com.sun.crypto.provider.SunJCE());

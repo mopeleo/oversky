@@ -6,7 +6,7 @@ public class SysOrgRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String orgid;    //机构ID
+	private Long orgid;    //机构ID
 	private String unioncode;    //unioncode
 	private String shortname;    //机构简称
 	private String fullname;    //机构全称
@@ -16,15 +16,15 @@ public class SysOrgRes extends BaseResDto {
 	private String address;    //联系地址
 	private String postcode;    //邮政编码
 	private String email;    //电子邮件
-	private String parentorg;    //上级机构
+	private int parentorg;    //上级机构
 	private int orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
 	private String remark;    //备注
 
-	public String getOrgid() {
+	public Long getOrgid() {
 		return this.orgid;
 	}
 
-	public void setOrgid(String orgid) {
+	public void setOrgid(Long orgid) {
 		this.orgid = orgid;
 	}
 
@@ -100,11 +100,11 @@ public class SysOrgRes extends BaseResDto {
 		this.email = email;
 	}
 
-	public String getParentorg() {
+	public int getParentorg() {
 		return this.parentorg;
 	}
 
-	public void setParentorg(String parentorg) {
+	public void setParentorg(int parentorg) {
 		this.parentorg = parentorg;
 	}
 

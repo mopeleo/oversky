@@ -6,28 +6,28 @@ public class SysLogLogin extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String logid;    //logid
-	private long userid;    //userid
+	private Long logid;    //logid
+	private Long userid;    //userid
 	private String logindate;    //登录日期
 	private String logintime;    //登录时间
 	private String loginpasswd;    //登录密码
 	private String loginip;    //登录IP
-	private int logintype;    //登录方式（1-pc，2-手机）
-	private int loginresult;    //登录是否成功 0-失败，1-成功
+	private Integer logintype;    //登录方式（1-pc，2-手机）
+	private Integer loginresult;    //登录是否成功 0-失败，1-成功
 
-	public String getLogid() {
+	public Long getLogid() {
 		return this.logid;
 	}
 
-	public void setLogid(String logid) {
+	public void setLogid(Long logid) {
 		this.logid = logid;
 	}
 
-	public long getUserid() {
+	public Long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(long userid) {
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 
@@ -63,30 +63,30 @@ public class SysLogLogin extends BaseEntity{
 		this.loginip = loginip;
 	}
 
-	public int getLogintype() {
+	public Integer getLogintype() {
 		return this.logintype;
 	}
 
-	public void setLogintype(int logintype) {
+	public void setLogintype(Integer logintype) {
 		this.logintype = logintype;
 	}
 
-	public int getLoginresult() {
+	public Integer getLoginresult() {
 		return this.loginresult;
 	}
 
-	public void setLoginresult(int loginresult) {
+	public void setLoginresult(Integer loginresult) {
 		this.loginresult = loginresult;
 	}
 
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysLogLogin");
-		return build.append(this.logid).toString();
+		return build.append("#").append(this.logid).toString();
 	}
 
-    public static String buildEntityKey(String logid){
+    public static String buildEntityKey(Long logid){
         StringBuilder build = new StringBuilder("SysLogLogin");
-        return build.append(logid).toString();
+        return build.append("#").append(logid).toString();
     }
 
 	@Override

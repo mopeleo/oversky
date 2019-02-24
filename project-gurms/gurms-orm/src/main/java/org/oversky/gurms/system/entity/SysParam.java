@@ -7,7 +7,7 @@ public class SysParam extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private String unioncode;    //unioncode
-	private Long paramid;    //paramid
+	private Integer paramid;    //paramid
 	private String paramvalue;    //paramvalue
 
 	public String getUnioncode() {
@@ -18,11 +18,11 @@ public class SysParam extends BaseEntity{
 		this.unioncode = unioncode;
 	}
 
-	public Long getParamid() {
+	public Integer getParamid() {
 		return this.paramid;
 	}
 
-	public void setParamid(Long paramid) {
+	public void setParamid(Integer paramid) {
 		this.paramid = paramid;
 	}
 
@@ -36,12 +36,12 @@ public class SysParam extends BaseEntity{
 
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysParam");
-		return build.append(this.unioncode).append(this.paramid).toString();
+		return build.append("#").append(this.unioncode).append("#").append(this.paramid).toString();
 	}
 
-    public static String buildEntityKey(String unioncode, Long paramid){
+    public static String buildEntityKey(String unioncode, Integer paramid){
         StringBuilder build = new StringBuilder("SysParam");
-        return build.append(unioncode).append(paramid).toString();
+        return build.append("#").append(unioncode).append("#").append(paramid).toString();
     }
 
 	@Override

@@ -25,7 +25,7 @@ public class DataType {
         if(datatype.indexOf(",")>0){
             return DOUBLE;
         }
-        if(datatype.equals("I") || datatype.equals("SI") || datatype.equals("LI")){
+        if(datatype.equals("I") || datatype.equals("SI") || datatype.equals("LI") || datatype.equals("BT")){
             return INT;
         }
         if(datatype.startsWith("N")){
@@ -97,40 +97,40 @@ public class DataType {
     }
     
     public static String convertPDMMysql(String datatype){
-        if(datatype.startsWith("NUMERIC")){
+        if(datatype.equals("INT") || datatype.equals("SMALLINT") || datatype.equals("TINYINT")){
+            return INT;
+        }
+        if(datatype.equals("BIGINT")) {
+        	return LONG;
+        }
+        if(datatype.startsWith("NUMERIC") || datatype.startsWith("DECIMAL")){
             if(datatype.length() == 7){
                 return LONG;
             }
             String desc = datatype.substring(8, datatype.length()-1);
-            String[] num = desc.split(",");
-            if(Integer.parseInt(num[1]) == 0){
-                if(Integer.parseInt(num[0]) > 9){
+            if(desc.indexOf(",") > 0) {
+                String[] num = desc.split(",");
+                if(Integer.parseInt(num[1]) == 0){
+                    if(Integer.parseInt(num[0]) > 9){
+                        return LONG;
+                    }else{
+                        return INT;
+                    }
+                }else{
+                    return DOUBLE;
+                }
+            }else {
+                if(Integer.parseInt(desc) > 9){
                     return LONG;
                 }else{
                     return INT;
-                }
-            }else{
-                return DOUBLE;
-            }
-        }
-        if(datatype.indexOf(",")>0){
-            return DOUBLE;
-        }
-        if(datatype.equals("INT") || datatype.equals("SMALLINT") || datatype.equals("BIGINT")){
-            return INT;
-        }
-        if(datatype.startsWith("DECIMAL")){
-            if(datatype.length() == 7){
-                return LONG;
-            }
-            String len = datatype.substring(8, datatype.length()-1);
-            if(Integer.parseInt(len) > 9){
-                return LONG;
-            }else{
-                return INT;
+                }            	
             }
         }
         if(datatype.startsWith("FLOAT")){
+            return DOUBLE;
+        }
+        if(datatype.indexOf(",")>0){
             return DOUBLE;
         }
         if(datatype.startsWith("CHAR") || datatype.startsWith("VARCHAR")){

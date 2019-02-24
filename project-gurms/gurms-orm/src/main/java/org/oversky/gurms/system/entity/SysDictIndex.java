@@ -7,10 +7,10 @@ public class SysDictIndex extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private String unioncode;    //unioncode
-	private Long dictcode;    //字典代码
+	private Integer dictcode;    //字典代码
 	private String dictname;    //字典名称
 	private String dictgroup;    //所属分组
-	private int editflag;    //是否可编辑（0-不可见，1-只读，2-读写）
+	private Integer editflag;    //是否可编辑（0-不可见，1-只读，2-读写）
 
 	public String getUnioncode() {
 		return this.unioncode;
@@ -20,11 +20,11 @@ public class SysDictIndex extends BaseEntity{
 		this.unioncode = unioncode;
 	}
 
-	public Long getDictcode() {
+	public Integer getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(Long dictcode) {
+	public void setDictcode(Integer dictcode) {
 		this.dictcode = dictcode;
 	}
 
@@ -44,22 +44,22 @@ public class SysDictIndex extends BaseEntity{
 		this.dictgroup = dictgroup;
 	}
 
-	public int getEditflag() {
+	public Integer getEditflag() {
 		return this.editflag;
 	}
 
-	public void setEditflag(int editflag) {
+	public void setEditflag(Integer editflag) {
 		this.editflag = editflag;
 	}
 
 	public String getEntityKey(){
 		StringBuilder build = new StringBuilder("SysDictIndex");
-		return build.append(this.unioncode).append(this.dictcode).toString();
+		return build.append("#").append(this.unioncode).append("#").append(this.dictcode).toString();
 	}
 
-    public static String buildEntityKey(String unioncode, Long dictcode){
+    public static String buildEntityKey(String unioncode, Integer dictcode){
         StringBuilder build = new StringBuilder("SysDictIndex");
-        return build.append(unioncode).append(dictcode).toString();
+        return build.append("#").append(unioncode).append("#").append(dictcode).toString();
     }
 
 	@Override

@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.cglib.beans.BeanCopier;
+import net.sf.cglib.core.Converter;
 
 public class BeanPropertyCopy {
 
     private static final Map<String, BeanCopier> BEANCOPIER_CACHE = new HashMap<String, BeanCopier>();
-    
+    private static final SameNameTypeConverter convert = new SameNameTypeConverter();
     private BeanPropertyCopy(){}
     
     private static <S, T> BeanCopier getBeanCopier(Class<S> source, Class<T> target){
@@ -28,6 +29,8 @@ public class BeanPropertyCopy {
             throw new IllegalArgumentException("参数错误：参数为空");
         }
         BeanCopier copier = getBeanCopier(source.getClass(), target.getClass());
+        //考虑到性能，尽量不要用convert
+//        copier.copy(source, target, convert);
         copier.copy(source, target, null);
     }
     
@@ -37,10 +40,7 @@ public class BeanPropertyCopy {
             T obj = target.newInstance();
             copier.copy(source, obj, null);
             return obj;
-        } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -58,5 +58,19 @@ public class BeanPropertyCopy {
             result.add(t);
         }
         return result;
+    }
+    
+    static class SameNameTypeConverter implements Converter {
+
+		@Override
+		public Object convert(Object value, Class target, Object context) {
+			if (value instanceof Integer) {  
+	            return (Integer) value; 
+			}
+			if (value instanceof Long) {  
+	            return (Long) value; 
+			}
+			return value;
+		}    	
     }
 }
