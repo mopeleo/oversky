@@ -1,6 +1,8 @@
 package org.oversky.base.util;
 
-import java.util.Hashtable;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.oversky.base.exception.BaseUtilException;
 
@@ -23,21 +25,21 @@ public class IDCodeUtils {
 	public static int[] Wi = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
 	public static String[] ValCodeArr = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
 	
-	public static boolean validateIDCard(String idcard) {
+	public static boolean validateIDCode(String IDCode) {
 		//效验身份证长度
-		if (idcard == null || (idcard.length() != 15 && idcard.length() != 18)) {
+		if (IDCode == null || (IDCode.length() != 15 && IDCode.length() != 18)) {
 			return false;
 		}
 		
 		String Ai = "";
-		if (idcard.length() == 18) {
-			Ai = idcard.substring(0, 17);
-		} else if (idcard.length() == 15) {
-			Ai = idcard.substring(0, 6) + "19" + idcard.substring(6, 15);
+		if (IDCode.length() == 18) {
+			Ai = IDCode.substring(0, 17);
+		} else {
+			Ai = IDCode.substring(0, 6) + "19" + IDCode.substring(6, 15);
 		}
 		
 		//身份证15位号码都应为数字 ; 18位号码除最后一位外，都应为数字。
-		if (!NumberUtil.isNumber(Ai)) {
+		if (!isDigital(Ai)) {
 			return false;
 		}
 		
@@ -49,120 +51,120 @@ public class IDCodeUtils {
 		}
 		
 		//身份证出生年月不在有效范围
-		try {
-			if ((DateUtils.getCurrentYear() - Integer.parseInt(year)) > 150|| (System.currentTimeMillis() - DateUtils.parseDate(birth).getTime()) < 0) {
-				return false;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		if ((LocalDate.now().getYear() - Integer.parseInt(year)) > 150
+				|| DateUtils.dateSub(birth, DateUtils.getNowDate()) <= 0) {
 			return false;
 		}
 		
 		//身份证地区编码错误
-		Hashtable<?, ?> h = getIDCardAreaCode();
+		Map<?, ?> h = getIDCodeAreaCode();
 		if (h.get(Ai.substring(0, 2)) == null) {
 			return false;
 		}
 		
-		if (idcard.length() == 18) {
+		if (IDCode.length() == 18) {
 			// 判断最后一位的值
-			Ai += getLastCharAtIdCard(Ai);
+			Ai += getLastCharAtIDCode(Ai);
 			
-			return Ai.equals(idcard);
+			return Ai.equals(IDCode);
 		}
 		
 		return true;
 	}
 	
-	public static String get18IDCard(String idcard){
-		if(!validateIDCard(idcard)){
+	public static String get18IDCode(String IDCode){
+		if(!validateIDCode(IDCode)){
 			throw new BaseUtilException("错误的身份证号码");
 		}
 		
-		if(idcard.length() == 18){
-			return idcard;
+		if(IDCode.length() == 18){
+			return IDCode;
 		}
 		
-		String idcard17 = idcard.substring(0, 6) + "19" + idcard.substring(6, 15);
-		idcard17 += getLastCharAtIdCard(idcard17);
-		return idcard17;
+		String IDCode17 = IDCode.substring(0, 6) + "19" + IDCode.substring(6, 15);
+		IDCode17 += getLastCharAtIDCode(IDCode17);
+		return IDCode17;
 	}
 	
-	public static String getIDCardArea(String idcard){
-		if(!validateIDCard(idcard)){
+	public static String getIDCodeArea(String IDCode){
+		if(!validateIDCode(IDCode)){
 			throw new BaseUtilException("错误的身份证号码");
 		}
 		
-		String areaCode = idcard.substring(0, 2);
-		return getIDCardAreaCode().get(areaCode);		
+		String areaCode = IDCode.substring(0, 2);
+		return getIDCodeAreaCode().get(areaCode);		
 	}
 	
-	public static Hashtable<String, String> getIDCardAreaCode() {
-		Hashtable<String, String> hashtable = new Hashtable<String, String>();
-		hashtable.put("11", "北京");
-		hashtable.put("12", "天津");
-		hashtable.put("13", "河北");
-		hashtable.put("14", "山西");
-		hashtable.put("15", "内蒙古");
-		hashtable.put("21", "辽宁");
-		hashtable.put("22", "吉林");
-		hashtable.put("23", "黑龙江");
-		hashtable.put("31", "上海");
-		hashtable.put("32", "江苏");
-		hashtable.put("33", "浙江");
-		hashtable.put("34", "安徽");
-		hashtable.put("35", "福建");
-		hashtable.put("36", "江西");
-		hashtable.put("37", "山东");
-		hashtable.put("41", "河南");
-		hashtable.put("42", "湖北");
-		hashtable.put("43", "湖南");
-		hashtable.put("44", "广东");
-		hashtable.put("45", "广西");
-		hashtable.put("46", "海南");
-		hashtable.put("50", "重庆");
-		hashtable.put("51", "四川");
-		hashtable.put("52", "贵州");
-		hashtable.put("53", "云南");
-		hashtable.put("54", "西藏");
-		hashtable.put("61", "陕西");
-		hashtable.put("62", "甘肃");
-		hashtable.put("63", "青海");
-		hashtable.put("64", "宁夏");
-		hashtable.put("65", "新疆");
-		hashtable.put("71", "台湾");
-		hashtable.put("81", "香港");
-		hashtable.put("82", "澳门");
-		hashtable.put("91", "国外");
+	public static HashMap<String, String> getIDCodeAreaCode() {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("11", "北京");
+		map.put("12", "天津");
+		map.put("13", "河北");
+		map.put("14", "山西");
+		map.put("15", "内蒙古");
+		map.put("21", "辽宁");
+		map.put("22", "吉林");
+		map.put("23", "黑龙江");
+		map.put("31", "上海");
+		map.put("32", "江苏");
+		map.put("33", "浙江");
+		map.put("34", "安徽");
+		map.put("35", "福建");
+		map.put("36", "江西");
+		map.put("37", "山东");
+		map.put("41", "河南");
+		map.put("42", "湖北");
+		map.put("43", "湖南");
+		map.put("44", "广东");
+		map.put("45", "广西");
+		map.put("46", "海南");
+		map.put("50", "重庆");
+		map.put("51", "四川");
+		map.put("52", "贵州");
+		map.put("53", "云南");
+		map.put("54", "西藏");
+		map.put("61", "陕西");
+		map.put("62", "甘肃");
+		map.put("63", "青海");
+		map.put("64", "宁夏");
+		map.put("65", "新疆");
+		map.put("71", "台湾");
+		map.put("81", "香港");
+		map.put("82", "澳门");
+		map.put("91", "国外");
 		
-		return hashtable;
+		return map;
 	}
 
-	public static String getIDCardBirthday(String idcard){
-		if(!validateIDCard(idcard)){
+	public static String getIDCodeBirthday(String IDCode){
+		if(!validateIDCode(IDCode)){
 			throw new BaseUtilException("错误的身份证号码");
 		}
 		
-		if(idcard.length() == 15){
-			idcard = get18IDCard(idcard);
+		if(IDCode.length() == 15){
+			IDCode = get18IDCode(IDCode);
 		}
 		
-		return idcard.substring(6, 14);
+		return IDCode.substring(6, 14);
 	}
 	
-	private static String getLastCharAtIdCard(String idcard17){
+	private static String getLastCharAtIDCode(String IDCode17){
 		int totalmulAiWi = 0;
 		for (int i = 0; i < 17; i++) {
-			totalmulAiWi += Integer.parseInt(String.valueOf(idcard17.charAt(i)))* Wi[i];
+			totalmulAiWi += Integer.parseInt(String.valueOf(IDCode17.charAt(i)))* Wi[i];
 		}
 		int modValue = totalmulAiWi % 11;
 		return ValCodeArr[modValue];
 	}
 	
+	private static boolean isDigital(String str) {
+        return str.matches("^[0-9]*$");
+    }	
+	
 	public static void main(String[] args) {
-		String idcard = "111111111111111";
-		System.out.println(validateIDCard(idcard));
-		System.out.println(getIDCardArea(idcard));
-		System.out.println(getIDCardBirthday(idcard));
+		String IDCode = "111111111111111";
+		System.out.println(validateIDCode(IDCode));
+		System.out.println(getIDCodeArea(IDCode));
+		System.out.println(getIDCodeBirthday(IDCode));
 	}
 }

@@ -1,47 +1,14 @@
 package org.oversky.base.util;
 
 import java.math.BigDecimal;
-import java.util.regex.Pattern;
 
 import org.oversky.base.exception.BaseUtilException;
 
-public class NumberUtil {
-
+public class MoneyUtils {
 	public static final String CHINESE_NUM = "零壹贰叁肆伍陆柒捌玖";     //大写
 	public static final String[] CHINESE_UNIT = {"仟佰拾", "角分"};    //单位
 	
-	private NumberUtil(){}
-	
-	/**
-	 * 数字转换为二进制数组
-	 * @param number
-	 * @return
-	 */
-	public static int[] number2binaryArray(int number){
-		String binaryString= Integer.toBinaryString(number);
-		int    oneCount    = Integer.bitCount(number);
-		int[]  binaryArray = new int[oneCount];
-		
-		int start = 0;
-		int len   = binaryString.length();
-		for(int i = 0 ; i < oneCount ; i ++){
-			start = binaryString.indexOf("1", start);
-			System.out.println("start :" + start);
-			binaryArray[i] = 1<<(len-start-1);
-			start ++;
-		}
-		return binaryArray;
-	}
-	
-	/**
-	 * 判断字符窜是否为数字
-	 * @param str
-	 * @return
-	 */
-	public static boolean isNumber(String str) {
-		Pattern pattern = Pattern.compile("[0-9]*");
-		return pattern.matcher(str).matches();
-	}
+	private MoneyUtils(){}
 	
 	/**
 	 * 转换人民币金额大写
@@ -123,7 +90,7 @@ public class NumberUtil {
         return result;
     }
 	
-	public static String transformGroup(String group){  
+	private static String transformGroup(String group){  
         String result = "";  
         int length = group.length();  
         for(int i=0; i < length; i++){  
@@ -148,20 +115,5 @@ public class NumberUtil {
         }  
         return result;  
     }
-	
-	
-	public static void main(String[] args) {
-		int num = 777;
-		System.out.println(Integer.toBinaryString(num));
-		System.out.println(Integer.bitCount(num));
-		long l = System.currentTimeMillis();
-		int[] test = number2binaryArray(num);
-		l = System.currentTimeMillis() - l;
-		System.out.println("total times : " + l);
-		for(int i : test){
-			System.out.println(i);
-		}
-		
-		System.out.println(rmbNumber2Chinese(2345678.09));
-	}
+
 }

@@ -3,7 +3,7 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.oversky.base.util.BeanPropertyCopy;
+import org.oversky.base.util.BeanCopyUtils;
 import org.oversky.base.util.EncryptUtils;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
@@ -63,7 +63,7 @@ public class IndexServiceImpl implements IndexService{
 			res.failure("密码错误");
 		}
 		
-		BeanPropertyCopy.copy(user, res);
+		BeanCopyUtils.copy(user, res);
 		res.success("登陆成功");
 		return res;
 	}

@@ -2,7 +2,7 @@ package org.oversky.gurms.system.service.impl;
 
 import java.util.List;
 
-import org.oversky.base.util.BeanPropertyCopy;
+import org.oversky.base.util.BeanCopyUtils;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
@@ -22,7 +22,7 @@ public class SysUserServiceImpl implements SysUserService{
 	@Override
 	public SysUserRes login(SysUserReq userReq) {
 		// TODO Auto-generated method stub
-		SysUser user = BeanPropertyCopy.convert(userReq, SysUser.class);
+		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
 		System.out.println(userReq.getPasswdvaliddate());
 		sysUserDao.insert(user);
 		return null;
@@ -30,7 +30,7 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	public boolean insert(SysUserReq userReq) {
-		SysUser user = BeanPropertyCopy.convert(userReq, SysUser.class);
+		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
 		return sysUserDao.insert(user) == 1;
 	}
 
@@ -47,12 +47,12 @@ public class SysUserServiceImpl implements SysUserService{
 	@Override
 	public SysUserRes getById(Long userid) {
 		SysUser user = sysUserDao.getById(userid);
-		return BeanPropertyCopy.convert(user, SysUserRes.class);
+		return BeanCopyUtils.convert(user, SysUserRes.class);
 	}
 
 	public List<SysUserRes> find(SysUserReq userReq){
-		SysUser where = BeanPropertyCopy.convert(userReq, SysUser.class);
+		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
 		List<SysUser> userList = sysUserDao.selectWhere(where);
-		return BeanPropertyCopy.convertList(userList, SysUserRes.class);
+		return BeanCopyUtils.convertList(userList, SysUserRes.class);
 	}
 }

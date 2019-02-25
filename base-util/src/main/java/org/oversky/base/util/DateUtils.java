@@ -1,9 +1,8 @@
 package org.oversky.base.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import org.oversky.base.exception.BaseUtilException;
@@ -12,8 +11,8 @@ public class DateUtils {
 
 	public static final String pattern_time = "HHmmss";
 	public static final String pattern_date = "yyyyMMdd";
-	public static final String pattern_fulltime = "yyyyMMddHHmmss";
-	// 支持(19000101|1900-01-01|1900/01/01)
+	public static final String pattern_datetime = "yyyyMMddHHmmss";
+	// 支持(19000101|1900-01-01|1900/01/01)  \s 匹配任何空白字符,包括空格、制表符、换页符等等
 	public static final String regex_date = "((\\d{2}(([02468][048])|([13579][26]))[\\-\\/\\s]?" //year1 闰年
 				+ "((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|"      //month+day 大
 				+ "(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|"               //month+day 小
@@ -26,151 +25,86 @@ public class DateUtils {
 
 	private DateUtils(){}
 	
-	public static String getCurrentTime(){
-		return getCurrentTime(pattern_time);
+	private static String format(LocalDateTime date, String pattern) {
+		return DateTimeFormatter.ofPattern(pattern).format(date);
 	}
 	
-	public static String getCurrentDate(){
-		return getCurrentTime(pattern_date);
+	private static String format(LocalDate date, String pattern) {
+		return DateTimeFormatter.ofPattern(pattern).format(date);
 	}
 	
-	public static String getCurrentFullTime(){
-		return getCurrentTime(pattern_fulltime);
+	public static String getNow(String pattern){
+		return format(LocalDateTime.now(), pattern);
 	}
 	
-	public static long dateSub(String begindate, String enddate){
-        long begin = parseDate(begindate).getTime();
-        long end = parseDate(enddate).getTime();
-	    return  (end - begin)/(24*60*60*1000);	    
-	}
-	/**
-	 * 
-	 * @param date  ：格式为YYYYMMDD的日期字符串
-	 * @param num ： 要加减的数字，可为负
-	 * @param arithtype ： 要加减的类型，1天、2月、3年
-	 * @return
-	 * @throws ParseException 
-	 */
-	private static String dateArith(String date, int num, int arithtype){
-		Calendar c = getCalendarInstance(date);
-		switch(arithtype){
-			case 1:
-				c.add(Calendar.DAY_OF_MONTH, num);
-				break;
-			case 2:
-				c.add(Calendar.MONTH, num);
-				break;
-			case 3:
-				c.add(Calendar.YEAR, num);
-				break;
-			default:
-				break;
-		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf.applyPattern(pattern_date);
-		return sdf.format(c.getTime());
+	public static String getNowTime(){
+		return format(LocalDateTime.now(), pattern_time);
 	}
 	
-	public static Calendar getCalendarInstance(String date){
-        Date d = parseDate(date);
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-        return c;
-	}
-
-	public static int getCurrentYear(){
-        return Calendar.getInstance().get(Calendar.YEAR);
-    }
-    
-	public static int getYear(String date){
-        return getCalendarInstance(date).get(Calendar.YEAR);
-    }
-	
-	public static String addYear(String date, int year){
-		return dateArith(date, year, 3);
-	}
-
-	public static int getCurrentMonth(){
-		return Calendar.getInstance().get(Calendar.MONTH);
+	public static String getNowDate(){
+		return format(LocalDateTime.now(), pattern_date);
 	}
 	
-    public static int getMonth(String date){
-        return getCalendarInstance(date).get(Calendar.MONTH);
-    }
-    
-	public static String addMonth(String date, int month){
-		return dateArith(date, month, 2);
-	}
-
-    public static int getCurrentDay(){
-        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-    }
-    
-    public static int getDay(String date){
-        return getCalendarInstance(date).get(Calendar.DAY_OF_MONTH);
-    }
-    
-	public static String addDay(String date, int day){
-		return dateArith(date, day, 1);
-	}
-
-	public static String getCurrentTime(String pattern){
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf.applyPattern(pattern);
-		return sdf.format(Calendar.getInstance().getTime());
+	public static String getNowDateTime(){
+		return format(LocalDateTime.now(), pattern_datetime);
 	}
 	
-	public static Date parseDate(String datestring){
-		if(datestring == null || datestring.length() != 8){
-			throw new BaseUtilException(datestring + "必须为yyyyMMdd形式字符串");
-		}
-		if(isDate(datestring)){
-			return parseDate(pattern_date, datestring);
-		}else{
-			throw new BaseUtilException(datestring + "是错误的日期字符串");
+	public static LocalDate parseDate(String date) {
+		String date8 = date;
+		if(isDate(date)) {
+			if(date.length() == 10) {
+				date8 = date.substring(0, 4) + date.substring(5,7) + date.substring(8);
+			}
+			return LocalDate.parse(date8, DateTimeFormatter.ofPattern(pattern_date));
+		}else {
+			throw new BaseUtilException("请输入正确的日期格式字符串");
 		}
 	}
-	
-	public static Date parseDate(String pattern, String datestring){
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		sdf.applyPattern(pattern);
-		try {
-			return sdf.parse(datestring);
-		} catch (ParseException e) {
-			throw new BaseUtilException(e.getMessage());
-		}
-	}
-	
-	public static boolean dateBetween(String date, String startdate, String enddate){
-		return dateBetween(pattern_date, date, startdate, enddate);
-	}
-	
-	public static boolean dateBetween(String pattern, String date, String startdate, String enddate){
-		long d = parseDate(pattern, date).getTime();
-		long start = parseDate(pattern, startdate).getTime();
-		long end = parseDate(pattern, enddate).getTime();
 
-		return d >= start && d < end;
-	}
-	
-	//效验字符串是否为日期格式，支持(190000101|1900-00-00|1900/00/00)
+	//效验字符串是否为日期格式，支持(1900 01 01|1900-00-00|1900/00/00)
 	public static boolean isDate(String strDate) {
+		if(strDate == null || (strDate.length() != 8 && strDate.length() != 10)){
+			return false;
+		}
 		return DATE_PATTERN.matcher(strDate).matches();
 	}
 	
-	public static String getTimeStamp(){
-		return String.valueOf(System.currentTimeMillis());
+	public static long dateSub(String begindate, String enddate){
+		LocalDate beginLD = parseDate(begindate);
+		LocalDate endLD = parseDate(enddate);
+//		Duration duration = Duration.between(beginLDT, endLDT);        
+	    return endLD.toEpochDay() - beginLD.toEpochDay();	    
 	}
 	
-	public static int getAge(String birthDate){
-		Calendar c = getCalendarInstance(birthDate);
-		int currentYear = getCurrentYear();
-		int currentMonth = getCurrentMonth();
-		int currentDay = getCurrentDay();
-		int birthYear = c.get(Calendar.YEAR);
-		int birthMonth = c.get(Calendar.MONTH);
-		int birthDay = c.get(Calendar.DAY_OF_MONTH);
+	public static boolean dateBetween(String date, String startdate, String enddate){
+		return dateSub(startdate, date) > 0 && dateSub(date, enddate) > 0;
+	}
+	
+	public static String addDays(String date, long days) {
+		LocalDate ld = parseDate(date).plusDays(days);
+		return format(ld, pattern_date);
+	}
+	
+	public static String addMonths(String date, long months) {
+		LocalDate ld = parseDate(date).plusMonths(months);
+		return format(ld, pattern_date);
+	}
+	
+	public static String addYears(String date, long years) {
+		LocalDate ld = parseDate(date).plusYears(years);
+		return format(ld, pattern_date);
+	}
+	
+	
+	public static int getCurrentAge(String birthDate){
+		LocalDate ldt = parseDate(birthDate);
+		LocalDate nowDate = LocalDate.now();
+		int currentYear = nowDate.getYear();
+		int currentMonth = nowDate.getMonthValue();
+		int currentDay = nowDate.getDayOfMonth();
+		int birthYear = ldt.getYear();
+		int birthMonth = ldt.getMonthValue();
+		int birthDay = ldt.getDayOfMonth();
 		int age = currentYear - birthYear;
 		if(age < 0){
 			throw new BaseUtilException("请输入正确的出生年份:[" + birthYear + "]");
@@ -187,9 +121,15 @@ public class DateUtils {
 	
 	public static void main(String[] args){
 		String s = "20081231";
-		System.out.println(isDate(s));
-		System.out.println(addDay(s, 3));
-		System.out.println(getAge(s));
-		System.out.print(dateArith(s,2,2));
+		System.out.println(getCurrentAge(s));
+		System.out.println(parseDate(s).plusDays(2));
+		String start = "20190123";
+		String end = "20190223";
+		String validDate = "2019/01/31";
+		System.out.println(isDate(validDate));
+		System.out.println(parseDate(validDate));
+		System.out.println(dateSub(start, end));
+		System.out.println(dateBetween("20190131", start, end));
+		System.out.println(addDays(end, -10));
 	}
 }
