@@ -3,6 +3,7 @@ package org.oversky.base.util;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
 import org.oversky.base.exception.BaseUtilException;
@@ -69,15 +70,15 @@ public class DateUtils {
 		return DATE_PATTERN.matcher(strDate).matches();
 	}
 	
-	public static long dateSub(String begindate, String enddate){
+	public static long dateMinus(String begindate, String enddate){
 		LocalDate beginLD = parseDate(begindate);
 		LocalDate endLD = parseDate(enddate);
-//		Duration duration = Duration.between(beginLDT, endLDT);        
-	    return endLD.toEpochDay() - beginLD.toEpochDay();	    
+//	    return endLD.toEpochDay() - beginLD.toEpochDay();	    
+		return ChronoUnit.DAYS.between(beginLD, endLD);
 	}
 	
 	public static boolean dateBetween(String date, String startdate, String enddate){
-		return dateSub(startdate, date) > 0 && dateSub(date, enddate) > 0;
+		return dateMinus(startdate, date) > 0 && dateMinus(date, enddate) > 0;
 	}
 	
 	public static String addDays(String date, long days) {
@@ -128,7 +129,7 @@ public class DateUtils {
 		String validDate = "2019/01/31";
 		System.out.println(isDate(validDate));
 		System.out.println(parseDate(validDate));
-		System.out.println(dateSub(start, end));
+		System.out.println(dateMinus(start, end));
 		System.out.println(dateBetween("20190131", start, end));
 		System.out.println(addDays(end, -10));
 	}

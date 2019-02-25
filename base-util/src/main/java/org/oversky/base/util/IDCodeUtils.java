@@ -52,7 +52,7 @@ public class IDCodeUtils {
 		
 		//身份证出生年月不在有效范围
 		if ((LocalDate.now().getYear() - Integer.parseInt(year)) > 150
-				|| DateUtils.dateSub(birth, DateUtils.getNowDate()) <= 0) {
+				|| DateUtils.dateMinus(birth, DateUtils.getNowDate()) <= 0) {
 			return false;
 		}
 		
