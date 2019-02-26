@@ -5,10 +5,6 @@
         <id column="roleid" jdbcType="INTEGER" property="roleid" />
         <id column="menuid" jdbcType="VARCHAR" property="menuid" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}roleid, ${tab}menuid
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysRoleMenu">
         insert into sys_role_menu (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -17,27 +13,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysRoleMenu" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_role_menu
-		<where>
-			<if test="roleid != null ">
-				and roleid = #{roleid, jdbcType=INTEGER}
-			</if>
-			<if test="menuid != null  and menuid !='' ">
-				and menuid = #{menuid, jdbcType=VARCHAR}
-			</if>
-		</where>
+          from sys_role_menu 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysRoleMenu">
-        select count(1) from sys_role_menu
-		<where>
-			<if test="roleid != null ">
-				and roleid = #{roleid, jdbcType=INTEGER}
-			</if>
-			<if test="menuid != null  and menuid !='' ">
-				and menuid = #{menuid, jdbcType=VARCHAR}
-			</if>
-		</where>
+        select count(1) from sys_role_menu <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -58,12 +39,27 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_role_menu
-         where 1=1 and roleid = #{0} and menuid = #{1}
+         where roleid = #{0} and menuid = #{1}
     </select>
 
     <delete id="deleteById">
         delete from sys_role_menu
-         where 1=1 and roleid = #{0} and menuid = #{1}
+         where roleid = #{0} and menuid = #{1}
     </delete>
   
+	
+	<sql id="column_list">
+        ${tab}roleid, ${tab}menuid
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="roleid != null">
+				and roleid = #{roleid, jdbcType=INTEGER}
+			</if>
+			<if test="menuid != null and menuid != ''">
+				and menuid = #{menuid, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
 </mapper>

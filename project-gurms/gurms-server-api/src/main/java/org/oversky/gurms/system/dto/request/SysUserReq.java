@@ -6,25 +6,25 @@ public class SysUserReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long userid; // 用户ID,内部自动生成
-	private String unioncode; // unioncode
-	private String username; // 用户名称
-	private String loginid; // 登录名
-	private String loginpasswd; // 登录密码
-	private String salt; // 密码盐
-	private String mobileno; // 手机号码
-	private String email; // 电子邮件
-	private Integer orgid; // 所属机构
-	private String idtype; // 证件类型
-	private String idcode; // 证件号码
-	private String logindate; // 登录日期
-	private String logintime; // 登录时间
-	private Integer status; // 用户状态，0，已删除；1，正常；2，锁定
-	private Integer loginerror; // 连续登录失败次数
-	private String passwdvaliddate; // 密码失效日期
+	private Long userid;    //用户ID,内部自动生成
+	private String unioncode;    //unioncode
+	private String username;    //用户名称
+	private String loginid;    //登录名
+	private String loginpasswd;    //登录密码
+	private String salt;    //密码盐
+	private String mobileno;    //手机号码
+	private String email;    //电子邮件
+	private int orgid;    //所属机构
+	private String idtype;    //证件类型
+	private String idcode;    //证件号码
+	private String logindate;    //登录日期
+	private String logintime;    //登录时间
+	private int status;    //用户状态，0，已删除；1，正常；2，锁定
+	private int loginerror;    //连续登录失败次数
+	private String passwdvaliddate;    //密码失效日期
 
 	public Long getUserid() {
-		return userid;
+		return this.userid;
 	}
 
 	public void setUserid(Long userid) {
@@ -32,7 +32,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getUnioncode() {
-		return unioncode;
+		return this.unioncode;
 	}
 
 	public void setUnioncode(String unioncode) {
@@ -40,7 +40,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public void setUsername(String username) {
@@ -48,7 +48,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getLoginid() {
-		return loginid;
+		return this.loginid;
 	}
 
 	public void setLoginid(String loginid) {
@@ -56,7 +56,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getLoginpasswd() {
-		return loginpasswd;
+		return this.loginpasswd;
 	}
 
 	public void setLoginpasswd(String loginpasswd) {
@@ -64,7 +64,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getSalt() {
-		return salt;
+		return this.salt;
 	}
 
 	public void setSalt(String salt) {
@@ -72,7 +72,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getMobileno() {
-		return mobileno;
+		return this.mobileno;
 	}
 
 	public void setMobileno(String mobileno) {
@@ -80,23 +80,23 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public Integer getOrgid() {
-		return orgid;
+	public int getOrgid() {
+		return this.orgid;
 	}
 
-	public void setOrgid(Integer orgid) {
+	public void setOrgid(int orgid) {
 		this.orgid = orgid;
 	}
 
 	public String getIdtype() {
-		return idtype;
+		return this.idtype;
 	}
 
 	public void setIdtype(String idtype) {
@@ -104,7 +104,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getIdcode() {
-		return idcode;
+		return this.idcode;
 	}
 
 	public void setIdcode(String idcode) {
@@ -112,7 +112,7 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getLogindate() {
-		return logindate;
+		return this.logindate;
 	}
 
 	public void setLogindate(String logindate) {
@@ -120,43 +120,44 @@ public class SysUserReq extends BaseReqDto {
 	}
 
 	public String getLogintime() {
-		return logintime;
+		return this.logintime;
 	}
 
 	public void setLogintime(String logintime) {
 		this.logintime = logintime;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public int getStatus() {
+		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
-	public Integer getLoginerror() {
-		return loginerror;
+	public int getLoginerror() {
+		return this.loginerror;
 	}
 
-	public void setLoginerror(Integer loginerror) {
+	public void setLoginerror(int loginerror) {
 		this.loginerror = loginerror;
 	}
 
 	public String getPasswdvaliddate() {
-		return passwdvaliddate;
+		return this.passwdvaliddate;
 	}
 
 	public void setPasswdvaliddate(String passwdvaliddate) {
 		this.passwdvaliddate = passwdvaliddate;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getClass().getSimpleName());
-		sb.append(" [");
-		sb.append("Hash = ").append(hashCode());
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
 		sb.append(", userid=").append(userid);
 		sb.append(", unioncode=").append(unioncode);
 		sb.append(", username=").append(username);
@@ -173,7 +174,7 @@ public class SysUserReq extends BaseReqDto {
 		sb.append(", status=").append(status);
 		sb.append(", loginerror=").append(loginerror);
 		sb.append(", passwdvaliddate=").append(passwdvaliddate);
-		sb.append("]");
-		return sb.toString();
+        sb.append("]");
+        return sb.toString();
 	}
 }

@@ -81,6 +81,15 @@ public class CodeGenerator {
         return getConfig(key + "_package").trim();
     }
     
+    //文件存在是否覆盖，默认覆盖，除非明确配置 override=false
+    public boolean getOverride(String key){
+        String override = getConfig(key + "_override").trim();
+        if("false".equals(override)) {
+        	return false;
+        }
+        return true;
+    }
+    
     public String getOutput(String key){
         return getConfig(key + "_output").trim();
     }
@@ -172,15 +181,22 @@ public class CodeGenerator {
             params.put("table", table);            
             String[] types = getGenerateType().split(",");
             for(String type : types){
-                String template = type + ".ftl";
-                String pkg = getPackage(type);
-                //潜规则不要用！！！
+            	//潜规则不要用！！！
 //                if(table.getGroup() != null && !table.getGroup().equals("")){
 //                    pkg = pkg + "." + table.getGroup();
 //                }
-                params.put("package", pkg);
-                params.put(type + "_package", pkg);
+            	String pkg = getPackage(type);
+            	params.put("package", pkg);
+            	params.put(type + "_package", pkg);
                 outFile = getOutPath(getOutput(type), pkg, table.getCode() + getFilesuffix(type));
+                //若配置为不覆盖
+                if(this.getOverride(type) == false) {
+                	File f = new File(outFile);
+                	if(f.exists()) {
+                		continue;
+                	}
+                }
+                String template = type + ".ftl";
                 generate(template, params, outFile);
             }            
             System.out.println("---------生成 ["+table.getName() + "(" + table.getCode() + ")] 代码结束----------");

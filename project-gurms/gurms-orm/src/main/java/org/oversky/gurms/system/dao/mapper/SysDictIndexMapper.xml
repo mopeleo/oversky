@@ -8,10 +8,6 @@
         <result column="dictgroup" jdbcType="VARCHAR" property="dictgroup" />
         <result column="editflag" jdbcType="INTEGER" property="editflag" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}unioncode, ${tab}dictcode, ${tab}dictname, ${tab}dictgroup, ${tab}editflag
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
         insert into sys_dict_index (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -20,45 +16,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysDictIndex" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_dict_index
-		<where>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="dictcode != null ">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="dictname != null  and dictname !='' ">
-				and dictname = #{dictname, jdbcType=VARCHAR}
-			</if>
-			<if test="dictgroup != null  and dictgroup !='' ">
-				and dictgroup = #{dictgroup, jdbcType=VARCHAR}
-			</if>
-			<if test="editflag != null ">
-				and editflag = #{editflag, jdbcType=INTEGER}
-			</if>
-		</where>
+          from sys_dict_index 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
-        select count(1) from sys_dict_index
-		<where>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="dictcode != null ">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="dictname != null  and dictname !='' ">
-				and dictname = #{dictname, jdbcType=VARCHAR}
-			</if>
-			<if test="dictgroup != null  and dictgroup !='' ">
-				and dictgroup = #{dictgroup, jdbcType=VARCHAR}
-			</if>
-			<if test="editflag != null ">
-				and editflag = #{editflag, jdbcType=INTEGER}
-			</if>
-		</where>
+        select count(1) from sys_dict_index <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -79,12 +42,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_dict_index
-         where 1=1 and unioncode = #{0} and dictcode = #{1}
+         where unioncode = #{0} and dictcode = #{1}
     </select>
 
     <delete id="deleteById">
         delete from sys_dict_index
-         where 1=1 and unioncode = #{0} and dictcode = #{1}
+         where unioncode = #{0} and dictcode = #{1}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
@@ -92,7 +55,7 @@
                dictname = #{dictname, jdbcType=VARCHAR}, 
                dictgroup = #{dictgroup, jdbcType=VARCHAR}, 
                editflag = #{editflag, jdbcType=INTEGER}
-         where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER}
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
@@ -108,6 +71,30 @@
 				editflag = #{editflag, jdbcType=INTEGER},
 		    </if>
 		</set>
-		where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER}
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER}
 	</update>
+	
+	<sql id="column_list">
+        ${tab}unioncode, ${tab}dictcode, ${tab}dictname, ${tab}dictgroup, ${tab}editflag
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="dictcode != null">
+				and dictcode = #{dictcode, jdbcType=INTEGER}
+			</if>
+			<if test="dictname != null and dictname != ''">
+				and dictname = #{dictname, jdbcType=VARCHAR}
+			</if>
+			<if test="dictgroup != null and dictgroup != ''">
+				and dictgroup = #{dictgroup, jdbcType=VARCHAR}
+			</if>
+			<if test="editflag != null">
+				and editflag = #{editflag, jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
 </mapper>

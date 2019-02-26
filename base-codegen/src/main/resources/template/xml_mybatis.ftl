@@ -12,10 +12,6 @@
 	</#if>
 </#list>
     </resultMap>
-	
-	<sql id="column_list">
-        <#list table.columns as column>${r'${'}tab}${column.originCode}<#if column_has_next>, </#if></#list>
-	</sql>
   
     <insert id="insert" parameterType="${java_entity_package}.${table.code}">
         insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -24,25 +20,12 @@
   
     <select id="selectWhere" parameterType="${java_entity_package}.${table.code}" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from ${table.originCode?lower_case}
-		<where>
-<#list table.columns as column>
-			<if test="${column.code} != null <#if column.datatype == "string"> and ${column.code} !='' </#if>">
-				and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}
-			</if>
-</#list>
-		</where>
+          from ${table.originCode?lower_case} 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="${java_entity_package}.${table.code}">
-        select count(1) from ${table.originCode?lower_case}
-		<where>
-<#list table.columns as column>
-			<if test="${column.code} != null <#if column.datatype == "string"> and ${column.code} !='' </#if>">
-				and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}
-			</if>
-</#list>
-		</where>
+        select count(1) from ${table.originCode?lower_case} <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -64,12 +47,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
-         where 1=1<#list table.keys as column> and ${column.originCode} = #${r'{'}${column_index}}</#list>
+         where <#list table.keys as column>${column.originCode} = #${r'{'}${column_index}}<#if column_has_next> and </#if></#list>
     </select>
 
     <delete id="deleteById">
         delete from ${table.originCode?lower_case}
-         where 1=1<#list table.keys as column> and ${column.originCode} = #${r'{'}${column_index}}</#list>
+         where <#list table.keys as column>${column.originCode} = #${r'{'}${column_index}}<#if column_has_next> and </#if></#list>
     </delete>
   
 	<#if (table.colsExceptKey?size > 0)>
@@ -78,7 +61,7 @@
 		<#list table.colsExceptKey as column>
                ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if>
 		</#list>
-         where 1=1<#list table.keys as column> and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}</#list>
+		where <#list table.keys as column>${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next> and </#if></#list>
     </update>
 
 	<update id="dynamicUpdateById" parameterType="${java_entity_package}.${table.code}">
@@ -90,8 +73,22 @@
 		    </if>
 		</#list>
 		</set>
-		where 1=1<#list table.keys as column> and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}</#list>
+		where <#list table.keys as column>${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next> and </#if></#list>
 	</update>
 	</#if>
 </#if>
+	
+	<sql id="column_list">
+        <#list table.columns as column>${r'${'}tab}${column.originCode}<#if column_has_next>, </#if></#list>
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+<#list table.columns as column>
+			<if test="${column.code} != null<#if column.datatype == "string"> and ${column.code} != ''</#if>">
+				and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}
+			</if>
+</#list>
+		</where>
+	</sql>
 </mapper>

@@ -7,10 +7,6 @@
         <id column="itemcode" jdbcType="VARCHAR" property="itemcode" />
         <result column="itemname" jdbcType="VARCHAR" property="itemname" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}unioncode, ${tab}dictcode, ${tab}itemcode, ${tab}itemname
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysDictValue">
         insert into sys_dict_value (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -19,39 +15,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysDictValue" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_dict_value
-		<where>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="dictcode != null ">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="itemcode != null  and itemcode !='' ">
-				and itemcode = #{itemcode, jdbcType=VARCHAR}
-			</if>
-			<if test="itemname != null  and itemname !='' ">
-				and itemname = #{itemname, jdbcType=VARCHAR}
-			</if>
-		</where>
+          from sys_dict_value 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysDictValue">
-        select count(1) from sys_dict_value
-		<where>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="dictcode != null ">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="itemcode != null  and itemcode !='' ">
-				and itemcode = #{itemcode, jdbcType=VARCHAR}
-			</if>
-			<if test="itemname != null  and itemname !='' ">
-				and itemname = #{itemname, jdbcType=VARCHAR}
-			</if>
-		</where>
+        select count(1) from sys_dict_value <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -72,18 +41,18 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_dict_value
-         where 1=1 and unioncode = #{0} and dictcode = #{1} and itemcode = #{2}
+         where unioncode = #{0} and dictcode = #{1} and itemcode = #{2}
     </select>
 
     <delete id="deleteById">
         delete from sys_dict_value
-         where 1=1 and unioncode = #{0} and dictcode = #{1} and itemcode = #{2}
+         where unioncode = #{0} and dictcode = #{1} and itemcode = #{2}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysDictValue">
         update sys_dict_value set 
                itemname = #{itemname, jdbcType=VARCHAR}
-         where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysDictValue">
@@ -93,6 +62,27 @@
 				itemname = #{itemname, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
 	</update>
+	
+	<sql id="column_list">
+        ${tab}unioncode, ${tab}dictcode, ${tab}itemcode, ${tab}itemname
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="dictcode != null">
+				and dictcode = #{dictcode, jdbcType=INTEGER}
+			</if>
+			<if test="itemcode != null and itemcode != ''">
+				and itemcode = #{itemcode, jdbcType=VARCHAR}
+			</if>
+			<if test="itemname != null and itemname != ''">
+				and itemname = #{itemname, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
 </mapper>

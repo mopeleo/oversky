@@ -11,10 +11,6 @@
         <result column="logintype" jdbcType="INTEGER" property="logintype" />
         <result column="loginresult" jdbcType="INTEGER" property="loginresult" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}logid, ${tab}userid, ${tab}logindate, ${tab}logintime, ${tab}loginpasswd, ${tab}loginip, ${tab}logintype, ${tab}loginresult
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
         insert into sys_log_login (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -23,63 +19,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysLogLogin" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_log_login
-		<where>
-			<if test="logid != null ">
-				and logid = #{logid, jdbcType=DECIMAL}
-			</if>
-			<if test="userid != null ">
-				and userid = #{userid, jdbcType=DECIMAL}
-			</if>
-			<if test="logindate != null  and logindate !='' ">
-				and logindate = #{logindate, jdbcType=VARCHAR}
-			</if>
-			<if test="logintime != null  and logintime !='' ">
-				and logintime = #{logintime, jdbcType=VARCHAR}
-			</if>
-			<if test="loginpasswd != null  and loginpasswd !='' ">
-				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
-			</if>
-			<if test="loginip != null  and loginip !='' ">
-				and loginip = #{loginip, jdbcType=VARCHAR}
-			</if>
-			<if test="logintype != null ">
-				and logintype = #{logintype, jdbcType=INTEGER}
-			</if>
-			<if test="loginresult != null ">
-				and loginresult = #{loginresult, jdbcType=INTEGER}
-			</if>
-		</where>
+          from sys_log_login 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
-        select count(1) from sys_log_login
-		<where>
-			<if test="logid != null ">
-				and logid = #{logid, jdbcType=DECIMAL}
-			</if>
-			<if test="userid != null ">
-				and userid = #{userid, jdbcType=DECIMAL}
-			</if>
-			<if test="logindate != null  and logindate !='' ">
-				and logindate = #{logindate, jdbcType=VARCHAR}
-			</if>
-			<if test="logintime != null  and logintime !='' ">
-				and logintime = #{logintime, jdbcType=VARCHAR}
-			</if>
-			<if test="loginpasswd != null  and loginpasswd !='' ">
-				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
-			</if>
-			<if test="loginip != null  and loginip !='' ">
-				and loginip = #{loginip, jdbcType=VARCHAR}
-			</if>
-			<if test="logintype != null ">
-				and logintype = #{logintype, jdbcType=INTEGER}
-			</if>
-			<if test="loginresult != null ">
-				and loginresult = #{loginresult, jdbcType=INTEGER}
-			</if>
-		</where>
+        select count(1) from sys_log_login <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -100,12 +45,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_log_login
-         where 1=1 and logid = #{0}
+         where logid = #{0}
     </select>
 
     <delete id="deleteById">
         delete from sys_log_login
-         where 1=1 and logid = #{0}
+         where logid = #{0}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
@@ -117,7 +62,7 @@
                loginip = #{loginip, jdbcType=VARCHAR}, 
                logintype = #{logintype, jdbcType=INTEGER}, 
                loginresult = #{loginresult, jdbcType=INTEGER}
-         where 1=1 and logid = #{logid, jdbcType=DECIMAL}
+		where logid = #{logid, jdbcType=DECIMAL}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
@@ -145,6 +90,39 @@
 				loginresult = #{loginresult, jdbcType=INTEGER},
 		    </if>
 		</set>
-		where 1=1 and logid = #{logid, jdbcType=DECIMAL}
+		where logid = #{logid, jdbcType=DECIMAL}
 	</update>
+	
+	<sql id="column_list">
+        ${tab}logid, ${tab}userid, ${tab}logindate, ${tab}logintime, ${tab}loginpasswd, ${tab}loginip, ${tab}logintype, ${tab}loginresult
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="logid != null">
+				and logid = #{logid, jdbcType=DECIMAL}
+			</if>
+			<if test="userid != null">
+				and userid = #{userid, jdbcType=DECIMAL}
+			</if>
+			<if test="logindate != null and logindate != ''">
+				and logindate = #{logindate, jdbcType=VARCHAR}
+			</if>
+			<if test="logintime != null and logintime != ''">
+				and logintime = #{logintime, jdbcType=VARCHAR}
+			</if>
+			<if test="loginpasswd != null and loginpasswd != ''">
+				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
+			</if>
+			<if test="loginip != null and loginip != ''">
+				and loginip = #{loginip, jdbcType=VARCHAR}
+			</if>
+			<if test="logintype != null">
+				and logintype = #{logintype, jdbcType=INTEGER}
+			</if>
+			<if test="loginresult != null">
+				and loginresult = #{loginresult, jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
 </mapper>

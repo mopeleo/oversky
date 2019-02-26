@@ -19,10 +19,6 @@
         <result column="loginerror" jdbcType="INTEGER" property="loginerror" />
         <result column="passwdvaliddate" jdbcType="VARCHAR" property="passwdvaliddate" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}userid, ${tab}unioncode, ${tab}username, ${tab}loginid, ${tab}loginpasswd, ${tab}salt, ${tab}mobileno, ${tab}email, ${tab}orgid, ${tab}idtype, ${tab}idcode, ${tab}logindate, ${tab}logintime, ${tab}status, ${tab}loginerror, ${tab}passwdvaliddate
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUser">
         insert into sys_user (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -31,111 +27,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUser" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_user
-		<where>
-			<if test="userid != null ">
-				and userid = #{userid, jdbcType=DECIMAL}
-			</if>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="username != null  and username !='' ">
-				and username = #{username, jdbcType=VARCHAR}
-			</if>
-			<if test="loginid != null  and loginid !='' ">
-				and loginid = #{loginid, jdbcType=VARCHAR}
-			</if>
-			<if test="loginpasswd != null  and loginpasswd !='' ">
-				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
-			</if>
-			<if test="salt != null  and salt !='' ">
-				and salt = #{salt, jdbcType=VARCHAR}
-			</if>
-			<if test="mobileno != null  and mobileno !='' ">
-				and mobileno = #{mobileno, jdbcType=VARCHAR}
-			</if>
-			<if test="email != null  and email !='' ">
-				and email = #{email, jdbcType=VARCHAR}
-			</if>
-			<if test="orgid != null ">
-				and orgid = #{orgid, jdbcType=INTEGER}
-			</if>
-			<if test="idtype != null  and idtype !='' ">
-				and idtype = #{idtype, jdbcType=VARCHAR}
-			</if>
-			<if test="idcode != null  and idcode !='' ">
-				and idcode = #{idcode, jdbcType=VARCHAR}
-			</if>
-			<if test="logindate != null  and logindate !='' ">
-				and logindate = #{logindate, jdbcType=VARCHAR}
-			</if>
-			<if test="logintime != null  and logintime !='' ">
-				and logintime = #{logintime, jdbcType=VARCHAR}
-			</if>
-			<if test="status != null ">
-				and status = #{status, jdbcType=INTEGER}
-			</if>
-			<if test="loginerror != null ">
-				and loginerror = #{loginerror, jdbcType=INTEGER}
-			</if>
-			<if test="passwdvaliddate != null  and passwdvaliddate !='' ">
-				and passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
-			</if>
-		</where>
+          from sys_user 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysUser">
-        select count(1) from sys_user
-		<where>
-			<if test="userid != null ">
-				and userid = #{userid, jdbcType=DECIMAL}
-			</if>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="username != null  and username !='' ">
-				and username = #{username, jdbcType=VARCHAR}
-			</if>
-			<if test="loginid != null  and loginid !='' ">
-				and loginid = #{loginid, jdbcType=VARCHAR}
-			</if>
-			<if test="loginpasswd != null  and loginpasswd !='' ">
-				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
-			</if>
-			<if test="salt != null  and salt !='' ">
-				and salt = #{salt, jdbcType=VARCHAR}
-			</if>
-			<if test="mobileno != null  and mobileno !='' ">
-				and mobileno = #{mobileno, jdbcType=VARCHAR}
-			</if>
-			<if test="email != null  and email !='' ">
-				and email = #{email, jdbcType=VARCHAR}
-			</if>
-			<if test="orgid != null ">
-				and orgid = #{orgid, jdbcType=INTEGER}
-			</if>
-			<if test="idtype != null  and idtype !='' ">
-				and idtype = #{idtype, jdbcType=VARCHAR}
-			</if>
-			<if test="idcode != null  and idcode !='' ">
-				and idcode = #{idcode, jdbcType=VARCHAR}
-			</if>
-			<if test="logindate != null  and logindate !='' ">
-				and logindate = #{logindate, jdbcType=VARCHAR}
-			</if>
-			<if test="logintime != null  and logintime !='' ">
-				and logintime = #{logintime, jdbcType=VARCHAR}
-			</if>
-			<if test="status != null ">
-				and status = #{status, jdbcType=INTEGER}
-			</if>
-			<if test="loginerror != null ">
-				and loginerror = #{loginerror, jdbcType=INTEGER}
-			</if>
-			<if test="passwdvaliddate != null  and passwdvaliddate !='' ">
-				and passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
-			</if>
-		</where>
+        select count(1) from sys_user <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -156,12 +53,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user
-         where 1=1 and userid = #{0}
+         where userid = #{0}
     </select>
 
     <delete id="deleteById">
         delete from sys_user
-         where 1=1 and userid = #{0}
+         where userid = #{0}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysUser">
@@ -181,7 +78,7 @@
                status = #{status, jdbcType=INTEGER}, 
                loginerror = #{loginerror, jdbcType=INTEGER}, 
                passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
-         where 1=1 and userid = #{userid, jdbcType=DECIMAL}
+		where userid = #{userid, jdbcType=DECIMAL}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysUser">
@@ -233,6 +130,63 @@
 				passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where 1=1 and userid = #{userid, jdbcType=DECIMAL}
+		where userid = #{userid, jdbcType=DECIMAL}
 	</update>
+	
+	<sql id="column_list">
+        ${tab}userid, ${tab}unioncode, ${tab}username, ${tab}loginid, ${tab}loginpasswd, ${tab}salt, ${tab}mobileno, ${tab}email, ${tab}orgid, ${tab}idtype, ${tab}idcode, ${tab}logindate, ${tab}logintime, ${tab}status, ${tab}loginerror, ${tab}passwdvaliddate
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="userid != null">
+				and userid = #{userid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="username != null and username != ''">
+				and username = #{username, jdbcType=VARCHAR}
+			</if>
+			<if test="loginid != null and loginid != ''">
+				and loginid = #{loginid, jdbcType=VARCHAR}
+			</if>
+			<if test="loginpasswd != null and loginpasswd != ''">
+				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
+			</if>
+			<if test="salt != null and salt != ''">
+				and salt = #{salt, jdbcType=VARCHAR}
+			</if>
+			<if test="mobileno != null and mobileno != ''">
+				and mobileno = #{mobileno, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="orgid != null">
+				and orgid = #{orgid, jdbcType=INTEGER}
+			</if>
+			<if test="idtype != null and idtype != ''">
+				and idtype = #{idtype, jdbcType=VARCHAR}
+			</if>
+			<if test="idcode != null and idcode != ''">
+				and idcode = #{idcode, jdbcType=VARCHAR}
+			</if>
+			<if test="logindate != null and logindate != ''">
+				and logindate = #{logindate, jdbcType=VARCHAR}
+			</if>
+			<if test="logintime != null and logintime != ''">
+				and logintime = #{logintime, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and status = #{status, jdbcType=INTEGER}
+			</if>
+			<if test="loginerror != null">
+				and loginerror = #{loginerror, jdbcType=INTEGER}
+			</if>
+			<if test="passwdvaliddate != null and passwdvaliddate != ''">
+				and passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
 </mapper>

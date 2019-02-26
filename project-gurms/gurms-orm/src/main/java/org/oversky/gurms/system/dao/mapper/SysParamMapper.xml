@@ -6,10 +6,6 @@
         <id column="paramid" jdbcType="INTEGER" property="paramid" />
         <result column="paramvalue" jdbcType="VARCHAR" property="paramvalue" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}unioncode, ${tab}paramid, ${tab}paramvalue
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParam">
         insert into sys_param (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -18,33 +14,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParam" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_param
-		<where>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="paramid != null ">
-				and paramid = #{paramid, jdbcType=INTEGER}
-			</if>
-			<if test="paramvalue != null  and paramvalue !='' ">
-				and paramvalue = #{paramvalue, jdbcType=VARCHAR}
-			</if>
-		</where>
+          from sys_param 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParam">
-        select count(1) from sys_param
-		<where>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="paramid != null ">
-				and paramid = #{paramid, jdbcType=INTEGER}
-			</if>
-			<if test="paramvalue != null  and paramvalue !='' ">
-				and paramvalue = #{paramvalue, jdbcType=VARCHAR}
-			</if>
-		</where>
+        select count(1) from sys_param <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -65,18 +40,18 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param
-         where 1=1 and unioncode = #{0} and paramid = #{1}
+         where unioncode = #{0} and paramid = #{1}
     </select>
 
     <delete id="deleteById">
         delete from sys_param
-         where 1=1 and unioncode = #{0} and paramid = #{1}
+         where unioncode = #{0} and paramid = #{1}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysParam">
         update sys_param set 
                paramvalue = #{paramvalue, jdbcType=VARCHAR}
-         where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and paramid = #{paramid, jdbcType=INTEGER}
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and paramid = #{paramid, jdbcType=INTEGER}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysParam">
@@ -86,6 +61,24 @@
 				paramvalue = #{paramvalue, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where 1=1 and unioncode = #{unioncode, jdbcType=VARCHAR} and paramid = #{paramid, jdbcType=INTEGER}
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and paramid = #{paramid, jdbcType=INTEGER}
 	</update>
+	
+	<sql id="column_list">
+        ${tab}unioncode, ${tab}paramid, ${tab}paramvalue
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="paramid != null">
+				and paramid = #{paramid, jdbcType=INTEGER}
+			</if>
+			<if test="paramvalue != null and paramvalue != ''">
+				and paramvalue = #{paramvalue, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
 </mapper>

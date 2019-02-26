@@ -12,10 +12,6 @@
         <result column="initvalue" jdbcType="VARCHAR" property="initvalue" />
         <result column="valuelength" jdbcType="INTEGER" property="valuelength" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}paramid, ${tab}paramname, ${tab}texttitle, ${tab}texttail, ${tab}distype, ${tab}dictcode, ${tab}valuelist, ${tab}initvalue, ${tab}valuelength
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParamExt">
         insert into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -24,69 +20,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParamExt" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_param_ext
-		<where>
-			<if test="paramid != null ">
-				and paramid = #{paramid, jdbcType=INTEGER}
-			</if>
-			<if test="paramname != null  and paramname !='' ">
-				and paramname = #{paramname, jdbcType=VARCHAR}
-			</if>
-			<if test="texttitle != null  and texttitle !='' ">
-				and texttitle = #{texttitle, jdbcType=VARCHAR}
-			</if>
-			<if test="texttail != null  and texttail !='' ">
-				and texttail = #{texttail, jdbcType=VARCHAR}
-			</if>
-			<if test="distype != null ">
-				and distype = #{distype, jdbcType=INTEGER}
-			</if>
-			<if test="dictcode != null ">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="valuelist != null  and valuelist !='' ">
-				and valuelist = #{valuelist, jdbcType=VARCHAR}
-			</if>
-			<if test="initvalue != null  and initvalue !='' ">
-				and initvalue = #{initvalue, jdbcType=VARCHAR}
-			</if>
-			<if test="valuelength != null ">
-				and valuelength = #{valuelength, jdbcType=INTEGER}
-			</if>
-		</where>
+          from sys_param_ext 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParamExt">
-        select count(1) from sys_param_ext
-		<where>
-			<if test="paramid != null ">
-				and paramid = #{paramid, jdbcType=INTEGER}
-			</if>
-			<if test="paramname != null  and paramname !='' ">
-				and paramname = #{paramname, jdbcType=VARCHAR}
-			</if>
-			<if test="texttitle != null  and texttitle !='' ">
-				and texttitle = #{texttitle, jdbcType=VARCHAR}
-			</if>
-			<if test="texttail != null  and texttail !='' ">
-				and texttail = #{texttail, jdbcType=VARCHAR}
-			</if>
-			<if test="distype != null ">
-				and distype = #{distype, jdbcType=INTEGER}
-			</if>
-			<if test="dictcode != null ">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="valuelist != null  and valuelist !='' ">
-				and valuelist = #{valuelist, jdbcType=VARCHAR}
-			</if>
-			<if test="initvalue != null  and initvalue !='' ">
-				and initvalue = #{initvalue, jdbcType=VARCHAR}
-			</if>
-			<if test="valuelength != null ">
-				and valuelength = #{valuelength, jdbcType=INTEGER}
-			</if>
-		</where>
+        select count(1) from sys_param_ext <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -107,12 +46,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param_ext
-         where 1=1 and paramid = #{0}
+         where paramid = #{0}
     </select>
 
     <delete id="deleteById">
         delete from sys_param_ext
-         where 1=1 and paramid = #{0}
+         where paramid = #{0}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysParamExt">
@@ -125,7 +64,7 @@
                valuelist = #{valuelist, jdbcType=VARCHAR}, 
                initvalue = #{initvalue, jdbcType=VARCHAR}, 
                valuelength = #{valuelength, jdbcType=INTEGER}
-         where 1=1 and paramid = #{paramid, jdbcType=INTEGER}
+		where paramid = #{paramid, jdbcType=INTEGER}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysParamExt">
@@ -156,6 +95,42 @@
 				valuelength = #{valuelength, jdbcType=INTEGER},
 		    </if>
 		</set>
-		where 1=1 and paramid = #{paramid, jdbcType=INTEGER}
+		where paramid = #{paramid, jdbcType=INTEGER}
 	</update>
+	
+	<sql id="column_list">
+        ${tab}paramid, ${tab}paramname, ${tab}texttitle, ${tab}texttail, ${tab}distype, ${tab}dictcode, ${tab}valuelist, ${tab}initvalue, ${tab}valuelength
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="paramid != null">
+				and paramid = #{paramid, jdbcType=INTEGER}
+			</if>
+			<if test="paramname != null and paramname != ''">
+				and paramname = #{paramname, jdbcType=VARCHAR}
+			</if>
+			<if test="texttitle != null and texttitle != ''">
+				and texttitle = #{texttitle, jdbcType=VARCHAR}
+			</if>
+			<if test="texttail != null and texttail != ''">
+				and texttail = #{texttail, jdbcType=VARCHAR}
+			</if>
+			<if test="distype != null">
+				and distype = #{distype, jdbcType=INTEGER}
+			</if>
+			<if test="dictcode != null">
+				and dictcode = #{dictcode, jdbcType=INTEGER}
+			</if>
+			<if test="valuelist != null and valuelist != ''">
+				and valuelist = #{valuelist, jdbcType=VARCHAR}
+			</if>
+			<if test="initvalue != null and initvalue != ''">
+				and initvalue = #{initvalue, jdbcType=VARCHAR}
+			</if>
+			<if test="valuelength != null">
+				and valuelength = #{valuelength, jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
 </mapper>

@@ -16,10 +16,6 @@
         <result column="orgtype" jdbcType="INTEGER" property="orgtype" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}orgid, ${tab}unioncode, ${tab}shortname, ${tab}fullname, ${tab}linkman, ${tab}linktel, ${tab}faxno, ${tab}address, ${tab}postcode, ${tab}email, ${tab}parentorg, ${tab}orgtype, ${tab}remark
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysOrg">
         insert into sys_org (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -28,93 +24,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysOrg" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_org
-		<where>
-			<if test="orgid != null ">
-				and orgid = #{orgid, jdbcType=INTEGER}
-			</if>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="shortname != null  and shortname !='' ">
-				and shortname = #{shortname, jdbcType=VARCHAR}
-			</if>
-			<if test="fullname != null  and fullname !='' ">
-				and fullname = #{fullname, jdbcType=VARCHAR}
-			</if>
-			<if test="linkman != null  and linkman !='' ">
-				and linkman = #{linkman, jdbcType=VARCHAR}
-			</if>
-			<if test="linktel != null  and linktel !='' ">
-				and linktel = #{linktel, jdbcType=VARCHAR}
-			</if>
-			<if test="faxno != null  and faxno !='' ">
-				and faxno = #{faxno, jdbcType=VARCHAR}
-			</if>
-			<if test="address != null  and address !='' ">
-				and address = #{address, jdbcType=VARCHAR}
-			</if>
-			<if test="postcode != null  and postcode !='' ">
-				and postcode = #{postcode, jdbcType=VARCHAR}
-			</if>
-			<if test="email != null  and email !='' ">
-				and email = #{email, jdbcType=VARCHAR}
-			</if>
-			<if test="parentorg != null ">
-				and parentorg = #{parentorg, jdbcType=INTEGER}
-			</if>
-			<if test="orgtype != null ">
-				and orgtype = #{orgtype, jdbcType=INTEGER}
-			</if>
-			<if test="remark != null  and remark !='' ">
-				and remark = #{remark, jdbcType=VARCHAR}
-			</if>
-		</where>
+          from sys_org 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysOrg">
-        select count(1) from sys_org
-		<where>
-			<if test="orgid != null ">
-				and orgid = #{orgid, jdbcType=INTEGER}
-			</if>
-			<if test="unioncode != null  and unioncode !='' ">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
-			<if test="shortname != null  and shortname !='' ">
-				and shortname = #{shortname, jdbcType=VARCHAR}
-			</if>
-			<if test="fullname != null  and fullname !='' ">
-				and fullname = #{fullname, jdbcType=VARCHAR}
-			</if>
-			<if test="linkman != null  and linkman !='' ">
-				and linkman = #{linkman, jdbcType=VARCHAR}
-			</if>
-			<if test="linktel != null  and linktel !='' ">
-				and linktel = #{linktel, jdbcType=VARCHAR}
-			</if>
-			<if test="faxno != null  and faxno !='' ">
-				and faxno = #{faxno, jdbcType=VARCHAR}
-			</if>
-			<if test="address != null  and address !='' ">
-				and address = #{address, jdbcType=VARCHAR}
-			</if>
-			<if test="postcode != null  and postcode !='' ">
-				and postcode = #{postcode, jdbcType=VARCHAR}
-			</if>
-			<if test="email != null  and email !='' ">
-				and email = #{email, jdbcType=VARCHAR}
-			</if>
-			<if test="parentorg != null ">
-				and parentorg = #{parentorg, jdbcType=INTEGER}
-			</if>
-			<if test="orgtype != null ">
-				and orgtype = #{orgtype, jdbcType=INTEGER}
-			</if>
-			<if test="remark != null  and remark !='' ">
-				and remark = #{remark, jdbcType=VARCHAR}
-			</if>
-		</where>
+        select count(1) from sys_org <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -135,12 +50,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_org
-         where 1=1 and orgid = #{0}
+         where orgid = #{0}
     </select>
 
     <delete id="deleteById">
         delete from sys_org
-         where 1=1 and orgid = #{0}
+         where orgid = #{0}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysOrg">
@@ -157,7 +72,7 @@
                parentorg = #{parentorg, jdbcType=INTEGER}, 
                orgtype = #{orgtype, jdbcType=INTEGER}, 
                remark = #{remark, jdbcType=VARCHAR}
-         where 1=1 and orgid = #{orgid, jdbcType=INTEGER}
+		where orgid = #{orgid, jdbcType=INTEGER}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysOrg">
@@ -200,6 +115,54 @@
 				remark = #{remark, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where 1=1 and orgid = #{orgid, jdbcType=INTEGER}
+		where orgid = #{orgid, jdbcType=INTEGER}
 	</update>
+	
+	<sql id="column_list">
+        ${tab}orgid, ${tab}unioncode, ${tab}shortname, ${tab}fullname, ${tab}linkman, ${tab}linktel, ${tab}faxno, ${tab}address, ${tab}postcode, ${tab}email, ${tab}parentorg, ${tab}orgtype, ${tab}remark
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="orgid != null">
+				and orgid = #{orgid, jdbcType=INTEGER}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="shortname != null and shortname != ''">
+				and shortname = #{shortname, jdbcType=VARCHAR}
+			</if>
+			<if test="fullname != null and fullname != ''">
+				and fullname = #{fullname, jdbcType=VARCHAR}
+			</if>
+			<if test="linkman != null and linkman != ''">
+				and linkman = #{linkman, jdbcType=VARCHAR}
+			</if>
+			<if test="linktel != null and linktel != ''">
+				and linktel = #{linktel, jdbcType=VARCHAR}
+			</if>
+			<if test="faxno != null and faxno != ''">
+				and faxno = #{faxno, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null and address != ''">
+				and address = #{address, jdbcType=VARCHAR}
+			</if>
+			<if test="postcode != null and postcode != ''">
+				and postcode = #{postcode, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="parentorg != null">
+				and parentorg = #{parentorg, jdbcType=INTEGER}
+			</if>
+			<if test="orgtype != null">
+				and orgtype = #{orgtype, jdbcType=INTEGER}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
 </mapper>

@@ -5,10 +5,6 @@
         <id column="userid" jdbcType="DECIMAL" property="userid" />
         <id column="roleid" jdbcType="INTEGER" property="roleid" />
     </resultMap>
-	
-	<sql id="column_list">
-        ${tab}userid, ${tab}roleid
-	</sql>
   
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserRole">
         insert into sys_user_role (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -17,27 +13,12 @@
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUserRole" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_user_role
-		<where>
-			<if test="userid != null ">
-				and userid = #{userid, jdbcType=DECIMAL}
-			</if>
-			<if test="roleid != null ">
-				and roleid = #{roleid, jdbcType=INTEGER}
-			</if>
-		</where>
+          from sys_user_role 
+          <include refid="where_all_list" />
     </select>
 
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysUserRole">
-        select count(1) from sys_user_role
-		<where>
-			<if test="userid != null ">
-				and userid = #{userid, jdbcType=DECIMAL}
-			</if>
-			<if test="roleid != null ">
-				and roleid = #{roleid, jdbcType=INTEGER}
-			</if>
-		</where>
+        select count(1) from sys_user_role <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -58,12 +39,27 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user_role
-         where 1=1 and userid = #{0} and roleid = #{1}
+         where userid = #{0} and roleid = #{1}
     </select>
 
     <delete id="deleteById">
         delete from sys_user_role
-         where 1=1 and userid = #{0} and roleid = #{1}
+         where userid = #{0} and roleid = #{1}
     </delete>
   
+	
+	<sql id="column_list">
+        ${tab}userid, ${tab}roleid
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="userid != null">
+				and userid = #{userid, jdbcType=DECIMAL}
+			</if>
+			<if test="roleid != null">
+				and roleid = #{roleid, jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
 </mapper>
