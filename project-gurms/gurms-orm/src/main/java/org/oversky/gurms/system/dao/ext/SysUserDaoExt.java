@@ -3,7 +3,11 @@ package org.oversky.gurms.system.dao.ext;
 import java.util.List;
 import java.util.Map;
 
+import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
+
 public interface SysUserDaoExt {
 
-	List<Map<String, Object>> getUserRole(Map<String, Object> query);
+	List<Map<String, Object>> getUserRoles(Map<String, Object> query);
+	
+	SysUserBO getUserRolesAndMenus(Long userid);
 }

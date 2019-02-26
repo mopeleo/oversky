@@ -1,7 +1,6 @@
 package org.oversky.gurms.system.service.test;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
+import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.service.SysUserService;
@@ -62,16 +62,26 @@ public class SysUserServiceTest {
 	public void testDaoExt() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userid", 1L);
-		List<Map<String, Object>> list = userDaoExt.getUserRole(map);
+		List<Map<String, Object>> list = userDaoExt.getUserRoles(map);
 		for(Map<String, Object> result : list) {
 			result.forEach((k, v) -> {
 				System.out.print(k + ":" + v + ", ");
 			});
-			for(Map.Entry<String, Object> entry : result.entrySet()) {
-				System.out.print(entry.getKey() + ":" + entry.getValue() + ", ");
-			}
+//			for(Map.Entry<String, Object> entry : result.entrySet()) {
+//				System.out.print(entry.getKey() + ":" + entry.getValue() + ", ");
+//			}
 			System.out.println();
 		}
+	}
+	
+	@Test
+	public void testGetUserRolesAndMenus() {
+		System.out.println("-----------begin  testGetUserRolesAndMenus------------");
+		SysUserBO bo = userDaoExt.getUserRolesAndMenus(1L);
+		System.out.println(bo.getSysorg().getShortname());
+		System.out.println(bo.getRoles().size());
+		System.out.println(bo.getMenus().size());
+		System.out.println("-----------end  testGetUserRolesAndMenus------------");
 	}
 	
 	@Test
