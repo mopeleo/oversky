@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.oversky.base.service.BaseResListDto;
 import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
@@ -50,12 +51,11 @@ public class SysUserServiceTest {
 	}
 	
 	@Test
-	public void query() {
+	public void getById() {
 		SysUserReq userDto = new SysUserReq();
 		userDto.setUserid(2L);
 		List<SysUserRes> res = sysUserService.find(userDto);
 		Assert.assertSame("不一样呀", 1, res.size());
-		System.out.println(res);
 	}
 	
 	@Test
@@ -71,6 +71,19 @@ public class SysUserServiceTest {
 				System.out.print(entry.getKey() + ":" + entry.getValue() + ", ");
 			}
 			System.out.println();
+		}
+	}
+	
+	@Test
+	public void testPage() {
+		SysUserReq userDto = new SysUserReq();
+		userDto.setPageNum(2);
+		userDto.setPageSize(5);
+		BaseResListDto<SysUserRes> res = sysUserService.pageSysUser(userDto);
+		System.out.println(res);
+		System.out.println("-----------------------");
+		for(SysUserRes user :  res.getResults()) {
+			System.out.println(user);
 		}
 	}
 	
