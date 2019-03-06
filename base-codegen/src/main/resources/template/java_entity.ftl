@@ -34,6 +34,12 @@ public class ${table.code} extends BaseEntity{
         StringBuilder build = new StringBuilder("${table.code}");
         return build<#list table.keys as column>.append("#").append(${column.code})</#list>.toString();
     }
+    
+    public void copyPrimaryKey(${table.code} entity){
+	<#list table.keys as column>
+		this.${column.code} = entity.get${column.code?cap_first}();
+	</#list>    	
+    }
 </#if>
 
 	@Override

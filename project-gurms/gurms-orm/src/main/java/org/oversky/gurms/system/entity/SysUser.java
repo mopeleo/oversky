@@ -160,6 +160,10 @@ public class SysUser extends BaseEntity{
         StringBuilder build = new StringBuilder("SysUser");
         return build.append("#").append(userid).toString();
     }
+    
+    public void copyPrimaryKey(SysUser entity){
+		this.userid = entity.getUserid();
+    }
 
 	@Override
     public String toString() {

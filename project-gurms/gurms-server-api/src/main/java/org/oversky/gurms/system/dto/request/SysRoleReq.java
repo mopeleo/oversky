@@ -7,13 +7,13 @@ public class SysRoleReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private String unioncode;    //unioncode
-	private Long roleid;    //角色ID
+	private Integer roleid;    //角色ID
 	private String rolename;    //角色名称
-	private int status;    //角色状态，0-无效，1-有效
-	private int roletype;    //角色类型，0-公共，1-私有
+	private Integer status;    //角色状态，0-无效，1-有效
+	private Integer roletype;    //角色类型，0-公共，1-私有
 	private String startdate;    //角色生效日期
 	private String enddate;    //角色失效日期
-	private long creator;    //创建人
+	private Long creator;    //创建人
 
 	public String getUnioncode() {
 		return this.unioncode;
@@ -23,11 +23,11 @@ public class SysRoleReq extends BaseReqDto {
 		this.unioncode = unioncode;
 	}
 
-	public Long getRoleid() {
+	public Integer getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Long roleid) {
+	public void setRoleid(Integer roleid) {
 		this.roleid = roleid;
 	}
 
@@ -39,19 +39,19 @@ public class SysRoleReq extends BaseReqDto {
 		this.rolename = rolename;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public int getRoletype() {
+	public Integer getRoletype() {
 		return this.roletype;
 	}
 
-	public void setRoletype(int roletype) {
+	public void setRoletype(Integer roletype) {
 		this.roletype = roletype;
 	}
 
@@ -71,11 +71,11 @@ public class SysRoleReq extends BaseReqDto {
 		this.enddate = enddate;
 	}
 
-	public long getCreator() {
+	public Long getCreator() {
 		return this.creator;
 	}
 
-	public void setCreator(long creator) {
+	public void setCreator(Long creator) {
 		this.creator = creator;
 	}
 

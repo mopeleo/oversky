@@ -34,6 +34,11 @@ public class SysUserRole extends BaseEntity{
         StringBuilder build = new StringBuilder("SysUserRole");
         return build.append("#").append(userid).append("#").append(roleid).toString();
     }
+    
+    public void copyPrimaryKey(SysUserRole entity){
+		this.userid = entity.getUserid();
+		this.roleid = entity.getRoleid();
+    }
 
 	@Override
     public String toString() {

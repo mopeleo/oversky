@@ -6,21 +6,21 @@ public class SysParamExtRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long paramid;    //参数ID
+	private Integer paramid;    //参数ID
 	private String paramname;    //参数名称
 	private String texttitle;    //描述头
 	private String texttail;    //描述尾
-	private int distype;    //0 text 无法修改；1 input 可以修改；2 select 可以修改
-	private int dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
+	private Integer distype;    //0 text 无法修改；1 input 可以修改；2 select 可以修改
+	private Integer dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
 	private String valuelist;    //控件显示的值列表，如“0|否;1|是”
 	private String initvalue;    //初始值
-	private int valuelength;    //输入值长度
+	private Integer valuelength;    //输入值长度
 
-	public Long getParamid() {
+	public Integer getParamid() {
 		return this.paramid;
 	}
 
-	public void setParamid(Long paramid) {
+	public void setParamid(Integer paramid) {
 		this.paramid = paramid;
 	}
 
@@ -48,19 +48,19 @@ public class SysParamExtRes extends BaseResDto {
 		this.texttail = texttail;
 	}
 
-	public int getDistype() {
+	public Integer getDistype() {
 		return this.distype;
 	}
 
-	public void setDistype(int distype) {
+	public void setDistype(Integer distype) {
 		this.distype = distype;
 	}
 
-	public int getDictcode() {
+	public Integer getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(int dictcode) {
+	public void setDictcode(Integer dictcode) {
 		this.dictcode = dictcode;
 	}
 
@@ -80,11 +80,11 @@ public class SysParamExtRes extends BaseResDto {
 		this.initvalue = initvalue;
 	}
 
-	public int getValuelength() {
+	public Integer getValuelength() {
 		return this.valuelength;
 	}
 
-	public void setValuelength(int valuelength) {
+	public void setValuelength(Integer valuelength) {
 		this.valuelength = valuelength;
 	}
 

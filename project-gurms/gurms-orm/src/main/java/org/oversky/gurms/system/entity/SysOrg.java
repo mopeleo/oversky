@@ -133,6 +133,10 @@ public class SysOrg extends BaseEntity{
         StringBuilder build = new StringBuilder("SysOrg");
         return build.append("#").append(orgid).toString();
     }
+    
+    public void copyPrimaryKey(SysOrg entity){
+		this.orgid = entity.getOrgid();
+    }
 
 	@Override
     public String toString() {

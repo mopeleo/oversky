@@ -62,7 +62,7 @@ public class SysUserServiceTest {
 	public void testDaoExt() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userid", 1L);
-		List<Map<String, Object>> list = userDaoExt.getUserRoles(map);
+		List<Map<String, Object>> list = userDaoExt.testUserRoles(map);
 		for(Map<String, Object> result : list) {
 			result.forEach((k, v) -> {
 				System.out.print(k + ":" + v + ", ");

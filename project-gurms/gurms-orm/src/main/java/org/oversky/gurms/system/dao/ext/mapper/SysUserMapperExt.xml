@@ -8,8 +8,9 @@
         <result column="username" jdbcType="VARCHAR" property="username" />
         <result column="loginid" jdbcType="VARCHAR" property="loginid" />
         <!-- 关联结果 -->
-        <association property="sysorg" javaType="org.oversky.gurms.system.entity.SysOrg" resultMap="org.oversky.gurms.system.dao.SysOrgDao.BaseResultMap"/>
+        <association property="sysorg" javaType="org.oversky.gurms.system.entity.SysOrg" resultMap="org.oversky.gurms.system.dao.SysOrgDao.BaseResultMap" />
         <!-- 嵌套结果 -->
+        <!-- 
         <collection property="roles" ofType="org.oversky.gurms.system.entity.SysRole" > 
 	        <id column="roleid" jdbcType="INTEGER" property="roleid" />
 	        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
@@ -20,19 +21,26 @@
 	        <result column="enddate" jdbcType="VARCHAR" property="enddate" />
 	        <result column="creator" jdbcType="DECIMAL" property="creator" />
     	</collection>
+    	 -->
         <!-- 嵌套查询 -->
-        <collection column="{m_userid=userid}" property="menus" select="getUserMenus" ofType="org.oversky.gurms.system.entity.SysMenu" > 
-    	</collection>
+        <collection column="{m_userid=userid}" property="menus" select="getUserMenus" ofType="org.oversky.gurms.system.entity.SysMenu" /> 
+        <collection column="{m_userid=userid}" property="roles" select="getUserRoles" ofType="org.oversky.gurms.system.entity.SysRole" /> 
 	</resultMap> 
 
 	<sql id="sysuser_column_list">
         <include refid="org.oversky.gurms.system.dao.SysUserDao.column_list"><property name="tab" value="a."/></include>
 	</sql>
   
-    <select id="getUserRoles" parameterType="hashmap" resultType="hashmap">
+    <select id="testUserRoles" parameterType="hashmap" resultType="hashmap">
 		select <include refid="sysuser_column_list"/> ,c.roleid, c.rolename
 		  from sys_user a, sys_user_role b, sys_role c 
 		 where a.userid = b.userid and b.roleid = c.roleid and a.userid = #{userid} 
+    </select>
+  
+    <select id="getUserRolesAndMenus" resultMap="map_getUserRolesAndMenus">
+		select a.userid,a.unioncode,a.loginid,a.username,b.*
+		  from sys_user a, sys_org b
+		 where a.orgid = b.orgid and a.userid = #{userid} 
     </select>
   
     <select id="getUserMenus" resultMap="org.oversky.gurms.system.dao.SysMenuDao.BaseResultMap">
@@ -41,18 +49,16 @@
 		 where exists (
 		 	   select 1 from sys_role_menu b where a.menuid= b.menuid and exists (
 		 	   		  select 1 from sys_role c where b.roleid = c.roleid and exists (
-		 	   		  		 select 1 from sys_user_role d where c.roleid = d.roleid and exists (
-		 	   		  		 		select 1 from sys_user e where d.userid = e.userid and e.userid = #{m_userid} 
-		 	   		  		 )
+		 	   		  		 select 1 from sys_user_role d where c.roleid = d.roleid and d.userid = #{m_userid} 
 		 	   		  )
 		 	   )
 		 )
-    </select>
-  
-    <select id="getUserRolesAndMenus" resultMap="map_getUserRolesAndMenus">
-		select a.userid,a.unioncode,a.loginid,a.username,c.*,d.*
-		  from sys_user a, sys_user_role b, sys_role c ,sys_org d
-		 where a.orgid = d.orgid and a.userid = b.userid and b.roleid = c.roleid and a.userid = #{userid} 
+	</select>
+
+    <select id="getUserRoles" resultMap="org.oversky.gurms.system.dao.SysRoleDao.BaseResultMap">
+		select <include refid="org.oversky.gurms.system.dao.SysRoleDao.column_list"><property name="tab" value="a."/></include>
+		  from sys_role a,sys_user_role b
+		 where a.roleid = b.roleid and b.userid = #{m_userid} 
     </select>
   
 </mapper>

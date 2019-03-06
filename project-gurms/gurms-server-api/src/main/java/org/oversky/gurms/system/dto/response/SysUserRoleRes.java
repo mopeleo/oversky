@@ -7,7 +7,7 @@ public class SysUserRoleRes extends BaseResDto {
 	private static final long serialVersionUID = 1L;
 
 	private Long userid;    //userid
-	private Long roleid;    //roleid
+	private Integer roleid;    //roleid
 
 	public Long getUserid() {
 		return this.userid;
@@ -17,11 +17,11 @@ public class SysUserRoleRes extends BaseResDto {
 		this.userid = userid;
 	}
 
-	public Long getRoleid() {
+	public Integer getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Long roleid) {
+	public void setRoleid(Integer roleid) {
 		this.roleid = roleid;
 	}
 

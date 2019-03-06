@@ -88,6 +88,10 @@ public class SysRole extends BaseEntity{
         StringBuilder build = new StringBuilder("SysRole");
         return build.append("#").append(roleid).toString();
     }
+    
+    public void copyPrimaryKey(SysRole entity){
+		this.roleid = entity.getRoleid();
+    }
 
 	@Override
     public String toString() {

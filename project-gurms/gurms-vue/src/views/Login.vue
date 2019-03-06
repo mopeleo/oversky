@@ -6,10 +6,10 @@
 
         <el-form ref="loginForm" :model="login" :rules="rules">
             <el-form-item label="用户名" prop="loginid">
-                <el-input v-model="login.loginid"></el-input>
+                <el-input type="text" v-model="login.loginid" placeholder="请输入用户名"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="passwd">
-                <el-input v-model="login.passwd"></el-input>
+                <el-input type="password" v-model="login.passwd"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit('loginForm')">登录</el-button>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from '@/utils/axios'
+import md5 from 'js-md5';
 
 export default {
     data() {
@@ -45,17 +45,13 @@ export default {
         onSubmit(formName){
             this.$refs[formName].validate((valid)=>{
                 if(valid){
-                    alert("valid success ： " + this.login.loginid);
-                    axios({
-                        type: 'post',
-                        path: '/login',
-                        data: this.login,
-                        fn: data=>{
-                            alert(JSON.stringify(data));
-                        },
-                        errFn: err=>{
-                            alert(err);
-                        }
+                    this.login.passwd = md5(this.login.passwd);
+                    this.$api.Gurms.login(this.login).then((res)=>{
+                        // alert(JSON.stringify(res.data));
+                        this.$store.commit('pub/LOGIN', res.data);
+                        this.$router.push({name: 'home'})
+                    }).catch((err)=>{
+                        alert(err.data.message);
                     });
                 }else{
                     alert("valid failure");

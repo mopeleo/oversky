@@ -7,7 +7,7 @@ public class SysParamReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private String unioncode;    //unioncode
-	private Long paramid;    //paramid
+	private Integer paramid;    //paramid
 	private String paramvalue;    //paramvalue
 
 	public String getUnioncode() {
@@ -18,11 +18,11 @@ public class SysParamReq extends BaseReqDto {
 		this.unioncode = unioncode;
 	}
 
-	public Long getParamid() {
+	public Integer getParamid() {
 		return this.paramid;
 	}
 
-	public void setParamid(Long paramid) {
+	public void setParamid(Integer paramid) {
 		this.paramid = paramid;
 	}
 

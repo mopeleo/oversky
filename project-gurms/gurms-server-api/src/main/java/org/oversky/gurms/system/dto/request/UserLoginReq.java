@@ -8,6 +8,7 @@ public class UserLoginReq extends BaseReqDto {
 
 	private String loginid;
 	private String passwd;
+	private Integer logintype;
 	public String getLoginid() {
 		return loginid;
 	}
@@ -21,6 +22,12 @@ public class UserLoginReq extends BaseReqDto {
 		this.passwd = passwd;
 	}
 	
+	public Integer getLogintype() {
+		return logintype;
+	}
+	public void setLogintype(Integer logintype) {
+		this.logintype = logintype;
+	}
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -28,6 +35,7 @@ public class UserLoginReq extends BaseReqDto {
         sb.append("Hash = ").append(hashCode());
 		sb.append(", loginid=").append(loginid);
 		sb.append(", passwd=").append(passwd);
+		sb.append(", logintype=").append(logintype);
 		sb.append(" ]");
 		return sb.toString();
 	}

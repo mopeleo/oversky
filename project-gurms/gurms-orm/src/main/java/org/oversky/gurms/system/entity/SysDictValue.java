@@ -52,6 +52,12 @@ public class SysDictValue extends BaseEntity{
         StringBuilder build = new StringBuilder("SysDictValue");
         return build.append("#").append(unioncode).append("#").append(dictcode).append("#").append(itemcode).toString();
     }
+    
+    public void copyPrimaryKey(SysDictValue entity){
+		this.unioncode = entity.getUnioncode();
+		this.dictcode = entity.getDictcode();
+		this.itemcode = entity.getItemcode();
+    }
 
 	@Override
     public String toString() {

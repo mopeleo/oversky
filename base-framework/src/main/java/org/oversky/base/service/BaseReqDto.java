@@ -13,6 +13,8 @@ public abstract class BaseReqDto implements Serializable{
 	protected int pageNum;
 	//每页数量
 	protected int pageSize;
+	//效验token
+	protected String token;
 	public int getPageSize() {
 		return pageSize;
 	}
@@ -24,5 +26,12 @@ public abstract class BaseReqDto implements Serializable{
 	}
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}	
 }
+

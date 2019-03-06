@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <el-container>
-            <el-header>Header</el-header>
+            <el-header>Header, welcome: {{$store.getters['pub/userinfo'].username}}, 公司123名称： {{$store.state.pub.user.orgid}}</el-header>
             <el-container>
                 <el-aside width="200px">
                     <router-link to="/home/userlist">userlist</router-link><br/>

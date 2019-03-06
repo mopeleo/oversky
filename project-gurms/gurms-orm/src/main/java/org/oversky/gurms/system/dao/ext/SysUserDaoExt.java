@@ -7,7 +7,7 @@ import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 
 public interface SysUserDaoExt {
 
-	List<Map<String, Object>> getUserRoles(Map<String, Object> query);
+	List<Map<String, Object>> testUserRoles(Map<String, Object> query);
 	
 	SysUserBO getUserRolesAndMenus(Long userid);
 }

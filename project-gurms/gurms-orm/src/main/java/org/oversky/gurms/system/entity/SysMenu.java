@@ -79,6 +79,10 @@ public class SysMenu extends BaseEntity{
         StringBuilder build = new StringBuilder("SysMenu");
         return build.append("#").append(menuid).toString();
     }
+    
+    public void copyPrimaryKey(SysMenu entity){
+		this.menuid = entity.getMenuid();
+    }
 
 	@Override
     public String toString() {

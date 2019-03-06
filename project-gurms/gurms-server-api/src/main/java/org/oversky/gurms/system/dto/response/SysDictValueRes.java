@@ -7,7 +7,7 @@ public class SysDictValueRes extends BaseResDto {
 	private static final long serialVersionUID = 1L;
 
 	private String unioncode;    //unioncode
-	private Long dictcode;    //字典代码
+	private Integer dictcode;    //字典代码
 	private String itemcode;    //选项代码
 	private String itemname;    //选项名称
 
@@ -19,11 +19,11 @@ public class SysDictValueRes extends BaseResDto {
 		this.unioncode = unioncode;
 	}
 
-	public Long getDictcode() {
+	public Integer getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(Long dictcode) {
+	public void setDictcode(Integer dictcode) {
 		this.dictcode = dictcode;
 	}
 

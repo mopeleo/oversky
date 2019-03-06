@@ -34,6 +34,11 @@ public class SysRoleMenu extends BaseEntity{
         StringBuilder build = new StringBuilder("SysRoleMenu");
         return build.append("#").append(roleid).append("#").append(menuid).toString();
     }
+    
+    public void copyPrimaryKey(SysRoleMenu entity){
+		this.roleid = entity.getRoleid();
+		this.menuid = entity.getMenuid();
+    }
 
 	@Override
     public String toString() {

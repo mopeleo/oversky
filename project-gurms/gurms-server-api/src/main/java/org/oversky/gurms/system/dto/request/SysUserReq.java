@@ -14,13 +14,13 @@ public class SysUserReq extends BaseReqDto {
 	private String salt;    //密码盐
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
-	private int orgid;    //所属机构
+	private Integer orgid;    //所属机构
 	private String idtype;    //证件类型
 	private String idcode;    //证件号码
 	private String logindate;    //登录日期
 	private String logintime;    //登录时间
-	private int status;    //用户状态，0，已删除；1，正常；2，锁定
-	private int loginerror;    //连续登录失败次数
+	private Integer status;    //用户状态，0，已删除；1，正常；2，锁定
+	private Integer loginerror;    //连续登录失败次数
 	private String passwdvaliddate;    //密码失效日期
 
 	public Long getUserid() {
@@ -87,11 +87,11 @@ public class SysUserReq extends BaseReqDto {
 		this.email = email;
 	}
 
-	public int getOrgid() {
+	public Integer getOrgid() {
 		return this.orgid;
 	}
 
-	public void setOrgid(int orgid) {
+	public void setOrgid(Integer orgid) {
 		this.orgid = orgid;
 	}
 
@@ -127,19 +127,19 @@ public class SysUserReq extends BaseReqDto {
 		this.logintime = logintime;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public int getLoginerror() {
+	public Integer getLoginerror() {
 		return this.loginerror;
 	}
 
-	public void setLoginerror(int loginerror) {
+	public void setLoginerror(Integer loginerror) {
 		this.loginerror = loginerror;
 	}
 

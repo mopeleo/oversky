@@ -7,13 +7,13 @@ public class SysLogLoginRes extends BaseResDto {
 	private static final long serialVersionUID = 1L;
 
 	private Long logid;    //logid
-	private long userid;    //userid
+	private Long userid;    //userid
 	private String logindate;    //登录日期
 	private String logintime;    //登录时间
 	private String loginpasswd;    //登录密码
 	private String loginip;    //登录IP
-	private int logintype;    //登录方式（1-pc，2-手机）
-	private int loginresult;    //登录是否成功 0-失败，1-成功
+	private Integer logintype;    //登录方式（1-pc，2-手机）
+	private Integer loginresult;    //登录是否成功 0-失败，1-成功
 
 	public Long getLogid() {
 		return this.logid;
@@ -23,11 +23,11 @@ public class SysLogLoginRes extends BaseResDto {
 		this.logid = logid;
 	}
 
-	public long getUserid() {
+	public Long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(long userid) {
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 
@@ -63,19 +63,19 @@ public class SysLogLoginRes extends BaseResDto {
 		this.loginip = loginip;
 	}
 
-	public int getLogintype() {
+	public Integer getLogintype() {
 		return this.logintype;
 	}
 
-	public void setLogintype(int logintype) {
+	public void setLogintype(Integer logintype) {
 		this.logintype = logintype;
 	}
 
-	public int getLoginresult() {
+	public Integer getLoginresult() {
 		return this.loginresult;
 	}
 
-	public void setLoginresult(int loginresult) {
+	public void setLoginresult(Integer loginresult) {
 		this.loginresult = loginresult;
 	}
 

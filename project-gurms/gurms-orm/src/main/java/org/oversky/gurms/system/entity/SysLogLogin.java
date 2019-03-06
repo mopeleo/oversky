@@ -88,6 +88,10 @@ public class SysLogLogin extends BaseEntity{
         StringBuilder build = new StringBuilder("SysLogLogin");
         return build.append("#").append(logid).toString();
     }
+    
+    public void copyPrimaryKey(SysLogLogin entity){
+		this.logid = entity.getLogid();
+    }
 
 	@Override
     public String toString() {

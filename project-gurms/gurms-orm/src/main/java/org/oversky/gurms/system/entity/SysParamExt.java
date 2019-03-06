@@ -97,6 +97,10 @@ public class SysParamExt extends BaseEntity{
         StringBuilder build = new StringBuilder("SysParamExt");
         return build.append("#").append(paramid).toString();
     }
+    
+    public void copyPrimaryKey(SysParamExt entity){
+		this.paramid = entity.getParamid();
+    }
 
 	@Override
     public String toString() {

@@ -1,5 +1,4 @@
 <#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
-<#macro type column><#if column.datatype=="string">String<#elseif column.datatype=="int"><#if table.keys?seq_contains(column)>Long<#else>int</#if><#elseif column.datatype=="double"><#if table.keys?seq_contains(column)>Double<#else>double</#if><#else><#if table.keys?seq_contains(column)>Long<#else>long</#if></#if></#macro>
 package ${package};
 
 import org.oversky.base.service.BaseReqDto;
@@ -9,15 +8,15 @@ public class ${table.code}Req extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 <#list table.columns as column>
-	private <@type column=column /> ${column.code};    //${column.comment}
+	private <@type datatype=column.datatype /> ${column.code};    //${column.comment}
 </#list>
 
 <#list table.columns as column>
-	public <@type column=column /> get${column.code?cap_first}() {
+	public <@type datatype=column.datatype /> get${column.code?cap_first}() {
 		return this.${column.code};
 	}
 
-	public void set${column.code?cap_first}(<@type column=column /> ${column.code}) {
+	public void set${column.code?cap_first}(<@type datatype=column.datatype /> ${column.code}) {
 		this.${column.code} = ${column.code};
 	}
 

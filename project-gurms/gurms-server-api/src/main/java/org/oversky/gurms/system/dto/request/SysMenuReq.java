@@ -10,9 +10,9 @@ public class SysMenuReq extends BaseReqDto {
 	private String menuname;    //菜单名称
 	private String menuurl;    //菜单地址
 	private String parentmenu;    //上级菜单
-	private int menutype;    //菜单类型0-目录，1-菜单，2-页面链接
-	private int opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
-	private int status;    //菜单状态，0-无效，1-有效
+	private Integer menutype;    //菜单类型0-目录，1-菜单，2-页面链接
+	private Integer opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
+	private Integer status;    //菜单状态，0-无效，1-有效
 
 	public String getMenuid() {
 		return this.menuid;
@@ -46,27 +46,27 @@ public class SysMenuReq extends BaseReqDto {
 		this.parentmenu = parentmenu;
 	}
 
-	public int getMenutype() {
+	public Integer getMenutype() {
 		return this.menutype;
 	}
 
-	public void setMenutype(int menutype) {
+	public void setMenutype(Integer menutype) {
 		this.menutype = menutype;
 	}
 
-	public int getOpentype() {
+	public Integer getOpentype() {
 		return this.opentype;
 	}
 
-	public void setOpentype(int opentype) {
+	public void setOpentype(Integer opentype) {
 		this.opentype = opentype;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

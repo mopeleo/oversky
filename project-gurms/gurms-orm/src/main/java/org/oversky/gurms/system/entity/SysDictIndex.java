@@ -61,6 +61,11 @@ public class SysDictIndex extends BaseEntity{
         StringBuilder build = new StringBuilder("SysDictIndex");
         return build.append("#").append(unioncode).append("#").append(dictcode).toString();
     }
+    
+    public void copyPrimaryKey(SysDictIndex entity){
+		this.unioncode = entity.getUnioncode();
+		this.dictcode = entity.getDictcode();
+    }
 
 	@Override
     public String toString() {

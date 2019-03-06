@@ -43,6 +43,11 @@ public class SysParam extends BaseEntity{
         StringBuilder build = new StringBuilder("SysParam");
         return build.append("#").append(unioncode).append("#").append(paramid).toString();
     }
+    
+    public void copyPrimaryKey(SysParam entity){
+		this.unioncode = entity.getUnioncode();
+		this.paramid = entity.getParamid();
+    }
 
 	@Override
     public String toString() {

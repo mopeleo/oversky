@@ -7,10 +7,10 @@ public class SysDictIndexRes extends BaseResDto {
 	private static final long serialVersionUID = 1L;
 
 	private String unioncode;    //unioncode
-	private Long dictcode;    //字典代码
+	private Integer dictcode;    //字典代码
 	private String dictname;    //字典名称
 	private String dictgroup;    //所属分组
-	private int editflag;    //是否可编辑（0-不可见，1-只读，2-读写）
+	private Integer editflag;    //是否可编辑（0-不可见，1-只读，2-读写）
 
 	public String getUnioncode() {
 		return this.unioncode;
@@ -20,11 +20,11 @@ public class SysDictIndexRes extends BaseResDto {
 		this.unioncode = unioncode;
 	}
 
-	public Long getDictcode() {
+	public Integer getDictcode() {
 		return this.dictcode;
 	}
 
-	public void setDictcode(Long dictcode) {
+	public void setDictcode(Integer dictcode) {
 		this.dictcode = dictcode;
 	}
 
@@ -44,11 +44,11 @@ public class SysDictIndexRes extends BaseResDto {
 		this.dictgroup = dictgroup;
 	}
 
-	public int getEditflag() {
+	public Integer getEditflag() {
 		return this.editflag;
 	}
 
-	public void setEditflag(int editflag) {
+	public void setEditflag(Integer editflag) {
 		this.editflag = editflag;
 	}
 

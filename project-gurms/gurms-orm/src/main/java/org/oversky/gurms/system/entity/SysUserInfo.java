@@ -97,6 +97,10 @@ public class SysUserInfo extends BaseEntity{
         StringBuilder build = new StringBuilder("SysUserInfo");
         return build.append("#").append(userid).toString();
     }
+    
+    public void copyPrimaryKey(SysUserInfo entity){
+		this.userid = entity.getUserid();
+    }
 
 	@Override
     public String toString() {
