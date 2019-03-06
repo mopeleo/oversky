@@ -20,6 +20,7 @@ public class UserLoginRes extends BaseResDto {
 	private Integer status;    //用户状态，0，已删除；1，正常；2，锁定
 	
 	private List<SysMenuRes> menus;
+	private SysMenuRes menuTree;
 	public Long getUserid() {
 		return userid;
 	}
@@ -79,6 +80,12 @@ public class UserLoginRes extends BaseResDto {
 	}
 	public void setMenus(List<SysMenuRes> menus) {
 		this.menus = menus;
+	}
+	public SysMenuRes getMenuTree() {
+		return menuTree;
+	}
+	public void setMenuTree(SysMenuRes menuTree) {
+		this.menuTree = menuTree;
 	}
 	public void addMenu(SysMenuRes menu) {
 		if(this.menus == null) {

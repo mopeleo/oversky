@@ -10,12 +10,41 @@ export default new Router({
     routes: [
         {
             path: '/',
-            component: () => import('@/views/Login.vue')
+            // component: () => import('@/views/Login.vue')
+            redirect: '/login'
         },
         {
             path: '/login',
             component: () => import('@/views/Login.vue')
         },
+        {
+            path: '/home',
+            name: 'home',
+            component: Home,
+            children:[
+                {
+                    path: 'sysuser/list',
+                    component: () => import('@/views/sysuser/list.vue')
+                },
+                {
+                    path: 'sysuser/edit',
+                    component: () => import('@/views/sysuser/edit.vue')
+                },
+                {
+                    path: 'sysuser/detail',
+                    component: () => import('@/views/sysuser/detail.vue')
+                },
+                {
+                    path: 'sysrole/list',
+                    component: () => import('@/views/sysrole/list.vue')
+                },
+                {
+                    path: '',
+                    component: () => import('@/views/About.vue')
+                }
+            ]
+        }
+        /*
         {
             path: '/home',
             name: 'home',
@@ -42,6 +71,6 @@ export default new Router({
                     component: () => import('@/views/About.vue')
                 }
             ]
-        }
+        }*/
     ]
 })

@@ -1,5 +1,7 @@
 package org.oversky.gurms.system.dto.response;
 
+import java.util.List;
+
 import org.oversky.base.service.BaseResDto;
 
 public class SysMenuRes extends BaseResDto {
@@ -12,6 +14,8 @@ public class SysMenuRes extends BaseResDto {
 	private String parentmenu;    //上级菜单
 	private Integer menutype;    //菜单类型0-目录，1-菜单，2-页面链接
 	private Integer opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
+	private boolean tree = false; //是否以树的形式返回
+	private List<SysMenuRes> subMenus;
 
 	public String getMenuid() {
 		return this.menuid;
@@ -61,7 +65,23 @@ public class SysMenuRes extends BaseResDto {
 		this.opentype = opentype;
 	}
 
-    @Override
+    public boolean isTree() {
+		return tree;
+	}
+
+	public void setTree(boolean tree) {
+		this.tree = tree;
+	}
+
+	public List<SysMenuRes> getSubMenus() {
+		return subMenus;
+	}
+
+	public void setSubMenus(List<SysMenuRes> subMenus) {
+		this.subMenus = subMenus;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

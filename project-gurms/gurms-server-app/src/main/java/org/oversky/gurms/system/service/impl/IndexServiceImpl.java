@@ -19,6 +19,7 @@ import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.entity.SysLogLogin;
 import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.service.IndexService;
+import org.oversky.gurms.system.service.SysMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class IndexServiceImpl implements IndexService{
 	
 	@Autowired
 	private SysLogLoginDao sysLogLoginDao;
+	
+	@Autowired
+	private SysMenuService menuService;
 	
 	@Override
 	public void home() {
@@ -101,6 +105,8 @@ public class IndexServiceImpl implements IndexService{
 			menuRes.setParentmenu(menu.getParentmenu());
 			res.addMenu(menuRes);
 		});
+		
+		res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
 		
 		return res;
 	}
