@@ -4,50 +4,36 @@
             <el-header>Header, welcome: {{$store.getters['pub/userinfo'].username}}, 公司123名称： {{$store.state.pub.user.orgid}}</el-header>
             <el-container>
                 <el-aside width="200px">
-                <!--
-                    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-                        <el-submenu index="1">
+                    <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose">
+
+                    <template v-for="(menu,index) in user.menuTree.subMenus">
+                        <el-submenu v-if='menu.subMenus' :index="index" :key="menu.menuid">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
-                                <span>导航一</span>
+                                <span>{{menu.menuname}}</span>
                             </template>
-                            <el-menu-item-group>
-                                <template slot="title">分组一</template>
-                                <el-menu-item index="1-1">选项1</el-menu-item>
-                                <el-menu-item index="1-2">选项2</el-menu-item>
-                            </el-menu-item-group>
-                            <el-menu-item-group title="分组2">
-                                <el-menu-item index="1-3">选项3</el-menu-item>
-                            </el-menu-item-group>
-                            <el-submenu index="1-4">
-                                <template slot="title">选项4</template>
-                                <el-menu-item index="1-4-1">选项1</el-menu-item>
-                            </el-submenu>
+                            <template v-for="(menu2, index2) in menu.subMenus">
+                                <el-submenu v-if='menu2.subMenus' :index="index + '-' + index2" :key="menu2.menuid">
+                                    <template slot="title">{{menu2.menuname}}</template>
+                                    <el-menu-item v-for="(menu3) in menu2.subMenus" :index="'/home/'+menu3.menuurl" :key="menu3.menuid">{{menu3.menuname}}</el-menu-item>
+                                </el-submenu>
+                                <el-menu-item v-else :index="'/home/'+menu2.menuurl" :key="menu2.menuid">
+                                    {{menu2.menuname}}
+                                </el-menu-item>
+                            </template>
                         </el-submenu>
-                        <el-menu-item index="2">
+                        <el-menu-item v-else :index="index" :key="menu.menuid">
                             <i class="el-icon-menu"></i>
-                            <span slot="title">导航二</span>
+                            <span slot="title">{{menu.menuname}}</span>
                         </el-menu-item>
-                        <el-menu-item index="3" disabled>
-                            <i class="el-icon-document"></i>
-                            <span slot="title">导航三</span>
-                        </el-menu-item>
-                        <el-menu-item index="4">
-                            <i class="el-icon-setting"></i>
-                            <span slot="title">导航四</span>
-                        </el-menu-item>
+                    </template>
+
                     </el-menu>
-                    -->
-
-
-
-                    <router-link to="/home/sysuser/list">userlist</router-link><br />
-                    <router-link to="/home/sysrole/list">rolelist</router-link><br />
-                    <router-link to="/home">home</router-link><br />
-                    <router-link v-for="menu in user.menus" :key="menu.menuid" :to="{ path: menu.menuurl }">
-                            {{menu.menuname + "_" + menu.menuurl}}<br />
-                    </router-link>
+                    <router-link to="/home/sysuser/list">userlist</router-link><br/>
+                    <router-link to="/home/sysrole/list">rolelist</router-link><br/>
+                    <router-link to="/home">home</router-link><br/>
                 </el-aside>
+
                 <el-main>
                     <router-view></router-view>
                 </el-main>

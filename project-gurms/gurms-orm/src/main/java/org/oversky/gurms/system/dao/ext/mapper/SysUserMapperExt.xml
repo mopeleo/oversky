@@ -64,9 +64,15 @@
     <select id="getSubMenus" resultMap="org.oversky.gurms.system.dao.SysMenuDao.BaseResultMap">
 		select <include refid="org.oversky.gurms.system.dao.SysMenuDao.column_list"><property name="tab" value="a."/></include>
 		  from sys_menu a
-		  <if test="_parameter != null and _parameter != ''">
+		  <choose>
+		  		<when test="_parameter != null and _parameter != ''">
 		 where a.parentmenu = #{menuid}
-		  </if>
+		  		</when>
+		  		<otherwise>
+		 where a.parentmenu is null
+		  		</otherwise>
+		  </choose>
+		 order by a.menuid
 	</select>
 
     <select id="getUserRoles" resultMap="org.oversky.gurms.system.dao.SysRoleDao.BaseResultMap">
