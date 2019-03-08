@@ -22,7 +22,6 @@
 
 <script>
 import md5 from 'js-md5';
-import * as pub from '@/utils/pub';
 
 export default {
     data() {
@@ -49,11 +48,12 @@ export default {
                     this.login.passwd = md5(this.login.passwd);
                     this.$api.Gurms.login(this.login).then((res)=>{
                         // alert(JSON.stringify(res.data));
-                        let routes = pub.addDynamicMenuRoutes(res.data.menuTree.subMenus);
-                        for (var i = 0; i < routes.length; i++) {
-                            this.$router.options.routes[0].children.push(routes[i]);
-                        }
-                        this.$router.addRoutes(this.$router.options.routes);
+                        // let routes = pub.addDynamicMenuRoutes(res.data.menuTree.subMenus);
+                        // for (var i = 0; i < routes.length; i++) {
+                        //     this.$router.options.routes[0].children.push(routes[i]);
+                        // }
+                        // this.$router.addRoutes(this.$router.options.routes);
+                        this.$store.commit('pub/ADDROUTES');
                         this.$store.commit('pub/LOGIN', res.data);
                         this.$router.push({name: 'home'})
                     }).catch((err)=>{

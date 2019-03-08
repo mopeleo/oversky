@@ -1,7 +1,7 @@
 /**
 * gurms api接口统一管理
 */
-import axios from './axios';
+import axios from '@/utils/axios';
 // import qs from 'qs';
 
 const baseURL = 'http://localhost:8080';

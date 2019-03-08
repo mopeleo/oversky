@@ -1,7 +1,7 @@
 /**
 * test api接口统一管理
 */
-import axios from './axios'
+import axios from '@/utils/axios'
 
 const baseURL = '';
 
