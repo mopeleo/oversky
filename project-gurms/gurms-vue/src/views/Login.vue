@@ -53,11 +53,11 @@ export default {
                         //     this.$router.options.routes[0].children.push(routes[i]);
                         // }
                         // this.$router.addRoutes(this.$router.options.routes);
-                        this.$store.commit('pub/ADDROUTES');
                         this.$store.commit('pub/LOGIN', res.data);
+                        this.$store.commit('pub/ADDROUTES');
                         this.$router.push({name: 'home'})
                     }).catch((err)=>{
-                        alert(err.data.message);
+                        alert(err);
                     });
                 }else{
                     alert("valid failure");

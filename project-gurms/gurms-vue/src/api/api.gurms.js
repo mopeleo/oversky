@@ -13,12 +13,12 @@ export default {
         return axios.post(`${baseURL}/login`, params);
     },
     // 用户列表
-    userList () {
-        return axios.get(`${baseURL}/sysuser/list`);
+    userList (params) {
+        return axios.post(`${baseURL}/sysuser/list`, params);
     },
     // 用户详情
     userDetail (userid, params) {
-        return axios.get(`${baseURL}/sysuser/${userid}`, {
+        return axios.get(`${baseURL}/sysuser/detail/${userid}`, {
             params: params
         });
     }

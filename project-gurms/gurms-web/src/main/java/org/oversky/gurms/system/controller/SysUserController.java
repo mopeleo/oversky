@@ -1,8 +1,11 @@
 package org.oversky.gurms.system.controller;
 
+import org.oversky.base.service.BaseResListDto;
+import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +18,11 @@ public class SysUserController {
 	@RequestMapping("/detail")
 	public SysUserRes detail(Long userid) {
 		return userService.getById(userid);
+	}
+
+	@RequestMapping("/list")
+	public BaseResListDto<SysUserRes> list(@RequestBody SysUserReq userReq) {
+		return userService.pageSysUser(userReq);
 	}
 
 }
