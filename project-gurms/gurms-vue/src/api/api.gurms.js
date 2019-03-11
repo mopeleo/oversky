@@ -21,6 +21,10 @@ export default {
         return axios.get(`${baseURL}/sysuser/detail/${userid}`, {
             params: params
         });
+    },
+    // 用户删除
+    userDelete (userid) {
+        return axios.get(`${baseURL}/sysuser/delete/${userid}`);
     }
     // 其他接口…………
 }

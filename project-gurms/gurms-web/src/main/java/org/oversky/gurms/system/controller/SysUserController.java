@@ -5,6 +5,7 @@ import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,4 +26,8 @@ public class SysUserController {
 		return userService.pageSysUser(userReq);
 	}
 
+	@RequestMapping("/delete/{userId}")
+	public SysUserRes delete(@PathVariable Long userId) {
+		return userService.delete(userId);
+	}
 }

@@ -46,16 +46,8 @@ public class SysUserServiceTest {
 		userDto.setStatus(1);
 		userDto.setUnioncode("0000");
 		userDto.setUsername("test");
-		boolean flag = sysUserService.insert(userDto);
+		boolean flag = sysUserService.insert(userDto).isSuccess();
 		Assert.assertEquals(true, flag);
-	}
-	
-	@Test
-	public void getById() {
-		SysUserReq userDto = new SysUserReq();
-		userDto.setUserid(2L);
-		List<SysUserRes> res = sysUserService.find(userDto);
-		Assert.assertSame("不一样呀", 1, res.size());
 	}
 	
 	@Test

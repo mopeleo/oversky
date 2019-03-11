@@ -24,19 +24,38 @@ public class SysUserServiceImpl implements SysUserService{
 	private SysUserDao sysUserDao;
 
 	@Override
-	public boolean insert(SysUserReq userReq) {
+	public SysUserRes insert(SysUserReq userReq) {
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
-		return sysUserDao.insert(user) == 1;
+		SysUserRes res = new SysUserRes();
+		if(sysUserDao.insert(user) == 1) {
+			res.success("新增成功");
+		}else {
+			res.failure("新增失败");
+		}
+		return res;
 	}
 
 	@Override
-	public boolean delete(Long userid) {
-		return sysUserDao.deleteById(userid) == 1;
+	public SysUserRes delete(Long userid) {
+		SysUserRes res = new SysUserRes();
+		if(sysUserDao.deleteById(userid) == 1) {
+			res.success("删除成功");
+		}else {
+			res.failure("删除失败");
+		}
+		return res;
 	}
 
 	@Override
-	public boolean update(SysUserReq userReq) {
-		return false;
+	public SysUserRes update(SysUserReq userReq) {
+		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
+		SysUserRes res = new SysUserRes();
+		if(sysUserDao.updateById(user) == 1) {
+			res.success("修改成功");
+		}else {
+			res.failure("修改失败");
+		}
+		return res;
 	}
 
 	@Override
