@@ -55,7 +55,7 @@ export default {
                         // this.$router.addRoutes(this.$router.options.routes);
                         this.$store.commit('pub/LOGIN', res.data);
                         this.$store.commit('pub/ADDROUTES');
-                        this.$router.push({name: 'home'})
+                        this.$router.push({name: 'home'});
                     }).catch((err)=>{
                         alert(err);
                     });

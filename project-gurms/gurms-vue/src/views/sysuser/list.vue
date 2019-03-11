@@ -3,21 +3,22 @@
         <el-form ref="listForm" :model="userReq">
             <el-row>
                 <el-col :span="8">
-                    <el-form-item label="审批人">
-                        <el-input v-model="userReq.userid" placeholder="审批人" style="width:300px"></el-input>
+                    <el-form-item label="姓名">
+                        <el-input v-model="userReq.username" placeholder="姓名" style="width:300px"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                    <el-form-item label="活动区域">
-                        <el-select v-model="userReq.region" placeholder="活动区域">
-                            <el-option label="区域一" value="shanghai"></el-option>
-                            <el-option label="区域二" value="beijing"></el-option>
+                    <el-form-item label="用户状态">
+                        <el-select v-model="userReq.status" placeholder="用户状态">
+                            <el-option label="已删除" value="0"></el-option>
+                            <el-option label="正常" value="1"></el-option>
+                            <el-option label="锁定" value="2"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
+                        <el-button type="primary" @click="loadData">查询</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -27,9 +28,16 @@
                 @row-click="handleClick">
 
                 <el-table-column type="selection"></el-table-column>
-                <el-table-column prop="userid" label="Id" sortable show-overflow-tooltip></el-table-column>
                 <el-table-column prop="username" label="姓名" sortable></el-table-column>
-                <el-table-column label="操作">
+                <el-table-column prop="loginid" label="登录名" sortable></el-table-column>
+                <el-table-column prop="mobileno" label="手机号码" sortable></el-table-column>
+                <el-table-column prop="email" label="电子邮件" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="orgid" label="所属机构" sortable></el-table-column>
+                <el-table-column prop="status" label="用户状态"></el-table-column>
+                <el-table-column prop="logindate" label="登录日期" sortable></el-table-column>
+                <el-table-column prop="logintime" label="登录时间" sortable></el-table-column>
+                <el-table-column prop="passwdvaliddate" label="密码失效日期"></el-table-column>
+                <el-table-column fixed="right" width="180" label="操作">
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -94,7 +102,7 @@ export default{
             // this.multipleSelection = val;
         },
         handleEdit(index, row) {
-            console.log(index, row);
+            this.$router.push({path: '/home/sysuser/detail', query: {userid: row.userid}});
         },
         handleDelete(index, row) {
             this.$api.Gurms.userDelete(row.userid).then((res)=>{

@@ -29,9 +29,6 @@
                     </template>
 
                     </el-menu>
-                    <router-link to="/home/sysuser/list">userlist</router-link><br/>
-                    <router-link to="/home/sysrole/list">rolelist</router-link><br/>
-                    <router-link to="/home">home</router-link><br/>
                 </el-aside>
 
                 <el-main>

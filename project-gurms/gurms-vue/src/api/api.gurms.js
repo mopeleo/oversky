@@ -16,10 +16,14 @@ export default {
     userList (params) {
         return axios.post(`${baseURL}/sysuser/list`, params);
     },
+    // 用户编辑
+    userSave (params) {
+        return axios.post(`${baseURL}/sysuser/save`, params);
+    },
     // 用户详情
-    userDetail (userid, params) {
-        return axios.get(`${baseURL}/sysuser/detail/${userid}`, {
-            params: params
+    userDetail (userid) {
+        return axios.get(`${baseURL}/sysuser/detail`, {
+            params: {userid: userid}
         });
     },
     // 用户删除

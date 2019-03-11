@@ -74,7 +74,8 @@ public class SysUserServiceImpl implements SysUserService{
 	//只要你可以保证在 PageHelper 方法调用后紧跟 MyBatis 查询方法，这就是安全的。因为 PageHelper 在 finally 代码段中自动清除了 ThreadLocal 存储的对象。
 	public BaseResListDto<SysUserRes> pageSysUser(SysUserReq userReq){
 		Page<SysUser> page = PageHelper.startPage(userReq.getPageNum(), userReq.getPageSize());
-		List<SysUser> userList = sysUserDao.selectAll();
+		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
+		List<SysUser> userList = sysUserDao.selectWhere(where);
 		List<SysUserRes> userResList = BeanCopyUtils.convertList(userList, SysUserRes.class);
 		
 		BaseResListDto<SysUserRes> resList = new BaseResListDto<SysUserRes>();

@@ -21,6 +21,17 @@ public class SysUserController {
 		return userService.getById(userid);
 	}
 
+	@RequestMapping("/save")
+	public SysUserRes save(@RequestBody SysUserReq userReq) {
+		SysUserRes res = null;
+		if(userReq.getUserid() == null) {
+			res = userService.insert(userReq);
+		}else {
+			res = userService.update(userReq);
+		}
+		return res;
+	}
+
 	@RequestMapping("/list")
 	public BaseResListDto<SysUserRes> list(@RequestBody SysUserReq userReq) {
 		return userService.pageSysUser(userReq);
