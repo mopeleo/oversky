@@ -16,7 +16,7 @@
         <result column="orgtype" jdbcType="INTEGER" property="orgtype" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysOrg">
         insert into sys_org (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{orgid, jdbcType=INTEGER}, #{unioncode, jdbcType=VARCHAR}, #{shortname, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR}, #{linkman, jdbcType=VARCHAR}, #{linktel, jdbcType=VARCHAR}, #{faxno, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{parentorg, jdbcType=INTEGER}, #{orgtype, jdbcType=INTEGER}, #{remark, jdbcType=VARCHAR})

@@ -1,12 +1,12 @@
 <template>
-    <el-form ref="sysuserForm" :model="sysuser" label-width="80px">
+    <el-form ref="sysuserForm" :model="sysuser" :rules="rules" label-width="80px" :disabled="!edit">
         <el-form-item label="用户姓名">
-            <el-input v-model="sysuser.username"></el-input>
+            <el-input v-model="sysuser.username" :disabled="sysuser.userid?true:false"></el-input>
         </el-form-item>
-        <el-form-item label="登录名">
-            <el-input v-model="sysuser.loginid"></el-input>
+        <el-form-item label="登录名" prop="loginid">
+            <el-input v-model="sysuser.loginid" :disabled="sysuser.userid?true:false"></el-input>
         </el-form-item>
-        <el-form-item label="登录密码">
+        <el-form-item label="登录密码" prop="loginpasswd">
             <el-input v-model="sysuser.loginpasswd"></el-input>
         </el-form-item>
         <el-form-item label="手机号码">
@@ -30,7 +30,8 @@
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="onSubmit('sysuserForm')">保存</el-button>
-            <el-button @click="onReset('sysuserForm')">取消</el-button>
+            <el-button @click="onReset('sysuserForm')">重填</el-button>
+            <el-button type="primary" @click="$router.back(-1)">返回</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -39,6 +40,7 @@
 export default {
     data() {
         return {
+            edit:true,
             sysuser:{
                 userid:'',
                 unioncode:'',
@@ -63,22 +65,47 @@ export default {
         }
     },
     mounted(){
-        var userid = this.$route.query.userid;
-        alert(userid);
+        var userid = this.$route.params.userid;
+        // var userid = this.$route.query.userid;
+        if(userid && userid != 0){
+            this.$api.Gurms.userDetail(userid).then((res)=>{
+                this.sysuser.userid = res.data.userid;
+                this.sysuser.unioncode = res.data.unioncode;
+                this.sysuser.username = res.data.username;
+                this.sysuser.loginid = res.data.loginid;
+                this.sysuser.loginpasswd = res.data.loginpasswd;
+                this.sysuser.mobileno = res.data.mobileno;
+                this.sysuser.email = res.data.email;
+                this.sysuser.orgid = res.data.orgid;
+                this.sysuser.idtype = res.data.idtype;
+                this.sysuser.idcode = res.data.idcode;
+            }).catch((err)=>{
+                alert(err);
+            });
+            this.edit = this.$route.params.edit;
+        }
     },
     methods: {
         onSubmit(formName){
             this.$refs[formName].validate((valid)=>{
                 if(valid){
-                    this.$api.Gurms.userSave(this.sysuser).then((res)=>{
-                        this.$store.commit('pub/LOGIN', res.data);
-                        this.$store.commit('pub/ADDROUTES');
-                        this.$router.push({name: 'home'})
+                    var callAPI = null;
+                    if(this.edit){
+                        if(this.$route.params.userid){
+                            callAPI = this.$api.Gurms.userUpdate(this.sysuser);
+                        }else{
+                            callAPI = this.$api.Gurms.userAdd(this.sysuser);
+                        }
+                    }
+                    callAPI.then((res)=>{
+                        alert(res.data.returnmsg);
+                        if(res.data.success === true){
+                            this.$router.back(-1);
+                        }
                     }).catch((err)=>{
-                        alert(err);
+                        alert(err.data.message);
                     });
                 }else{
-                    alert("valid failure");
                     return false;
                 }
             })

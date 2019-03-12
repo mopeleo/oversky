@@ -12,7 +12,7 @@
         <result column="initvalue" jdbcType="VARCHAR" property="initvalue" />
         <result column="valuelength" jdbcType="INTEGER" property="valuelength" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParamExt">
         insert into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{distype, jdbcType=INTEGER}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER})

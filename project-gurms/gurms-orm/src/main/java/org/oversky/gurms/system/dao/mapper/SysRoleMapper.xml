@@ -11,7 +11,7 @@
         <result column="enddate" jdbcType="VARCHAR" property="enddate" />
         <result column="creator" jdbcType="DECIMAL" property="creator" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysRole">
         insert into sys_role (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{unioncode, jdbcType=VARCHAR}, #{roleid, jdbcType=INTEGER}, #{rolename, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{roletype, jdbcType=INTEGER}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{creator, jdbcType=DECIMAL})

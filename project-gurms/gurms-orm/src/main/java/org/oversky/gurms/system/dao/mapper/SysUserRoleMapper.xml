@@ -5,7 +5,7 @@
         <id column="userid" jdbcType="DECIMAL" property="userid" />
         <id column="roleid" jdbcType="INTEGER" property="roleid" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserRole">
         insert into sys_user_role (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{userid, jdbcType=DECIMAL}, #{roleid, jdbcType=INTEGER})

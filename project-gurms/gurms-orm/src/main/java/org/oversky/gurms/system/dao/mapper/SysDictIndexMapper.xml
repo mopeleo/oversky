@@ -8,7 +8,7 @@
         <result column="dictgroup" jdbcType="VARCHAR" property="dictgroup" />
         <result column="editflag" jdbcType="INTEGER" property="editflag" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
         insert into sys_dict_index (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{dictname, jdbcType=VARCHAR}, #{dictgroup, jdbcType=VARCHAR}, #{editflag, jdbcType=INTEGER})

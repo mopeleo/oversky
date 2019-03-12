@@ -16,6 +16,7 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
             // 创建路由配置
             var route = {
                 path: menuList[i].menuurl,
+                name: menuList[i].menuurl,
                 component: resolve => require([`@/views/${url}`], resolve)
             }
             routes.push(route);

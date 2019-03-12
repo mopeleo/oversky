@@ -16,9 +16,13 @@ export default {
     userList (params) {
         return axios.post(`${baseURL}/sysuser/list`, params);
     },
+    // 用户新增
+    userAdd (params) {
+        return axios.post(`${baseURL}/sysuser/add`, params);
+    },
     // 用户编辑
-    userSave (params) {
-        return axios.post(`${baseURL}/sysuser/save`, params);
+    userUpdate (params) {
+        return axios.post(`${baseURL}/sysuser/update`, params);
     },
     // 用户详情
     userDetail (userid) {

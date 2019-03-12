@@ -26,7 +26,8 @@ public class PDMParser {
     private static final String ELEMENT_LENGTH = "Length";
     private static final String ELEMENT_PRECISION = "Precision";
     private static final String ELEMENT_DEFAULTVALUE = "DefaultValue";
-    private static final String ELEMENT_MANDATORY = "Mandatory";
+    private static final String ELEMENT_IDENTITY = "Identity";
+    private static final String ELEMENT_MANDATORY = "Column.Mandatory";
     private static final String ELEMENT_COLUMNS = "Columns";
     private static final String ELEMENT_TABLES = "Tables";
     private static final String ELEMENT_TABLE = "Table";
@@ -227,6 +228,14 @@ public class PDMParser {
 						column.setMandatory("0");
 					}else{
 						column.setMandatory(elementMandatory.getTextTrim());
+					}
+					
+					Element elementIdentity = elementColumn.element(ELEMENT_IDENTITY);
+					if(elementIdentity == null){
+						column.setIdentity("0");
+					}else{
+						column.setIdentity(elementIdentity.getTextTrim());
+						table.setIdentityCol(column);
 					}
 					
 	                Element elementDefaultValue = elementColumn.element(ELEMENT_DEFAULTVALUE);

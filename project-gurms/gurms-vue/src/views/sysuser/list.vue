@@ -19,6 +19,7 @@
                 <el-col :span="8">
                     <el-form-item>
                         <el-button type="primary" @click="loadData">查询</el-button>
+                        <el-button type="primary" @click="handleAdd">新增</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -37,8 +38,9 @@
                 <el-table-column prop="logindate" label="登录日期" sortable></el-table-column>
                 <el-table-column prop="logintime" label="登录时间" sortable></el-table-column>
                 <el-table-column prop="passwdvaliddate" label="密码失效日期"></el-table-column>
-                <el-table-column fixed="right" width="180" label="操作">
+                <el-table-column fixed="right" width="240" label="操作">
                     <template slot-scope="scope">
+                        <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">查看</el-button>
                         <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
@@ -101,13 +103,22 @@ export default{
             console.log(val);
             // this.multipleSelection = val;
         },
+        handleAdd() {
+            this.$router.push({name: 'sysuser/detail'});
+        },
+        handleDetail(index, row) {
+            this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: false}});
+        },
         handleEdit(index, row) {
-            this.$router.push({path: '/home/sysuser/detail', query: {userid: row.userid}});
+            // this.$router.push({path: '/home/sysuser/detail', query: {userid: row.userid}});
+            this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: true}});
         },
         handleDelete(index, row) {
             this.$api.Gurms.userDelete(row.userid).then((res)=>{
-                if(res.data.success){
+                if(res.data === true){
                     this.$options.methods.loadData.bind(this)();
+                }else{
+                    alert('删除失败');
                 }
             }).catch((err)=>{
                 alert(err);

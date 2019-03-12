@@ -12,6 +12,7 @@ public class Column {
 	private String precision;
 	private String defaultValue;       //默认值
 	private String mandatory;          //值为1表示不能为空
+	private String identity;           //值为1表示为自增长序列，暂时记录
 	private String originCode;         //格式化前原始代码，小写
 	private String originDatatype;     //格式化前原数据类型
 	public String getId() {
@@ -61,6 +62,12 @@ public class Column {
 	}
 	public void setMandatory(String mandatory) {
 		this.mandatory = mandatory;
+	}
+	public String getIdentity() {
+		return identity;
+	}
+	public void setIdentity(String identity) {
+		this.identity = identity;
 	}
 	public String getOriginCode() {
         return originCode;

@@ -7,7 +7,7 @@
         <id column="itemcode" jdbcType="VARCHAR" property="itemcode" />
         <result column="itemname" jdbcType="VARCHAR" property="itemname" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysDictValue">
         insert into sys_dict_value (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{itemcode, jdbcType=VARCHAR}, #{itemname, jdbcType=VARCHAR})

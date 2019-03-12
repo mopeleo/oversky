@@ -12,7 +12,7 @@
         <result column="city" jdbcType="VARCHAR" property="city" />
         <result column="education" jdbcType="VARCHAR" property="education" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserInfo">
         insert into sys_user_info (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{userid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{sex, jdbcType=VARCHAR}, #{birthday, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{province, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{education, jdbcType=VARCHAR})

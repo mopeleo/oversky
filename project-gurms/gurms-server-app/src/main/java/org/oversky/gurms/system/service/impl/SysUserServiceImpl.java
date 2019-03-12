@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.util.BeanCopyUtils;
+import org.oversky.base.util.CommonUtils;
+import org.oversky.base.util.DateUtils;
+import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.util.StringUtil;
 
 @Service
 @Transactional
@@ -25,8 +29,16 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	public SysUserRes insert(SysUserReq userReq) {
-		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
 		SysUserRes res = new SysUserRes();
+		if(!this.check(userReq, res)) {
+			return res;
+		}
+		
+		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
+		user.setSalt(CommonUtils.getRandomString(8));
+		user.setStatus(DictConsts.USER_STATUS_NORMAL);
+		user.setLoginerror(0);
+		user.setPasswdvaliddate(DateUtils.addMonths(DateUtils.getNowDate(),3));
 		if(sysUserDao.insert(user) == 1) {
 			res.success("新增成功");
 		}else {
@@ -36,21 +48,19 @@ public class SysUserServiceImpl implements SysUserService{
 	}
 
 	@Override
-	public SysUserRes delete(Long userid) {
-		SysUserRes res = new SysUserRes();
-		if(sysUserDao.deleteById(userid) == 1) {
-			res.success("删除成功");
-		}else {
-			res.failure("删除失败");
-		}
-		return res;
+	public boolean delete(Long userid) {
+		return sysUserDao.deleteById(userid) == 1;
 	}
 
 	@Override
 	public SysUserRes update(SysUserReq userReq) {
-		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
 		SysUserRes res = new SysUserRes();
-		if(sysUserDao.updateById(user) == 1) {
+		if(!this.check(userReq, res)) {
+			return res;
+		}
+		
+		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
+		if(sysUserDao.dynamicUpdateById(user) == 1) {
 			res.success("修改成功");
 		}else {
 			res.failure("修改失败");
@@ -83,5 +93,13 @@ public class SysUserServiceImpl implements SysUserService{
 		resList.success("查询成功");
 		resList.initPage(page.getPageNum(), page.getPageSize(), (int)page.getTotal());
 		return resList;
+	}
+	
+	private boolean check(SysUserReq userReq, SysUserRes res) {
+		if(StringUtil.isEmpty(userReq.getLoginid())) {
+			res.failure("登录名不能为空");
+			return false;
+		}
+		return true;
 	}
 }

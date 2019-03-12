@@ -123,11 +123,16 @@ public class CDMParser {
                 column.setCode(code);
 //                System.out.println("column : id = " + column.getId() + ", name = " + column.getName() + ", code = " + column.getCode());
 
+                //cdm不支持自增长字段，在字段的注释带有[identity]则表示为自增长字段
                 Element elementCommont = colItem.element(ELEMENT_COMMENT);
+                column.setIdentity("0");
                 if(elementCommont == null){
                     column.setComment(elementName.getTextTrim());
                 }else{
                     column.setComment(elementCommont.getTextTrim());
+                    if(column.getComment().toLowerCase().indexOf("[identity]") >= 0) {
+                    	column.setIdentity("1");
+                    }
                 }
 
                 Element elementDataType = colItem.element(ELEMENT_DATATYPE);
@@ -252,7 +257,10 @@ public class CDMParser {
                         refCol.setMandatory("0");
                     }
 					if(colMap.containsKey(refId)){
-					    table.addColumn(refCol);
+						table.addColumn(refCol);
+						if(!"0".equals(refCol.getIdentity())) {
+							table.setIdentityCol(refCol);
+						}
 					}
 					
 					if(keyList.contains(id)){

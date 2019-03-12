@@ -21,15 +21,14 @@ public class SysUserController {
 		return userService.getById(userid);
 	}
 
-	@RequestMapping("/save")
-	public SysUserRes save(@RequestBody SysUserReq userReq) {
-		SysUserRes res = null;
-		if(userReq.getUserid() == null) {
-			res = userService.insert(userReq);
-		}else {
-			res = userService.update(userReq);
-		}
-		return res;
+	@RequestMapping("/add")
+	public SysUserRes add(@RequestBody SysUserReq userReq) {
+		return userService.insert(userReq);
+	}
+
+	@RequestMapping("/update")
+	public SysUserRes update(@RequestBody SysUserReq userReq) {
+		return userService.update(userReq);
 	}
 
 	@RequestMapping("/list")
@@ -38,7 +37,7 @@ public class SysUserController {
 	}
 
 	@RequestMapping("/delete/{userId}")
-	public SysUserRes delete(@PathVariable Long userId) {
+	public boolean delete(@PathVariable Long userId) {
 		return userService.delete(userId);
 	}
 }

@@ -12,6 +12,7 @@ public class Table {
 	private String group;
 	private String originCode;
 	private String dbms;
+	private Column identityCol;
 	
 	private List<Column> columns = new ArrayList<Column>();
     private List<Column> keys = new ArrayList<Column>();
@@ -79,8 +80,15 @@ public class Table {
 	public String getDbms() {
         return dbms;
     }
+	public Column getIdentityCol() {
+		return identityCol;
+	}
 
-    public void setDbms(String dbms) {
+	public void setIdentityCol(Column identityCol) {
+		this.identityCol = identityCol;
+	}
+
+	public void setDbms(String dbms) {
         this.dbms = dbms;
     }
 

@@ -11,10 +11,10 @@
         <result column="logintype" jdbcType="INTEGER" property="logintype" />
         <result column="loginresult" jdbcType="INTEGER" property="loginresult" />
     </resultMap>
-  
-    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
-        insert into sys_log_login (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{logid, jdbcType=DECIMAL}, #{userid, jdbcType=DECIMAL}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{loginip, jdbcType=VARCHAR}, #{logintype, jdbcType=INTEGER}, #{loginresult, jdbcType=INTEGER})
+
+    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysLogLogin" useGeneratedKeys="true" keyProperty="logid">
+        insert into sys_log_login (userid, logindate, logintime, loginpasswd, loginip, logintype, loginresult)
+        values (#{userid, jdbcType=DECIMAL}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{loginip, jdbcType=VARCHAR}, #{logintype, jdbcType=INTEGER}, #{loginresult, jdbcType=INTEGER})
     </insert>
   
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysLogLogin" resultMap="BaseResultMap">

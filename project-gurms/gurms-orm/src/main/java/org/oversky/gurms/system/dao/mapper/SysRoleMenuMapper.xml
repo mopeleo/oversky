@@ -5,7 +5,7 @@
         <id column="roleid" jdbcType="INTEGER" property="roleid" />
         <id column="menuid" jdbcType="VARCHAR" property="menuid" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysRoleMenu">
         insert into sys_role_menu (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{roleid, jdbcType=INTEGER}, #{menuid, jdbcType=VARCHAR})

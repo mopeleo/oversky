@@ -6,7 +6,7 @@
         <id column="paramid" jdbcType="INTEGER" property="paramid" />
         <result column="paramvalue" jdbcType="VARCHAR" property="paramvalue" />
     </resultMap>
-  
+
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParam">
         insert into sys_param (<include refid="column_list"><property name="tab" value=""/></include>)
         values (#{unioncode, jdbcType=VARCHAR}, #{paramid, jdbcType=INTEGER}, #{paramvalue, jdbcType=VARCHAR})

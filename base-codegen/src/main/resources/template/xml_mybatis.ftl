@@ -12,11 +12,18 @@
 	</#if>
 </#list>
     </resultMap>
-  
+
+<#if ((table.dbms)!'')?contains("MYSQL") && (table.identityCol??)>    
+    <insert id="insert" parameterType="${java_entity_package}.${table.code}" useGeneratedKeys="true" keyProperty="${table.identityCol.code}">
+        insert into ${table.originCode?lower_case} (<#list table.columns as column><#if column.identity == "0">${column.originCode}<#if column_has_next>, </#if></#if></#list>)
+        values (<#list table.columns as column><#if column.identity == "0">#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#if></#list>)
+    </insert>
+<#else>
     <insert id="insert" parameterType="${java_entity_package}.${table.code}">
         insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>)
         values (<#list table.columns as column>#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
     </insert>
+</#if>
   
     <select id="selectWhere" parameterType="${java_entity_package}.${table.code}" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
