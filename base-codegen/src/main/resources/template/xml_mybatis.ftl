@@ -77,7 +77,9 @@
     <update id="updateById" parameterType="${java_entity_package}.${table.code}">
         update ${table.originCode?lower_case} set 
 		<#list table.colsExceptKey as column>
+			<#if column.identity == "0">
                ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if>
+			</#if>
 		</#list>
 		where <#list table.keys as column>${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next> and </#if></#list>
     </update>
@@ -86,9 +88,11 @@
 		update ${table.originCode?lower_case}
 		<set>
 		<#list table.colsExceptKey as column>
+			<#if column.identity == "0">
 		    <if test="${column.code} != null">
 				${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />},
 		    </if>
+		    </#if>
 		</#list>
 		</set>
 		where <#list table.keys as column>${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next> and </#if></#list>
@@ -100,7 +104,8 @@
 	<update id="updateBatch" parameterType="java.util.List">
 	    update ${table.originCode?lower_case}
 	    <trim prefix="set" suffixOverrides=",">	
-	<#list table.colsExceptKey as column>	
+	<#list table.colsExceptKey as column>
+		<#if column.identity == "0">
 	        <trim prefix="${column.originCode} = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.${column.code} != null">
@@ -111,6 +116,7 @@
 	                </if>
 	            </foreach>
 	        </trim>
+	    </#if>
 	</#list>		
 	    </trim>
 	    where <#list table.keys as column>${column.originCode}</#list> in
