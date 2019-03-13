@@ -257,9 +257,11 @@ public class CDMParser {
                         refCol.setMandatory("0");
                     }
 					if(colMap.containsKey(refId)){
-						table.addColumn(refCol);
 						if(!"0".equals(refCol.getIdentity())) {
 							table.setIdentityCol(refCol);
+							table.getColumns().add(0, refCol);	//自增字段最好插在最前面
+						}else {
+							table.addColumn(refCol);
 						}
 					}
 					

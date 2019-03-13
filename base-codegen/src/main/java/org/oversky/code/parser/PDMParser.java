@@ -235,7 +235,6 @@ public class PDMParser {
 						column.setIdentity("0");
 					}else{
 						column.setIdentity(elementIdentity.getTextTrim());
-						table.setIdentityCol(column);
 					}
 					
 	                Element elementDefaultValue = elementColumn.element(ELEMENT_DEFAULTVALUE);
@@ -243,7 +242,14 @@ public class PDMParser {
 	                    column.setDefaultValue(elementDefaultValue.getTextTrim());
 	                }
 					
-					table.addColumn(column);
+	                //添加column，如果有自增主键，添加到最前面
+	                if(elementIdentity == null) {
+	                	table.addColumn(column);	                	
+	                }else {
+						table.setIdentityCol(column);
+	                	table.getColumns().add(0, column);
+	                }
+	                
 					if(keyList.contains(column.getId())){
 						table.addKey(column);
 					}else{

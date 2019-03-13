@@ -25,6 +25,27 @@
     </insert>
 </#if>
   
+<#if ((table.dbms)!'')?contains("MYSQL")>
+	<!-- mysql专属 -->
+	<#if table.identityCol??> 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="${table.identityCol.code}">
+		insert into ${table.originCode?lower_case} (<#list table.columns as column><#if column.identity == "0">${column.originCode}<#if column_has_next>, </#if></#if></#list>)
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+        (<#list table.columns as column><#if column.identity == "0">#${r'{'}item.${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#if></#list>)
+		</foreach>
+	</insert>
+	<#else>
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(<#list table.columns as column>#${r'{'}item.${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
+		</foreach>
+	</insert>
+	</#if>
+</#if>
+	
     <select id="selectWhere" parameterType="${java_entity_package}.${table.code}" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case} 
@@ -40,16 +61,6 @@
           from ${table.originCode?lower_case}
     </select>
 
-	<!-- mysql专属 -->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert all
-		<foreach item="item" index="index" collection="list">
-		into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (<#list table.columns as column>#${r'{'}item.${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
-		</foreach>
-		select 1 from dual
-	</insert>
-	
 <#if (table.keys?size > 0)>
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
@@ -84,7 +95,31 @@
 	</update>
 	</#if>
 </#if>
-	
+
+<#if table.keys?size == 1>
+	<update id="updateBatch" parameterType="java.util.List">
+	    update ${table.originCode?lower_case}
+	    <trim prefix="set" suffixOverrides=",">	
+	<#list table.colsExceptKey as column>	
+	        <trim prefix="${column.originCode} = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.${column.code} != null">
+	                    when <#list table.keys as column>${column.originCode}</#list> = #${r'{'}item.<#list table.keys as column>${column.code}</#list>} then #${r'{'}item.${column.code}, jdbcType=<@type datatype=column.datatype />}
+	                </if>
+	                <if test="item.${column.code} == null">
+	                    when <#list table.keys as column>${column.originCode}</#list> = #${r'{'}item.<#list table.keys as column>${column.code}</#list>} then ${column.originCode}
+	                </if>
+	            </foreach>
+	        </trim>
+	</#list>		
+	    </trim>
+	    where <#list table.keys as column>${column.originCode}</#list> in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #${r'{'}item.<#list table.keys as column>${column.code}</#list>}
+	    </foreach>
+	</update>
+</#if>
+
 	<sql id="column_list">
         <#list table.columns as column>${r'${'}tab}${column.originCode}<#if column_has_next>, </#if></#list>
 	</sql>

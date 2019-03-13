@@ -20,4 +20,7 @@ public interface SysParamDao{
     List<SysParam> selectWhere(SysParam where);
 
     List<SysParam> selectAll();
+    
+	int insertBatch(List<SysParam> entityList);
+	
 }

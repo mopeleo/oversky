@@ -25,6 +25,15 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=INTEGER}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{loginerror, jdbcType=INTEGER}, #{passwdvaliddate, jdbcType=VARCHAR})
     </insert>
   
+	<!-- mysql专属 -->
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="userid">
+		insert into sys_user (unioncode, username, loginid, loginpasswd, salt, mobileno, email, orgid, idtype, idcode, logindate, logintime, status, loginerror, passwdvaliddate)
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=INTEGER}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.loginerror, jdbcType=INTEGER}, #{item.passwdvaliddate, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUser" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user 
@@ -40,16 +49,6 @@
           from sys_user
     </select>
 
-	<!-- mysql专属 -->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert all
-		<foreach item="item" index="index" collection="list">
-		into sys_user (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (#{item.userid, jdbcType=DECIMAL}, #{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=INTEGER}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.loginerror, jdbcType=INTEGER}, #{item.passwdvaliddate, jdbcType=VARCHAR})
-		</foreach>
-		select 1 from dual
-	</insert>
-	
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user
@@ -132,7 +131,167 @@
 		</set>
 		where userid = #{userid, jdbcType=DECIMAL}
 	</update>
-	
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update sys_user
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when userid = #{item.userid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when userid = #{item.userid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="username = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.username != null">
+	                    when userid = #{item.userid} then #{item.username, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.username == null">
+	                    when userid = #{item.userid} then username
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="loginid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.loginid != null">
+	                    when userid = #{item.userid} then #{item.loginid, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.loginid == null">
+	                    when userid = #{item.userid} then loginid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="loginpasswd = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.loginpasswd != null">
+	                    when userid = #{item.userid} then #{item.loginpasswd, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.loginpasswd == null">
+	                    when userid = #{item.userid} then loginpasswd
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="salt = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.salt != null">
+	                    when userid = #{item.userid} then #{item.salt, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.salt == null">
+	                    when userid = #{item.userid} then salt
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="mobileno = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.mobileno != null">
+	                    when userid = #{item.userid} then #{item.mobileno, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.mobileno == null">
+	                    when userid = #{item.userid} then mobileno
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="email = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.email != null">
+	                    when userid = #{item.userid} then #{item.email, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.email == null">
+	                    when userid = #{item.userid} then email
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="orgid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.orgid != null">
+	                    when userid = #{item.userid} then #{item.orgid, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.orgid == null">
+	                    when userid = #{item.userid} then orgid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="idtype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.idtype != null">
+	                    when userid = #{item.userid} then #{item.idtype, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.idtype == null">
+	                    when userid = #{item.userid} then idtype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="idcode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.idcode != null">
+	                    when userid = #{item.userid} then #{item.idcode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.idcode == null">
+	                    when userid = #{item.userid} then idcode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="logindate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.logindate != null">
+	                    when userid = #{item.userid} then #{item.logindate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.logindate == null">
+	                    when userid = #{item.userid} then logindate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="logintime = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.logintime != null">
+	                    when userid = #{item.userid} then #{item.logintime, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.logintime == null">
+	                    when userid = #{item.userid} then logintime
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="status = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.status != null">
+	                    when userid = #{item.userid} then #{item.status, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.status == null">
+	                    when userid = #{item.userid} then status
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="loginerror = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.loginerror != null">
+	                    when userid = #{item.userid} then #{item.loginerror, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.loginerror == null">
+	                    when userid = #{item.userid} then loginerror
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="passwdvaliddate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.passwdvaliddate != null">
+	                    when userid = #{item.userid} then #{item.passwdvaliddate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.passwdvaliddate == null">
+	                    when userid = #{item.userid} then passwdvaliddate
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where userid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.userid}
+	    </foreach>
+	</update>
+
 	<sql id="column_list">
         ${tab}userid, ${tab}unioncode, ${tab}username, ${tab}loginid, ${tab}loginpasswd, ${tab}salt, ${tab}mobileno, ${tab}email, ${tab}orgid, ${tab}idtype, ${tab}idcode, ${tab}logindate, ${tab}logintime, ${tab}status, ${tab}loginerror, ${tab}passwdvaliddate
 	</sql>

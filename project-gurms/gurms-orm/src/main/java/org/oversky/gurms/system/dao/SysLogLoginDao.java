@@ -20,4 +20,9 @@ public interface SysLogLoginDao{
     List<SysLogLogin> selectWhere(SysLogLogin where);
 
     List<SysLogLogin> selectAll();
+    
+	int updateBatch(List<SysLogLogin> entityList);
+	
+	int insertBatch(List<SysLogLogin> entityList);
+	
 }

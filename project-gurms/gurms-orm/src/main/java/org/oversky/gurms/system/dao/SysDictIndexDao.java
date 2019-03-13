@@ -20,4 +20,7 @@ public interface SysDictIndexDao{
     List<SysDictIndex> selectWhere(SysDictIndex where);
 
     List<SysDictIndex> selectAll();
+    
+	int insertBatch(List<SysDictIndex> entityList);
+	
 }

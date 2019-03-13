@@ -11,6 +11,15 @@
         values (#{roleid, jdbcType=INTEGER}, #{menuid, jdbcType=VARCHAR})
     </insert>
   
+	<!-- mysql专属 -->
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into sys_role_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.roleid, jdbcType=INTEGER}, #{item.menuid, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysRoleMenu" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_role_menu 
@@ -26,16 +35,6 @@
           from sys_role_menu
     </select>
 
-	<!-- mysql专属 -->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert all
-		<foreach item="item" index="index" collection="list">
-		into sys_role_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (#{item.roleid, jdbcType=INTEGER}, #{item.menuid, jdbcType=VARCHAR})
-		</foreach>
-		select 1 from dual
-	</insert>
-	
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_role_menu
@@ -47,7 +46,8 @@
          where roleid = #{0} and menuid = #{1}
     </delete>
   
-	
+
+
 	<sql id="column_list">
         ${tab}roleid, ${tab}menuid
 	</sql>

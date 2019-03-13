@@ -16,4 +16,7 @@ public interface SysUserRoleDao{
     List<SysUserRole> selectWhere(SysUserRole where);
 
     List<SysUserRole> selectAll();
+    
+	int insertBatch(List<SysUserRole> entityList);
+	
 }

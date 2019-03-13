@@ -20,4 +20,9 @@ public interface SysUserInfoDao{
     List<SysUserInfo> selectWhere(SysUserInfo where);
 
     List<SysUserInfo> selectAll();
+    
+	int updateBatch(List<SysUserInfo> entityList);
+	
+	int insertBatch(List<SysUserInfo> entityList);
+	
 }

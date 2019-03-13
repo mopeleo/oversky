@@ -20,4 +20,9 @@ public interface SysOrgDao{
     List<SysOrg> selectWhere(SysOrg where);
 
     List<SysOrg> selectAll();
+    
+	int updateBatch(List<SysOrg> entityList);
+	
+	int insertBatch(List<SysOrg> entityList);
+	
 }

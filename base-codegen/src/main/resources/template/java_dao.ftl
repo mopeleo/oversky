@@ -11,12 +11,12 @@ public interface ${table.code}Dao{
 
     int deleteById(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>);
 
-<#if (table.colsExceptKey?size > 0)>
+	<#if (table.colsExceptKey?size > 0)>
     int updateById(${table.code} entity);
 	
     int dynamicUpdateById(${table.code} entity);
     
-</#if>
+	</#if>
 </#if>
     int count(${table.code} where);
     
@@ -25,4 +25,13 @@ public interface ${table.code}Dao{
     List<${table.code}> selectWhere(${table.code} where);
 
     List<${table.code}> selectAll();
+    
+<#if table.keys?size == 1>
+	int updateBatch(List<${table.code}> entityList);
+	
+</#if>
+<#if ((table.dbms)!'')?contains("MYSQL")>
+	int insertBatch(List<${table.code}> entityList);
+	
+</#if>
 }

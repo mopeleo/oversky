@@ -20,4 +20,9 @@ public interface SysRoleDao{
     List<SysRole> selectWhere(SysRole where);
 
     List<SysRole> selectAll();
+    
+	int updateBatch(List<SysRole> entityList);
+	
+	int insertBatch(List<SysRole> entityList);
+	
 }

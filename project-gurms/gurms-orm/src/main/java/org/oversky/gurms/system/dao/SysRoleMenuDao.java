@@ -16,4 +16,7 @@ public interface SysRoleMenuDao{
     List<SysRoleMenu> selectWhere(SysRoleMenu where);
 
     List<SysRoleMenu> selectAll();
+    
+	int insertBatch(List<SysRoleMenu> entityList);
+	
 }

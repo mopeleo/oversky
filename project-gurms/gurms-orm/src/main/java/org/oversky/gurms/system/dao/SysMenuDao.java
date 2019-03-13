@@ -20,4 +20,9 @@ public interface SysMenuDao{
     List<SysMenu> selectWhere(SysMenu where);
 
     List<SysMenu> selectAll();
+    
+	int updateBatch(List<SysMenu> entityList);
+	
+	int insertBatch(List<SysMenu> entityList);
+	
 }

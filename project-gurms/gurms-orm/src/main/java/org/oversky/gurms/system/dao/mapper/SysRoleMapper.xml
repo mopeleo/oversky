@@ -17,6 +17,15 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{roleid, jdbcType=INTEGER}, #{rolename, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{roletype, jdbcType=INTEGER}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{creator, jdbcType=DECIMAL})
     </insert>
   
+	<!-- mysql专属 -->
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into sys_role (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.unioncode, jdbcType=VARCHAR}, #{item.roleid, jdbcType=INTEGER}, #{item.rolename, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.roletype, jdbcType=INTEGER}, #{item.startdate, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.creator, jdbcType=DECIMAL})
+		</foreach>
+	</insert>
+	
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysRole" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_role 
@@ -32,16 +41,6 @@
           from sys_role
     </select>
 
-	<!-- mysql专属 -->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert all
-		<foreach item="item" index="index" collection="list">
-		into sys_role (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (#{item.unioncode, jdbcType=VARCHAR}, #{item.roleid, jdbcType=INTEGER}, #{item.rolename, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.roletype, jdbcType=INTEGER}, #{item.startdate, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.creator, jdbcType=DECIMAL})
-		</foreach>
-		select 1 from dual
-	</insert>
-	
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_role
@@ -92,7 +91,87 @@
 		</set>
 		where roleid = #{roleid, jdbcType=INTEGER}
 	</update>
-	
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update sys_role
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when roleid = #{item.roleid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when roleid = #{item.roleid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="rolename = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.rolename != null">
+	                    when roleid = #{item.roleid} then #{item.rolename, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.rolename == null">
+	                    when roleid = #{item.roleid} then rolename
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="status = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.status != null">
+	                    when roleid = #{item.roleid} then #{item.status, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.status == null">
+	                    when roleid = #{item.roleid} then status
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="roletype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.roletype != null">
+	                    when roleid = #{item.roleid} then #{item.roletype, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.roletype == null">
+	                    when roleid = #{item.roleid} then roletype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="startdate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.startdate != null">
+	                    when roleid = #{item.roleid} then #{item.startdate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.startdate == null">
+	                    when roleid = #{item.roleid} then startdate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="enddate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.enddate != null">
+	                    when roleid = #{item.roleid} then #{item.enddate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.enddate == null">
+	                    when roleid = #{item.roleid} then enddate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="creator = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.creator != null">
+	                    when roleid = #{item.roleid} then #{item.creator, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.creator == null">
+	                    when roleid = #{item.roleid} then creator
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where roleid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.roleid}
+	    </foreach>
+	</update>
+
 	<sql id="column_list">
         ${tab}unioncode, ${tab}roleid, ${tab}rolename, ${tab}status, ${tab}roletype, ${tab}startdate, ${tab}enddate, ${tab}creator
 	</sql>

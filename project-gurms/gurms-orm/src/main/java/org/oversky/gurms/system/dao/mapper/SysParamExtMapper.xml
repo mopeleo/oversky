@@ -18,6 +18,15 @@
         values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{distype, jdbcType=INTEGER}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER})
     </insert>
   
+	<!-- mysql专属 -->
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.distype, jdbcType=INTEGER}, #{item.dictcode, jdbcType=INTEGER}, #{item.valuelist, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER})
+		</foreach>
+	</insert>
+	
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParamExt" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param_ext 
@@ -33,16 +42,6 @@
           from sys_param_ext
     </select>
 
-	<!-- mysql专属 -->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert all
-		<foreach item="item" index="index" collection="list">
-		into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.distype, jdbcType=INTEGER}, #{item.dictcode, jdbcType=INTEGER}, #{item.valuelist, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER})
-		</foreach>
-		select 1 from dual
-	</insert>
-	
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param_ext
@@ -97,7 +96,97 @@
 		</set>
 		where paramid = #{paramid, jdbcType=INTEGER}
 	</update>
-	
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update sys_param_ext
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="paramname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.paramname != null">
+	                    when paramid = #{item.paramid} then #{item.paramname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.paramname == null">
+	                    when paramid = #{item.paramid} then paramname
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="texttitle = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.texttitle != null">
+	                    when paramid = #{item.paramid} then #{item.texttitle, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.texttitle == null">
+	                    when paramid = #{item.paramid} then texttitle
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="texttail = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.texttail != null">
+	                    when paramid = #{item.paramid} then #{item.texttail, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.texttail == null">
+	                    when paramid = #{item.paramid} then texttail
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="distype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.distype != null">
+	                    when paramid = #{item.paramid} then #{item.distype, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.distype == null">
+	                    when paramid = #{item.paramid} then distype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="dictcode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.dictcode != null">
+	                    when paramid = #{item.paramid} then #{item.dictcode, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.dictcode == null">
+	                    when paramid = #{item.paramid} then dictcode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valuelist = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valuelist != null">
+	                    when paramid = #{item.paramid} then #{item.valuelist, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.valuelist == null">
+	                    when paramid = #{item.paramid} then valuelist
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="initvalue = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.initvalue != null">
+	                    when paramid = #{item.paramid} then #{item.initvalue, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.initvalue == null">
+	                    when paramid = #{item.paramid} then initvalue
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valuelength = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valuelength != null">
+	                    when paramid = #{item.paramid} then #{item.valuelength, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.valuelength == null">
+	                    when paramid = #{item.paramid} then valuelength
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where paramid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.paramid}
+	    </foreach>
+	</update>
+
 	<sql id="column_list">
         ${tab}paramid, ${tab}paramname, ${tab}texttitle, ${tab}texttail, ${tab}distype, ${tab}dictcode, ${tab}valuelist, ${tab}initvalue, ${tab}valuelength
 	</sql>

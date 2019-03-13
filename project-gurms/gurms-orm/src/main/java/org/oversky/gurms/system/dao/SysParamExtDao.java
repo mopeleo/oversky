@@ -20,4 +20,9 @@ public interface SysParamExtDao{
     List<SysParamExt> selectWhere(SysParamExt where);
 
     List<SysParamExt> selectAll();
+    
+	int updateBatch(List<SysParamExt> entityList);
+	
+	int insertBatch(List<SysParamExt> entityList);
+	
 }

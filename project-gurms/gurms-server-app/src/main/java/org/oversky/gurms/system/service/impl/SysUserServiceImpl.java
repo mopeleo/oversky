@@ -6,6 +6,7 @@ import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.util.BeanCopyUtils;
 import org.oversky.base.util.CommonUtils;
 import org.oversky.base.util.DateUtils;
+import org.oversky.base.util.EncryptUtils;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.util.StringUtil;
@@ -39,6 +41,10 @@ public class SysUserServiceImpl implements SysUserService{
 		user.setStatus(DictConsts.USER_STATUS_NORMAL);
 		user.setLoginerror(0);
 		user.setPasswdvaliddate(DateUtils.addMonths(DateUtils.getNowDate(),3));
+		if(!StringUtils.isEmpty(user.getLoginpasswd())) {
+			String md5Passwd = EncryptUtils.md5Encode(user.getLoginpasswd());
+			user.setLoginpasswd(EncryptUtils.md5Encode(md5Passwd + user.getSalt()));
+		}
 		if(sysUserDao.insert(user) == 1) {
 			res.success("新增成功");
 		}else {

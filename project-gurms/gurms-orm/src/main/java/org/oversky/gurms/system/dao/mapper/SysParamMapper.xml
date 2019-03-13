@@ -12,6 +12,15 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{paramid, jdbcType=INTEGER}, #{paramvalue, jdbcType=VARCHAR})
     </insert>
   
+	<!-- mysql专属 -->
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into sys_param (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.unioncode, jdbcType=VARCHAR}, #{item.paramid, jdbcType=INTEGER}, #{item.paramvalue, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParam" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param 
@@ -27,16 +36,6 @@
           from sys_param
     </select>
 
-	<!-- mysql专属 -->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert all
-		<foreach item="item" index="index" collection="list">
-		into sys_param (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (#{item.unioncode, jdbcType=VARCHAR}, #{item.paramid, jdbcType=INTEGER}, #{item.paramvalue, jdbcType=VARCHAR})
-		</foreach>
-		select 1 from dual
-	</insert>
-	
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param
@@ -63,7 +62,8 @@
 		</set>
 		where unioncode = #{unioncode, jdbcType=VARCHAR} and paramid = #{paramid, jdbcType=INTEGER}
 	</update>
-	
+
+
 	<sql id="column_list">
         ${tab}unioncode, ${tab}paramid, ${tab}paramvalue
 	</sql>

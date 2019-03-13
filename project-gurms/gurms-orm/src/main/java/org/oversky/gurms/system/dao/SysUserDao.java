@@ -20,4 +20,9 @@ public interface SysUserDao{
     List<SysUser> selectWhere(SysUser where);
 
     List<SysUser> selectAll();
+    
+	int updateBatch(List<SysUser> entityList);
+	
+	int insertBatch(List<SysUser> entityList);
+	
 }

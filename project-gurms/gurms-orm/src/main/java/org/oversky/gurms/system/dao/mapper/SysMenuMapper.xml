@@ -16,6 +16,15 @@
         values (#{menuid, jdbcType=VARCHAR}, #{menuname, jdbcType=VARCHAR}, #{menuurl, jdbcType=VARCHAR}, #{parentmenu, jdbcType=VARCHAR}, #{menutype, jdbcType=INTEGER}, #{opentype, jdbcType=INTEGER}, #{status, jdbcType=INTEGER})
     </insert>
   
+	<!-- mysql专属 -->
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into sys_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.menuid, jdbcType=VARCHAR}, #{item.menuname, jdbcType=VARCHAR}, #{item.menuurl, jdbcType=VARCHAR}, #{item.parentmenu, jdbcType=VARCHAR}, #{item.menutype, jdbcType=INTEGER}, #{item.opentype, jdbcType=INTEGER}, #{item.status, jdbcType=INTEGER})
+		</foreach>
+	</insert>
+	
     <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysMenu" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_menu 
@@ -31,16 +40,6 @@
           from sys_menu
     </select>
 
-	<!-- mysql专属 -->
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert all
-		<foreach item="item" index="index" collection="list">
-		into sys_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
-		values (#{item.menuid, jdbcType=VARCHAR}, #{item.menuname, jdbcType=VARCHAR}, #{item.menuurl, jdbcType=VARCHAR}, #{item.parentmenu, jdbcType=VARCHAR}, #{item.menutype, jdbcType=INTEGER}, #{item.opentype, jdbcType=INTEGER}, #{item.status, jdbcType=INTEGER})
-		</foreach>
-		select 1 from dual
-	</insert>
-	
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_menu
@@ -87,7 +86,77 @@
 		</set>
 		where menuid = #{menuid, jdbcType=VARCHAR}
 	</update>
-	
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update sys_menu
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="menuname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.menuname != null">
+	                    when menuid = #{item.menuid} then #{item.menuname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.menuname == null">
+	                    when menuid = #{item.menuid} then menuname
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="menuurl = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.menuurl != null">
+	                    when menuid = #{item.menuid} then #{item.menuurl, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.menuurl == null">
+	                    when menuid = #{item.menuid} then menuurl
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="parentmenu = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.parentmenu != null">
+	                    when menuid = #{item.menuid} then #{item.parentmenu, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.parentmenu == null">
+	                    when menuid = #{item.menuid} then parentmenu
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="menutype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.menutype != null">
+	                    when menuid = #{item.menuid} then #{item.menutype, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.menutype == null">
+	                    when menuid = #{item.menuid} then menutype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="opentype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.opentype != null">
+	                    when menuid = #{item.menuid} then #{item.opentype, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.opentype == null">
+	                    when menuid = #{item.menuid} then opentype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="status = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.status != null">
+	                    when menuid = #{item.menuid} then #{item.status, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.status == null">
+	                    when menuid = #{item.menuid} then status
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where menuid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.menuid}
+	    </foreach>
+	</update>
+
 	<sql id="column_list">
         ${tab}menuid, ${tab}menuname, ${tab}menuurl, ${tab}parentmenu, ${tab}menutype, ${tab}opentype, ${tab}status
 	</sql>

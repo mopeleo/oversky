@@ -1,5 +1,6 @@
 package org.oversky.gurms.system.service.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,10 +9,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.oversky.base.service.BaseResListDto;
+import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
 import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
+import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +29,9 @@ public class SysUserServiceTest {
 	
 	@Autowired
 	private SysUserDaoExt userDaoExt;
+	
+	@Autowired
+	private SysUserDao userDao;
 	
 //	@Test
 	public void insert() {
@@ -44,7 +50,7 @@ public class SysUserServiceTest {
 		userDto.setPasswdvaliddate("20190909");
 		userDto.setSalt("123");
 		userDto.setStatus(1);
-		userDto.setUnioncode("0000");
+		userDto.setUnioncode("00000000000000");
 		userDto.setUsername("test");
 		boolean flag = sysUserService.insert(userDto).isSuccess();
 		Assert.assertEquals(true, flag);
@@ -87,6 +93,51 @@ public class SysUserServiceTest {
 		for(SysUserRes user :  res.getResults()) {
 			System.out.println(user);
 		}
+	}
+	
+//	@Test
+	public void testBatchInsert() {
+		int len = 5;
+		List<SysUser> list = new ArrayList<SysUser>(len);
+		for(int i = 0; i < len; i++) {
+			SysUser userDto = new SysUser();
+			userDto.setEmail("test@126.com");
+			userDto.setIdcode("421001297608160946");
+			userDto.setIdtype("1");
+			userDto.setLogindate("20190130");
+			userDto.setLoginerror(i);
+			userDto.setLoginid("test");
+			userDto.setLoginpasswd("1");
+			userDto.setLogintime("150000");
+			userDto.setMobileno("13554600998");
+			userDto.setOrgid(10000);
+			userDto.setPasswdvaliddate("20190909");
+			userDto.setSalt("123");
+			userDto.setStatus(1);
+			userDto.setUnioncode("0000");
+			userDto.setUsername("test"+i);
+			list.add(userDto);
+		}
+		int r = userDao.insertBatch(list);
+		System.out.println(r);
+	}
+	
+//	@Test
+	public void testBatchUpdate() {
+		SysUser where = new SysUser();
+		where.setLoginid("test");
+		List<SysUser> list = userDao.selectWhere(where);
+		for(int i = 0; i < list.size(); i++) {
+			SysUser user = list.get(i);
+			if(user.getUserid()%2 == 0) {
+				user.setUnioncode(null);
+			}else {
+				user.setUnioncode("u" + i);
+			}
+//			user.setUnioncode("0000");
+		}
+		int r = userDao.updateBatch(list);
+		System.out.println(r);
 	}
 	
 }
