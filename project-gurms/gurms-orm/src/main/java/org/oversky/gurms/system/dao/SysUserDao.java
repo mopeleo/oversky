@@ -17,11 +17,15 @@ public interface SysUserDao{
     
     int insert(SysUser entity);
 
+    int deleteWhere(SysUser where);
+
     List<SysUser> selectWhere(SysUser where);
 
     List<SysUser> selectAll();
     
 	int updateBatch(List<SysUser> entityList);
+	
+	int deleteBatch(Long[] ids);
 	
 	int insertBatch(List<SysUser> entityList);
 	

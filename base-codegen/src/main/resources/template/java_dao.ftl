@@ -22,12 +22,16 @@ public interface ${table.code}Dao{
     
     int insert(${table.code} entity);
 
+    int deleteWhere(${table.code} where);
+
     List<${table.code}> selectWhere(${table.code} where);
 
     List<${table.code}> selectAll();
     
 <#if table.keys?size == 1>
 	int updateBatch(List<${table.code}> entityList);
+	
+	int deleteBatch(<#list table.keys as column><@type datatype=column.datatype /></#list>[] ids);
 	
 </#if>
 <#if ((table.dbms)!'')?contains("MYSQL")>

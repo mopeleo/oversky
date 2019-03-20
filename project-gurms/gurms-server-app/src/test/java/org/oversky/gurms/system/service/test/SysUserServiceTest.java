@@ -140,4 +140,10 @@ public class SysUserServiceTest {
 		System.out.println(r);
 	}
 	
+	@Test
+	public void testBatchDelete() {
+		Long[] ids = {23L,24L};
+		int r = userDao.deleteBatch(ids);
+		System.out.println(r);
+	}
 }

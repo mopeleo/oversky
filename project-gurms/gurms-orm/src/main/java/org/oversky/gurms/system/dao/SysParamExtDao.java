@@ -17,11 +17,15 @@ public interface SysParamExtDao{
     
     int insert(SysParamExt entity);
 
+    int deleteWhere(SysParamExt where);
+
     List<SysParamExt> selectWhere(SysParamExt where);
 
     List<SysParamExt> selectAll();
     
 	int updateBatch(List<SysParamExt> entityList);
+	
+	int deleteBatch(Long[] ids);
 	
 	int insertBatch(List<SysParamExt> entityList);
 	

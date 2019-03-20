@@ -17,6 +17,8 @@ public interface SysDictValueDao{
     
     int insert(SysDictValue entity);
 
+    int deleteWhere(SysDictValue where);
+
     List<SysDictValue> selectWhere(SysDictValue where);
 
     List<SysDictValue> selectAll();

@@ -17,11 +17,15 @@ public interface SysOrgDao{
     
     int insert(SysOrg entity);
 
+    int deleteWhere(SysOrg where);
+
     List<SysOrg> selectWhere(SysOrg where);
 
     List<SysOrg> selectAll();
     
 	int updateBatch(List<SysOrg> entityList);
+	
+	int deleteBatch(Long[] ids);
 	
 	int insertBatch(List<SysOrg> entityList);
 	

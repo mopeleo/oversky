@@ -1,3 +1,27 @@
+import { Message } from "element-ui";
+
+/**
+* 错误弹窗提示信息
+*/
+export function errTip(msg){
+    Message({
+        showClose: true,     //是否显示关闭按钮,默认false
+        message: msg,        //消息文字
+        duration: 0,         //显示时间, 毫秒。设为 0 则不会自动关闭,默认3000
+        center: true,        //文字是否居中,默认 false
+        type: 'error'        //消息类型，success/warning/info/error默认info
+    });
+}
+
+export function succTip(msg){
+    Message({
+        showClose: true,     //是否显示关闭按钮,默认false
+        message: msg,        //消息文字
+        center: true,        //文字是否居中,默认 false
+        type: 'success'        //消息类型，success/warning/info/error默认info
+    });
+}
+
 /**
  * 添加动态(菜单)路由
  * @param {*} menuList 菜单列表

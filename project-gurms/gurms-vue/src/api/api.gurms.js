@@ -12,6 +12,8 @@ export default {
         // return axios.post(`${baseURL}/login`, qs.stringify(params));
         return axios.post(`${baseURL}/login`, params);
     },
+
+    //========================================================
     // 用户列表
     userList (params) {
         return axios.post(`${baseURL}/sysuser/list`, params);
@@ -33,6 +35,27 @@ export default {
     // 用户删除
     userDelete (userid) {
         return axios.get(`${baseURL}/sysuser/delete/${userid}`);
-    }
-    // 其他接口…………
+    },
+
+    //========================================================
+    // 角色列表
+    roleList (params) {
+        return axios.post(`${baseURL}/sysrole/list`, params);
+    },
+    // 角色新增
+    roleAdd (params) {
+        return axios.post(`${baseURL}/sysrole/add`, params);
+    },
+    // 角色编辑
+    roleUpdate (params) {
+        return axios.post(`${baseURL}/sysrole/update`, params);
+    },
+    // 角色详情
+    roleDetail (roleid) {
+        return axios.get(`${baseURL}/sysrole/detail/${roleid}`)
+    },
+    // 角色删除
+    roleDelete (roleid) {
+        return axios.get(`${baseURL}/sysrole/delete/${roleid}`);
+    },
 }

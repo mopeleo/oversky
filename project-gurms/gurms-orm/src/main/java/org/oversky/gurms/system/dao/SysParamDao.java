@@ -17,6 +17,8 @@ public interface SysParamDao{
     
     int insert(SysParam entity);
 
+    int deleteWhere(SysParam where);
+
     List<SysParam> selectWhere(SysParam where);
 
     List<SysParam> selectAll();

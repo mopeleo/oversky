@@ -52,6 +52,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="${java_entity_package}.${table.code}">
+        delete from ${table.originCode?lower_case} 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="${java_entity_package}.${table.code}">
         select count(1) from ${table.originCode?lower_case} <include refid="where_all_list" />
 	</select>
@@ -124,6 +129,14 @@
 	        #${r'{'}item.<#list table.keys as column>${column.code}</#list>}
 	    </foreach>
 	</update>
+	
+	<delete id="deleteBatch">
+	    delete from ${table.originCode?lower_case}
+	     where <#list table.keys as column>${column.originCode}</#list> in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #${r'{'}id}
+	    </foreach>
+	</delete>
 </#if>
 
 	<sql id="column_list">

@@ -17,11 +17,15 @@ public interface SysLogLoginDao{
     
     int insert(SysLogLogin entity);
 
+    int deleteWhere(SysLogLogin where);
+
     List<SysLogLogin> selectWhere(SysLogLogin where);
 
     List<SysLogLogin> selectAll();
     
 	int updateBatch(List<SysLogLogin> entityList);
+	
+	int deleteBatch(Long[] ids);
 	
 	int insertBatch(List<SysLogLogin> entityList);
 	

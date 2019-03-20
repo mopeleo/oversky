@@ -29,6 +29,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
+        delete from sys_dict_index 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
         select count(1) from sys_dict_index <include refid="where_all_list" />
 	</select>

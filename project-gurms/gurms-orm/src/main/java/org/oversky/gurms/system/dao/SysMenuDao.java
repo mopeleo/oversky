@@ -17,11 +17,15 @@ public interface SysMenuDao{
     
     int insert(SysMenu entity);
 
+    int deleteWhere(SysMenu where);
+
     List<SysMenu> selectWhere(SysMenu where);
 
     List<SysMenu> selectAll();
     
 	int updateBatch(List<SysMenu> entityList);
+	
+	int deleteBatch(String[] ids);
 	
 	int insertBatch(List<SysMenu> entityList);
 	

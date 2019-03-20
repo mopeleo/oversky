@@ -32,6 +32,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysRole">
+        delete from sys_role 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysRole">
         select count(1) from sys_role <include refid="where_all_list" />
 	</select>
@@ -171,6 +176,14 @@
 	        #{item.roleid}
 	    </foreach>
 	</update>
+	
+	<delete id="deleteBatch">
+	    delete from sys_role
+	     where roleid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
 
 	<sql id="column_list">
         ${tab}unioncode, ${tab}roleid, ${tab}rolename, ${tab}status, ${tab}roletype, ${tab}startdate, ${tab}enddate, ${tab}creator

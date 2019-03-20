@@ -29,10 +29,11 @@
     </parent>
       
     <modules>
+    	<module>../gurms-common</module>
     	<module>../gurms-orm</module>
     	<module>../gurms-web</module>
-    	<module>../gurms-server-app</module>
     	<module>../gurms-server-api</module>
+    	<module>../gurms-server-app</module>
     </modules>
     
   	<dependencies>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.constant.CacheConsts;
+import org.oversky.gurms.system.constant.ConfigConsts;
 import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.entity.SysParam;
 import org.slf4j.Logger;
@@ -22,14 +23,19 @@ public class CacheSysParamRunner implements ApplicationRunner {
 	@Autowired
 	private SysParamDao paramDao;
 	
+	@Autowired
+	private ConfigConsts config;
+	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		// TODO Auto-generated method stub
+		logger.debug("gurms.config.redis-enable : [{}]", config.isRedisEnable());
+
 		List<SysParam> list = paramDao.selectAll();
 		if(list == null || list.size() == 0) {
 			logger.error("参数初始化失败：加载数为空" );
 			throw new BaseServiceException("参数初始化失败");
 		}
+		
 		
 		list.forEach(param->{
 			CacheConsts.put(param.getParamid(), param.getUnioncode(), param.getParamvalue());

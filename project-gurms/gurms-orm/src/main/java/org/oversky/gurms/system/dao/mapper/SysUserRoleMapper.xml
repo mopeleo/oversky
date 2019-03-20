@@ -26,6 +26,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysUserRole">
+        delete from sys_user_role 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysUserRole">
         select count(1) from sys_user_role <include refid="where_all_list" />
 	</select>

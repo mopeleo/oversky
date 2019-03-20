@@ -17,11 +17,15 @@ public interface SysUserInfoDao{
     
     int insert(SysUserInfo entity);
 
+    int deleteWhere(SysUserInfo where);
+
     List<SysUserInfo> selectWhere(SysUserInfo where);
 
     List<SysUserInfo> selectAll();
     
 	int updateBatch(List<SysUserInfo> entityList);
+	
+	int deleteBatch(Long[] ids);
 	
 	int insertBatch(List<SysUserInfo> entityList);
 	

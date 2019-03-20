@@ -32,6 +32,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
+        delete from sys_log_login 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
         select count(1) from sys_log_login <include refid="where_all_list" />
 	</select>
@@ -171,6 +176,14 @@
 	        #{item.logid}
 	    </foreach>
 	</update>
+	
+	<delete id="deleteBatch">
+	    delete from sys_log_login
+	     where logid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
 
 	<sql id="column_list">
         ${tab}logid, ${tab}userid, ${tab}logindate, ${tab}logintime, ${tab}loginpasswd, ${tab}loginip, ${tab}logintype, ${tab}loginresult

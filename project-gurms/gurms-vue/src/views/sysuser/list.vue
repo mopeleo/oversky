@@ -116,12 +116,13 @@ export default{
         handleDelete(index, row) {
             this.$api.Gurms.userDelete(row.userid).then((res)=>{
                 if(res.data === true){
+                    this.$message({message: '删除成功', type: 'success', showClose: true});
                     this.$options.methods.loadData.bind(this)();
                 }else{
-                    alert('删除失败');
+                    this.$message({message: '删除失败', type: 'error', showClose: true, duration: 0});
                 }
             }).catch((err)=>{
-                alert(err);
+                alert(JSON.stringify(err));
             });
         }
     }

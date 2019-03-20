@@ -37,6 +37,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysOrg">
+        delete from sys_org 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysOrg">
         select count(1) from sys_org <include refid="where_all_list" />
 	</select>
@@ -246,6 +251,14 @@
 	        #{item.orgid}
 	    </foreach>
 	</update>
+	
+	<delete id="deleteBatch">
+	    delete from sys_org
+	     where orgid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
 
 	<sql id="column_list">
         ${tab}orgid, ${tab}unioncode, ${tab}shortname, ${tab}fullname, ${tab}linkman, ${tab}linktel, ${tab}faxno, ${tab}address, ${tab}postcode, ${tab}email, ${tab}parentorg, ${tab}orgtype, ${tab}remark

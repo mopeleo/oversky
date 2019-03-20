@@ -27,6 +27,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysParam">
+        delete from sys_param 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParam">
         select count(1) from sys_param <include refid="where_all_list" />
 	</select>

@@ -31,6 +31,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysMenu">
+        delete from sys_menu 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysMenu">
         select count(1) from sys_menu <include refid="where_all_list" />
 	</select>
@@ -156,6 +161,14 @@
 	        #{item.menuid}
 	    </foreach>
 	</update>
+	
+	<delete id="deleteBatch">
+	    delete from sys_menu
+	     where menuid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
 
 	<sql id="column_list">
         ${tab}menuid, ${tab}menuname, ${tab}menuurl, ${tab}parentmenu, ${tab}menutype, ${tab}opentype, ${tab}status

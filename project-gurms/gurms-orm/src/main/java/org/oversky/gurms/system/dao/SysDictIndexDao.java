@@ -17,6 +17,8 @@ public interface SysDictIndexDao{
     
     int insert(SysDictIndex entity);
 
+    int deleteWhere(SysDictIndex where);
+
     List<SysDictIndex> selectWhere(SysDictIndex where);
 
     List<SysDictIndex> selectAll();

@@ -33,6 +33,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysParamExt">
+        delete from sys_param_ext 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParamExt">
         select count(1) from sys_param_ext <include refid="where_all_list" />
 	</select>
@@ -186,6 +191,14 @@
 	        #{item.paramid}
 	    </foreach>
 	</update>
+	
+	<delete id="deleteBatch">
+	    delete from sys_param_ext
+	     where paramid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
 
 	<sql id="column_list">
         ${tab}paramid, ${tab}paramname, ${tab}texttitle, ${tab}texttail, ${tab}distype, ${tab}dictcode, ${tab}valuelist, ${tab}initvalue, ${tab}valuelength

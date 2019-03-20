@@ -13,6 +13,8 @@ public interface SysUserRoleDao{
     
     int insert(SysUserRole entity);
 
+    int deleteWhere(SysUserRole where);
+
     List<SysUserRole> selectWhere(SysUserRole where);
 
     List<SysUserRole> selectAll();

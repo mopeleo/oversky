@@ -17,11 +17,15 @@ public interface SysRoleDao{
     
     int insert(SysRole entity);
 
+    int deleteWhere(SysRole where);
+
     List<SysRole> selectWhere(SysRole where);
 
     List<SysRole> selectAll();
     
 	int updateBatch(List<SysRole> entityList);
+	
+	int deleteBatch(Long[] ids);
 	
 	int insertBatch(List<SysRole> entityList);
 	

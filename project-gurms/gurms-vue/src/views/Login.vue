@@ -1,7 +1,7 @@
 <template>
     <div id="main">
         <div id="nav">
-            <router-link to="/home">System Login</router-link>
+            <router-link to="/404">System Login</router-link>
         </div>
 
         <el-form ref="loginForm" :model="login" :rules="rules">
@@ -22,6 +22,7 @@
 
 <script>
 import md5 from 'js-md5';
+import * as tools from '@/utils/tools'
 
 export default {
     data() {
@@ -56,11 +57,11 @@ export default {
                         this.$store.commit('pub/LOGIN', res.data);
                         this.$store.commit('pub/ADDROUTES');
                         this.$router.push({name: 'home'});
-                    }).catch((err)=>{
-                        alert(err);
+                    }).catch((error)=>{
+                        var msg = error.data ? error.data.message : error;
+                        tools.errTip(msg);
                     });
                 }else{
-                    alert("valid failure");
                     return false;
                 }
             })

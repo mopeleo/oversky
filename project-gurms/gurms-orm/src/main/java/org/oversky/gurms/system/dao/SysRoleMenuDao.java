@@ -13,6 +13,8 @@ public interface SysRoleMenuDao{
     
     int insert(SysRoleMenu entity);
 
+    int deleteWhere(SysRoleMenu where);
+
     List<SysRoleMenu> selectWhere(SysRoleMenu where);
 
     List<SysRoleMenu> selectAll();

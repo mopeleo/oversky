@@ -28,6 +28,11 @@
           <include refid="where_all_list" />
     </select>
 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysDictValue">
+        delete from sys_dict_value 
+          <include refid="where_all_list" />
+    </delete>
+
 	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysDictValue">
         select count(1) from sys_dict_value <include refid="where_all_list" />
 	</select>
