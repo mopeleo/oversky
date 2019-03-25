@@ -13,6 +13,7 @@ public interface SysRoleMenuDao{
 
     int count(SysRoleMenu where);
     
+	
     int insert(SysRoleMenu entity);
 
 	
@@ -23,6 +24,7 @@ public interface SysRoleMenuDao{
 	
     List<SysRoleMenu> selectAll();
     
+	
 	int insertBatch(List<SysRoleMenu> entityList);
 	
 }

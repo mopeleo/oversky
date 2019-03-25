@@ -19,6 +19,7 @@ public interface SysUserDao{
     
     int count(SysUser where);
     
+	
     int insert(SysUser entity);
 
 	
@@ -34,6 +35,7 @@ public interface SysUserDao{
 	
 	
 	int deleteBatch(Long[] ids);
+	
 	
 	int insertBatch(List<SysUser> entityList);
 	

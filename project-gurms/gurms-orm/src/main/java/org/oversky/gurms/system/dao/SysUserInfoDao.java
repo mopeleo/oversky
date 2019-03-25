@@ -19,6 +19,7 @@ public interface SysUserInfoDao{
     
     int count(SysUserInfo where);
     
+	
     int insert(SysUserInfo entity);
 
 	
@@ -34,6 +35,7 @@ public interface SysUserInfoDao{
 	
 	
 	int deleteBatch(Long[] ids);
+	
 	
 	int insertBatch(List<SysUserInfo> entityList);
 	

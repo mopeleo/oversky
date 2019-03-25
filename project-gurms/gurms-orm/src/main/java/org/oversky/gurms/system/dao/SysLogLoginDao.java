@@ -19,6 +19,7 @@ public interface SysLogLoginDao{
     
     int count(SysLogLogin where);
     
+	
     int insert(SysLogLogin entity);
 
 	
@@ -34,6 +35,7 @@ public interface SysLogLoginDao{
 	
 	
 	int deleteBatch(Long[] ids);
+	
 	
 	int insertBatch(List<SysLogLogin> entityList);
 	

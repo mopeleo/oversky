@@ -13,6 +13,7 @@ public interface SysUserRoleDao{
 
     int count(SysUserRole where);
     
+	
     int insert(SysUserRole entity);
 
 	
@@ -23,6 +24,7 @@ public interface SysUserRoleDao{
 	
     List<SysUserRole> selectAll();
     
+	
 	int insertBatch(List<SysUserRole> entityList);
 	
 }

@@ -10,7 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 @CacheConfig(cacheNames = "SysDictValue")
 public interface SysDictValueDao{
 
-	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysDictValue).buildEntityKey(#p0,)#p1,)#p2)")
+	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysDictValue).buildEntityKey(#p0,)#p1,)#p2)", unless = "#result == null")
     SysDictValue getById(String unioncode, Long dictcode, String itemcode);
 
 	@CacheEvict(key = "'unioncode:' + #unioncode + 'dictcode:' + #dictcode + 'itemcode:' + #itemcode")
@@ -24,6 +24,7 @@ public interface SysDictValueDao{
     
     int count(SysDictValue where);
     
+	@CacheEvict(key = "selectAll", condition = "#result == 1")
     int insert(SysDictValue entity);
 
 	@CacheEvict(allEntries=true)
@@ -31,9 +32,10 @@ public interface SysDictValueDao{
 
     List<SysDictValue> selectWhere(SysDictValue where);
 
-	@Cacheable(key = "selectAll")
+	@Cacheable(key = "selectAll", unless = "#result == null")
     List<SysDictValue> selectAll();
     
+	@CacheEvict(key = "selectAll", condition = "#result > 0")
 	int insertBatch(List<SysDictValue> entityList);
 	
 }
