@@ -79,14 +79,14 @@ public class SysLogLogin extends BaseEntity{
 		this.loginresult = loginresult;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysLogLogin");
-		return build.append("#").append(this.logid).toString();
+		return build.append("#logid:").append(this.logid).toString();
 	}
 
     public static String buildEntityKey(Long logid){
         StringBuilder build = new StringBuilder("SysLogLogin");
-        return build.append("#").append(logid).toString();
+        return build.append("#logid:").append(logid).toString();
     }
     
     public void copyPrimaryKey(SysLogLogin entity){

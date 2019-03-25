@@ -88,14 +88,14 @@ public class SysUserInfo extends BaseEntity{
 		this.education = education;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysUserInfo");
-		return build.append("#").append(this.userid).toString();
+		return build.append("#userid:").append(this.userid).toString();
 	}
 
     public static String buildEntityKey(Long userid){
         StringBuilder build = new StringBuilder("SysUserInfo");
-        return build.append("#").append(userid).toString();
+        return build.append("#userid:").append(userid).toString();
     }
     
     public void copyPrimaryKey(SysUserInfo entity){

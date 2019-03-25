@@ -124,14 +124,14 @@ public class SysOrg extends BaseEntity{
 		this.remark = remark;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysOrg");
-		return build.append("#").append(this.orgid).toString();
+		return build.append("#orgid:").append(this.orgid).toString();
 	}
 
     public static String buildEntityKey(Integer orgid){
         StringBuilder build = new StringBuilder("SysOrg");
-        return build.append("#").append(orgid).toString();
+        return build.append("#orgid:").append(orgid).toString();
     }
     
     public void copyPrimaryKey(SysOrg entity){

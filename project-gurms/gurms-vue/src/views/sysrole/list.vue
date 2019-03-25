@@ -75,9 +75,6 @@
                 <el-form-item label="失效日期" prop="enddate">
                     <el-input v-model="sysrole.enddate"></el-input>
                 </el-form-item>
-                <el-form-item label="创建人" prop="creator">
-                    <el-input v-model="sysrole.creator"></el-input>
-                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
                     <el-button @click="onReset('detailForm')">重填</el-button>
@@ -201,6 +198,9 @@ export default{
         onSubmit(formName){
             this.$refs[formName].validate((valid)=>{
                 if(valid){
+                    //从session赋值
+                    this.sysrole.unioncode = this.$store.state.pub.user.unioncode;
+                    this.sysrole.creator = this.$store.state.pub.user.userid;
                     var callAPI = null;
                     if(this.edit){
                         if(this.editType === 'update'){

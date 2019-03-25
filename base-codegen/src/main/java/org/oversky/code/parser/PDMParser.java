@@ -45,7 +45,7 @@ public class PDMParser {
 	public static Model parse(File cdm){
 		return parse(cdm, null, null);
 	}
-	
+
 	public static Model parse(File pdm, String modelPackage, String excludePattern){
 		Model model = new Model();
 		SAXReader saxReader = new SAXReader();
@@ -142,6 +142,9 @@ public class PDMParser {
 					table.setComment(elementName.getTextTrim());
 				}else{
 					table.setComment(elementCommont.getTextTrim());
+                    if(table.getComment().toLowerCase().indexOf("[cache]") >= 0) {
+                    	table.setCache(true);
+                    }
 				}
 				
 				//解析c:PrimaryKey节点

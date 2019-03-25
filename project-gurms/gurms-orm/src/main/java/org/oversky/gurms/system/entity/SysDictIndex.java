@@ -52,14 +52,14 @@ public class SysDictIndex extends BaseEntity{
 		this.editflag = editflag;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysDictIndex");
-		return build.append("#").append(this.unioncode).append("#").append(this.dictcode).toString();
+		return build.append("#unioncode:").append(this.unioncode).append("#dictcode:").append(this.dictcode).toString();
 	}
 
     public static String buildEntityKey(String unioncode, Integer dictcode){
         StringBuilder build = new StringBuilder("SysDictIndex");
-        return build.append("#").append(unioncode).append("#").append(dictcode).toString();
+        return build.append("#unioncode:").append(unioncode).append("#dictcode:").append(dictcode).toString();
     }
     
     public void copyPrimaryKey(SysDictIndex entity){

@@ -3,9 +3,9 @@ package org.oversky.gurms.common.redis;
 import java.time.Duration;
 
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
+@EnableCaching
 public class RedisConfig {
 	
 	@Bean
@@ -35,8 +36,7 @@ public class RedisConfig {
 		return template;
 	}
 	
-	@Primary
-	@Bean
+//	@Bean
 	public CacheManager cacheManager(LettuceConnectionFactory factory) {
 		RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
 				.entryTtl(Duration.ofMinutes(30L))	//设置缓存的默认超时时间：30分钟
@@ -45,7 +45,7 @@ public class RedisConfig {
 				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer((valueSerializer())));
 		return RedisCacheManager.builder(RedisCacheWriter.nonLockingRedisCacheWriter(factory)).cacheDefaults(cacheConfig).build();
 	}
-	
+
 	private RedisSerializer<String> keySerializer() {
 		return new StringRedisSerializer();
 	}

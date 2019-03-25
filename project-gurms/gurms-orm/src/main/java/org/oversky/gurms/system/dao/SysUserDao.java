@@ -5,11 +5,15 @@ import java.util.List;
 
 public interface SysUserDao{
 
+	
     SysUser getById(Long userid);
 
+	
     int deleteById(Long userid);
 
+	
     int updateById(SysUser entity);
+	
 	
     int dynamicUpdateById(SysUser entity);
     
@@ -17,13 +21,17 @@ public interface SysUserDao{
     
     int insert(SysUser entity);
 
+	
     int deleteWhere(SysUser where);
 
     List<SysUser> selectWhere(SysUser where);
 
+	
     List<SysUser> selectAll();
     
+	
 	int updateBatch(List<SysUser> entityList);
+	
 	
 	int deleteBatch(Long[] ids);
 	

@@ -5,11 +5,15 @@ import java.util.List;
 
 public interface SysOrgDao{
 
+	
     SysOrg getById(Long orgid);
 
+	
     int deleteById(Long orgid);
 
+	
     int updateById(SysOrg entity);
+	
 	
     int dynamicUpdateById(SysOrg entity);
     
@@ -17,13 +21,17 @@ public interface SysOrgDao{
     
     int insert(SysOrg entity);
 
+	
     int deleteWhere(SysOrg where);
 
     List<SysOrg> selectWhere(SysOrg where);
 
+	
     List<SysOrg> selectAll();
     
+	
 	int updateBatch(List<SysOrg> entityList);
+	
 	
 	int deleteBatch(Long[] ids);
 	

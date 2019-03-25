@@ -21,7 +21,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Autowired
 	private SysRoleDao roleDao;
 	
-	@Override
 	public SysRoleRes insert(SysRoleReq roleReq) {
 		SysRoleRes res = new SysRoleRes();
 		SysRole role = BeanCopyUtils.convert(roleReq, SysRole.class);
@@ -53,9 +52,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return res;
 	}
 
-	@Override
 	public SysRoleRes getById(Long roleid) {
-		// TODO Auto-generated method stub
 		return BeanCopyUtils.convert(roleDao.getById(roleid), SysRoleRes.class);
 	}
 

@@ -25,14 +25,14 @@ public class SysRoleMenu extends BaseEntity{
 		this.menuid = menuid;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysRoleMenu");
-		return build.append("#").append(this.roleid).append("#").append(this.menuid).toString();
+		return build.append("#roleid:").append(this.roleid).append("#menuid:").append(this.menuid).toString();
 	}
 
     public static String buildEntityKey(Integer roleid, String menuid){
         StringBuilder build = new StringBuilder("SysRoleMenu");
-        return build.append("#").append(roleid).append("#").append(menuid).toString();
+        return build.append("#roleid:").append(roleid).append("#menuid:").append(menuid).toString();
     }
     
     public void copyPrimaryKey(SysRoleMenu entity){

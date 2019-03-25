@@ -25,14 +25,14 @@ public class ${table.code} extends BaseEntity{
 
 </#list>
 <#if (table.keys?size > 0)>
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("${table.code}");
-		return build<#list table.keys as column>.append("#").append(this.${column.code})</#list>.toString();
+		return build<#list table.keys as column>.append("#${column.code}:").append(this.${column.code})</#list>.toString();
 	}
 
     public static String buildEntityKey(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>){
         StringBuilder build = new StringBuilder("${table.code}");
-        return build<#list table.keys as column>.append("#").append(${column.code})</#list>.toString();
+        return build<#list table.keys as column>.append("#${column.code}:").append(${column.code})</#list>.toString();
     }
     
     public void copyPrimaryKey(${table.code} entity){

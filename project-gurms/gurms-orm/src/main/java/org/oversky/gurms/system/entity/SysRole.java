@@ -79,14 +79,14 @@ public class SysRole extends BaseEntity{
 		this.creator = creator;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysRole");
-		return build.append("#").append(this.roleid).toString();
+		return build.append("#roleid:").append(this.roleid).toString();
 	}
 
     public static String buildEntityKey(Integer roleid){
         StringBuilder build = new StringBuilder("SysRole");
-        return build.append("#").append(roleid).toString();
+        return build.append("#roleid:").append(roleid).toString();
     }
     
     public void copyPrimaryKey(SysRole entity){

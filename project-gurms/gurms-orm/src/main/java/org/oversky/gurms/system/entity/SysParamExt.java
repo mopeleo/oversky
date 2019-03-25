@@ -88,14 +88,14 @@ public class SysParamExt extends BaseEntity{
 		this.valuelength = valuelength;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysParamExt");
-		return build.append("#").append(this.paramid).toString();
+		return build.append("#paramid:").append(this.paramid).toString();
 	}
 
     public static String buildEntityKey(Integer paramid){
         StringBuilder build = new StringBuilder("SysParamExt");
-        return build.append("#").append(paramid).toString();
+        return build.append("#paramid:").append(paramid).toString();
     }
     
     public void copyPrimaryKey(SysParamExt entity){

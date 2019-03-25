@@ -5,11 +5,15 @@ import java.util.List;
 
 public interface SysLogLoginDao{
 
+	
     SysLogLogin getById(Long logid);
 
+	
     int deleteById(Long logid);
 
+	
     int updateById(SysLogLogin entity);
+	
 	
     int dynamicUpdateById(SysLogLogin entity);
     
@@ -17,13 +21,17 @@ public interface SysLogLoginDao{
     
     int insert(SysLogLogin entity);
 
+	
     int deleteWhere(SysLogLogin where);
 
     List<SysLogLogin> selectWhere(SysLogLogin where);
 
+	
     List<SysLogLogin> selectAll();
     
+	
 	int updateBatch(List<SysLogLogin> entityList);
+	
 	
 	int deleteBatch(Long[] ids);
 	

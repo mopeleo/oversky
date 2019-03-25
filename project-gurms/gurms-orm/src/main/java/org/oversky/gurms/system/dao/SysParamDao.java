@@ -5,11 +5,15 @@ import java.util.List;
 
 public interface SysParamDao{
 
+	
     SysParam getById(String unioncode, Long paramid);
 
+	
     int deleteById(String unioncode, Long paramid);
 
+	
     int updateById(SysParam entity);
+	
 	
     int dynamicUpdateById(SysParam entity);
     
@@ -17,10 +21,12 @@ public interface SysParamDao{
     
     int insert(SysParam entity);
 
+	
     int deleteWhere(SysParam where);
 
     List<SysParam> selectWhere(SysParam where);
 
+	
     List<SysParam> selectAll();
     
 	int insertBatch(List<SysParam> entityList);

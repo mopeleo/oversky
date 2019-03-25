@@ -2,12 +2,17 @@
     <div>
         <el-form ref="listForm" :model="userReq">
             <el-row>
-                <el-col :span="8">
+                <el-col :span="6">
                     <el-form-item label="姓名">
-                        <el-input v-model="userReq.username" placeholder="姓名" style="width:300px"></el-input>
+                        <el-input v-model="userReq.username" placeholder="姓名" style="width:200px"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="6">
+                    <el-form-item label="手机号码">
+                        <el-input v-model="userReq.mobileno" placeholder="手机号码" style="width:200px"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
                     <el-form-item label="用户状态">
                         <el-select v-model="userReq.status" placeholder="用户状态">
                             <el-option label="已删除" value="0"></el-option>
@@ -16,7 +21,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="6">
                     <el-form-item>
                         <el-button type="primary" @click="loadData">查询</el-button>
                         <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -61,6 +66,8 @@
 </template>
 
 <script>
+import * as tools from '@/utils/tools'
+
 export default{
     data(){
         return {
@@ -81,7 +88,7 @@ export default{
             this.$api.Gurms.userList(this.userReq).then((res)=>{
                 this.tableData = res.data;
             }).catch((err)=>{
-                alert(err);
+                tools.errTip(err.data ? err.data.message : err);
             });
         },
         //点击行响应
@@ -122,7 +129,7 @@ export default{
                     this.$message({message: '删除失败', type: 'error', showClose: true, duration: 0});
                 }
             }).catch((err)=>{
-                alert(JSON.stringify(err));
+                tools.errTip(err.data ? err.data.message : err);
             });
         }
     }

@@ -34,14 +34,14 @@ public class SysParam extends BaseEntity{
 		this.paramvalue = paramvalue;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysParam");
-		return build.append("#").append(this.unioncode).append("#").append(this.paramid).toString();
+		return build.append("#unioncode:").append(this.unioncode).append("#paramid:").append(this.paramid).toString();
 	}
 
     public static String buildEntityKey(String unioncode, Integer paramid){
         StringBuilder build = new StringBuilder("SysParam");
-        return build.append("#").append(unioncode).append("#").append(paramid).toString();
+        return build.append("#unioncode:").append(unioncode).append("#paramid:").append(paramid).toString();
     }
     
     public void copyPrimaryKey(SysParam entity){

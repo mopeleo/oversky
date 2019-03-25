@@ -70,14 +70,14 @@ public class SysMenu extends BaseEntity{
 		this.status = status;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysMenu");
-		return build.append("#").append(this.menuid).toString();
+		return build.append("#menuid:").append(this.menuid).toString();
 	}
 
     public static String buildEntityKey(String menuid){
         StringBuilder build = new StringBuilder("SysMenu");
-        return build.append("#").append(menuid).toString();
+        return build.append("#menuid:").append(menuid).toString();
     }
     
     public void copyPrimaryKey(SysMenu entity){

@@ -151,14 +151,14 @@ public class SysUser extends BaseEntity{
 		this.passwdvaliddate = passwdvaliddate;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysUser");
-		return build.append("#").append(this.userid).toString();
+		return build.append("#userid:").append(this.userid).toString();
 	}
 
     public static String buildEntityKey(Long userid){
         StringBuilder build = new StringBuilder("SysUser");
-        return build.append("#").append(userid).toString();
+        return build.append("#userid:").append(userid).toString();
     }
     
     public void copyPrimaryKey(SysUser entity){

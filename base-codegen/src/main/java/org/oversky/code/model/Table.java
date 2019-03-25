@@ -13,6 +13,7 @@ public class Table {
 	private String originCode;
 	private String dbms;
 	private Column identityCol;
+	private boolean cache;
 	
 	private List<Column> columns = new ArrayList<Column>();
     private List<Column> keys = new ArrayList<Column>();
@@ -104,5 +105,13 @@ public class Table {
 
     public void setColsExceptKey(List<Column> colsExceptKey) {
         this.colsExceptKey = colsExceptKey;
-    }	
+    }
+
+	public boolean isCache() {
+		return cache;
+	}
+
+	public void setCache(boolean cache) {
+		this.cache = cache;
+	}	
 }

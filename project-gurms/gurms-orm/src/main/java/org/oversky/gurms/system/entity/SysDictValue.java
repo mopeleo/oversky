@@ -43,14 +43,14 @@ public class SysDictValue extends BaseEntity{
 		this.itemname = itemname;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysDictValue");
-		return build.append("#").append(this.unioncode).append("#").append(this.dictcode).append("#").append(this.itemcode).toString();
+		return build.append("#unioncode:").append(this.unioncode).append("#dictcode:").append(this.dictcode).append("#itemcode:").append(this.itemcode).toString();
 	}
 
     public static String buildEntityKey(String unioncode, Integer dictcode, String itemcode){
         StringBuilder build = new StringBuilder("SysDictValue");
-        return build.append("#").append(unioncode).append("#").append(dictcode).append("#").append(itemcode).toString();
+        return build.append("#unioncode:").append(unioncode).append("#dictcode:").append(dictcode).append("#itemcode:").append(itemcode).toString();
     }
     
     public void copyPrimaryKey(SysDictValue entity){

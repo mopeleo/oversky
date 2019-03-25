@@ -9,6 +9,7 @@ import org.oversky.base.util.DateUtils;
 import org.oversky.base.util.EncryptUtils;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
+import org.oversky.gurms.system.dao.ext.ListQueryDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.entity.SysUser;
@@ -29,6 +30,9 @@ public class SysUserServiceImpl implements SysUserService{
 	@Autowired
 	private SysUserDao sysUserDao;
 
+	@Autowired
+	private ListQueryDao queryDao;
+	
 	@Override
 	public SysUserRes insert(SysUserReq userReq) {
 		SysUserRes res = new SysUserRes();
@@ -91,7 +95,7 @@ public class SysUserServiceImpl implements SysUserService{
 	public BaseResListDto<SysUserRes> pageSysUser(SysUserReq userReq){
 		Page<SysUser> page = PageHelper.startPage(userReq.getPageNum(), userReq.getPageSize());
 		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
-		List<SysUser> userList = sysUserDao.selectWhere(where);
+		List<SysUser> userList = queryDao.findUsers(where);
 		List<SysUserRes> userResList = BeanCopyUtils.convertList(userList, SysUserRes.class);
 		
 		BaseResListDto<SysUserRes> resList = new BaseResListDto<SysUserRes>();

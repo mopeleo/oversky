@@ -213,6 +213,9 @@ public class CDMParser {
 					table.setComment(elementName.getTextTrim());
 				}else{
 					table.setComment(elementCommont.getTextTrim());
+                    if(table.getComment().toLowerCase().indexOf("[cache]") >= 0) {
+                    	table.setCache(true);
+                    }
 				}
                 //解析主键节点
                 Element primaryIndentifierNode = elementTable.element(ELEMENT_PRIMARYIDENTIFIER);

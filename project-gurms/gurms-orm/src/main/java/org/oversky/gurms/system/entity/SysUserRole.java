@@ -25,14 +25,14 @@ public class SysUserRole extends BaseEntity{
 		this.roleid = roleid;
 	}
 
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysUserRole");
-		return build.append("#").append(this.userid).append("#").append(this.roleid).toString();
+		return build.append("#userid:").append(this.userid).append("#roleid:").append(this.roleid).toString();
 	}
 
     public static String buildEntityKey(Long userid, Integer roleid){
         StringBuilder build = new StringBuilder("SysUserRole");
-        return build.append("#").append(userid).append("#").append(roleid).toString();
+        return build.append("#userid:").append(userid).append("#roleid:").append(roleid).toString();
     }
     
     public void copyPrimaryKey(SysUserRole entity){
