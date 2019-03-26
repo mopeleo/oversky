@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 
 @CacheConfig(cacheNames = "SysParamExt")
 public interface SysParamExtDao{
@@ -13,35 +14,44 @@ public interface SysParamExtDao{
 	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysParamExt).buildEntityKey(#p0)", unless = "#result == null")
     SysParamExt getById(Long paramid);
 
-	@CacheEvict(key = "'paramid:' + #paramid")
+	@Caching(evict={
+		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
+		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysParamExt).buildEntityKey(#p0)", condition = "#result == 1")
+	})
     int deleteById(Long paramid);
 
-	@CacheEvict(key = "'paramid:' + #paramid")
+	@Caching(evict={
+		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
+		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
+	})
     int updateById(SysParamExt entity);
 	
-	@CacheEvict(key = "'paramid:' + #paramid")
+	@Caching(evict={
+		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
+		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
+	})
     int dynamicUpdateById(SysParamExt entity);
     
     int count(SysParamExt where);
     
-	@CacheEvict(key = "selectAll", condition = "#result == 1")
+	@CacheEvict(key = "'selectAll'", condition = "#result == 1")
     int insert(SysParamExt entity);
 
-	@CacheEvict(allEntries=true)
+	@CacheEvict(allEntries=true, condition = "#result > 0")
     int deleteWhere(SysParamExt where);
 
     List<SysParamExt> selectWhere(SysParamExt where);
 
-	@Cacheable(key = "selectAll", unless = "#result == null")
+	@Cacheable(key = "'selectAll'", unless = "#result == null")
     List<SysParamExt> selectAll();
     
-	@CacheEvict(allEntries=true)
+	@CacheEvict(allEntries=true, condition = "#result > 0")
 	int updateBatch(List<SysParamExt> entityList);
 	
-	@CacheEvict(allEntries=true)
+	@CacheEvict(allEntries=true, condition = "#result > 0")
 	int deleteBatch(Long[] ids);
 	
-	@CacheEvict(key = "selectAll", condition = "#result > 0")
+	@CacheEvict(key = "'selectAll'", condition = "#result > 0")
 	int insertBatch(List<SysParamExt> entityList);
 	
 }

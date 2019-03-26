@@ -107,8 +107,7 @@ export default{
             sysrole:null,
             rules:{
                 roleid:[
-                    {required:true, message:'角色ID不能为空', trigger:'blur'},
-                    {min:3, max:8, message:'输入长度在3-8之间', trigger:'blur'}
+                    {required:true, message:'角色ID不能为空', trigger:'blur'}
                 ],
                 status:{
                     required:true, message:'角色名称不能为空',trigger:'blur'

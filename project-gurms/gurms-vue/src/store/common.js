@@ -3,8 +3,7 @@ import * as tools from '@/utils/tools'
 import PUBDEFINE from '@/utils/pubdefine'
 
 const state = {
-    user:undefined,
-    network:true
+    user:undefined
 }
 
 const getters = {
@@ -34,9 +33,6 @@ const mutations = {
             router.options.routes[0].children.push(routes[i]);
         }
         router.addRoutes(router.options.routes);
-    },
-    CHANGENETWORK(state, status){
-        state.network = status;
     }
 }
 

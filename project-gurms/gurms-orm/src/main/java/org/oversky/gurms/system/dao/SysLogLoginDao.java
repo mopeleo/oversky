@@ -8,12 +8,9 @@ public interface SysLogLoginDao{
 	
     SysLogLogin getById(Long logid);
 
-	
     int deleteById(Long logid);
 
-	
     int updateById(SysLogLogin entity);
-	
 	
     int dynamicUpdateById(SysLogLogin entity);
     

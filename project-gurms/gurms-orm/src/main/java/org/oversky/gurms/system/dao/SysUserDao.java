@@ -8,12 +8,9 @@ public interface SysUserDao{
 	
     SysUser getById(Long userid);
 
-	
     int deleteById(Long userid);
 
-	
     int updateById(SysUser entity);
-	
 	
     int dynamicUpdateById(SysUser entity);
     

@@ -8,7 +8,6 @@ public interface SysUserRoleDao{
 	
     SysUserRole getById(Long userid, Long roleid);
 
-	
     int deleteById(Long userid, Long roleid);
 
     int count(SysUserRole where);

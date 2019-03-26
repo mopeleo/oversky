@@ -8,7 +8,6 @@ public interface SysRoleMenuDao{
 	
     SysRoleMenu getById(Long roleid, String menuid);
 
-	
     int deleteById(Long roleid, String menuid);
 
     int count(SysRoleMenu where);
