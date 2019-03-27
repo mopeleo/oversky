@@ -15,6 +15,7 @@ public class Column {
 	private String identity;           //值为1表示为自增长序列，暂时记录
 	private String originCode;         //格式化前原始代码，小写
 	private String originDatatype;     //格式化前原数据类型
+	private String sequence;		   //column ru
 	public String getId() {
 		return id;
 	}
@@ -87,7 +88,13 @@ public class Column {
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
-    public boolean equals(Object o){
+    public String getSequence() {
+		return sequence;
+	}
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+	public boolean equals(Object o){
 		if(o == null || !(o instanceof Column)){
 			return false;
 		}else{

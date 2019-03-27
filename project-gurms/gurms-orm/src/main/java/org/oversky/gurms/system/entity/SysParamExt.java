@@ -10,7 +10,7 @@ public class SysParamExt extends BaseEntity{
 	private String paramname;    //参数名称
 	private String texttitle;    //描述头
 	private String texttail;    //描述尾
-	private Integer distype;    //0 text 无法修改；1 input 可以修改；2 select 可以修改
+	private Integer distype;    //0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改
 	private Integer dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
 	private String valuelist;    //控件显示的值列表，如“0|否;1|是”
 	private String initvalue;    //初始值

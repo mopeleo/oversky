@@ -15,7 +15,7 @@ public class UserLoginRes extends BaseResDto {
 	private String loginid;    //登录名
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
-	private Integer orgid;    //所属机构
+	private Long orgid;    //所属机构
 	private String orgname;
 	private Integer status;    //用户状态，0，已删除；1，正常；2，锁定
 	
@@ -57,10 +57,10 @@ public class UserLoginRes extends BaseResDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Integer getOrgid() {
+	public Long getOrgid() {
 		return orgid;
 	}
-	public void setOrgid(Integer orgid) {
+	public void setOrgid(Long orgid) {
 		this.orgid = orgid;
 	}
 	public Integer getStatus() {

@@ -12,7 +12,6 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{paramid, jdbcType=INTEGER}, #{paramvalue, jdbcType=VARCHAR})
     </insert>
   
-	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_param (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 

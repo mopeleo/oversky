@@ -6,7 +6,7 @@ public class SysOrg extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer orgid;    //机构ID
+	private Long orgid;    //机构ID
 	private String unioncode;    //unioncode
 	private String shortname;    //机构简称
 	private String fullname;    //机构全称
@@ -16,15 +16,15 @@ public class SysOrg extends BaseEntity{
 	private String address;    //联系地址
 	private String postcode;    //邮政编码
 	private String email;    //电子邮件
-	private Integer parentorg;    //上级机构
+	private Long parentorg;    //上级机构
 	private Integer orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
 	private String remark;    //备注
 
-	public Integer getOrgid() {
+	public Long getOrgid() {
 		return this.orgid;
 	}
 
-	public void setOrgid(Integer orgid) {
+	public void setOrgid(Long orgid) {
 		this.orgid = orgid;
 	}
 
@@ -100,11 +100,11 @@ public class SysOrg extends BaseEntity{
 		this.email = email;
 	}
 
-	public Integer getParentorg() {
+	public Long getParentorg() {
 		return this.parentorg;
 	}
 
-	public void setParentorg(Integer parentorg) {
+	public void setParentorg(Long parentorg) {
 		this.parentorg = parentorg;
 	}
 
@@ -129,7 +129,7 @@ public class SysOrg extends BaseEntity{
 		return build.append("#orgid:").append(this.orgid).toString();
 	}
 
-    public static String buildEntityKey(Integer orgid){
+    public static String buildEntityKey(Long orgid){
         StringBuilder build = new StringBuilder("SysOrg");
         return build.append("#orgid:").append(orgid).toString();
     }

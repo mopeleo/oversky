@@ -36,8 +36,7 @@ public class SysUserServiceTest {
 //	@Test
 	public void insert() {
 		SysUserReq userDto = new SysUserReq();
-		userDto.setUserid(3L);
-		userDto.setEmail("test@126.com");
+		userDto.setEmail("test@12611.com");
 		userDto.setIdcode("421001297608160946");
 		userDto.setIdtype("1");
 		userDto.setLogindate("20190130");
@@ -46,17 +45,17 @@ public class SysUserServiceTest {
 		userDto.setLoginpasswd("1");
 		userDto.setLogintime("150000");
 		userDto.setMobileno("13554600998");
-		userDto.setOrgid(10000);
+		userDto.setOrgid(10000L);
 		userDto.setPasswdvaliddate("20190909");
 		userDto.setSalt("123");
 		userDto.setStatus(1);
-		userDto.setUnioncode("00000000000000");
+		userDto.setUnioncode("0000");
 		userDto.setUsername("test");
 		boolean flag = sysUserService.insert(userDto).isSuccess();
 		Assert.assertEquals(true, flag);
 	}
 	
-	@Test
+//	@Test
 	public void testDaoExt() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userid", 1L);
@@ -72,7 +71,7 @@ public class SysUserServiceTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testGetUserRolesAndMenus() {
 		System.out.println("-----------begin  testGetUserRolesAndMenus------------");
 		SysUserBO bo = userDaoExt.getUserRolesAndMenus(1L);
@@ -82,7 +81,7 @@ public class SysUserServiceTest {
 		System.out.println("-----------end  testGetUserRolesAndMenus------------");
 	}
 	
-	@Test
+//	@Test
 	public void testPage() {
 		SysUserReq userDto = new SysUserReq();
 		userDto.setPageNum(2);
@@ -101,7 +100,7 @@ public class SysUserServiceTest {
 		List<SysUser> list = new ArrayList<SysUser>(len);
 		for(int i = 0; i < len; i++) {
 			SysUser userDto = new SysUser();
-			userDto.setEmail("test@126.com");
+			userDto.setEmail("hyh@126.com");
 			userDto.setIdcode("421001297608160946");
 			userDto.setIdtype("1");
 			userDto.setLogindate("20190130");
@@ -110,7 +109,7 @@ public class SysUserServiceTest {
 			userDto.setLoginpasswd("1");
 			userDto.setLogintime("150000");
 			userDto.setMobileno("13554600998");
-			userDto.setOrgid(10000);
+			userDto.setOrgid(10000L);
 			userDto.setPasswdvaliddate("20190909");
 			userDto.setSalt("123");
 			userDto.setStatus(1);
@@ -130,9 +129,9 @@ public class SysUserServiceTest {
 		for(int i = 0; i < list.size(); i++) {
 			SysUser user = list.get(i);
 			if(user.getUserid()%2 == 0) {
-				user.setUnioncode(null);
+				user.setUnioncode("u-" + i);
 			}else {
-				user.setUnioncode("u" + i);
+				user.setUnioncode("u+" + i);
 			}
 //			user.setUnioncode("0000");
 		}
@@ -142,7 +141,7 @@ public class SysUserServiceTest {
 	
 	@Test
 	public void testBatchDelete() {
-		Long[] ids = {23L,24L};
+		Long[] ids = {26L,40L};
 		int r = userDao.deleteBatch(ids);
 		System.out.println(r);
 	}

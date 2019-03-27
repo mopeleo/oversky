@@ -18,7 +18,6 @@
         values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{distype, jdbcType=INTEGER}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER})
     </insert>
   
-	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 

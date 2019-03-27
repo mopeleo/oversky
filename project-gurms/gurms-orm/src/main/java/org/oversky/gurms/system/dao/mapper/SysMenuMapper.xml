@@ -16,7 +16,6 @@
         values (#{menuid, jdbcType=VARCHAR}, #{menuname, jdbcType=VARCHAR}, #{menuurl, jdbcType=VARCHAR}, #{parentmenu, jdbcType=VARCHAR}, #{menutype, jdbcType=INTEGER}, #{opentype, jdbcType=INTEGER}, #{status, jdbcType=INTEGER})
     </insert>
   
-	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 

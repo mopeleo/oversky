@@ -18,6 +18,11 @@
         insert into ${table.originCode?lower_case} (<#list table.columns as column><#if column.identity == "0">${column.originCode}<#if column_has_next>, </#if></#if></#list>)
         values (<#list table.columns as column><#if column.identity == "0">#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#if></#list>)
     </insert>
+<#elseif ((table.dbms)!'')?contains("ORACLE") && (table.identityCol??)>
+    <insert id="insert" parameterType="${java_entity_package}.${table.code}">
+        insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (<#list table.columns as column><#if column.identity == "0">#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#else>${table.identityCol.sequence}.nextval</#if><#if column_has_next>, </#if></#list>)
+    </insert>
 <#else>
     <insert id="insert" parameterType="${java_entity_package}.${table.code}">
         insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>)
@@ -26,7 +31,6 @@
 </#if>
   
 <#if ((table.dbms)!'')?contains("MYSQL")>
-	<!-- mysql专属 -->
 	<#if table.identityCol??> 
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="${table.identityCol.code}">
 		insert into ${table.originCode?lower_case} (<#list table.columns as column><#if column.identity == "0">${column.originCode}<#if column_has_next>, </#if></#if></#list>)
@@ -42,6 +46,26 @@
 		<foreach item="item" index="index" collection="list" separator=",">
 		(<#list table.columns as column>#${r'{'}item.${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
 		</foreach>
+	</insert>
+	</#if>
+<#elseif ((table.dbms)!'')?contains("ORACLE")>
+	<#if table.identityCol??> 
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>) 
+		select ${table.identityCol.sequence}.nextval, t.* from (
+		<foreach item="item" index="index" collection="list" separator=" union all ">
+			select <#list table.columns as column><#if column.identity == "0">#${r'{'}item.${column.code}} ${column.code}<#if column_has_next>, </#if></#if></#list> from dual
+		</foreach>
+		) t
+	</insert>
+	<#else>
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>) 
+		select t.* from (
+		<foreach item="item" index="index" collection="list" separator=" union all ">
+			select <#list table.columns as column>#${r'{'}item.${column.code}} ${column.code}<#if column_has_next>, </#if></#list> from dual
+		</foreach>
+		) t
 	</insert>
 	</#if>
 </#if>

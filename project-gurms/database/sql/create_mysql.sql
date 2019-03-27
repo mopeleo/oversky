@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/2/24 22:28:19                           */
+/* Created on:     2019/3/27 23:19:09                           */
 /*==============================================================*/
 
 
@@ -34,12 +34,14 @@ drop table if exists sys_user_role;
 create table sys_dict_index
 (
    unioncode            char(4) not null default '0000',
-   dictcode             smallint not null default 0 comment '字典代码',
+   dictcode             decimal(4) not null default 0 comment '字典代码',
    dictname             varchar(32) not null comment '字典名称',
    dictgroup            char(1) not null default '0' comment '所属分组',
    editflag             tinyint not null default 0 comment '是否可编辑（0-不可见，1-只读，2-读写）',
    primary key (dictcode, unioncode)
 );
+
+alter table sys_dict_index comment '[cache]';
 
 /*==============================================================*/
 /* Table: sys_dict_value                                        */
@@ -47,18 +49,20 @@ create table sys_dict_index
 create table sys_dict_value
 (
    unioncode            char(4) not null default '0000',
-   dictcode             smallint not null default 0 comment '字典代码',
+   dictcode             decimal(4) not null default 0 comment '字典代码',
    itemcode             varchar(8) not null comment '选项代码',
    itemname             varchar(32) not null comment '选项名称',
    primary key (dictcode, itemcode, unioncode)
 );
+
+alter table sys_dict_value comment '[cache]';
 
 /*==============================================================*/
 /* Table: sys_log_login                                         */
 /*==============================================================*/
 create table sys_log_login
 (
-   logid                bigint not null default 0,
+   logid                bigint not null auto_increment comment '[identity]',
    userid               bigint not null default 0,
    logindate            char(8) comment '登录日期',
    logintime            char(6) comment '登录时间',
@@ -84,12 +88,14 @@ create table sys_menu
    primary key (menuid)
 );
 
+alter table sys_menu comment '[cache]';
+
 /*==============================================================*/
 /* Table: sys_org                                               */
 /*==============================================================*/
 create table sys_org
 (
-   orgid                int not null comment '机构ID',
+   orgid                bigint not null comment '机构ID',
    unioncode            char(4) not null default '0000',
    shortname            varchar(16) not null comment '机构简称',
    fullname             varchar(32) comment '机构全称',
@@ -99,11 +105,13 @@ create table sys_org
    address              varchar(64) comment '联系地址',
    postcode             varchar(8) comment '邮政编码',
    email                varchar(64) comment '电子邮件',
-   parentorg            int not null comment '上级机构',
+   parentorg            bigint comment '上级机构',
    orgtype              tinyint not null default 0 comment '机构类型(0-虚拟，可选，1-总，2-分，3-支)',
    remark               varchar(32) comment '备注',
    primary key (orgid)
 );
+
+alter table sys_org comment '[cache]';
 
 /*==============================================================*/
 /* Table: sys_param                                             */
@@ -111,27 +119,31 @@ create table sys_org
 create table sys_param
 (
    unioncode            char(4) not null default '0000',
-   paramid              smallint not null default 0,
+   paramid              decimal(4) not null default 0,
    paramvalue           varchar(16) not null,
    primary key (paramid, unioncode)
 );
+
+alter table sys_param comment '[cache]';
 
 /*==============================================================*/
 /* Table: sys_param_ext                                         */
 /*==============================================================*/
 create table sys_param_ext
 (
-   paramid              smallint not null default 0 comment '参数ID',
+   paramid              decimal(4) not null default 0 comment '参数ID',
    paramname            varchar(16) not null comment '参数名称',
    texttitle            varchar(16) comment '描述头',
    texttail             varchar(16) comment '描述尾',
-   distype              tinyint not null default 0 comment '0 text 无法修改；1 input 可以修改；2 select 可以修改',
-   dictcode             smallint not null default 0 comment '字典代码，对应的值列表为已知数据字典，优先于valuelist',
+   distype              tinyint not null default 0 comment '0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改',
+   dictcode             decimal(4) not null default 0 comment '字典代码，对应的值列表为已知数据字典，优先于valuelist',
    valuelist            varchar(32) comment '控件显示的值列表，如“0|否;1|是”',
    initvalue            varchar(16) not null comment '初始值',
-   valuelength          smallint not null default 0 comment '输入值长度',
+   valuelength          decimal(4) not null default 0 comment '输入值长度',
    primary key (paramid)
 );
+
+alter table sys_param_ext comment '[cache]';
 
 /*==============================================================*/
 /* Table: sys_role                                              */
@@ -139,7 +151,7 @@ create table sys_param_ext
 create table sys_role
 (
    unioncode            char(4) not null default '0000',
-   roleid               int not null default 0 comment '角色ID',
+   roleid               decimal(4) not null default 0 comment '角色ID',
    rolename             varchar(16) not null comment '角色名称',
    status               tinyint not null default 0 comment '角色状态，0-无效，1-有效',
    roletype             tinyint not null default 0 comment '角色类型，0-公共，1-私有',
@@ -149,12 +161,14 @@ create table sys_role
    primary key (roleid)
 );
 
+alter table sys_role comment '[cache]';
+
 /*==============================================================*/
 /* Table: sys_role_menu                                         */
 /*==============================================================*/
 create table sys_role_menu
 (
-   roleid               int not null default 0,
+   roleid               decimal(8) not null default 0,
    menuid               varchar(8) not null,
    primary key (roleid, menuid)
 );
@@ -164,7 +178,7 @@ create table sys_role_menu
 /*==============================================================*/
 create table sys_user
 (
-   userid               bigint not null default 0 comment '用户ID,内部自动生成',
+   userid               bigint not null auto_increment comment '用户ID,内部自动生成[identity]',
    unioncode            char(4) not null default '0000',
    username             varchar(32) not null comment '用户名称',
    loginid              varchar(16) comment '登录名',
@@ -172,13 +186,13 @@ create table sys_user
    salt                 varchar(8) not null comment '密码盐',
    mobileno             varchar(16) not null comment '手机号码',
    email                varchar(64) comment '电子邮件',
-   orgid                int not null comment '所属机构',
+   orgid                bigint not null comment '所属机构',
    idtype               char(1) not null default '0' comment '证件类型',
    idcode               varchar(32) comment '证件号码',
    logindate            char(8) comment '登录日期',
    logintime            char(6) comment '登录时间',
    status               tinyint not null default 0 comment '用户状态，0，已删除；1，正常；2，锁定',
-   loginerror           smallint not null default 0 comment '连续登录失败次数',
+   loginerror           decimal(4) not null default 0 comment '连续登录失败次数',
    passwdvaliddate      char(8) not null comment '密码失效日期',
    primary key (userid)
 );
@@ -188,7 +202,7 @@ create table sys_user
 /*==============================================================*/
 create table sys_user_info
 (
-   userid               bigint not null default 0 comment '用户ID,内部自动生成',
+   userid               bigint not null comment '用户ID,内部自动生成',
    unioncode            char(4) not null default '0000',
    sex                  char(1) not null default '0' comment '性别（0-女，1-男）',
    birthday             char(8) comment '生日',
@@ -205,8 +219,8 @@ create table sys_user_info
 /*==============================================================*/
 create table sys_user_role
 (
-   userid               bigint not null default 0,
-   roleid               int not null default 0,
+   userid               bigint not null,
+   roleid               decimal(8) not null default 0,
    primary key (userid, roleid)
 );
 

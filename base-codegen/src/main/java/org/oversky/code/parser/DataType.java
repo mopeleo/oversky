@@ -25,7 +25,10 @@ public class DataType {
         if(datatype.indexOf(",")>0){
             return DOUBLE;
         }
-        if(datatype.equals("I") || datatype.equals("SI") || datatype.equals("LI") || datatype.equals("BT")){
+        if(datatype.equals("LI")) {
+        	return LONG;
+        }
+        if(datatype.equals("I") || datatype.equals("SI") || datatype.equals("BT")){
             return INT;
         }
         if(datatype.startsWith("N")){
@@ -65,8 +68,11 @@ public class DataType {
         if(datatype.indexOf(",")>0){
             return DOUBLE;
         }
-        if(datatype.equals("INTEGER") || datatype.equals("SMALLINT")){
+        if(datatype.equals("SMALLINT")){
             return INT;
+        }
+        if(datatype.equals("INTEGER")){
+            return LONG;
         }
         if(datatype.startsWith("NUMBER")){
             if(datatype.length() == 6){

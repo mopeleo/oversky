@@ -13,7 +13,6 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{itemcode, jdbcType=VARCHAR}, #{itemname, jdbcType=VARCHAR})
     </insert>
   
-	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_dict_value (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 

@@ -67,9 +67,7 @@ public interface ${table.code}Dao{
 	int deleteBatch(<#list table.keys as column><@type datatype=column.datatype /></#list>[] ids);
 	
 </#if>
-<#if ((table.dbms)!'')?contains("MYSQL")>
 	<#if enableCache>@CacheEvict(key = "'selectAll'", condition = "#result > 0")</#if>
 	int insertBatch(List<${table.code}> entityList);
 	
-</#if>
 }

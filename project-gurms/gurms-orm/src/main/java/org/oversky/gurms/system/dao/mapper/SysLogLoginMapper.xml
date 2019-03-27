@@ -17,7 +17,6 @@
         values (#{userid, jdbcType=DECIMAL}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{loginip, jdbcType=VARCHAR}, #{logintype, jdbcType=INTEGER}, #{loginresult, jdbcType=INTEGER})
     </insert>
   
-	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
 		insert into sys_log_login (userid, logindate, logintime, loginpasswd, loginip, logintype, loginresult)
 		values 

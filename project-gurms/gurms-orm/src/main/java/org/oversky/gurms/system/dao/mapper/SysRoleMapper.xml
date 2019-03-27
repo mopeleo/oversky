@@ -17,7 +17,6 @@
         values (#{unioncode, jdbcType=VARCHAR}, #{roleid, jdbcType=INTEGER}, #{rolename, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{roletype, jdbcType=INTEGER}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{creator, jdbcType=DECIMAL})
     </insert>
   
-	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_role (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 

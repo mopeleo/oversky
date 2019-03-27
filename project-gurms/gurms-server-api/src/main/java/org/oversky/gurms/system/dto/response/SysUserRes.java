@@ -6,7 +6,7 @@ public class SysUserRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long userid;    //用户ID,内部自动生成
+	private Long userid;    //用户ID,内部自动生成[identity]
 	private String unioncode;    //unioncode
 	private String username;    //用户名称
 	private String loginid;    //登录名
@@ -14,7 +14,7 @@ public class SysUserRes extends BaseResDto {
 	private String salt;    //密码盐
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
-	private Integer orgid;    //所属机构
+	private Long orgid;    //所属机构
 	private String idtype;    //证件类型
 	private String idcode;    //证件号码
 	private String logindate;    //登录日期
@@ -87,11 +87,11 @@ public class SysUserRes extends BaseResDto {
 		this.email = email;
 	}
 
-	public Integer getOrgid() {
+	public Long getOrgid() {
 		return this.orgid;
 	}
 
-	public void setOrgid(Integer orgid) {
+	public void setOrgid(Long orgid) {
 		this.orgid = orgid;
 	}
 

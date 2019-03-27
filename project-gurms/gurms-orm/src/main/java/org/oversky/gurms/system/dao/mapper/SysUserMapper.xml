@@ -10,7 +10,7 @@
         <result column="salt" jdbcType="VARCHAR" property="salt" />
         <result column="mobileno" jdbcType="VARCHAR" property="mobileno" />
         <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="orgid" jdbcType="INTEGER" property="orgid" />
+        <result column="orgid" jdbcType="DECIMAL" property="orgid" />
         <result column="idtype" jdbcType="VARCHAR" property="idtype" />
         <result column="idcode" jdbcType="VARCHAR" property="idcode" />
         <result column="logindate" jdbcType="VARCHAR" property="logindate" />
@@ -22,15 +22,14 @@
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUser" useGeneratedKeys="true" keyProperty="userid">
         insert into sys_user (unioncode, username, loginid, loginpasswd, salt, mobileno, email, orgid, idtype, idcode, logindate, logintime, status, loginerror, passwdvaliddate)
-        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=INTEGER}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{loginerror, jdbcType=INTEGER}, #{passwdvaliddate, jdbcType=VARCHAR})
+        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=DECIMAL}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{loginerror, jdbcType=INTEGER}, #{passwdvaliddate, jdbcType=VARCHAR})
     </insert>
   
-	<!-- mysql专属 -->
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="userid">
 		insert into sys_user (unioncode, username, loginid, loginpasswd, salt, mobileno, email, orgid, idtype, idcode, logindate, logintime, status, loginerror, passwdvaliddate)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=INTEGER}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.loginerror, jdbcType=INTEGER}, #{item.passwdvaliddate, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=DECIMAL}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.loginerror, jdbcType=INTEGER}, #{item.passwdvaliddate, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -74,7 +73,7 @@
                salt = #{salt, jdbcType=VARCHAR}, 
                mobileno = #{mobileno, jdbcType=VARCHAR}, 
                email = #{email, jdbcType=VARCHAR}, 
-               orgid = #{orgid, jdbcType=INTEGER}, 
+               orgid = #{orgid, jdbcType=DECIMAL}, 
                idtype = #{idtype, jdbcType=VARCHAR}, 
                idcode = #{idcode, jdbcType=VARCHAR}, 
                logindate = #{logindate, jdbcType=VARCHAR}, 
@@ -110,7 +109,7 @@
 				email = #{email, jdbcType=VARCHAR},
 		    </if>
 		    <if test="orgid != null">
-				orgid = #{orgid, jdbcType=INTEGER},
+				orgid = #{orgid, jdbcType=DECIMAL},
 		    </if>
 		    <if test="idtype != null">
 				idtype = #{idtype, jdbcType=VARCHAR},
@@ -213,7 +212,7 @@
 	        <trim prefix="orgid = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.orgid != null">
-	                    when userid = #{item.userid} then #{item.orgid, jdbcType=INTEGER}
+	                    when userid = #{item.userid} then #{item.orgid, jdbcType=DECIMAL}
 	                </if>
 	                <if test="item.orgid == null">
 	                    when userid = #{item.userid} then orgid
@@ -336,7 +335,7 @@
 				and email = #{email, jdbcType=VARCHAR}
 			</if>
 			<if test="orgid != null">
-				and orgid = #{orgid, jdbcType=INTEGER}
+				and orgid = #{orgid, jdbcType=DECIMAL}
 			</if>
 			<if test="idtype != null and idtype != ''">
 				and idtype = #{idtype, jdbcType=VARCHAR}

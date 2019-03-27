@@ -2,7 +2,9 @@ package org.oversky.code.parser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
@@ -29,6 +31,8 @@ public class PDMParser {
     private static final String ELEMENT_IDENTITY = "Identity";
     private static final String ELEMENT_MANDATORY = "Column.Mandatory";
     private static final String ELEMENT_COLUMNS = "Columns";
+    private static final String ELEMENT_SEQUENCES = "Sequences";
+    private static final String ELEMENT_SEQUENCE = "Sequence";
     private static final String ELEMENT_TABLES = "Tables";
     private static final String ELEMENT_TABLE = "Table";
     private static final String ELEMENT_KEY = "Key";
@@ -38,9 +42,12 @@ public class PDMParser {
     private static final String NODE_ROOT = "//Model";
     private static final String NODE_DBMS = NODE_ROOT + "/o:RootObject/c:Children/o:Model/c:DBMS/o:Shortcut";
     private static final String NODE_TABLE = NODE_ROOT + "/o:RootObject/c:Children/o:Model/c:Tables/o:Table";
+    private static final String NODE_SEQUENCE = NODE_ROOT + "/o:RootObject/c:Children/o:Model/c:Sequences/o:Sequence";
     private static final String NODE_PACKAGE = NODE_ROOT + "/o:RootObject/c:Children/o:Model/c:Packages/o:Package";
     
-	private PDMParser(){}
+	private static final Map<String, String> SEQMAP = new HashMap<>();
+	
+    private PDMParser(){}
 	
 	public static Model parse(File cdm){
 		return parse(cdm, null, null);
@@ -53,7 +60,7 @@ public class PDMParser {
 			Document document = saxReader.read(pdm);
 			//跳到c:DBMS解析数据库类型
 			Element shortcut = (Element)document.selectSingleNode(NODE_DBMS);
-			String dbms = shortcut.element(ELEMENT_CODE).getTextTrim().toUpperCase();
+			String dbms = shortcut.element(ELEMENT_NAME).getTextTrim().toUpperCase();
 			DataType.SourceType type = null;
 			if(dbms.startsWith("ORACLE")){
 			    type = DataType.SourceType.PDM_ORACLE;
@@ -63,14 +70,18 @@ public class PDMParser {
 			
 			//所有o:Table节点列表，对应表属性
 			List oTableList = null;
+			//所有o:Sequence节点列表，对应序列属性
+			List oSequenceList = null;
 			//先判断是否有package存在
 			List<Element> packages = document.selectNodes(NODE_PACKAGE);
 			if(packages == null || packages.size() == 0) {
 				//直接跳到o:Table节点解析
 				oTableList = document.selectNodes(NODE_TABLE);				
+				oSequenceList = document.selectNodes(NODE_SEQUENCE);				
 				System.out.println("不存在package节点");
 			}else {
 				oTableList = new ArrayList();				
+				oSequenceList = new ArrayList();				
 				for(Element pkg : packages) {
 					String pkgCode = pkg.element(ELEMENT_CODE).getTextTrim();
 					//如果配置文件有配置package名字
@@ -85,6 +96,10 @@ public class PDMParser {
 					
 					//找o:package节点下面的o:Table
 					oTableList.addAll(pkg.element(ELEMENT_TABLES).elements(ELEMENT_TABLE));
+					//找o:package节点下面的o:Sequence
+					if(pkg.element(ELEMENT_SEQUENCES) != null) {
+						oSequenceList.addAll(pkg.element(ELEMENT_SEQUENCES).elements(ELEMENT_SEQUENCE));
+					}
 				}
 				System.out.println("package节点个数：" + packages.size());
 			}
@@ -94,10 +109,23 @@ public class PDMParser {
 				return model;
 			}
 
+			//开始解析o:Sequence节点
+			if(oSequenceList != null && oSequenceList.size() > 0){
+				for(int i = 0; i < oSequenceList.size(); i++) {
+					Element elementSeq = (Element)oSequenceList.get(i);
+					Attribute attrId = elementSeq.attribute(ATTR_ID);
+					
+					Element elementCode = elementSeq.element(ELEMENT_CODE);
+	                String origincode = elementCode.getTextTrim().toLowerCase();
+	                
+	                SEQMAP.put(attrId.getValue(), origincode);
+				}
+			}
+			
 			for(int i = 0; i < oTableList.size(); i++){
 				Table table = new Table();
 				table.setDbms(dbms);
-				Element elementTable=(Element)oTableList.get(i);
+				Element elementTable = (Element)oTableList.get(i);
 				
                 Element elementCode = elementTable.element(ELEMENT_CODE);
                 String origincode = elementCode.getTextTrim().toLowerCase();
@@ -233,11 +261,23 @@ public class PDMParser {
 						column.setMandatory(elementMandatory.getTextTrim());
 					}
 					
+					//oracle的pdm没有identity属性
 					Element elementIdentity = elementColumn.element(ELEMENT_IDENTITY);
 					if(elementIdentity == null){
 						column.setIdentity("0");
 					}else{
 						column.setIdentity(elementIdentity.getTextTrim());
+					}
+					
+					//mysql没有sequence属性
+					Element elementSequence = elementColumn.element(ELEMENT_SEQUENCE);
+					if(elementSequence != null) {
+						String seqRefId = elementSequence.element(ELEMENT_SEQUENCE).attribute(ATTR_REF).getValue();
+						//只有对应的列指定了sequence，自动生成的sql才会生成带seq.nextval
+						if(SEQMAP.containsKey(seqRefId)) {
+							column.setSequence(SEQMAP.get(seqRefId));
+							column.setIdentity("1");
+						}
 					}
 					
 	                Element elementDefaultValue = elementColumn.element(ELEMENT_DEFAULTVALUE);
@@ -246,7 +286,7 @@ public class PDMParser {
 	                }
 					
 	                //添加column，如果有自增主键，添加到最前面
-	                if(elementIdentity == null) {
+	                if("0".equals(column.getIdentity())) {
 	                	table.addColumn(column);	                	
 	                }else {
 						table.setIdentityCol(column);
