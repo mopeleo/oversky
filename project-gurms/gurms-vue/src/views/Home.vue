@@ -1,7 +1,10 @@
 <template>
     <div class="home">
         <el-container>
-            <el-header>Header, welcome: {{$store.getters['pub/userinfo'].username}}, 公司123名称： {{$store.state.pub.user.orgid}}</el-header>
+            <el-header>
+            Header, welcome: {{$store.getters['pub/userinfo'].username}}, 公司123名称： {{$store.state.pub.user.orgid}}
+            <el-button type="primary" @click="logout">注销</el-button>
+            </el-header>
             <el-container>
                 <el-aside width="200px">
                     <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose">
@@ -28,6 +31,22 @@
                         </el-menu-item>
                     </template>
 
+
+                    <el-submenu index="99">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>测试菜单</span>
+                        </template>
+                        <el-menu-item-group>
+                            <template slot="title">分组一</template>
+                            <el-menu-item :index="'/home/sysuser/list'">选项1</el-menu-item>
+                            <el-menu-item :index="'/home/sysrole/list'">选项2</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+
+
+
+
                     </el-menu>
                 </el-aside>
 
@@ -44,6 +63,10 @@ export default {
         return { user: this.$store.state.pub.user };
     },
     methods:{
+        logout:function(){
+            this.$store.commit('pub/LOGOUT');
+            this.$router.push({path: '/login'});
+        },
         //点击行响应
         handleOpen: function(){
             console.log(1);

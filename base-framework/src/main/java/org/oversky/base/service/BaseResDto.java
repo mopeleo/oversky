@@ -10,7 +10,7 @@ import org.oversky.base.constant.PubDefine;
  * @author Blue
  *
  */
-public abstract class BaseResDto implements Serializable {
+public class BaseResDto implements Serializable {
 
 	protected String returncode;
 	protected String returnmsg;

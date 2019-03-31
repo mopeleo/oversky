@@ -36,20 +36,14 @@ export default new Router({
             component: () => import('@/views/error/index.vue'),
             children: [
                 {
-                    path: '401',
-                    component: () => import('@/views/error/404.vue')
-                },
-                {
-                    path: '403',
-                    component: () => import('@/views/error/404.vue')
-                },
-                {
                     path: '404',
+                    name: 'error404',
                     component: () => import('@/views/error/404.vue')
                 },
                 {
                     path: '500',
-                    component: () => import('@/views/error/404.vue')
+                    name: 'error500',
+                    component: () => import('@/views/error/500.vue')
                 }
             ]
         },

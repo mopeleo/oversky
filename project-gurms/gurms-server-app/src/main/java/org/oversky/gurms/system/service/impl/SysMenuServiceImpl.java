@@ -92,6 +92,9 @@ public class SysMenuServiceImpl implements SysMenuService {
 		List<SysMenu> children = userDaoExt.getSubMenus(menuRes.getMenuid());
 		if(children != null && children.size() > 0) {
 			List<SysMenuRes> childrenRes = BeanCopyUtils.convertList(children, SysMenuRes.class);
+			if(menuRes.getMenutype() == null) {
+				menuRes.setMenutype(0);
+			}
 			menuRes.setSubMenus(childrenRes);
 			menuRes.setTree(true);
 			for(SysMenuRes child : childrenRes) {

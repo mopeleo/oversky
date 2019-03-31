@@ -1,7 +1,7 @@
 <template>
     <div id="main">
         <div id="nav">
-            <router-link to="/404">System Login</router-link>
+            <router-link to="/home/sysuser/list">System Login</router-link>
         </div>
 
         <el-form ref="loginForm" :model="login" :rules="rules">

@@ -21,24 +21,26 @@ public class WebMvcConfiguration {
 	
 	@Bean
 	public FilterRegistrationBean<CorsFilter> corsFilter() {
-	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    CorsConfiguration config = new CorsConfiguration();
 	    config.setAllowCredentials(true);   
 	    config.addAllowedOrigin("http://127.0.0.1:8088");
 	    config.addAllowedOrigin("http://localhost:8088");
 	    config.addAllowedHeader("*");
 	    config.addAllowedMethod("*");
+	    
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    source.registerCorsConfiguration("/**", config); // CORS 配置对所有接口都有效
+	    
 	    FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
 	    bean.setOrder(0);
 	    return bean;
 	}
 	
-//	@Bean
+	@Bean
     public FilterRegistrationBean<JwtAuthTokenFilter> authFilter() {
         FilterRegistrationBean<JwtAuthTokenFilter> registration = new FilterRegistrationBean<>();
         //注入过滤器
-        registration.setFilter(new JwtAuthTokenFilter());
+        registration.setFilter(filterAuth());
         //拦截规则
         registration.addUrlPatterns("/*");
         registration.addInitParameter("excludeUrls", "login,validcode");
@@ -49,4 +51,8 @@ public class WebMvcConfiguration {
         return registration;
     }
 	
+	@Bean
+	public JwtAuthTokenFilter filterAuth() {
+		return new JwtAuthTokenFilter();
+	}
 }

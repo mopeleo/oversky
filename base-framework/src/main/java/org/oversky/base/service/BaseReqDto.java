@@ -15,6 +15,7 @@ public abstract class BaseReqDto implements Serializable{
 	protected int pageSize;
 	//效验token
 	protected String token;
+	
 	public int getPageSize() {
 		return pageSize;
 	}

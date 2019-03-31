@@ -1,4 +1,18 @@
 import { Message } from "element-ui";
+import router from '../router';
+
+/**
+  * 跳转登录页
+  * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
+  */
+export function toLogin() {
+    router.replace({
+        path: '/login',
+        query: {
+            redirect: router.currentRoute.fullPath
+        }
+    });
+}
 
 /**
 * 错误弹窗提示信息

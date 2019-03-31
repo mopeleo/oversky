@@ -3,56 +3,38 @@
   * 请求拦截、响应拦截、错误统一处理
   */
 import axios from 'axios';
-// import router from '../router';
+import router from '../router';
 import store from '../store';
 import * as tools from '@/utils/tools'
 
 
 /**
-  * 跳转登录页
-  * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
-  */
-/*
-const toLogin = () => {
-    router.replace({
-        path: '/login',
-        query: {
-            redirect: router.currentRoute.fullPath
-        }
-    });
-}
-*/
-/**
   * 请求失败后的错误统一处理
   * @param {Number} status 请求失败的状态码
   */
-/*
-const errorHandle = (status, other) => {
+const errorHandle = (status, msg) => {
     // 状态码判断
     switch (status) {
         // 401: 未登录状态，跳转登录页
         case 401:
-            toLogin();
+            tools.toLogin();
             break;
         // 403 token过期
         // 清除token并跳转登录页
         case 403:
-            tools.errTip('登录过期，请重新登录');
-            localStorage.removeItem('token');
-            store.commit('loginSuccess', null);
+            store.commit('pub/LOGOUT');
             setTimeout(() => {
-                toLogin();
+                tools.toLogin();
             }, 1000);
             break;
         // 404请求不存在
         case 404:
-            tools.errTip('请求的资源不存在');
+            router.push({name: 'error404', params: {message: msg}});
             break;
         default:
-            tools.errTip(other);
+            router.push({name: 'error500', params: {message: msg}});
     }
 }
-*/
 
 // 创建axios实例
 var instance = axios.create({
@@ -104,7 +86,7 @@ instance.interceptors.response.use(
         const { response } = error;
         if (response) {
             // 请求已发出，但是不在2xx的范围
-            // errorHandle(response.status, response.data.message);
+            errorHandle(response.status, response.data.message);
             return Promise.reject(response);
         } else {
             // 请求超时或断网时
