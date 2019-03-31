@@ -56,9 +56,10 @@ export default {
                         // this.$router.addRoutes(this.$router.options.routes);
                         this.$store.commit('pub/LOGIN', res.data);
                         this.$store.commit('pub/ADDROUTES');
-                        this.$router.push({name: 'home'});
+                        this.$router.push({path: '/home'});
                     }).catch((error)=>{
-                        var msg = error.data ? error.data.message : error;
+                        // alert(JSON.stringify(error));
+                        var msg = error.data ? error.data.returnmsg : error;
                         tools.errTip(msg);
                     });
                 }else{

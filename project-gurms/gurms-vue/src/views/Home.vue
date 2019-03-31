@@ -7,7 +7,7 @@
                     <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose">
 
                     <template v-for="(menu,index) in user.menuTree.subMenus">
-                        <el-submenu v-if='menu.subMenus' :index="index" :key="menu.menuid">
+                        <el-submenu v-if='menu.subMenus' :index="index + ''" :key="menu.menuid">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
                                 <span>{{menu.menuname}}</span>
@@ -22,7 +22,7 @@
                                 </el-menu-item>
                             </template>
                         </el-submenu>
-                        <el-menu-item v-else :index="index" :key="menu.menuid">
+                        <el-menu-item v-else :index="index + ''" :key="menu.menuid">
                             <i class="el-icon-menu"></i>
                             <span slot="title">{{menu.menuname}}</span>
                         </el-menu-item>
@@ -42,6 +42,15 @@
 export default {
     data() {
         return { user: this.$store.state.pub.user };
+    },
+    methods:{
+        //点击行响应
+        handleOpen: function(){
+            console.log(1);
+        },
+        handleClose: function(){
+            console.log(2);
+        }
     }
 }
 </script>

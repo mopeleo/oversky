@@ -9,7 +9,12 @@ const state = {
 const getters = {
     userinfo(state){
         if(!state.user){
-            state.user = JSON.parse(sessionStorage.getItem(PUBDEFINE.KEY_USER));
+            var localUser = localStorage.getItem(PUBDEFINE.KEY_USER);
+            if(localUser){
+                state.user = JSON.parse(localUser);
+            }else{
+                state.user = null;
+            }
         }
         return state.user;
     }
@@ -18,15 +23,15 @@ const getters = {
 const mutations = {
     LOGIN(state, payload){
         state.user = payload;
-        sessionStorage.setItem(PUBDEFINE.KEY_USER, JSON.stringify(payload));
+        localStorage.setItem(PUBDEFINE.KEY_USER, JSON.stringify(payload));
     },
     LOGOUT(state){
-        sessionStorage.removeItem(PUBDEFINE.KEY_USER);
+        localStorage.removeItem(PUBDEFINE.KEY_USER);
         state.user = undefined;
     },
     ADDROUTES(state){
         if(!state.user){
-            state.user = JSON.parse(sessionStorage.getItem(PUBDEFINE.KEY_USER));
+            state.user = JSON.parse(localStorage.getItem(PUBDEFINE.KEY_USER));
         }
         let routes = tools.addDynamicMenuRoutes(state.user.menuTree.subMenus);
         for (var i = 0; i < routes.length; i++) {

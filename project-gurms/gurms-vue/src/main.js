@@ -15,19 +15,39 @@ import api from './api';
 Vue.prototype.$api = api; // 将api挂载到vue的原型上
 
 // 用户手动刷新页面，这是路由会被重设，要重新新增
-if (sessionStorage.getItem(PUBDEFINE.KEY_USER)) {
+if (localStorage.getItem(PUBDEFINE.KEY_USER)) {
     store.commit('pub/ADDROUTES');
 }
 // 登录状态判断
-router.beforeEach((to, from , next) => {
-    if (!sessionStorage.getItem(PUBDEFINE.KEY_USER) && to.path !== '/login') {
-        next({
-            path: '/login',
-            query: {redirect: to.fullPath}
-        });
-    } else {
-        next();
-    }
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem(PUBDEFINE.KEY_USER);
+    // if(to.matched.some(record => record.meta.requireAuth || record.meta.homePages)){
+    //     //路由元信息requireAuth:true，或者homePages:true，则不做登录校验
+    //     next();
+    // }else{
+        if(token){//判断用户是否登录
+            if(Object.keys(from.query).length === 0){//判断路由来源是否有query，处理不是目的跳转的情况
+                next();
+            }else{
+                let redirect = from.query.redirect//如果来源路由有query
+                if(to.path === redirect){   //这行是解决next无限循环的问题
+                    next();
+                }else{
+                    next({path:redirect});  //跳转到目的路由
+                }
+            }
+        }else{
+            if(to.path === "/login"){
+                next();
+            }else{
+                next({
+                    path:"/login",
+                    query: {redirect: to.fullPath}  //将目的路由地址存入login的query中
+                });
+            }
+        }
+    // }
+
 })
 
 new Vue({

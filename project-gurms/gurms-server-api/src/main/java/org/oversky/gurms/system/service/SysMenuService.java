@@ -10,4 +10,8 @@ public interface SysMenuService extends BaseService{
 	SysMenuRes getUserMenuTree(Long userId);
 	
 	SysMenuRes getRoleMenuTree(Long roleId);
+	
+	boolean isCorrectUrl(String url);
+	
+	SysMenuRes getMenuByUrl(String url);
 }

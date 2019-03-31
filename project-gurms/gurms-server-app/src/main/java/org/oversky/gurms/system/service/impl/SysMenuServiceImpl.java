@@ -38,6 +38,34 @@ public class SysMenuServiceImpl implements SysMenuService {
 		return res;
 	}
 
+
+	@Override
+	public boolean isCorrectUrl(String url) {
+		List<SysMenu> menus = menuDao.selectAll();
+		for(SysMenu menu : menus) {
+			if(url.endsWith(menu.getMenuurl())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+
+	@Override
+	public SysMenuRes getMenuByUrl(String url) {
+		// TODO Auto-generated method stub
+		SysMenu menu = new SysMenu();
+		menu.setMenuurl(url);
+		List<SysMenu> menus = menuDao.selectWhere(menu);
+		SysMenuRes res = null;
+		if(menus != null && menus.size() > 0) {
+			menu = menus.get(0);
+			res = new SysMenuRes();
+			BeanCopyUtils.copy(menu, res);
+		}
+		return res;
+	}
+
 	@Override
 	public SysMenuRes getUserMenuTree(Long userId) {
 		SysMenuRes root = new SysMenuRes();
@@ -92,6 +120,6 @@ public class SysMenuServiceImpl implements SysMenuService {
 				it.remove();				
 			}
 		}
-	}	
+	}
 
 }

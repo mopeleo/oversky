@@ -1,8 +1,5 @@
 package org.oversky.gurms.system.dto.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.oversky.base.service.BaseResDto;
 
 public class UserLoginRes extends BaseResDto {
@@ -18,8 +15,8 @@ public class UserLoginRes extends BaseResDto {
 	private Long orgid;    //所属机构
 	private String orgname;
 	private Integer status;    //用户状态，0，已删除；1，正常；2，锁定
+	private String token;
 	
-	private List<SysMenuRes> menus;
 	private SysMenuRes menuTree;
 	public Long getUserid() {
 		return userid;
@@ -75,22 +72,16 @@ public class UserLoginRes extends BaseResDto {
 	public void setOrgname(String orgname) {
 		this.orgname = orgname;
 	}
-	public List<SysMenuRes> getMenus() {
-		return menus;
-	}
-	public void setMenus(List<SysMenuRes> menus) {
-		this.menus = menus;
-	}
 	public SysMenuRes getMenuTree() {
 		return menuTree;
 	}
 	public void setMenuTree(SysMenuRes menuTree) {
 		this.menuTree = menuTree;
 	}
-	public void addMenu(SysMenuRes menu) {
-		if(this.menus == null) {
-			this.menus = new ArrayList<SysMenuRes>();
-		}
-		this.menus.add(menu);
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

@@ -15,6 +15,7 @@ public class SysMenuRes extends BaseResDto {
 	private Integer menutype;    //菜单类型0-目录，1-菜单，2-页面链接
 	private Integer opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
 	private Integer status;    //菜单状态，0-无效，1-有效
+	private Integer accesstype;    //访问权限：0-可任意访问，1-登录访问，2-需授权
 	private boolean tree;
 	private List<SysMenuRes> subMenus;
 
@@ -64,6 +65,14 @@ public class SysMenuRes extends BaseResDto {
 
 	public void setParentmenu(String parentmenu) {
 		this.parentmenu = parentmenu;
+	}
+
+	public Integer getAccesstype() {
+		return accesstype;
+	}
+
+	public void setAccesstype(Integer accesstype) {
+		this.accesstype = accesstype;
 	}
 
 	public Integer getMenutype() {

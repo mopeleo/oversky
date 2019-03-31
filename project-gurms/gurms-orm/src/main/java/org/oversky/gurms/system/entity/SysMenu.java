@@ -12,6 +12,7 @@ public class SysMenu extends BaseEntity{
 	private String parentmenu;    //上级菜单
 	private Integer menutype;    //菜单类型0-目录，1-菜单，2-页面链接
 	private Integer opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
+	private Integer accesstype;    //访问权限：0-可任意访问，1-登录访问，2-需授权
 	private Integer status;    //菜单状态，0-无效，1-有效
 
 	public String getMenuid() {
@@ -62,6 +63,14 @@ public class SysMenu extends BaseEntity{
 		this.opentype = opentype;
 	}
 
+	public Integer getAccesstype() {
+		return this.accesstype;
+	}
+
+	public void setAccesstype(Integer accesstype) {
+		this.accesstype = accesstype;
+	}
+
 	public Integer getStatus() {
 		return this.status;
 	}
@@ -96,6 +105,7 @@ public class SysMenu extends BaseEntity{
 		sb.append(", parentmenu=").append(parentmenu);
 		sb.append(", menutype=").append(menutype);
 		sb.append(", opentype=").append(opentype);
+		sb.append(", accesstype=").append(accesstype);
 		sb.append(", status=").append(status);
         sb.append("]");
         return sb.toString();

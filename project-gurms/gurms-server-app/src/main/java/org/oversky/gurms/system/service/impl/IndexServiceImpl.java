@@ -14,7 +14,6 @@ import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
 import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
-import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.entity.SysLogLogin;
 import org.oversky.gurms.system.entity.SysUser;
@@ -94,18 +93,7 @@ public class IndexServiceImpl implements IndexService{
 		
 		SysUserBO userBo = userDaoExt.getUserRolesAndMenus(user.getUserid());
 		res.setOrgid(userBo.getSysorg().getOrgid());
-		res.setOrgname(userBo.getSysorg().getShortname());
-		userBo.getMenus().forEach((menu)->{
-			SysMenuRes menuRes = new SysMenuRes();
-			menuRes.setMenuid(menu.getMenuid());
-			menuRes.setMenuname(menu.getMenuname());
-			menuRes.setMenutype(menu.getMenutype());
-			menuRes.setMenuurl(menu.getMenuurl());
-			menuRes.setOpentype(menu.getOpentype());
-			menuRes.setParentmenu(menu.getParentmenu());
-			res.addMenu(menuRes);
-		});
-		
+		res.setOrgname(userBo.getSysorg().getShortname());		
 		res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
 		
 		return res;

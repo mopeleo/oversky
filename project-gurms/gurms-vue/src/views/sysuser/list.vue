@@ -58,7 +58,7 @@
                     :current-page="userReq.pageNum"
                     :page-sizes="this.$pubdefine.PAGE_SIZES"
                     :page-size="userReq.pageSize"
-                    :total="tableData.page.total">
+                    :total="tableData.page ? tableData.page.total : 0">
                 </el-pagination>
             </div>
         </el-form>
@@ -72,7 +72,7 @@ export default{
     data(){
         return {
             //表格当前页数据
-            tableData: null,
+            tableData: {},
             //查询条件及分页参数
             userReq: {
                 pageSize: this.$pubdefine.PAGE_SIZE,

@@ -29,6 +29,38 @@ public class CommonUtils {
 		return getRandomString(length, CHAR_CODES);
 	}
 
+	public static boolean existSuffix(String key, String[] suffix){
+		return existSuffix(key, suffix, true);
+	}
+	
+	/**
+	 * 	//判断key是否是以suffix数组中的字符串结尾
+	 * @param key
+	 * @param suffix
+	 * @param ignoreCase
+	 * @return
+	 */
+	public static boolean existSuffix(String key, String[] suffix, boolean ignoreCase){
+		if(suffix == null || suffix.length == 0){
+			return true;
+		}
+		if(ignoreCase){
+			String lowerKey = key.toLowerCase();
+			for(String tmpSuffix : suffix){
+				if(lowerKey.endsWith(tmpSuffix.toLowerCase())){
+					return true;
+				}
+			}
+		}else{
+			for(String tmpSuffix : suffix){
+				if(key.endsWith(tmpSuffix)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private static String getRandomString(int length, char[] source) {
 		char[] codes = new char[length];
 		Random random = new Random();
