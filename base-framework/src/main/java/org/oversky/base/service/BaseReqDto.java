@@ -15,6 +15,8 @@ public abstract class BaseReqDto implements Serializable{
 	protected int pageSize;
 	//效验token
 	protected String token;
+	//资源ID(如菜单ID，API接口ID等)
+	protected String resourceId;
 	
 	public int getPageSize() {
 		return pageSize;
@@ -33,6 +35,12 @@ public abstract class BaseReqDto implements Serializable{
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public String getResourceId() {
+		return resourceId;
+	}
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
 	}	
 }
 

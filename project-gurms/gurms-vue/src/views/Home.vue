@@ -64,8 +64,18 @@ export default {
     },
     methods:{
         logout:function(){
+            //根据jwt判断，服务器不保存状态，所以无需发请求到服务器
             this.$store.commit('pub/LOGOUT');
             this.$router.push({path: '/login'});
+            // this.$api.Gurms.logout(this.user.userid).then((res)=>{
+            //     if(res.data === true){
+            //         this.$store.commit('pub/LOGOUT');
+            //         this.$router.push({path: '/login'});
+            //     }
+            // }).catch((error)=>{
+            //     var msg = error.data ? error.data.returnmsg : error;
+            //     tools.errTip(msg);
+            // });
         },
         //点击行响应
         handleOpen: function(){

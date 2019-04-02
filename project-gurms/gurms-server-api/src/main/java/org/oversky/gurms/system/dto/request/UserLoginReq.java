@@ -6,9 +6,11 @@ public class UserLoginReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long userid;
 	private String loginid;
 	private String passwd;
 	private Integer logintype;
+	
 	public String getLoginid() {
 		return loginid;
 	}
@@ -27,6 +29,12 @@ public class UserLoginReq extends BaseReqDto {
 	}
 	public void setLogintype(Integer logintype) {
 		this.logintype = logintype;
+	}
+	public Long getUserid() {
+		return userid;
+	}
+	public void setUserid(Long userid) {
+		this.userid = userid;
 	}
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

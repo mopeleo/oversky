@@ -7,6 +7,7 @@ import org.oversky.gurms.system.constant.CacheConsts;
 import org.oversky.gurms.system.constant.ConfigConsts;
 import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.entity.SysParam;
+import org.oversky.gurms.system.service.SysMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class CacheSysParamRunner implements ApplicationRunner {
 	private SysParamDao paramDao;
 	
 	@Autowired
+	private SysMenuService menuService;
+	
+	@Autowired
 	private ConfigConsts config;
 	
 	@Override
@@ -36,6 +40,7 @@ public class CacheSysParamRunner implements ApplicationRunner {
 			throw new BaseServiceException("参数初始化失败");
 		}
 		
+		menuService.getFullMenuTree();
 		
 		list.forEach(param->{
 			CacheConsts.put(param.getParamid(), param.getUnioncode(), param.getParamvalue());

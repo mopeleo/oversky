@@ -11,7 +11,7 @@ import org.oversky.gurms.system.constant.CacheConsts;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysLogLoginDao;
 import org.oversky.gurms.system.dao.SysUserDao;
-import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
+import org.oversky.gurms.system.dao.ext.UserRightDao;
 import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
@@ -34,7 +34,7 @@ public class IndexServiceImpl implements IndexService{
 	private SysUserDao sysUserDao;
 
 	@Autowired
-	private SysUserDaoExt userDaoExt;
+	private UserRightDao userDaoExt;
 	
 	@Autowired
 	private SysLogLoginDao sysLogLoginDao;

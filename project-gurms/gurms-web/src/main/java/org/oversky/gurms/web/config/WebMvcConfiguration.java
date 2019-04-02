@@ -1,12 +1,15 @@
 package org.oversky.gurms.web.config;
 
 import org.oversky.gurms.web.filter.JwtAuthTokenFilter;
+import org.oversky.gurms.web.filter.JwtAuthTokenInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Filter 统一配置管理
@@ -17,7 +20,7 @@ import org.springframework.web.filter.CorsFilter;
  *
  */
 @Configuration
-public class WebMvcConfiguration {
+public class WebMvcConfiguration implements WebMvcConfigurer{
 	
 	@Bean
 	public FilterRegistrationBean<CorsFilter> corsFilter() {
@@ -36,23 +39,37 @@ public class WebMvcConfiguration {
 	    return bean;
 	}
 	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry){
+		registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
+			.excludePathPatterns("/login")
+			.excludePathPatterns("/logout")
+			.excludePathPatterns("/validcode");
+	}
+	
 	@Bean
+	public JwtAuthTokenInterceptor authInterceptor() {
+		return new JwtAuthTokenInterceptor();
+	}
+	
+//	@Bean  //Filter过滤器中的异常不能被全局异常处理捕获，故改为拦截器Interceptor
     public FilterRegistrationBean<JwtAuthTokenFilter> authFilter() {
         FilterRegistrationBean<JwtAuthTokenFilter> registration = new FilterRegistrationBean<>();
         //注入过滤器
         registration.setFilter(filterAuth());
         //拦截规则
         registration.addUrlPatterns("/*");
-        registration.addInitParameter("excludeUrls", "login,validcode");
+        registration.addInitParameter("excludeUrls", "login,logout,validcode");
         //过滤器名称
         registration.setName("jwtAuthTokenFilter");
         //过滤器顺序
         registration.setOrder(1);
         return registration;
-    }
+    }	
 	
-	@Bean
+//	@Bean
 	public JwtAuthTokenFilter filterAuth() {
 		return new JwtAuthTokenFilter();
 	}
+	
 }

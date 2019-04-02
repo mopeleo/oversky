@@ -12,6 +12,9 @@ export default {
         // return axios.post(`${baseURL}/login`, qs.stringify(params));
         return axios.post(`${baseURL}/login`, params);
     },
+    logout (userid) {
+        return axios.get(`${baseURL}/logout/${userid}`);
+    },
 
     //========================================================
     // 用户列表

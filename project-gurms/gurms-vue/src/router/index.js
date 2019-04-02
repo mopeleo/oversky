@@ -16,6 +16,16 @@ export default new Router({
                 {
                     path: '',
                     component: () => import('@/views/About.vue')
+                },
+                {
+                    path: '404',
+                    name: 'error404',
+                    component: () => import('@/views/error/404.vue')
+                },
+                {
+                    path: '500',
+                    name: 'error500',
+                    component: () => import('@/views/error/500.vue')
                 }
             ]
         },
@@ -32,24 +42,8 @@ export default new Router({
             component: () => import('@/views/Login.vue')
         },
         {
-            path: '/error',
-            component: () => import('@/views/error/index.vue'),
-            children: [
-                {
-                    path: '404',
-                    name: 'error404',
-                    component: () => import('@/views/error/404.vue')
-                },
-                {
-                    path: '500',
-                    name: 'error500',
-                    component: () => import('@/views/error/500.vue')
-                }
-            ]
-        },
-        {
             path: '*',
-            redirect: '/error/404'
+            redirect: '/home/404'
         }
     ]
 })

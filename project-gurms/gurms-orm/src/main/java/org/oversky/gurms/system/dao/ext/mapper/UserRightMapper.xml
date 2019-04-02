@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.oversky.gurms.system.dao.ext.SysUserDaoExt">
+<mapper namespace="org.oversky.gurms.system.dao.ext.UserRightDao">
 
 	<resultMap id="map_getUserRolesAndMenus" type="org.oversky.gurms.system.dao.ext.bo.SysUserBO">
         <id column="userid" jdbcType="DECIMAL" property="userid" />

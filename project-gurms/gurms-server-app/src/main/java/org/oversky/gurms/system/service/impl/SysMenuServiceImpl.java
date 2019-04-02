@@ -6,21 +6,24 @@ import java.util.List;
 
 import org.oversky.base.util.BeanCopyUtils;
 import org.oversky.gurms.system.dao.SysMenuDao;
-import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
+import org.oversky.gurms.system.dao.ext.UserRightDao;
 import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.entity.SysMenu;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig(cacheNames = "SysMenu")
 public class SysMenuServiceImpl implements SysMenuService {
 
 	@Autowired
 	private SysMenuDao menuDao;
 	
 	@Autowired
-	private SysUserDaoExt userDaoExt;
+	private UserRightDao userRightDao;
 	
 	@Override
 	public SysMenuRes getMenu(String menuId, boolean tree) {
@@ -38,19 +41,14 @@ public class SysMenuServiceImpl implements SysMenuService {
 		return res;
 	}
 
-
 	@Override
-	public boolean isCorrectUrl(String url) {
-		List<SysMenu> menus = menuDao.selectAll();
-		for(SysMenu menu : menus) {
-			if(url.endsWith(menu.getMenuurl())) {
-				return true;
-			}
-		}
-		return false;
+	@CacheEvict(key = "'getFullMenuTree'")
+	public SysMenuRes getFullMenuTree() {
+		SysMenuRes root = new SysMenuRes();
+		getSubMenus(root);
+		return root;
 	}
 	
-
 	@Override
 	public SysMenuRes getMenuByUrl(String url) {
 		// TODO Auto-generated method stub
@@ -72,7 +70,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 		root.setTree(true);
 		this.getSubMenus(root);
 
-		List<SysMenu> userMenus = userDaoExt.getUserMenus(userId);
+		List<SysMenu> userMenus = userRightDao.getUserMenus(userId);
 		this.createMenuTree(root, userMenus);
 		return root;
 	}
@@ -83,13 +81,13 @@ public class SysMenuServiceImpl implements SysMenuService {
 		root.setTree(true);
 		this.getSubMenus(root);
 
-		List<SysMenu> userMenus = userDaoExt.getRoleMenus(roleId);
+		List<SysMenu> userMenus = userRightDao.getRoleMenus(roleId);
 		this.createMenuTree(root, userMenus);
 		return root;
 	}
 	
 	private void getSubMenus(SysMenuRes menuRes) {
-		List<SysMenu> children = userDaoExt.getSubMenus(menuRes.getMenuid());
+		List<SysMenu> children = userRightDao.getSubMenus(menuRes.getMenuid());
 		if(children != null && children.size() > 0) {
 			List<SysMenuRes> childrenRes = BeanCopyUtils.convertList(children, SysMenuRes.class);
 			if(menuRes.getMenutype() == null) {

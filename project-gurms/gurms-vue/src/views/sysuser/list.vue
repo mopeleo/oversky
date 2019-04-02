@@ -88,7 +88,7 @@ export default{
             this.$api.Gurms.userList(this.userReq).then((res)=>{
                 this.tableData = res.data;
             }).catch((err)=>{
-                tools.errTip(err.data ? err.data.returnmsg : err.message);
+                tools.errTip(err);
             });
         },
         //点击行响应

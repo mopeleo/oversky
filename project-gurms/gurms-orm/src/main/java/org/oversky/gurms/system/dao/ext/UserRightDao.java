@@ -5,14 +5,17 @@ import java.util.Map;
 
 import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 import org.oversky.gurms.system.entity.SysMenu;
+import org.oversky.gurms.system.entity.SysRole;
 
-public interface SysUserDaoExt {
+public interface UserRightDao {
 
 	List<Map<String, Object>> testUserRoles(Map<String, Object> query);
 	
 	SysUserBO getUserRolesAndMenus(Long userid);
 	
 	List<SysMenu> getUserMenus(Long userid);
+
+	List<SysRole> getUserRoles(Long userid);
 
 	List<SysMenu> getRoleMenus(Long roleid);
 

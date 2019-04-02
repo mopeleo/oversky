@@ -3,38 +3,10 @@
   * 请求拦截、响应拦截、错误统一处理
   */
 import axios from 'axios';
-import router from '../router';
 import store from '../store';
+import router from '../router';
 import * as tools from '@/utils/tools'
 
-
-/**
-  * 请求失败后的错误统一处理
-  * @param {Number} status 请求失败的状态码
-  */
-const errorHandle = (status, msg) => {
-    // 状态码判断
-    switch (status) {
-        // 401: 未登录状态，跳转登录页
-        case 401:
-            tools.toLogin();
-            break;
-        // 403 token过期
-        // 清除token并跳转登录页
-        case 403:
-            store.commit('pub/LOGOUT');
-            setTimeout(() => {
-                tools.toLogin();
-            }, 1000);
-            break;
-        // 404请求不存在
-        case 404:
-            router.push({name: 'error404', params: {message: msg}});
-            break;
-        default:
-            router.push({name: 'error500', params: {message: msg}});
-    }
-}
 
 // 创建axios实例
 var instance = axios.create({
@@ -71,7 +43,7 @@ instance.interceptors.response.use(
     res => {
         if(res.status === 200){
             // tools.errTip(JSON.stringify(res));
-            if(res.data && res.data.success){
+            if(res.data && (res.data === true || res.data.success === true)){
                 return Promise.resolve(res);
             }else{
                 return Promise.reject(res);
@@ -81,13 +53,26 @@ instance.interceptors.response.use(
         }
         // return res.status === 200 ? Promise.resolve(res) : Promise.reject(res);
     },
-    // 请求失败
+    // 默认除了2XX之外的都是错误的，就会走这里
     error => {
         const { response } = error;
         if (response) {
-            // 请求已发出，但是不在2xx的范围
-            errorHandle(response.status, response.data.message);
-            return Promise.reject(response);
+            var resMsg = response.data ? response.data.returnmsg : response.message;
+            // 状态码判断
+            switch (response.status) {
+                // 401: 未登录状态，跳转登录页
+                case 401:
+                    store.commit('pub/LOGOUT');
+                    tools.toLogin();
+                    break;
+                // 404: 未找到或需要授权
+                case 404:
+                    router.push({name: 'error404', params: {message: resMsg}});
+                    break;
+                default:
+                    break;
+            }
+            return Promise.reject(resMsg);
         } else {
             // 请求超时或断网时
             return Promise.reject('服务器无响应');

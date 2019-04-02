@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.gurms.system.dao.SysUserDao;
-import org.oversky.gurms.system.dao.ext.SysUserDaoExt;
+import org.oversky.gurms.system.dao.ext.UserRightDao;
 import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
@@ -28,7 +28,7 @@ public class SysUserServiceTest {
 	private SysUserService sysUserService;
 	
 	@Autowired
-	private SysUserDaoExt userDaoExt;
+	private UserRightDao userDaoExt;
 	
 	@Autowired
 	private SysUserDao userDao;
