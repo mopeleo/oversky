@@ -1,9 +1,14 @@
 <#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
+<#-- 
+<#macro type column><#if column.datatype=="string">String<#elseif column.datatype=="int"><#if table.keys?seq_contains(column)>Long<#else>int</#if><#elseif column.datatype=="double"><#if table.keys?seq_contains(column)>Double<#else>double</#if><#else><#if table.keys?seq_contains(column)>Long<#else>long</#if></#if></#macro>
+ -->
 package ${package};
 
-import com.dl.server.entity.DLEntity;
+import org.oversky.base.entity.BaseEntity;
 
-public class ${table.code} extends DLEntity{
+public class ${table.code} extends BaseEntity{
+
+	private static final long serialVersionUID = 1L;
 
 <#list table.columns as column>
 	private <@type datatype=column.datatype /> ${column.code};    //${column.comment}
@@ -19,27 +24,23 @@ public class ${table.code} extends DLEntity{
 	}
 
 </#list>
-    public boolean existId(){
-        return <#if (table.keys?size > 0)>true<#else>false</#if>;
-    }
-    
 <#if (table.keys?size > 0)>
-	public String getEntityKey(){
+	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("${table.code}");
-		return build<#list table.keys as column>.append(this.${column.code})</#list>.toString();
+		return build<#list table.keys as column>.append("#${column.code}:").append(this.${column.code})</#list>.toString();
 	}
 
     public static String buildEntityKey(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>){
         StringBuilder build = new StringBuilder("${table.code}");
-        return build<#list table.keys as column>.append(${column.code})</#list>.toString();
+        return build<#list table.keys as column>.append("#${column.code}:").append(${column.code})</#list>.toString();
+    }
+    
+    public void copyPrimaryKey(${table.code} entity){
+	<#list table.keys as column>
+		this.${column.code} = entity.get${column.code?cap_first}();
+	</#list>    	
     }
 </#if>
-	
-	public void clear(){
-<#list table.columns as column>
-		this.${column.code} = null;
-</#list>
-	}
 
 	@Override
     public String toString() {

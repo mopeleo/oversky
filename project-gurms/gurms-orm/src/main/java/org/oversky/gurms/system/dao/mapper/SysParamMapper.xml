@@ -43,12 +43,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_param
-         where unioncode = #{0} and paramid = #{1}
+         where unioncode = #{param1} and paramid = #{param2}
     </select>
 
     <delete id="deleteById">
         delete from sys_param
-         where unioncode = #{0} and paramid = #{1}
+         where unioncode = #{param1} and paramid = #{param2}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysParam">

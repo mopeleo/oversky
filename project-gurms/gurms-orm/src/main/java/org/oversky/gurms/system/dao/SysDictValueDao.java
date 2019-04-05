@@ -12,13 +12,13 @@ import org.springframework.cache.annotation.Caching;
 public interface SysDictValueDao{
 
 	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysDictValue).buildEntityKey(#p0,#p1,#p2)", unless = "#result == null")
-    SysDictValue getById(String unioncode, Long dictcode, String itemcode);
+    SysDictValue getById(String unioncode, Integer dictcode, String itemcode);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysDictValue).buildEntityKey(#p0,#p1,#p2)", condition = "#result == 1")
 	})
-    int deleteById(String unioncode, Long dictcode, String itemcode);
+    int deleteById(String unioncode, Integer dictcode, String itemcode);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),

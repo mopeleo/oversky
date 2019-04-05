@@ -111,14 +111,14 @@ export default{
             // this.multipleSelection = val;
         },
         handleAdd() {
-            this.$router.push({name: 'sysuser/detail'});
+            this.$router.push({name: '1311'});
         },
         handleDetail(index, row) {
-            this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: false}});
+            this.$router.push({name: '1311', params: {userid: row.userid, edit: false}});
         },
         handleEdit(index, row) {
-            // this.$router.push({path: '/home/sysuser/detail', query: {userid: row.userid}});
-            this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: true}});
+            this.$router.push({name: '1311', params: {userid: row.userid, edit: true}});
+            // this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: true}});
         },
         handleDelete(index, row) {
             this.$api.Gurms.userDelete(row.userid).then((res)=>{

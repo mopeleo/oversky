@@ -48,12 +48,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_menu
-         where menuid = #{0}
+         where menuid = #{param1}
     </select>
 
     <delete id="deleteById">
         delete from sys_menu
-         where menuid = #{0}
+         where menuid = #{param1}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysMenu">

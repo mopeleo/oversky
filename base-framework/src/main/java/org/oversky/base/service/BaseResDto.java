@@ -12,9 +12,11 @@ import org.oversky.base.constant.PubDefine;
  */
 public class BaseResDto implements Serializable {
 
-	protected String returncode;
-	protected String returnmsg;
-	protected boolean success;
+	private static final long serialVersionUID = 1L;
+
+	protected String returncode = PubDefine.RETCODE_SUCCESS;
+	protected String returnmsg = PubDefine.RETMSG_SUCCESS;;
+	protected boolean success = true;
 
 	public String getReturncode() {
 		return returncode;

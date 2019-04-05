@@ -45,12 +45,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_dict_index
-         where unioncode = #{0} and dictcode = #{1}
+         where unioncode = #{param1} and dictcode = #{param2}
     </select>
 
     <delete id="deleteById">
         delete from sys_dict_index
-         where unioncode = #{0} and dictcode = #{1}
+         where unioncode = #{param1} and dictcode = #{param2}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysDictIndex">

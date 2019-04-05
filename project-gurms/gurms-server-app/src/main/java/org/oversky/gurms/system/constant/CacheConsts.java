@@ -1,58 +1,29 @@
 package org.oversky.gurms.system.constant;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.oversky.base.service.BaseServiceException;
+import org.oversky.gurms.common.spring.SpringBeanUtils;
+import org.oversky.gurms.system.dao.SysParamDao;
+import org.oversky.gurms.system.entity.SysParam;
 
 public final class CacheConsts {
 	
-	private final static ConcurrentHashMap<String, String> CACHE = new ConcurrentHashMap<>();
-	private final static String DEFUALT_UNIONCODE = "0000";   //默认的unioncode
-	public final static Integer PK_SYS_MODE = 1;
+	private static SysParamDao paramDao = SpringBeanUtils.getBean(SysParamDao.class);
+
+	public final static String DEFUALT_UNIONCODE = "0000";   	//默认的unioncode
+	public final static Integer PK_SYS_ROOTUSER = 0;			//超级用户
+	public final static Integer PK_SYS_MODE = 1;				//模式 1-单用户，2-多法人
 	public final static Integer PK_PASSWD_ERROR_TIMES = 2;		//密码错误次数
 	
-	private CacheConsts() {}
-	
-	public static void put(Integer key, String unioncode, String value) {
-		String mode = getSysMode();
-		String paramKey = null;
-		if("1".equals(mode)) {
-			paramKey = getCacheKey(key, unioncode);
-		}else {
-			paramKey = getCacheKey(key, DEFUALT_UNIONCODE);
-		}
-		CACHE.put(paramKey, value);
-	}
-	
-	public static String get(Integer key, String unioncode) {
-		String mode = getSysMode();
-		String paramKey = null;
-		//如果是多法人模式
-		if("1".equals(mode)) {
-			//先取自己设置的参数
-			paramKey = getCacheKey(key, unioncode);
-			//若存在，则返回，不存在取公共的默认配置
-			if(CACHE.containsKey(paramKey)) {
-				return CACHE.get(paramKey);
-			}
-		}
-		paramKey = getCacheKey(key, DEFUALT_UNIONCODE);
-		return CACHE.get(paramKey);
-	}
-	
-	private static String getSysMode() {
-		String paramKey = getCacheKey(PK_SYS_MODE, DEFUALT_UNIONCODE);
-		return CACHE.get(paramKey);
-	}
-	
-	private static String getCacheKey(Integer key, String unioncode) {
-		String paramKey = key.toString();
-		if(unioncode != null && !"".equals(unioncode.trim())) {
-			paramKey += "_" + unioncode.trim();
-		}else {
-			throw new BaseServiceException("unioncode不能为空");
+	public static String getParam(String unioncode, Integer paramid) {
+		SysParam value = paramDao.getById(unioncode, paramid);
+		if(value == null) {
+			value = paramDao.getById(DEFUALT_UNIONCODE, paramid);
+			if(value == null) {
+				throw new BaseServiceException("错误的系统参数 : " + paramid);
+			}			
 		}
 		
-		return paramKey;
+		return value.getParamvalue();
 	}
+	
 }

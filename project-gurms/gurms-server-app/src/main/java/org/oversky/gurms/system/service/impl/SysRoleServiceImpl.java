@@ -34,7 +34,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
-	public boolean delete(Long roleid) {
+	public boolean delete(Integer roleid) {
 		// TODO Auto-generated method stub
 		return roleDao.deleteById(roleid) == 1;
 	}
@@ -52,7 +52,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return res;
 	}
 
-	public SysRoleRes getById(Long roleid) {
+	public SysRoleRes getById(Integer roleid) {
 		return BeanCopyUtils.convert(roleDao.getById(roleid), SysRoleRes.class);
 	}
 

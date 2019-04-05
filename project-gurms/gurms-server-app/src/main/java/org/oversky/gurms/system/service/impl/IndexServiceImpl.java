@@ -10,9 +10,8 @@ import org.oversky.base.util.EncryptUtils;
 import org.oversky.gurms.system.constant.CacheConsts;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysLogLoginDao;
+import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.dao.SysUserDao;
-import org.oversky.gurms.system.dao.ext.UserRightDao;
-import org.oversky.gurms.system.dao.ext.bo.SysUserBO;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.entity.SysLogLogin;
@@ -31,14 +30,14 @@ public class IndexServiceImpl implements IndexService{
 	private static final Logger log = LoggerFactory.getLogger(IndexServiceImpl.class);
 	
 	@Autowired
+	private SysParamDao sysParamDao;
+	
+	@Autowired
 	private SysUserDao sysUserDao;
 
 	@Autowired
-	private UserRightDao userDaoExt;
-	
-	@Autowired
 	private SysLogLoginDao sysLogLoginDao;
-	
+
 	@Autowired
 	private SysMenuService menuService;
 	
@@ -91,10 +90,16 @@ public class IndexServiceImpl implements IndexService{
 			BeanCopyUtils.copy(user, res);
 		}
 		
-		SysUserBO userBo = userDaoExt.getUserRolesAndMenus(user.getUserid());
-		res.setOrgid(userBo.getSysorg().getOrgid());
-		res.setOrgname(userBo.getSysorg().getShortname());		
-		res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
+//		SysUserBO userBo = userRightDao.getUserRolesAndMenus(user.getUserid());
+//		res.setOrgid(userBo.getSysorg().getOrgid());
+//		res.setOrgname(userBo.getSysorg().getShortname());
+		String rootUser = CacheConsts.getParam(user.getUnioncode(), CacheConsts.PK_SYS_ROOTUSER);
+		//是超级用户表
+		if((","+rootUser+",").indexOf("," + user.getUserid() + ",") != -1) {
+			res.setMenuTree(menuService.getFullMenuTree());
+		}else {
+			res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
+		}
 		
 		return res;
 	}
@@ -124,7 +129,7 @@ public class IndexServiceImpl implements IndexService{
 			upUser.setLoginerror(0);
 		}else {
 			upUser.setLoginerror(user.getLoginerror() + 1);
-			String maxPasswdErr = CacheConsts.get(CacheConsts.PK_PASSWD_ERROR_TIMES, user.getUnioncode());
+			String maxPasswdErr = CacheConsts.getParam(user.getUnioncode(), CacheConsts.PK_PASSWD_ERROR_TIMES);
 			if(upUser.getLoginerror() >= Integer.parseInt(maxPasswdErr)) {
 				upUser.setStatus(DictConsts.USER_STATUS_PASSWDLOCK);
 			}

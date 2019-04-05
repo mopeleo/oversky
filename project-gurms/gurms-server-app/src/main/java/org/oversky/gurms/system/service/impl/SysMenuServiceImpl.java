@@ -54,6 +54,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 		// TODO Auto-generated method stub
 		SysMenu menu = new SysMenu();
 		menu.setMenuurl(url);
+		menu.setStatus(1);
 		List<SysMenu> menus = menuDao.selectWhere(menu);
 		SysMenuRes res = null;
 		if(menus != null && menus.size() > 0) {

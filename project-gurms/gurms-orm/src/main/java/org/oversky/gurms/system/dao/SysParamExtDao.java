@@ -12,13 +12,13 @@ import org.springframework.cache.annotation.Caching;
 public interface SysParamExtDao{
 
 	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysParamExt).buildEntityKey(#p0)", unless = "#result == null")
-    SysParamExt getById(Long paramid);
+    SysParamExt getById(Integer paramid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysParamExt).buildEntityKey(#p0)", condition = "#result == 1")
 	})
-    int deleteById(Long paramid);
+    int deleteById(Integer paramid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
@@ -49,7 +49,7 @@ public interface SysParamExtDao{
 	int updateBatch(List<SysParamExt> entityList);
 	
 	@CacheEvict(allEntries=true, condition = "#result > 0")
-	int deleteBatch(Long[] ids);
+	int deleteBatch(Integer[] ids);
 	
 	@CacheEvict(key = "'selectAll'", condition = "#result > 0")
 	int insertBatch(List<SysParamExt> entityList);

@@ -1,9 +1,9 @@
 <#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
 package ${package};
 
-import org.oversky.base.service.BaseDto;
+import org.oversky.base.service.BaseResDto;
 
-public class ${table.code}Dto extends BaseDto {
+public class ${table.code}Res extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,12 +21,6 @@ public class ${table.code}Dto extends BaseDto {
 	}
 
 </#list>
-
-	public void clear(){
-<#list table.columns as column>
-		this.${column.code} = null;
-</#list>
-	}
 
     @Override
     public String toString() {

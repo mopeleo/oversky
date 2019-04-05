@@ -42,12 +42,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_role_menu
-         where roleid = #{0} and menuid = #{1}
+         where roleid = #{param1} and menuid = #{param2}
     </select>
 
     <delete id="deleteById">
         delete from sys_role_menu
-         where roleid = #{0} and menuid = #{1}
+         where roleid = #{param1} and menuid = #{param2}
     </delete>
   
 

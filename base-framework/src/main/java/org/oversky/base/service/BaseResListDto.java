@@ -9,9 +9,9 @@ public class BaseResListDto<T> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String returncode;
-	private String returnmsg;
-	private boolean success;
+	private String returncode = PubDefine.RETCODE_SUCCESS;
+	private String returnmsg = PubDefine.RETMSG_SUCCESS;
+	private boolean success = true;
 	private List<T> results;
 	
 	//分页相关

@@ -42,12 +42,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user_role
-         where userid = #{0} and roleid = #{1}
+         where userid = #{param1} and roleid = #{param2}
     </select>
 
     <delete id="deleteById">
         delete from sys_user_role
-         where userid = #{0} and roleid = #{1}
+         where userid = #{param1} and roleid = #{param2}
     </delete>
   
 

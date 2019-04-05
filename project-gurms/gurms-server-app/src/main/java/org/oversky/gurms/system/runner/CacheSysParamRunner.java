@@ -40,11 +40,11 @@ public class CacheSysParamRunner implements ApplicationRunner {
 			throw new BaseServiceException("参数初始化失败");
 		}
 		
-		menuService.getFullMenuTree();
-		
 		list.forEach(param->{
-			CacheConsts.put(param.getParamid(), param.getUnioncode(), param.getParamvalue());
+			paramDao.getById(param.getUnioncode(), param.getParamid());
 		});
+		
+		menuService.getFullMenuTree();
 	}
 
 }

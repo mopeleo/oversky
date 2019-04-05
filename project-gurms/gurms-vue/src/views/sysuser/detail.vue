@@ -71,6 +71,7 @@ export default {
         // var userid = this.$route.query.userid;
         if(userid && userid != 0){
             this.$api.Gurms.userDetail(userid).then((res)=>{
+                // alert(JSON.stringify(res));
                 this.sysuser.userid = res.data.userid;
                 this.sysuser.unioncode = res.data.unioncode;
                 this.sysuser.username = res.data.username;
@@ -82,7 +83,7 @@ export default {
                 this.sysuser.idtype = res.data.idtype;
                 this.sysuser.idcode = res.data.idcode;
             }).catch((err)=>{
-                tools.errTip(err.data ? err.data.message : err);
+                tools.errTip(err);
             });
             this.edit = this.$route.params.edit;
         }

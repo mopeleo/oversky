@@ -94,12 +94,12 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
-         where <#list table.keys as column>${column.originCode} = #${r'{'}${column_index}}<#if column_has_next> and </#if></#list>
+         where <#list table.keys as column>${column.originCode} = #${r'{param'}${column_index+1}}<#if column_has_next> and </#if></#list>
     </select>
 
     <delete id="deleteById">
         delete from ${table.originCode?lower_case}
-         where <#list table.keys as column>${column.originCode} = #${r'{'}${column_index}}<#if column_has_next> and </#if></#list>
+         where <#list table.keys as column>${column.originCode} = #${r'{param'}${column_index+1}}<#if column_has_next> and </#if></#list>
     </delete>
   
 	<#if (table.colsExceptKey?size > 0)>

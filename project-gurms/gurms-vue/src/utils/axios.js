@@ -46,10 +46,10 @@ instance.interceptors.response.use(
             if(res.data && (res.data === true || res.data.success === true)){
                 return Promise.resolve(res);
             }else{
-                return Promise.reject(res);
+                return Promise.reject(res.data.returnmsg);
             }
         }else{
-            return Promise.reject(res);
+            return Promise.reject(res.data.returnmsg);
         }
         // return res.status === 200 ? Promise.resolve(res) : Promise.reject(res);
     },
@@ -67,7 +67,7 @@ instance.interceptors.response.use(
                     break;
                 // 404: 未找到或需要授权
                 case 404:
-                    router.push({name: 'error404', params: {message: resMsg}});
+                    router.replace({name: 'error404', params: {message: resMsg}});
                     break;
                 default:
                     break;

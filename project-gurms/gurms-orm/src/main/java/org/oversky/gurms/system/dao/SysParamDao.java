@@ -12,13 +12,13 @@ import org.springframework.cache.annotation.Caching;
 public interface SysParamDao{
 
 	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysParam).buildEntityKey(#p0,#p1)", unless = "#result == null")
-    SysParam getById(String unioncode, Long paramid);
+    SysParam getById(String unioncode, Integer paramid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysParam).buildEntityKey(#p0,#p1)", condition = "#result == 1")
 	})
-    int deleteById(String unioncode, Long paramid);
+    int deleteById(String unioncode, Integer paramid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),

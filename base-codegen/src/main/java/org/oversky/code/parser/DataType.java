@@ -103,10 +103,10 @@ public class DataType {
     }
     
     public static String convertPDMMysql(String datatype){
-        if(datatype.equals("INT") || datatype.equals("SMALLINT") || datatype.equals("TINYINT")){
+        if(datatype.equals("SMALLINT") || datatype.equals("TINYINT")){
             return INT;
         }
-        if(datatype.equals("BIGINT")) {
+        if(datatype.equals("INT") || datatype.equals("BIGINT")) {
         	return LONG;
         }
         if(datatype.startsWith("NUMERIC") || datatype.startsWith("DECIMAL")){
