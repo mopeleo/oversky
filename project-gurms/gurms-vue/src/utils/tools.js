@@ -55,6 +55,7 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
             var route = {
                 path: menuList[i].menuurl,
                 name: menuList[i].menuurl,
+                meta:{menuid: menuList[i].menuid, menutype:menuList[i].menutype, accesstype:menuList[i].accesstype},
                 component: resolve => require([`@/views/${url}`], resolve)
             }
             routes.push(route);

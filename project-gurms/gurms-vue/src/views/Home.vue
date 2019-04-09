@@ -9,6 +9,11 @@
                 <el-aside width="200px">
                     <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose">
 
+                    <el-menu-item :index="'/home/about'">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">首页</span>
+                    </el-menu-item>
+
                     <template v-for="(menu,index) in user.menuTree.subMenus">
                         <el-submenu v-if='menu.subMenus' :index="index + ''" :key="menu.menuid">
                             <template slot="title">

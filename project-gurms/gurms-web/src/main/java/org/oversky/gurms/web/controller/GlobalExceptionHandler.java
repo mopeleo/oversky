@@ -18,6 +18,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(value = WebException.class)
 	public Object webExceptionHandler(WebException e) {
+		e.printStackTrace();
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
 		restfulResult.setReturnmsg(e.getMessage());
@@ -27,6 +28,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(value = BaseServiceException.class)
 	public Object busiExceptionHandler(BaseServiceException e) {
+		e.printStackTrace();
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
 		restfulResult.setReturnmsg(e.getMessage());
@@ -36,6 +38,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(value = ExpiredJwtException.class)
 	public Object tokenExpiredExceptionHandler(ExpiredJwtException e) {
+		e.printStackTrace();
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
 		restfulResult.setReturnmsg("用户token已过期，请重新登录");
@@ -45,9 +48,14 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(value = Exception.class)
 	public Object defaultExceptionHandler(Exception e) {
+		e.printStackTrace();
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
-		restfulResult.setReturnmsg(e.getMessage());
+		String msg = e.getMessage();
+		if(msg == null || "".equals(msg)) {
+			msg = "服务器发生未知错误异常";
+		}
+		restfulResult.setReturnmsg(msg);
 		restfulResult.setSuccess(false);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(restfulResult);
 	}

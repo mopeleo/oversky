@@ -20,11 +20,14 @@ if (localStorage.getItem(PUBDEFINE.KEY_USER)) {
 }
 // 登录状态判断
 router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem(PUBDEFINE.KEY_USER);
-    // if(to.matched.some(record => record.meta.requireAuth || record.meta.homePages)){
-    //     //路由元信息requireAuth:true，或者homePages:true，则不做登录校验
-    //     next();
-    // }else{
+    if(to.meta && to.meta.accesstype && to.meta.accesstype !== '0'){
+        // alert(JSON.stringify(to.params));
+        // if(to.params){
+        //     to.params['resourceid'] = to.meta.menuid;
+        // }else{
+        //     to.params = {'resourceid' : to.meta.menuid};
+        // }
+        const token = localStorage.getItem(PUBDEFINE.KEY_USER);
         if(token){//判断用户是否登录
             if(Object.keys(from.query).length === 0){//判断路由来源是否有query，处理不是目的跳转的情况
                 next();
@@ -46,7 +49,10 @@ router.beforeEach((to, from, next) => {
                 });
             }
         }
-    // }
+
+    }else{
+        next();
+    }
 
 })
 

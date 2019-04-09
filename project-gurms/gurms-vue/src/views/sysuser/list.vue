@@ -111,13 +111,13 @@ export default{
             // this.multipleSelection = val;
         },
         handleAdd() {
-            this.$router.push({name: '1311'});
+            this.$router.push({name: 'sysuser/detail'});
         },
         handleDetail(index, row) {
-            this.$router.push({name: '1311', params: {userid: row.userid, edit: false}});
+            this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: false}});
         },
         handleEdit(index, row) {
-            this.$router.push({name: '1311', params: {userid: row.userid, edit: true}});
+            this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: true}});
             // this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: true}});
         },
         handleDelete(index, row) {

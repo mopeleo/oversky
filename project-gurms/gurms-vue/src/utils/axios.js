@@ -58,6 +58,7 @@ instance.interceptors.response.use(
         const { response } = error;
         if (response) {
             var resMsg = response.data ? response.data.returnmsg : response.message;
+            // alert(JSON.stringify(response));
             // 状态码判断
             switch (response.status) {
                 // 401: 未登录状态，跳转登录页

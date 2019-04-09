@@ -20,7 +20,11 @@ public class JwtAuthTokenInterceptor implements HandlerInterceptor{
 	
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		String requestUrl = request.getServletPath().substring(1);		
+		String requestUrl = request.getServletPath().substring(1);
+//		String resourceId = request.getParameter("resourceid");
+//		String userId = request.getParameter("userid");
+//		System.out.println("================resourceId : " + resourceId + "===================");
+//		System.out.println("================userId : " + userId + "===================");
 		//从数据库获取
 		SysMenuRes menu = menuService.getMenuByUrl(requestUrl);
 		if(menu != null && menu.getAccesstype() != DictConsts.MENU_ACCESSTYPE_ANY) {
@@ -50,18 +54,18 @@ public class JwtAuthTokenInterceptor implements HandlerInterceptor{
 	}
 	
 	private boolean hasPrivilege(String menuId, SysMenuRes menus){
-		if(menus == null){
+		if(menus == null || menuId == null){
 			return false;
 		}
-		
-		if(menus.getMenutype() == 0){
+		if(menuId.equals(menus.getMenuid())) {
+			return true;
+		}
+		if(menus.getSubMenus() != null && menus.getSubMenus().size() > 0){
 			for(SysMenuRes m : menus.getSubMenus()){
 				if(hasPrivilege(menuId, m)){
 					return true;
 				}
 			}
-		}else{
-			return menus.getMenuid().equals(menuId);
 		}
 		return false;
 	}

@@ -97,8 +97,8 @@ public class SysMenuServiceImpl implements SysMenuService {
 			menuRes.setSubMenus(childrenRes);
 			menuRes.setTree(true);
 			for(SysMenuRes child : childrenRes) {
-				//是目录，继续向下查询
-				if(child.getMenutype() == 0) {
+				//不是按钮，继续向下查询
+				if(child.getMenutype() != 2) {
 					getSubMenus(child);
 				}
 			}

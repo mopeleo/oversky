@@ -18,6 +18,10 @@ export default new Router({
                     component: () => import('@/views/About.vue')
                 },
                 {
+                    path: 'about',
+                    component: () => import('@/views/About.vue')
+                },
+                {
                     path: '404',
                     name: 'error404',
                     component: () => import('@/views/error/404.vue')
