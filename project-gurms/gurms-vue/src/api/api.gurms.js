@@ -5,6 +5,7 @@ import axios from '@/utils/axios';
 // import qs from 'qs';
 
 const baseURL = 'http://localhost:8080';
+// const baseURL = '/gurms';
 
 export default {
     // post提交

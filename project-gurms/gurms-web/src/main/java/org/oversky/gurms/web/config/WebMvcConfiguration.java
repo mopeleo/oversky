@@ -28,6 +28,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 	    config.setAllowCredentials(true);   
 	    config.addAllowedOrigin("http://127.0.0.1:8088");
 	    config.addAllowedOrigin("http://localhost:8088");
+	    config.addAllowedOrigin("http://127.0.0.1:7777");
+	    config.addAllowedOrigin("http://localhost:7777");
 	    config.addAllowedHeader("*");
 	    config.addAllowedMethod("*");
 	    

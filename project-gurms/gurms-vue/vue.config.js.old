@@ -2,11 +2,11 @@ const path = require('path');
 
 module.exports = {
     // 基本路径
-    publicPath: '/',
+    publicPath: './',
     // 输出文件目录
     outputDir: 'dist',
-	assetsDir: 'static', // 静态资源目录 (js, css, img, fonts)
-    lintOnSave: true,// 是否开启eslint保存检测，有效值：ture | false | 'error'
+    // eslint-loader 是否在保存的时候检查
+    lintOnSave: true,
     // webpack配置
     // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     chainWebpack: () => {},
@@ -23,7 +23,8 @@ module.exports = {
             // 开发生产共同配置
             resolve: {
                 alias: {
-                    '@': path.resolve(__dirname, './src')
+                    '@': path.resolve(__dirname, './src'),
+                    '@c': path.resolve(__dirname, './src/components')
                 }
             }
         });

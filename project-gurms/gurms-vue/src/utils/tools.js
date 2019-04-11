@@ -44,9 +44,7 @@ export function succTip(msg){
 export function addDynamicMenuRoutes(menuList = [], routes = []) {
     var temp = [];
     for (var i = 0; i < menuList.length; i++) {
-        if (menuList[i].subMenus && menuList[i].subMenus.length > 0) {
-            temp = temp.concat(menuList[i].subMenus);
-        } else if (menuList[i].menuurl) {
+        if (menuList[i].menuurl) {
             menuList[i].menuurl = menuList[i].menuurl.replace(/^\//, '');
             // 根据菜单URL动态加载vue组件，这里要求vue组件须按照url路径存储
             // 如url="sys/user"，则组件路径应是"@/views/sys/user.vue",否则组件加载不到
@@ -56,9 +54,13 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
                 path: menuList[i].menuurl,
                 name: menuList[i].menuurl,
                 meta:{menuid: menuList[i].menuid, menutype:menuList[i].menutype, accesstype:menuList[i].accesstype},
-                component: resolve => require([`@/views/${url}`], resolve)
+                component: () => import(`@/views/${url}`)
+                // component: resolve => require([`@/views/${url}`], resolve)
             }
             routes.push(route);
+        }
+        if (menuList[i].subMenus && menuList[i].subMenus.length > 0) {
+            temp = temp.concat(menuList[i].subMenus);
         }
     }
     if (temp.length > 0) {
