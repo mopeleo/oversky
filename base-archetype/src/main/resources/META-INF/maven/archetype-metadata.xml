@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archetype-descriptor name="oversky-base-archetype">
+  	<requiredProperties>
+        <requiredProperty key="groupId">
+            <defaultValue>com.base</defaultValue>
+        </requiredProperty>
+    </requiredProperties>
+
     <fileSets>
         <fileSet filtered="true" encoding="UTF-8">
             <directory>src/main/java</directory>
@@ -11,13 +17,6 @@
             <directory>src/main/resources</directory>
             <includes>
                 <include>**/*.**</include>
-                <include>**/**</include>
-            </includes>
-        </fileSet>
-        <fileSet filtered="true" encoding="UTF-8">
-            <directory>src/main/webapp</directory>
-            <includes>
-                <include>**/*.**</include>
             </includes>
         </fileSet>
         <fileSet filtered="true" encoding="UTF-8">
@@ -27,10 +26,17 @@
             </includes>
         </fileSet>
         <fileSet filtered="true" encoding="UTF-8">
+            <directory>src/test/resources</directory>
+            <includes>
+                <include>**/*.**</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
             <directory></directory>
             <includes>
-                 <include>.**</include>
+                 <include>.xml</include>
             </includes>
         </fileSet>
   	</fileSets>
+  	
 </archetype-descriptor>
