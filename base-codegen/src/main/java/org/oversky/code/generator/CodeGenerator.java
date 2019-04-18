@@ -15,7 +15,9 @@ import java.util.ResourceBundle;
 import org.oversky.code.model.Model;
 import org.oversky.code.model.Table;
 import org.oversky.code.parser.CDMParser;
+import org.oversky.code.parser.DatabaseParser;
 import org.oversky.code.parser.PDMParser;
+import org.oversky.code.parser.config.DatabaseConfig;
 import org.oversky.code.util.PropertiesUtil;
 
 import freemarker.template.Configuration;
@@ -39,6 +41,10 @@ public class CodeGenerator {
         	val = "";
         }
         return val;
+    }
+    
+    public String getModelType() {
+    	return getConfig("model_type").trim();
     }
     
     public String getTemplateDir(){
@@ -160,8 +166,33 @@ public class CodeGenerator {
     }   
 
     public void projectGenerate(){
+    	String modelType = getModelType();
+    	if(modelType == null || "".equals(modelType)) {
+    		throw new NullPointerException("model_type没有配置");
+    	}
     	String modelFile = getModelFile();
         Model model = null;
+        switch (modelType) {
+	        case "1":
+	            model = CDMParser.parse(new File(modelFile), getModelPackage(), getModelExclude());
+	        	break;
+	        case "2":
+	            model = PDMParser.parse(new File(modelFile), getModelPackage(), getModelExclude());
+	        	break;
+	        case "3":
+	        	DatabaseConfig config = new DatabaseConfig();
+	        	config.setDbtype(getConfig("db_type"));
+	        	config.setUrl(getConfig("db_url"));
+	        	config.setDriver(getConfig("db_driver"));
+	        	config.setUsername(getConfig("db_username"));
+	        	config.setPassword(getConfig("db_password"));
+	        	model = DatabaseParser.parse(config, getModelExclude());
+	        	break;
+	        default:
+	        	throw new RuntimeException("暂不支持的model_type");
+        }
+        
+        /**
         if(modelFile.toLowerCase().endsWith(".pdm")){
            model =  PDMParser.parse(new File(modelFile), getModelPackage(), getModelExclude());
         }else if(modelFile.toLowerCase().endsWith(".cdm")){
@@ -169,6 +200,7 @@ public class CodeGenerator {
         }else{
             throw new RuntimeException("暂不支持的文件类型");
         }
+        */
         
         String outFile = null;
         Map params = new HashMap();

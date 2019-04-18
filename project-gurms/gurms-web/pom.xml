@@ -39,6 +39,14 @@
 		     <optional>true</optional>
 		     <scope>true</scope>
 		</dependency>
+		
+		<!-- 打war包时声明springboot中内嵌tomcat的作用范围，运行时无效 -->
+		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-tomcat</artifactId>
+        	<scope>provided</scope>
+    	</dependency>
+
     </dependencies>
     
     <build>

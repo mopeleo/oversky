@@ -3,6 +3,13 @@ import * as tools from '@/utils/tools'
 import PUBDEFINE from '@/utils/pubdefine'
 
 const state = {
+    indexTab:{
+        tabId: 'index',
+        tabName: '首页',
+        routeName: 'about'
+    },
+    openTabs: [],
+    activeTab: '',
     user:undefined
 }
 
@@ -24,10 +31,14 @@ const mutations = {
     LOGIN(state, payload){
         state.user = payload;
         localStorage.setItem(PUBDEFINE.KEY_USER, JSON.stringify(payload));
+        state.openTabs.push(state.indexTab);
+        state.activeTab = state.indexTab.tabId;
     },
     LOGOUT(state){
         localStorage.removeItem(PUBDEFINE.KEY_USER);
         state.user = undefined;
+        state.openTabs = [];
+        state.activeTab = '';
     },
     ADDROUTES(state){
         if(!state.user){
@@ -38,6 +49,68 @@ const mutations = {
             router.options.routes[0].children.push(routes[i]);
         }
         router.addRoutes(router.options.routes);
+    },
+    ADDTAB (state, tabObj) {
+        //就是打开页
+        if(state.activeTab === tabObj.tabId){
+            return;
+        }
+        //存在，是非打开页
+        for(var i = 0; i < state.openTabs.length; i++){
+            if(state.openTabs[i].tabId === tabObj.tabId){
+                state.activeTab = state.openTabs[i].tabId;
+                // router.push({name: state.openTabs[i].routeName});
+                return;
+            }
+        }
+
+        if(state.openTabs.length >= 10){
+            tools.confirmTip("打开的标签过多,将删除之前所有标签,是否继续?", function(){
+                state.openTabs = [];
+                state.openTabs.push(state.indexTab);
+                state.openTabs.push(tabObj);
+                state.activeTab = tabObj.tabId;
+            });
+        }else{
+            state.activeTab = tabObj.tabId;
+            state.openTabs.push(tabObj);
+        }
+    },
+    DELTAB (state, tabId) {
+        let idx = 0;
+        for(var i = 0; i < state.openTabs.length; i++){
+            if(state.openTabs[i].tabId === tabId){
+                break;
+            }
+            idx++;
+        }
+        state.openTabs.splice(idx, 1);
+        if(state.openTabs.length == 0){
+            state.activeTab = state.indexTab.tabId;
+            state.openTabs.push(state.indexTab);
+            router.push({name: state.indexTab.routeName});
+            return;
+        }
+        if(tabId === state.activeTab){
+            let nextTab = null;
+            if(state.openTabs.length == idx){
+                nextTab = state.openTabs[idx-1];
+            }else{
+                nextTab = state.openTabs[idx];
+            }
+            state.activeTab = nextTab.tabId;
+            router.push({name: nextTab.routeName});
+        }
+    },
+    CHANGETAB (state, tabId) {
+        for(var i = 0; i < state.openTabs.length; i++){
+            var m = state.openTabs[i];
+            if(m.tabId === tabId){
+                state.activeTab = m.tabId;
+                router.push({name: m.routeName});
+                break;
+            }
+        }
     }
 }
 

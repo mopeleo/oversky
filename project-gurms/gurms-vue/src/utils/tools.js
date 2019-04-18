@@ -1,4 +1,4 @@
-import { Message } from "element-ui";
+import { Message,MessageBox } from "element-ui";
 import router from '../router';
 
 /**
@@ -36,6 +36,16 @@ export function succTip(msg){
     });
 }
 
+export function confirmTip(msg, callback){
+    MessageBox.confirm(msg, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    }).then(()=>{
+        callback();
+    });
+}
+
 /**
  * 添加动态(菜单)路由
  * @param {*} menuList 菜单列表
@@ -53,7 +63,7 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
             var route = {
                 path: menuList[i].menuurl,
                 name: menuList[i].menuurl,
-                meta:{menuid: menuList[i].menuid, menutype:menuList[i].menutype, accesstype:menuList[i].accesstype},
+                meta:{menuid: menuList[i].menuid, menuname: menuList[i].menuname, menutype: menuList[i].menutype, accesstype: menuList[i].accesstype},
                 component: () => import(`@/views/${url}`)
                 // component: resolve => require([`@/views/${url}`], resolve)
             }

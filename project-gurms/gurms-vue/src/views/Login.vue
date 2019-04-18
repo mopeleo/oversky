@@ -22,7 +22,7 @@
 
 <script>
 import md5 from 'js-md5';
-import * as tools from '@/utils/tools'
+import * as tools from '@/utils/tools';
 
 export default {
     data() {
@@ -40,7 +40,7 @@ export default {
                     required:true, message:'密码不能为空',trigger:'blur'
                 }
             }
-        }
+        };
     },
     methods: {
         onSubmit(formName){
@@ -65,7 +65,7 @@ export default {
                 }else{
                     return false;
                 }
-            })
+            });
         },
         onReset(formName){
             this.$refs[formName].resetFields();

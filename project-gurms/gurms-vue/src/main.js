@@ -20,6 +20,14 @@ if (localStorage.getItem(PUBDEFINE.KEY_USER)) {
 }
 // 登录状态判断
 router.beforeEach((to, from, next) => {
+    //刷新后标签生成标签
+    if(to.meta && to.meta.menuid){
+        store.commit('pub/ADDTAB',{
+            tabId:to.meta.menuid,
+            tabName:to.meta.menuname,
+            routeName:to.name
+        });
+    }
     if(to.meta && to.meta.accesstype && to.meta.accesstype !== '0'){
         // alert(JSON.stringify(to.params));
         // if(to.params){

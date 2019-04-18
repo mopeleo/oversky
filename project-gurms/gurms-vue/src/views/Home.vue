@@ -9,7 +9,7 @@
                 <el-aside width="200px">
                     <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose">
 
-                    <el-menu-item :index="'/home/about'">
+                    <el-menu-item :index="'/home/about'" @click="clickMenu({menuid:'index',menuname:'首页',menuurl:'about'})">
                         <i class="el-icon-menu"></i>
                         <span slot="title">首页</span>
                     </el-menu-item>
@@ -23,7 +23,7 @@
                             <template v-for="(menu2, index2) in menu.subMenus">
                                 <el-submenu v-if='menu2.subMenus' :index="index + '-' + index2" :key="menu2.menuid">
                                     <template slot="title">{{menu2.menuname}}</template>
-                                    <el-menu-item v-for="(menu3) in menu2.subMenus" :index="'/home/'+menu3.menuurl" :key="menu3.menuid">{{menu3.menuname}}</el-menu-item>
+                                    <el-menu-item v-for="(menu3) in menu2.subMenus" :index="'/home/'+menu3.menuurl" :key="menu3.menuid" @click="clickMenu(menu3)">{{menu3.menuname}}</el-menu-item>
                                 </el-submenu>
                                 <el-menu-item v-else :index="'/home/'+menu2.menuurl" :key="menu2.menuid">
                                     {{menu2.menuname}}
@@ -56,14 +56,20 @@
                 </el-aside>
 
                 <el-main>
+                    <menuTab></menuTab>
+                    <keep-alive>
                     <router-view></router-view>
+                    </keep-alive>
                 </el-main>
             </el-container>
         </el-container>
     </div>
 </template>
 <script>
+import menuTab from "@/components/TopTab.vue";
+
 export default {
+    components:{menuTab},
     data() {
         return { user: this.$store.state.pub.user };
     },
@@ -82,12 +88,20 @@ export default {
             //     tools.errTip(msg);
             // });
         },
+        clickMenu: function(menuObj){
+            let tabObj = {
+                tabId: menuObj.menuid,
+                tabName: menuObj.menuname,
+                routeName: menuObj.menuurl
+            };
+            this.$store.commit('pub/ADDTAB', tabObj);
+        },
         //点击行响应
         handleOpen: function(){
-            console.log(1);
+
         },
         handleClose: function(){
-            console.log(2);
+
         }
     }
 }

@@ -1,0 +1,69 @@
+<template>
+    <el-row class="tac">
+        <el-col :span="24">
+            <el-menu router unique-opened :default-active="$route.path" class="el-menu-vertical-demo" theme="dark"
+                @open="handleOpen" @close="handleClose">
+
+            <el-menu-item :index="'/home/about'">
+                <i class="el-icon-menu"></i>
+                <span slot="title">首页</span>
+            </el-menu-item>
+
+            <template v-for="(menu,index) in user.menuTree.subMenus">
+                <el-submenu v-if='menu.subMenus' :index="index + ''" :key="menu.menuid">
+                    <template slot="title">
+                        <i class="el-icon-location"></i>
+                        <span>{{menu.menuname}}</span>
+                    </template>
+                    <template v-for="(menu2, index2) in menu.subMenus">
+                        <el-submenu v-if='menu2.subMenus' :index="index + '-' + index2" :key="menu2.menuid">
+                            <template slot="title">{{menu2.menuname}}</template>
+                            <el-menu-item v-for="(menu3) in menu2.subMenus" :index="'/home/'+menu3.menuurl" :key="menu3.menuid">{{menu3.menuname}}</el-menu-item>
+                        </el-submenu>
+                        <el-menu-item v-else :index="'/home/'+menu2.menuurl" :key="menu2.menuid">
+                            {{menu2.menuname}}
+                        </el-menu-item>
+                    </template>
+                </el-submenu>
+                <el-menu-item v-else :index="index + ''" :key="menu.menuid">
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">{{menu.menuname}}</span>
+                </el-menu-item>
+            </template>
+
+
+            <el-submenu index="99">
+                <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span>测试菜单</span>
+                </template>
+                <el-menu-item-group>
+                    <template slot="title">分组一</template>
+                    <el-menu-item :index="'/home/sysuser/list'">选项1</el-menu-item>
+                    <el-menu-item :index="'/home/sysrole/list'">选项2</el-menu-item>
+                </el-menu-item-group>
+            </el-submenu>
+
+
+
+
+            </el-menu>
+        </el-col>
+    </el-row>
+</template>
+<script>
+export default {
+    data() {
+        return { user: this.$store.state.pub.user };
+    },
+    methods:{
+        //点击行响应
+        handleOpen: function(){
+            console.log(1);
+        },
+        handleClose: function(){
+            console.log(2);
+        }
+    }
+}
+</script>

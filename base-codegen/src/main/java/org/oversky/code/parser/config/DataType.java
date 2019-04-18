@@ -1,12 +1,26 @@
-package org.oversky.code.parser;
+package org.oversky.code.parser.config;
 
 public class DataType {
-    public final static String INT = "int";
+	public final static String CODE_SEP = "_";
+
+	public final static String INT = "int";
     public final static String LONG = "long";
     public final static String DOUBLE = "double";
     public final static String STRING = "string";
 
     public static enum SourceType{CDM, PDM_ORACLE, PDM_MYSQL};
+    
+    public static SourceType getSourceType(String dbms) {
+		DataType.SourceType type = null;
+		if(dbms.startsWith("ORACLE")){
+		    type = DataType.SourceType.PDM_ORACLE;
+		}else if(dbms.startsWith("MYSQL")){
+            type = DataType.SourceType.PDM_MYSQL;
+		}else {
+			throw new RuntimeException("暂不支持的数据库类型:" + dbms);
+		}
+		return type;
+    }
     
     public static String convertType(String datatype, SourceType sourceType){
         switch (sourceType){

@@ -15,10 +15,10 @@ import org.dom4j.io.SAXReader;
 import org.oversky.code.model.Column;
 import org.oversky.code.model.Model;
 import org.oversky.code.model.Table;
+import org.oversky.code.parser.config.DataType;
 
 public class CDMParser {
 
-    private static final String CODE_SEP = "_";
 	private static final String ATTR_ID = "Id";
 	private static final String ATTR_REF = "Ref";
     private static final String ELEMENT_NAME = "Name";
@@ -111,8 +111,8 @@ public class CDMParser {
                 String origincode = elementCode.getTextTrim().toLowerCase();
                 column.setOriginCode(origincode);
                 String code = "";
-                if(origincode.indexOf(CODE_SEP) > 0){
-                    String[] parts = origincode.split(CODE_SEP);
+                if(origincode.indexOf(DataType.CODE_SEP) > 0){
+                    String[] parts = origincode.split(DataType.CODE_SEP);
                     code = parts[0];
                     for(int p = 1; p < parts.length; p++){
                         code += parts[p].substring(0, 1).toUpperCase() + parts[p].substring(1);
@@ -191,8 +191,8 @@ public class CDMParser {
 				
 				table.setOriginCode(origincode);
                 String code = "";
-                if(origincode.indexOf(CODE_SEP) > 0){
-                    String[] parts = origincode.split(CODE_SEP);
+                if(origincode.indexOf(DataType.CODE_SEP) > 0){
+                    String[] parts = origincode.split(DataType.CODE_SEP);
                     table.setGroup(parts[0]);
                     for(int p = 0; p < parts.length; p++){
                         code += parts[p].substring(0, 1).toUpperCase() + parts[p].substring(1);
