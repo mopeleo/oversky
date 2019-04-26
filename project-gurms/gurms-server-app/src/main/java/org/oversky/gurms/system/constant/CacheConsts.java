@@ -10,9 +10,9 @@ public final class CacheConsts {
 	private static SysParamDao paramDao = SpringBeanUtils.getBean(SysParamDao.class);
 
 	public final static String DEFUALT_UNIONCODE = "0000";   	//默认的unioncode
-	public final static Integer PK_SYS_ROOTUSER = 0;			//超级用户
-	public final static Integer PK_SYS_MODE = 1;				//模式 1-单用户，2-多法人
-	public final static Integer PK_PASSWD_ERROR_TIMES = 2;		//密码错误次数
+	public final static Integer PK_SYS_MODE = 1000;				//模式 1-单用户，2-多法人
+	public final static Integer PK_SYS_ROOTUSER = 1001;			//超级用户
+	public final static Integer PK_PASSWD_ERROR_TIMES = 1002;	//密码错误次数
 	
 	public static String getParam(String unioncode, Integer paramid) {
 		SysParam value = paramDao.getById(unioncode, paramid);

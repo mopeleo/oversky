@@ -21,3 +21,5 @@ INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, a
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1233', '机构删除', 'sysorg/delete', '1230', 2, 1, 1, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1240', '权限菜单', 'sysmenu/list', '1200', 1, 1, 1, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2000', '应用', '', null, 0, 1, 0, null);
+
+commit;

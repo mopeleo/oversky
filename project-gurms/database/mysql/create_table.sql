@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/4/26 21:28:25                           */
+/* Created on:     2019/4/27 0:41:12                            */
 /*==============================================================*/
 
 
@@ -201,7 +201,7 @@ create table sys_param_info
    valuelength          numeric(4,0) default 0 comment '输入值长度,0-不检查长度，其他值效验长度',
    texttitle            varchar(32) comment '描述头',
    texttail             varchar(32) comment '描述尾',
-   dictcode             numeric(4,0) default 0 comment '字典代码，对应的值列表为已知数据字典，优先于valuelist',
+   dictcode             numeric(4,0) comment '字典代码，对应的值列表为已知数据字典，优先于valuelist',
    valuelist            varchar(64) comment '控件显示的值列表，如“0|否;1|是”',
    primary key (paramid)
 );
@@ -220,7 +220,7 @@ create table sys_role
    roletype             numeric(1,0) not null default 0 comment '角色类型，0-公共，1-私有',
    startdate            char(8) not null comment '角色生效日期',
    enddate              char(8) not null comment '角色失效日期',
-   creator              bigint not null default 0 comment '创建人',
+   creator              bigint not null comment '创建人',
    primary key (roleid)
 );
 
@@ -292,14 +292,14 @@ create table sys_user_actlog
 (
    logid                bigint not null auto_increment comment '[identity]',
    unioncode            char(4) not null default '0000',
-   userid               bigint not null,
-   menuid               varchar(8),
-   requrl               varchar(32),
-   reqmethod            varchar(32),
-   reqdata              varchar(256),
-   actdate              char(8) not null,
-   acttime              char(6) not null,
-   accesstype           numeric(1,0) not null default 0,
+   userid               bigint not null comment '用户ID',
+   menuid               varchar(8) comment '菜单ID',
+   requrl               varchar(32) comment '请求URL',
+   reqmethod            varchar(32) comment '请求方法',
+   reqdata              varchar(256) comment '请求数据，json',
+   actdate              char(8) not null comment '行为日期',
+   acttime              char(6) not null comment '行为时间',
+   accesstype           numeric(1,0) not null default 0 comment '登录方式（0-pc，1-手机）',
    ipaddress            varchar(16),
    primary key (logid)
 );
@@ -336,7 +336,7 @@ create table sys_user_login
    logintime            char(6) comment '登录时间',
    loginpasswd          char(32) not null comment '登录密码',
    loginip              varchar(16) comment '登录IP',
-   logintype            numeric(1,0) not null default 0 comment '登录方式（1-pc，2-手机）',
+   logintype            numeric(1,0) not null default 0 comment '登录方式（0-pc，1-手机）',
    loginresult          numeric(1,0) not null default 0 comment '登录是否成功 0-失败，1-成功',
    summary              varchar(32) comment '说明',
    primary key (logid)
@@ -348,7 +348,7 @@ create table sys_user_login
 create table sys_user_role
 (
    userid               bigint not null,
-   roleid               numeric(8,0) not null default 0,
+   roleid               numeric(8,0) not null,
    primary key (userid, roleid)
 );
 

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* Created on:     2019/4/26 21:30:47                           */
+/* Created on:     2019/4/27 0:42:37                            */
 /*==============================================================*/
 
 
@@ -381,7 +381,7 @@ create table sys_param_info
    valuelength          NUMBER(4)            default 0,
    texttitle            VARCHAR2(32),
    texttail             VARCHAR2(32),
-   dictcode             NUMBER(4)            default 0,
+   dictcode             NUMBER(4),
    valuelist            VARCHAR2(64),
    constraint PK_SYS_PARAM_INFO primary key (paramid)
 );
@@ -431,7 +431,7 @@ create table sys_role
    roletype             NUMBER(1)            default 0 not null,
    startdate            CHAR(8)              not null,
    enddate              CHAR(8)              not null,
-   creator              INTEGER              default 0 not null,
+   creator              INTEGER              not null,
    constraint PK_SYS_ROLE primary key (roleid)
 );
 
@@ -631,6 +631,30 @@ comment on table sys_user_actlog is
 comment on column sys_user_actlog.logid is
 '[identity]';
 
+comment on column sys_user_actlog.userid is
+'用户ID';
+
+comment on column sys_user_actlog.menuid is
+'菜单ID';
+
+comment on column sys_user_actlog.requrl is
+'请求URL';
+
+comment on column sys_user_actlog.reqmethod is
+'请求方法';
+
+comment on column sys_user_actlog.reqdata is
+'请求数据，json';
+
+comment on column sys_user_actlog.actdate is
+'行为日期';
+
+comment on column sys_user_actlog.acttime is
+'行为时间';
+
+comment on column sys_user_actlog.accesstype is
+'登录方式（0-pc，1-手机）';
+
 /*==============================================================*/
 /* Table: sys_user_info                                         */
 /*==============================================================*/
@@ -713,7 +737,7 @@ comment on column sys_user_login.loginip is
 '登录IP';
 
 comment on column sys_user_login.logintype is
-'登录方式（1-pc，2-手机）';
+'登录方式（0-pc，1-手机）';
 
 comment on column sys_user_login.loginresult is
 '登录是否成功 0-失败，1-成功';
@@ -727,7 +751,7 @@ comment on column sys_user_login.summary is
 create table sys_user_role 
 (
    userid               INTEGER              not null,
-   roleid               NUMBER(8)            default 0 not null,
+   roleid               NUMBER(8)            not null,
    constraint PK_SYS_USER_ROLE primary key (userid, roleid)
 );
 
