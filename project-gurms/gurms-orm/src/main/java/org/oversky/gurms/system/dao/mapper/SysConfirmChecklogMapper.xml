@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.system.dao.SysConfirmChecklogDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysConfirmChecklog">
+        <id column="logid" jdbcType="DECIMAL" property="logid" />
+        <result column="datalog" jdbcType="DECIMAL" property="datalog" />
+        <result column="checker" jdbcType="DECIMAL" property="checker" />
+        <result column="checklevel" jdbcType="INTEGER" property="checklevel" />
+        <result column="checkdate" jdbcType="VARCHAR" property="checkdate" />
+        <result column="checktime" jdbcType="VARCHAR" property="checktime" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysConfirmChecklog" useGeneratedKeys="true" keyProperty="logid">
+        insert into sys_confirm_checklog (datalog, checker, checklevel, checkdate, checktime, status, summary)
+        values (#{datalog, jdbcType=DECIMAL}, #{checker, jdbcType=DECIMAL}, #{checklevel, jdbcType=INTEGER}, #{checkdate, jdbcType=VARCHAR}, #{checktime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{summary, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
+		insert into sys_confirm_checklog (datalog, checker, checklevel, checkdate, checktime, status, summary)
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+        (#{item.datalog, jdbcType=DECIMAL}, #{item.checker, jdbcType=DECIMAL}, #{item.checklevel, jdbcType=INTEGER}, #{item.checkdate, jdbcType=VARCHAR}, #{item.checktime, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.summary, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysConfirmChecklog" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_confirm_checklog 
+          <include refid="where_all_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysConfirmChecklog">
+        delete from sys_confirm_checklog 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysConfirmChecklog">
+        select count(1) from sys_confirm_checklog <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_confirm_checklog
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_confirm_checklog
+         where logid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from sys_confirm_checklog
+         where logid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysConfirmChecklog">
+        update sys_confirm_checklog set 
+               datalog = #{datalog, jdbcType=DECIMAL}, 
+               checker = #{checker, jdbcType=DECIMAL}, 
+               checklevel = #{checklevel, jdbcType=INTEGER}, 
+               checkdate = #{checkdate, jdbcType=VARCHAR}, 
+               checktime = #{checktime, jdbcType=VARCHAR}, 
+               status = #{status, jdbcType=INTEGER}, 
+               summary = #{summary, jdbcType=VARCHAR}
+		where logid = #{logid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysConfirmChecklog">
+		update sys_confirm_checklog
+		<set>
+		    <if test="datalog != null">
+				datalog = #{datalog, jdbcType=DECIMAL},
+		    </if>
+		    <if test="checker != null">
+				checker = #{checker, jdbcType=DECIMAL},
+		    </if>
+		    <if test="checklevel != null">
+				checklevel = #{checklevel, jdbcType=INTEGER},
+		    </if>
+		    <if test="checkdate != null">
+				checkdate = #{checkdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="checktime != null">
+				checktime = #{checktime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="status != null">
+				status = #{status, jdbcType=INTEGER},
+		    </if>
+		    <if test="summary != null">
+				summary = #{summary, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where logid = #{logid, jdbcType=DECIMAL}
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update sys_confirm_checklog
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="datalog = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.datalog != null">
+	                    when logid = #{item.logid} then #{item.datalog, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.datalog == null">
+	                    when logid = #{item.logid} then datalog
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="checker = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.checker != null">
+	                    when logid = #{item.logid} then #{item.checker, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.checker == null">
+	                    when logid = #{item.logid} then checker
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="checklevel = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.checklevel != null">
+	                    when logid = #{item.logid} then #{item.checklevel, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.checklevel == null">
+	                    when logid = #{item.logid} then checklevel
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="checkdate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.checkdate != null">
+	                    when logid = #{item.logid} then #{item.checkdate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.checkdate == null">
+	                    when logid = #{item.logid} then checkdate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="checktime = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.checktime != null">
+	                    when logid = #{item.logid} then #{item.checktime, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.checktime == null">
+	                    when logid = #{item.logid} then checktime
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="status = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.status != null">
+	                    when logid = #{item.logid} then #{item.status, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.status == null">
+	                    when logid = #{item.logid} then status
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="summary = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.summary != null">
+	                    when logid = #{item.logid} then #{item.summary, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.summary == null">
+	                    when logid = #{item.logid} then summary
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where logid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.logid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from sys_confirm_checklog
+	     where logid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}logid, ${tab}datalog, ${tab}checker, ${tab}checklevel, ${tab}checkdate, ${tab}checktime, ${tab}status, ${tab}summary
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="logid != null">
+				and logid = #{logid, jdbcType=DECIMAL}
+			</if>
+			<if test="datalog != null">
+				and datalog = #{datalog, jdbcType=DECIMAL}
+			</if>
+			<if test="checker != null">
+				and checker = #{checker, jdbcType=DECIMAL}
+			</if>
+			<if test="checklevel != null">
+				and checklevel = #{checklevel, jdbcType=INTEGER}
+			</if>
+			<if test="checkdate != null and checkdate != ''">
+				and checkdate = #{checkdate, jdbcType=VARCHAR}
+			</if>
+			<if test="checktime != null and checktime != ''">
+				and checktime = #{checktime, jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and status = #{status, jdbcType=INTEGER}
+			</if>
+			<if test="summary != null and summary != ''">
+				and summary = #{summary, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+</mapper>

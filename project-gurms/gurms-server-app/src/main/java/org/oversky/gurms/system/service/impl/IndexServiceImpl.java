@@ -9,13 +9,12 @@ import org.oversky.base.util.DateUtils;
 import org.oversky.base.util.EncryptUtils;
 import org.oversky.gurms.system.constant.CacheConsts;
 import org.oversky.gurms.system.constant.DictConsts;
-import org.oversky.gurms.system.dao.SysLogLoginDao;
-import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.dao.SysUserDao;
+import org.oversky.gurms.system.dao.SysUserLoginDao;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
-import org.oversky.gurms.system.entity.SysLogLogin;
 import org.oversky.gurms.system.entity.SysUser;
+import org.oversky.gurms.system.entity.SysUserLogin;
 import org.oversky.gurms.system.service.IndexService;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.slf4j.Logger;
@@ -30,13 +29,10 @@ public class IndexServiceImpl implements IndexService{
 	private static final Logger log = LoggerFactory.getLogger(IndexServiceImpl.class);
 	
 	@Autowired
-	private SysParamDao sysParamDao;
-	
-	@Autowired
 	private SysUserDao sysUserDao;
 
 	@Autowired
-	private SysLogLoginDao sysLogLoginDao;
+	private SysUserLoginDao sysUserLoginDao;
 
 	@Autowired
 	private SysMenuService menuService;
@@ -111,12 +107,12 @@ public class IndexServiceImpl implements IndexService{
 	}
 	
 	private void writeLoginLog(UserLoginReq user) {
-		SysLogLogin log = new SysLogLogin();
+		SysUserLogin log = new SysUserLogin();
 		log.setLogindate(DateUtils.getNowDate());
 		log.setLogintime(DateUtils.getNowTime());
 		log.setLoginpasswd(user.getPasswd());
 		log.setLogintype(user.getLogintype());
-		sysLogLoginDao.insert(log);
+		sysUserLoginDao.insert(log);
 	}
 	
 	private void processPasswd(SysUser user, boolean loginSuccess) {

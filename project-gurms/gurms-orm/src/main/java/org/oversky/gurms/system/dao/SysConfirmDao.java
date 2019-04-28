@@ -1,6 +1,6 @@
 package org.oversky.gurms.system.dao;
 
-import org.oversky.gurms.system.entity.SysOrg;
+import org.oversky.gurms.system.entity.SysConfirm;
 import java.util.List;
 
 import org.springframework.cache.annotation.CacheConfig;
@@ -8,50 +8,44 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 
-@CacheConfig(cacheNames = "SysOrg")
-public interface SysOrgDao{
+@CacheConfig(cacheNames = "SysConfirm")
+public interface SysConfirmDao{
 
-	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysOrg).buildEntityKey(#p0)", unless = "#result == null")
-    SysOrg getById(Integer orgid);
+	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysConfirm).buildEntityKey(#p0,#p1)", unless = "#result == null")
+    SysConfirm getById(String unioncode, String tablename);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
-		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysOrg).buildEntityKey(#p0)", condition = "#result == 1")
+		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysConfirm).buildEntityKey(#p0,#p1)", condition = "#result == 1")
 	})
-    int deleteById(Integer orgid);
+    int deleteById(String unioncode, String tablename);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
 	})
-    int updateById(SysOrg entity);
+    int updateById(SysConfirm entity);
 	
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
 	})
-    int dynamicUpdateById(SysOrg entity);
+    int dynamicUpdateById(SysConfirm entity);
     
-    int count(SysOrg where);
+    int count(SysConfirm where);
     
 	@CacheEvict(key = "'selectAll'", condition = "#result == 1")
-    int insert(SysOrg entity);
+    int insert(SysConfirm entity);
 
 	@CacheEvict(allEntries=true, condition = "#result > 0")
-    int deleteWhere(SysOrg where);
+    int deleteWhere(SysConfirm where);
 
-    List<SysOrg> selectWhere(SysOrg where);
+    List<SysConfirm> selectWhere(SysConfirm where);
 
 	@Cacheable(key = "'selectAll'", unless = "#result == null")
-    List<SysOrg> selectAll();
+    List<SysConfirm> selectAll();
     
-	@CacheEvict(allEntries=true, condition = "#result > 0")
-	int updateBatch(List<SysOrg> entityList);
-	
-	@CacheEvict(allEntries=true, condition = "#result > 0")
-	int deleteBatch(Integer[] ids);
-	
 	@CacheEvict(key = "'selectAll'", condition = "#result > 0")
-	int insertBatch(List<SysOrg> entityList);
+	int insertBatch(List<SysConfirm> entityList);
 	
 }

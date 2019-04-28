@@ -1,20 +1,21 @@
-package org.oversky.gurms.system.entity;
+package org.oversky.gurms.system.dto.request;
 
-import org.oversky.base.entity.BaseEntity;
+import org.oversky.base.service.BaseReqDto;
 
-public class SysParamExt extends BaseEntity{
+public class SysParamInfoReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer paramid;    //参数ID
 	private String paramname;    //参数名称
+	private String paramgroup;    //所属分组，字典
+	private Integer edittype;    //0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改
+	private String initvalue;    //初始值
+	private Integer valuelength;    //输入值长度,0-不检查长度，其他值效验长度
 	private String texttitle;    //描述头
 	private String texttail;    //描述尾
-	private Integer distype;    //0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改
 	private Integer dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
 	private String valuelist;    //控件显示的值列表，如“0|否;1|是”
-	private String initvalue;    //初始值
-	private Integer valuelength;    //输入值长度
 
 	public Integer getParamid() {
 		return this.paramid;
@@ -32,44 +33,20 @@ public class SysParamExt extends BaseEntity{
 		this.paramname = paramname;
 	}
 
-	public String getTexttitle() {
-		return this.texttitle;
+	public String getParamgroup() {
+		return this.paramgroup;
 	}
 
-	public void setTexttitle(String texttitle) {
-		this.texttitle = texttitle;
+	public void setParamgroup(String paramgroup) {
+		this.paramgroup = paramgroup;
 	}
 
-	public String getTexttail() {
-		return this.texttail;
+	public Integer getEdittype() {
+		return this.edittype;
 	}
 
-	public void setTexttail(String texttail) {
-		this.texttail = texttail;
-	}
-
-	public Integer getDistype() {
-		return this.distype;
-	}
-
-	public void setDistype(Integer distype) {
-		this.distype = distype;
-	}
-
-	public Integer getDictcode() {
-		return this.dictcode;
-	}
-
-	public void setDictcode(Integer dictcode) {
-		this.dictcode = dictcode;
-	}
-
-	public String getValuelist() {
-		return this.valuelist;
-	}
-
-	public void setValuelist(String valuelist) {
-		this.valuelist = valuelist;
+	public void setEdittype(Integer edittype) {
+		this.edittype = edittype;
 	}
 
 	public String getInitvalue() {
@@ -88,21 +65,40 @@ public class SysParamExt extends BaseEntity{
 		this.valuelength = valuelength;
 	}
 
-	public String buildEntityKey(){
-		StringBuilder build = new StringBuilder("SysParamExt");
-		return build.append("#paramid:").append(this.paramid).toString();
+	public String getTexttitle() {
+		return this.texttitle;
 	}
 
-    public static String buildEntityKey(Integer paramid){
-        StringBuilder build = new StringBuilder("SysParamExt");
-        return build.append("#paramid:").append(paramid).toString();
-    }
-    
-    public void copyPrimaryKey(SysParamExt entity){
-		this.paramid = entity.getParamid();
-    }
+	public void setTexttitle(String texttitle) {
+		this.texttitle = texttitle;
+	}
 
-	@Override
+	public String getTexttail() {
+		return this.texttail;
+	}
+
+	public void setTexttail(String texttail) {
+		this.texttail = texttail;
+	}
+
+	public Integer getDictcode() {
+		return this.dictcode;
+	}
+
+	public void setDictcode(Integer dictcode) {
+		this.dictcode = dictcode;
+	}
+
+	public String getValuelist() {
+		return this.valuelist;
+	}
+
+	public void setValuelist(String valuelist) {
+		this.valuelist = valuelist;
+	}
+
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -110,13 +106,14 @@ public class SysParamExt extends BaseEntity{
         sb.append("Hash = ").append(hashCode());
 		sb.append(", paramid=").append(paramid);
 		sb.append(", paramname=").append(paramname);
-		sb.append(", texttitle=").append(texttitle);
-		sb.append(", texttail=").append(texttail);
-		sb.append(", distype=").append(distype);
-		sb.append(", dictcode=").append(dictcode);
-		sb.append(", valuelist=").append(valuelist);
+		sb.append(", paramgroup=").append(paramgroup);
+		sb.append(", edittype=").append(edittype);
 		sb.append(", initvalue=").append(initvalue);
 		sb.append(", valuelength=").append(valuelength);
+		sb.append(", texttitle=").append(texttitle);
+		sb.append(", texttail=").append(texttail);
+		sb.append(", dictcode=").append(dictcode);
+		sb.append(", valuelist=").append(valuelist);
         sb.append("]");
         return sb.toString();
 	}

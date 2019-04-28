@@ -109,7 +109,7 @@ public class SysUserServiceTest {
 			userDto.setLoginpasswd("1");
 			userDto.setLogintime("150000");
 			userDto.setMobileno("13554600998");
-			userDto.setOrgid(10000L);
+			userDto.setOrgid(10000);
 			userDto.setPasswdvaliddate("20190909");
 			userDto.setSalt("123");
 			userDto.setStatus(1);

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.oversky.gurms.system.dao.SysLogLoginDao">
-    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysLogLogin">
+<mapper namespace="org.oversky.gurms.system.dao.SysUserLoginDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysUserLogin">
         <id column="logid" jdbcType="DECIMAL" property="logid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
         <result column="userid" jdbcType="DECIMAL" property="userid" />
         <result column="logindate" jdbcType="VARCHAR" property="logindate" />
         <result column="logintime" jdbcType="VARCHAR" property="logintime" />
@@ -10,67 +11,73 @@
         <result column="loginip" jdbcType="VARCHAR" property="loginip" />
         <result column="logintype" jdbcType="INTEGER" property="logintype" />
         <result column="loginresult" jdbcType="INTEGER" property="loginresult" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysLogLogin" useGeneratedKeys="true" keyProperty="logid">
-        insert into sys_log_login (userid, logindate, logintime, loginpasswd, loginip, logintype, loginresult)
-        values (#{userid, jdbcType=DECIMAL}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{loginip, jdbcType=VARCHAR}, #{logintype, jdbcType=INTEGER}, #{loginresult, jdbcType=INTEGER})
+    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserLogin" useGeneratedKeys="true" keyProperty="logid">
+        insert into sys_user_login (unioncode, userid, logindate, logintime, loginpasswd, loginip, logintype, loginresult, summary)
+        values (#{unioncode, jdbcType=VARCHAR}, #{userid, jdbcType=DECIMAL}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{loginip, jdbcType=VARCHAR}, #{logintype, jdbcType=INTEGER}, #{loginresult, jdbcType=INTEGER}, #{summary, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
-		insert into sys_log_login (userid, logindate, logintime, loginpasswd, loginip, logintype, loginresult)
+		insert into sys_user_login (unioncode, userid, logindate, logintime, loginpasswd, loginip, logintype, loginresult, summary)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.userid, jdbcType=DECIMAL}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.loginip, jdbcType=VARCHAR}, #{item.logintype, jdbcType=INTEGER}, #{item.loginresult, jdbcType=INTEGER})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.userid, jdbcType=DECIMAL}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.loginip, jdbcType=VARCHAR}, #{item.logintype, jdbcType=INTEGER}, #{item.loginresult, jdbcType=INTEGER}, #{item.summary, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
-    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysLogLogin" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUserLogin" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_log_login 
+          from sys_user_login 
           <include refid="where_all_list" />
     </select>
 
-    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
-        delete from sys_log_login 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysUserLogin">
+        delete from sys_user_login 
           <include refid="where_all_list" />
     </delete>
 
-	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
-        select count(1) from sys_log_login <include refid="where_all_list" />
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysUserLogin">
+        select count(1) from sys_user_login <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_log_login
+          from sys_user_login
     </select>
 
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_log_login
+          from sys_user_login
          where logid = #{param1}
     </select>
 
     <delete id="deleteById">
-        delete from sys_log_login
+        delete from sys_user_login
          where logid = #{param1}
     </delete>
   
-    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
-        update sys_log_login set 
+    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysUserLogin">
+        update sys_user_login set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
                userid = #{userid, jdbcType=DECIMAL}, 
                logindate = #{logindate, jdbcType=VARCHAR}, 
                logintime = #{logintime, jdbcType=VARCHAR}, 
                loginpasswd = #{loginpasswd, jdbcType=VARCHAR}, 
                loginip = #{loginip, jdbcType=VARCHAR}, 
                logintype = #{logintype, jdbcType=INTEGER}, 
-               loginresult = #{loginresult, jdbcType=INTEGER}
+               loginresult = #{loginresult, jdbcType=INTEGER}, 
+               summary = #{summary, jdbcType=VARCHAR}
 		where logid = #{logid, jdbcType=DECIMAL}
     </update>
 
-	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysLogLogin">
-		update sys_log_login
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysUserLogin">
+		update sys_user_login
 		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
 		    <if test="userid != null">
 				userid = #{userid, jdbcType=DECIMAL},
 		    </if>
@@ -92,13 +99,26 @@
 		    <if test="loginresult != null">
 				loginresult = #{loginresult, jdbcType=INTEGER},
 		    </if>
+		    <if test="summary != null">
+				summary = #{summary, jdbcType=VARCHAR},
+		    </if>
 		</set>
 		where logid = #{logid, jdbcType=DECIMAL}
 	</update>
 
 	<update id="updateBatch" parameterType="java.util.List">
-	    update sys_log_login
+	    update sys_user_login
 	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when logid = #{item.logid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when logid = #{item.logid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
 	        <trim prefix="userid = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.userid != null">
@@ -169,6 +189,16 @@
 	                </if>
 	            </foreach>
 	        </trim>
+	        <trim prefix="summary = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.summary != null">
+	                    when logid = #{item.logid} then #{item.summary, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.summary == null">
+	                    when logid = #{item.logid} then summary
+	                </if>
+	            </foreach>
+	        </trim>
 	    </trim>
 	    where logid in
 	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -177,7 +207,7 @@
 	</update>
 	
 	<delete id="deleteBatch">
-	    delete from sys_log_login
+	    delete from sys_user_login
 	     where logid in
 	    <foreach collection="array" item="id" separator="," open="(" close=")">
 	        #{id}
@@ -185,13 +215,16 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}logid, ${tab}userid, ${tab}logindate, ${tab}logintime, ${tab}loginpasswd, ${tab}loginip, ${tab}logintype, ${tab}loginresult
+        ${tab}logid, ${tab}unioncode, ${tab}userid, ${tab}logindate, ${tab}logintime, ${tab}loginpasswd, ${tab}loginip, ${tab}logintype, ${tab}loginresult, ${tab}summary
 	</sql>
 	
 	<sql id="where_all_list">
 		<where>
 			<if test="logid != null">
 				and logid = #{logid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
 			<if test="userid != null">
 				and userid = #{userid, jdbcType=DECIMAL}
@@ -213,6 +246,9 @@
 			</if>
 			<if test="loginresult != null">
 				and loginresult = #{loginresult, jdbcType=INTEGER}
+			</if>
+			<if test="summary != null and summary != ''">
+				and summary = #{summary, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

@@ -7,11 +7,12 @@ public class SysUserInfo extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private Long userid;    //用户ID,内部自动生成
-	private String unioncode;    //unioncode
 	private String sex;    //性别（0-女，1-男）
 	private String birthday;    //生日
 	private String address;    //联系地址
 	private String postcode;    //邮政编码
+	private String phone;    //备用电话
+	private String nationality;    //国籍
 	private String province;    //所在省份
 	private String city;    //所在城市
 	private String education;    //教育程度
@@ -22,14 +23,6 @@ public class SysUserInfo extends BaseEntity{
 
 	public void setUserid(Long userid) {
 		this.userid = userid;
-	}
-
-	public String getUnioncode() {
-		return this.unioncode;
-	}
-
-	public void setUnioncode(String unioncode) {
-		this.unioncode = unioncode;
 	}
 
 	public String getSex() {
@@ -62,6 +55,22 @@ public class SysUserInfo extends BaseEntity{
 
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
+	}
+
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getNationality() {
+		return this.nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
 	}
 
 	public String getProvince() {
@@ -109,11 +118,12 @@ public class SysUserInfo extends BaseEntity{
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
 		sb.append(", userid=").append(userid);
-		sb.append(", unioncode=").append(unioncode);
 		sb.append(", sex=").append(sex);
 		sb.append(", birthday=").append(birthday);
 		sb.append(", address=").append(address);
 		sb.append(", postcode=").append(postcode);
+		sb.append(", phone=").append(phone);
+		sb.append(", nationality=").append(nationality);
 		sb.append(", province=").append(province);
 		sb.append(", city=").append(city);
 		sb.append(", education=").append(education);

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.system.dao.SysSnoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysSno">
+        <id column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <id column="noid" jdbcType="INTEGER" property="noid" />
+        <result column="noname" jdbcType="VARCHAR" property="noname" />
+        <result column="initvalue" jdbcType="DECIMAL" property="initvalue" />
+        <result column="nextvalue" jdbcType="DECIMAL" property="nextvalue" />
+        <result column="fixedflag" jdbcType="INTEGER" property="fixedflag" />
+        <result column="fixedlength" jdbcType="INTEGER" property="fixedlength" />
+        <result column="fillchar" jdbcType="VARCHAR" property="fillchar" />
+        <result column="notype" jdbcType="INTEGER" property="notype" />
+        <result column="nodate" jdbcType="VARCHAR" property="nodate" />
+        <result column="prefix" jdbcType="VARCHAR" property="prefix" />
+        <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysSno">
+        insert into sys_sno (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{unioncode, jdbcType=VARCHAR}, #{noid, jdbcType=INTEGER}, #{noname, jdbcType=VARCHAR}, #{initvalue, jdbcType=DECIMAL}, #{nextvalue, jdbcType=DECIMAL}, #{fixedflag, jdbcType=INTEGER}, #{fixedlength, jdbcType=INTEGER}, #{fillchar, jdbcType=VARCHAR}, #{notype, jdbcType=INTEGER}, #{nodate, jdbcType=VARCHAR}, #{prefix, jdbcType=VARCHAR}, #{suffix, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into sys_sno (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.unioncode, jdbcType=VARCHAR}, #{item.noid, jdbcType=INTEGER}, #{item.noname, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=DECIMAL}, #{item.nextvalue, jdbcType=DECIMAL}, #{item.fixedflag, jdbcType=INTEGER}, #{item.fixedlength, jdbcType=INTEGER}, #{item.fillchar, jdbcType=VARCHAR}, #{item.notype, jdbcType=INTEGER}, #{item.nodate, jdbcType=VARCHAR}, #{item.prefix, jdbcType=VARCHAR}, #{item.suffix, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysSno" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_sno 
+          <include refid="where_all_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysSno">
+        delete from sys_sno 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysSno">
+        select count(1) from sys_sno <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_sno
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_sno
+         where unioncode = #{param1} and noid = #{param2}
+    </select>
+
+    <delete id="deleteById">
+        delete from sys_sno
+         where unioncode = #{param1} and noid = #{param2}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysSno">
+        update sys_sno set 
+               noname = #{noname, jdbcType=VARCHAR}, 
+               initvalue = #{initvalue, jdbcType=DECIMAL}, 
+               nextvalue = #{nextvalue, jdbcType=DECIMAL}, 
+               fixedflag = #{fixedflag, jdbcType=INTEGER}, 
+               fixedlength = #{fixedlength, jdbcType=INTEGER}, 
+               fillchar = #{fillchar, jdbcType=VARCHAR}, 
+               notype = #{notype, jdbcType=INTEGER}, 
+               nodate = #{nodate, jdbcType=VARCHAR}, 
+               prefix = #{prefix, jdbcType=VARCHAR}, 
+               suffix = #{suffix, jdbcType=VARCHAR}
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and noid = #{noid, jdbcType=INTEGER}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysSno">
+		update sys_sno
+		<set>
+		    <if test="noname != null">
+				noname = #{noname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="initvalue != null">
+				initvalue = #{initvalue, jdbcType=DECIMAL},
+		    </if>
+		    <if test="nextvalue != null">
+				nextvalue = #{nextvalue, jdbcType=DECIMAL},
+		    </if>
+		    <if test="fixedflag != null">
+				fixedflag = #{fixedflag, jdbcType=INTEGER},
+		    </if>
+		    <if test="fixedlength != null">
+				fixedlength = #{fixedlength, jdbcType=INTEGER},
+		    </if>
+		    <if test="fillchar != null">
+				fillchar = #{fillchar, jdbcType=VARCHAR},
+		    </if>
+		    <if test="notype != null">
+				notype = #{notype, jdbcType=INTEGER},
+		    </if>
+		    <if test="nodate != null">
+				nodate = #{nodate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="prefix != null">
+				prefix = #{prefix, jdbcType=VARCHAR},
+		    </if>
+		    <if test="suffix != null">
+				suffix = #{suffix, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where unioncode = #{unioncode, jdbcType=VARCHAR} and noid = #{noid, jdbcType=INTEGER}
+	</update>
+
+
+	<sql id="column_list">
+        ${tab}unioncode, ${tab}noid, ${tab}noname, ${tab}initvalue, ${tab}nextvalue, ${tab}fixedflag, ${tab}fixedlength, ${tab}fillchar, ${tab}notype, ${tab}nodate, ${tab}prefix, ${tab}suffix
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="noid != null">
+				and noid = #{noid, jdbcType=INTEGER}
+			</if>
+			<if test="noname != null and noname != ''">
+				and noname = #{noname, jdbcType=VARCHAR}
+			</if>
+			<if test="initvalue != null">
+				and initvalue = #{initvalue, jdbcType=DECIMAL}
+			</if>
+			<if test="nextvalue != null">
+				and nextvalue = #{nextvalue, jdbcType=DECIMAL}
+			</if>
+			<if test="fixedflag != null">
+				and fixedflag = #{fixedflag, jdbcType=INTEGER}
+			</if>
+			<if test="fixedlength != null">
+				and fixedlength = #{fixedlength, jdbcType=INTEGER}
+			</if>
+			<if test="fillchar != null and fillchar != ''">
+				and fillchar = #{fillchar, jdbcType=VARCHAR}
+			</if>
+			<if test="notype != null">
+				and notype = #{notype, jdbcType=INTEGER}
+			</if>
+			<if test="nodate != null and nodate != ''">
+				and nodate = #{nodate, jdbcType=VARCHAR}
+			</if>
+			<if test="prefix != null and prefix != ''">
+				and prefix = #{prefix, jdbcType=VARCHAR}
+			</if>
+			<if test="suffix != null and suffix != ''">
+				and suffix = #{suffix, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+</mapper>

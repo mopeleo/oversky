@@ -1,95 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.oversky.gurms.system.dao.SysParamExtDao">
-    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysParamExt">
+<mapper namespace="org.oversky.gurms.system.dao.SysParamInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysParamInfo">
         <id column="paramid" jdbcType="INTEGER" property="paramid" />
         <result column="paramname" jdbcType="VARCHAR" property="paramname" />
-        <result column="texttitle" jdbcType="VARCHAR" property="texttitle" />
-        <result column="texttail" jdbcType="VARCHAR" property="texttail" />
-        <result column="distype" jdbcType="INTEGER" property="distype" />
-        <result column="dictcode" jdbcType="INTEGER" property="dictcode" />
-        <result column="valuelist" jdbcType="VARCHAR" property="valuelist" />
+        <result column="paramgroup" jdbcType="VARCHAR" property="paramgroup" />
+        <result column="edittype" jdbcType="INTEGER" property="edittype" />
         <result column="initvalue" jdbcType="VARCHAR" property="initvalue" />
         <result column="valuelength" jdbcType="INTEGER" property="valuelength" />
+        <result column="texttitle" jdbcType="VARCHAR" property="texttitle" />
+        <result column="texttail" jdbcType="VARCHAR" property="texttail" />
+        <result column="dictcode" jdbcType="INTEGER" property="dictcode" />
+        <result column="valuelist" jdbcType="VARCHAR" property="valuelist" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParamExt">
-        insert into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{distype, jdbcType=INTEGER}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER})
+    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParamInfo">
+        insert into sys_param_info (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{paramgroup, jdbcType=VARCHAR}, #{edittype, jdbcType=INTEGER}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into sys_param_ext (<include refid="column_list"><property name="tab" value=""/></include>) 
+		insert into sys_param_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.distype, jdbcType=INTEGER}, #{item.dictcode, jdbcType=INTEGER}, #{item.valuelist, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER})
+		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.paramgroup, jdbcType=VARCHAR}, #{item.edittype, jdbcType=INTEGER}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.dictcode, jdbcType=INTEGER}, #{item.valuelist, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
-    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParamExt" resultMap="BaseResultMap">
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysParamInfo" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_param_ext 
+          from sys_param_info 
           <include refid="where_all_list" />
     </select>
 
-    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysParamExt">
-        delete from sys_param_ext 
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysParamInfo">
+        delete from sys_param_info 
           <include refid="where_all_list" />
     </delete>
 
-	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParamExt">
-        select count(1) from sys_param_ext <include refid="where_all_list" />
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysParamInfo">
+        select count(1) from sys_param_info <include refid="where_all_list" />
 	</select>
 
     <select id="selectAll" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_param_ext
+          from sys_param_info
     </select>
 
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
-          from sys_param_ext
+          from sys_param_info
          where paramid = #{param1}
     </select>
 
     <delete id="deleteById">
-        delete from sys_param_ext
+        delete from sys_param_info
          where paramid = #{param1}
     </delete>
   
-    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysParamExt">
-        update sys_param_ext set 
+    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysParamInfo">
+        update sys_param_info set 
                paramname = #{paramname, jdbcType=VARCHAR}, 
+               paramgroup = #{paramgroup, jdbcType=VARCHAR}, 
+               edittype = #{edittype, jdbcType=INTEGER}, 
+               initvalue = #{initvalue, jdbcType=VARCHAR}, 
+               valuelength = #{valuelength, jdbcType=INTEGER}, 
                texttitle = #{texttitle, jdbcType=VARCHAR}, 
                texttail = #{texttail, jdbcType=VARCHAR}, 
-               distype = #{distype, jdbcType=INTEGER}, 
                dictcode = #{dictcode, jdbcType=INTEGER}, 
-               valuelist = #{valuelist, jdbcType=VARCHAR}, 
-               initvalue = #{initvalue, jdbcType=VARCHAR}, 
-               valuelength = #{valuelength, jdbcType=INTEGER}
+               valuelist = #{valuelist, jdbcType=VARCHAR}
 		where paramid = #{paramid, jdbcType=INTEGER}
     </update>
 
-	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysParamExt">
-		update sys_param_ext
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysParamInfo">
+		update sys_param_info
 		<set>
 		    <if test="paramname != null">
 				paramname = #{paramname, jdbcType=VARCHAR},
 		    </if>
-		    <if test="texttitle != null">
-				texttitle = #{texttitle, jdbcType=VARCHAR},
+		    <if test="paramgroup != null">
+				paramgroup = #{paramgroup, jdbcType=VARCHAR},
 		    </if>
-		    <if test="texttail != null">
-				texttail = #{texttail, jdbcType=VARCHAR},
-		    </if>
-		    <if test="distype != null">
-				distype = #{distype, jdbcType=INTEGER},
-		    </if>
-		    <if test="dictcode != null">
-				dictcode = #{dictcode, jdbcType=INTEGER},
-		    </if>
-		    <if test="valuelist != null">
-				valuelist = #{valuelist, jdbcType=VARCHAR},
+		    <if test="edittype != null">
+				edittype = #{edittype, jdbcType=INTEGER},
 		    </if>
 		    <if test="initvalue != null">
 				initvalue = #{initvalue, jdbcType=VARCHAR},
@@ -97,12 +90,24 @@
 		    <if test="valuelength != null">
 				valuelength = #{valuelength, jdbcType=INTEGER},
 		    </if>
+		    <if test="texttitle != null">
+				texttitle = #{texttitle, jdbcType=VARCHAR},
+		    </if>
+		    <if test="texttail != null">
+				texttail = #{texttail, jdbcType=VARCHAR},
+		    </if>
+		    <if test="dictcode != null">
+				dictcode = #{dictcode, jdbcType=INTEGER},
+		    </if>
+		    <if test="valuelist != null">
+				valuelist = #{valuelist, jdbcType=VARCHAR},
+		    </if>
 		</set>
 		where paramid = #{paramid, jdbcType=INTEGER}
 	</update>
 
 	<update id="updateBatch" parameterType="java.util.List">
-	    update sys_param_ext
+	    update sys_param_info
 	    <trim prefix="set" suffixOverrides=",">	
 	        <trim prefix="paramname = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
@@ -114,53 +119,23 @@
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="texttitle = case" suffix="end,">
+	        <trim prefix="paramgroup = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.texttitle != null">
-	                    when paramid = #{item.paramid} then #{item.texttitle, jdbcType=VARCHAR}
+	                <if test="item.paramgroup != null">
+	                    when paramid = #{item.paramid} then #{item.paramgroup, jdbcType=VARCHAR}
 	                </if>
-	                <if test="item.texttitle == null">
-	                    when paramid = #{item.paramid} then texttitle
+	                <if test="item.paramgroup == null">
+	                    when paramid = #{item.paramid} then paramgroup
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="texttail = case" suffix="end,">
+	        <trim prefix="edittype = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.texttail != null">
-	                    when paramid = #{item.paramid} then #{item.texttail, jdbcType=VARCHAR}
+	                <if test="item.edittype != null">
+	                    when paramid = #{item.paramid} then #{item.edittype, jdbcType=INTEGER}
 	                </if>
-	                <if test="item.texttail == null">
-	                    when paramid = #{item.paramid} then texttail
-	                </if>
-	            </foreach>
-	        </trim>
-	        <trim prefix="distype = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.distype != null">
-	                    when paramid = #{item.paramid} then #{item.distype, jdbcType=INTEGER}
-	                </if>
-	                <if test="item.distype == null">
-	                    when paramid = #{item.paramid} then distype
-	                </if>
-	            </foreach>
-	        </trim>
-	        <trim prefix="dictcode = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.dictcode != null">
-	                    when paramid = #{item.paramid} then #{item.dictcode, jdbcType=INTEGER}
-	                </if>
-	                <if test="item.dictcode == null">
-	                    when paramid = #{item.paramid} then dictcode
-	                </if>
-	            </foreach>
-	        </trim>
-	        <trim prefix="valuelist = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.valuelist != null">
-	                    when paramid = #{item.paramid} then #{item.valuelist, jdbcType=VARCHAR}
-	                </if>
-	                <if test="item.valuelist == null">
-	                    when paramid = #{item.paramid} then valuelist
+	                <if test="item.edittype == null">
+	                    when paramid = #{item.paramid} then edittype
 	                </if>
 	            </foreach>
 	        </trim>
@@ -184,6 +159,46 @@
 	                </if>
 	            </foreach>
 	        </trim>
+	        <trim prefix="texttitle = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.texttitle != null">
+	                    when paramid = #{item.paramid} then #{item.texttitle, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.texttitle == null">
+	                    when paramid = #{item.paramid} then texttitle
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="texttail = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.texttail != null">
+	                    when paramid = #{item.paramid} then #{item.texttail, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.texttail == null">
+	                    when paramid = #{item.paramid} then texttail
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="dictcode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.dictcode != null">
+	                    when paramid = #{item.paramid} then #{item.dictcode, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.dictcode == null">
+	                    when paramid = #{item.paramid} then dictcode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valuelist = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valuelist != null">
+	                    when paramid = #{item.paramid} then #{item.valuelist, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.valuelist == null">
+	                    when paramid = #{item.paramid} then valuelist
+	                </if>
+	            </foreach>
+	        </trim>
 	    </trim>
 	    where paramid in
 	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -192,7 +207,7 @@
 	</update>
 	
 	<delete id="deleteBatch">
-	    delete from sys_param_ext
+	    delete from sys_param_info
 	     where paramid in
 	    <foreach collection="array" item="id" separator="," open="(" close=")">
 	        #{id}
@@ -200,7 +215,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}paramid, ${tab}paramname, ${tab}texttitle, ${tab}texttail, ${tab}distype, ${tab}dictcode, ${tab}valuelist, ${tab}initvalue, ${tab}valuelength
+        ${tab}paramid, ${tab}paramname, ${tab}paramgroup, ${tab}edittype, ${tab}initvalue, ${tab}valuelength, ${tab}texttitle, ${tab}texttail, ${tab}dictcode, ${tab}valuelist
 	</sql>
 	
 	<sql id="where_all_list">
@@ -211,26 +226,29 @@
 			<if test="paramname != null and paramname != ''">
 				and paramname = #{paramname, jdbcType=VARCHAR}
 			</if>
-			<if test="texttitle != null and texttitle != ''">
-				and texttitle = #{texttitle, jdbcType=VARCHAR}
+			<if test="paramgroup != null and paramgroup != ''">
+				and paramgroup = #{paramgroup, jdbcType=VARCHAR}
 			</if>
-			<if test="texttail != null and texttail != ''">
-				and texttail = #{texttail, jdbcType=VARCHAR}
-			</if>
-			<if test="distype != null">
-				and distype = #{distype, jdbcType=INTEGER}
-			</if>
-			<if test="dictcode != null">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="valuelist != null and valuelist != ''">
-				and valuelist = #{valuelist, jdbcType=VARCHAR}
+			<if test="edittype != null">
+				and edittype = #{edittype, jdbcType=INTEGER}
 			</if>
 			<if test="initvalue != null and initvalue != ''">
 				and initvalue = #{initvalue, jdbcType=VARCHAR}
 			</if>
 			<if test="valuelength != null">
 				and valuelength = #{valuelength, jdbcType=INTEGER}
+			</if>
+			<if test="texttitle != null and texttitle != ''">
+				and texttitle = #{texttitle, jdbcType=VARCHAR}
+			</if>
+			<if test="texttail != null and texttail != ''">
+				and texttail = #{texttail, jdbcType=VARCHAR}
+			</if>
+			<if test="dictcode != null">
+				and dictcode = #{dictcode, jdbcType=INTEGER}
+			</if>
+			<if test="valuelist != null and valuelist != ''">
+				and valuelist = #{valuelist, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

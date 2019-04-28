@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.system.dao.SysUserActlogDao">
+    <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysUserActlog">
+        <id column="logid" jdbcType="DECIMAL" property="logid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="userid" jdbcType="DECIMAL" property="userid" />
+        <result column="menuid" jdbcType="VARCHAR" property="menuid" />
+        <result column="requrl" jdbcType="VARCHAR" property="requrl" />
+        <result column="reqmethod" jdbcType="VARCHAR" property="reqmethod" />
+        <result column="reqdata" jdbcType="VARCHAR" property="reqdata" />
+        <result column="actdate" jdbcType="VARCHAR" property="actdate" />
+        <result column="acttime" jdbcType="VARCHAR" property="acttime" />
+        <result column="accesstype" jdbcType="INTEGER" property="accesstype" />
+        <result column="ipaddress" jdbcType="VARCHAR" property="ipaddress" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserActlog" useGeneratedKeys="true" keyProperty="logid">
+        insert into sys_user_actlog (unioncode, userid, menuid, requrl, reqmethod, reqdata, actdate, acttime, accesstype, ipaddress)
+        values (#{unioncode, jdbcType=VARCHAR}, #{userid, jdbcType=DECIMAL}, #{menuid, jdbcType=VARCHAR}, #{requrl, jdbcType=VARCHAR}, #{reqmethod, jdbcType=VARCHAR}, #{reqdata, jdbcType=VARCHAR}, #{actdate, jdbcType=VARCHAR}, #{acttime, jdbcType=VARCHAR}, #{accesstype, jdbcType=INTEGER}, #{ipaddress, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
+		insert into sys_user_actlog (unioncode, userid, menuid, requrl, reqmethod, reqdata, actdate, acttime, accesstype, ipaddress)
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.userid, jdbcType=DECIMAL}, #{item.menuid, jdbcType=VARCHAR}, #{item.requrl, jdbcType=VARCHAR}, #{item.reqmethod, jdbcType=VARCHAR}, #{item.reqdata, jdbcType=VARCHAR}, #{item.actdate, jdbcType=VARCHAR}, #{item.acttime, jdbcType=VARCHAR}, #{item.accesstype, jdbcType=INTEGER}, #{item.ipaddress, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.gurms.system.entity.SysUserActlog" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_user_actlog 
+          <include refid="where_all_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysUserActlog">
+        delete from sys_user_actlog 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.gurms.system.entity.SysUserActlog">
+        select count(1) from sys_user_actlog <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_user_actlog
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from sys_user_actlog
+         where logid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from sys_user_actlog
+         where logid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysUserActlog">
+        update sys_user_actlog set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
+               userid = #{userid, jdbcType=DECIMAL}, 
+               menuid = #{menuid, jdbcType=VARCHAR}, 
+               requrl = #{requrl, jdbcType=VARCHAR}, 
+               reqmethod = #{reqmethod, jdbcType=VARCHAR}, 
+               reqdata = #{reqdata, jdbcType=VARCHAR}, 
+               actdate = #{actdate, jdbcType=VARCHAR}, 
+               acttime = #{acttime, jdbcType=VARCHAR}, 
+               accesstype = #{accesstype, jdbcType=INTEGER}, 
+               ipaddress = #{ipaddress, jdbcType=VARCHAR}
+		where logid = #{logid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysUserActlog">
+		update sys_user_actlog
+		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="userid != null">
+				userid = #{userid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="menuid != null">
+				menuid = #{menuid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="requrl != null">
+				requrl = #{requrl, jdbcType=VARCHAR},
+		    </if>
+		    <if test="reqmethod != null">
+				reqmethod = #{reqmethod, jdbcType=VARCHAR},
+		    </if>
+		    <if test="reqdata != null">
+				reqdata = #{reqdata, jdbcType=VARCHAR},
+		    </if>
+		    <if test="actdate != null">
+				actdate = #{actdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="acttime != null">
+				acttime = #{acttime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="accesstype != null">
+				accesstype = #{accesstype, jdbcType=INTEGER},
+		    </if>
+		    <if test="ipaddress != null">
+				ipaddress = #{ipaddress, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where logid = #{logid, jdbcType=DECIMAL}
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update sys_user_actlog
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when logid = #{item.logid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when logid = #{item.logid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="userid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.userid != null">
+	                    when logid = #{item.logid} then #{item.userid, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.userid == null">
+	                    when logid = #{item.logid} then userid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="menuid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.menuid != null">
+	                    when logid = #{item.logid} then #{item.menuid, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.menuid == null">
+	                    when logid = #{item.logid} then menuid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="requrl = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.requrl != null">
+	                    when logid = #{item.logid} then #{item.requrl, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.requrl == null">
+	                    when logid = #{item.logid} then requrl
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="reqmethod = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.reqmethod != null">
+	                    when logid = #{item.logid} then #{item.reqmethod, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.reqmethod == null">
+	                    when logid = #{item.logid} then reqmethod
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="reqdata = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.reqdata != null">
+	                    when logid = #{item.logid} then #{item.reqdata, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.reqdata == null">
+	                    when logid = #{item.logid} then reqdata
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="actdate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.actdate != null">
+	                    when logid = #{item.logid} then #{item.actdate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.actdate == null">
+	                    when logid = #{item.logid} then actdate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="acttime = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.acttime != null">
+	                    when logid = #{item.logid} then #{item.acttime, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.acttime == null">
+	                    when logid = #{item.logid} then acttime
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="accesstype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.accesstype != null">
+	                    when logid = #{item.logid} then #{item.accesstype, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.accesstype == null">
+	                    when logid = #{item.logid} then accesstype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ipaddress = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ipaddress != null">
+	                    when logid = #{item.logid} then #{item.ipaddress, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.ipaddress == null">
+	                    when logid = #{item.logid} then ipaddress
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where logid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.logid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from sys_user_actlog
+	     where logid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}logid, ${tab}unioncode, ${tab}userid, ${tab}menuid, ${tab}requrl, ${tab}reqmethod, ${tab}reqdata, ${tab}actdate, ${tab}acttime, ${tab}accesstype, ${tab}ipaddress
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="logid != null">
+				and logid = #{logid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="userid != null">
+				and userid = #{userid, jdbcType=DECIMAL}
+			</if>
+			<if test="menuid != null and menuid != ''">
+				and menuid = #{menuid, jdbcType=VARCHAR}
+			</if>
+			<if test="requrl != null and requrl != ''">
+				and requrl = #{requrl, jdbcType=VARCHAR}
+			</if>
+			<if test="reqmethod != null and reqmethod != ''">
+				and reqmethod = #{reqmethod, jdbcType=VARCHAR}
+			</if>
+			<if test="reqdata != null and reqdata != ''">
+				and reqdata = #{reqdata, jdbcType=VARCHAR}
+			</if>
+			<if test="actdate != null and actdate != ''">
+				and actdate = #{actdate, jdbcType=VARCHAR}
+			</if>
+			<if test="acttime != null and acttime != ''">
+				and acttime = #{acttime, jdbcType=VARCHAR}
+			</if>
+			<if test="accesstype != null">
+				and accesstype = #{accesstype, jdbcType=INTEGER}
+			</if>
+			<if test="ipaddress != null and ipaddress != ''">
+				and ipaddress = #{ipaddress, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+</mapper>

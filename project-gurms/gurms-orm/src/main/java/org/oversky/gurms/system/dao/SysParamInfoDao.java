@@ -1,6 +1,6 @@
 package org.oversky.gurms.system.dao;
 
-import org.oversky.gurms.system.entity.SysParamExt;
+import org.oversky.gurms.system.entity.SysParamInfo;
 import java.util.List;
 
 import org.springframework.cache.annotation.CacheConfig;
@@ -8,15 +8,15 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 
-@CacheConfig(cacheNames = "SysParamExt")
-public interface SysParamExtDao{
+@CacheConfig(cacheNames = "SysParamInfo")
+public interface SysParamInfoDao{
 
-	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysParamExt).buildEntityKey(#p0)", unless = "#result == null")
-    SysParamExt getById(Integer paramid);
+	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysParamInfo).buildEntityKey(#p0)", unless = "#result == null")
+    SysParamInfo getById(Integer paramid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
-		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysParamExt).buildEntityKey(#p0)", condition = "#result == 1")
+		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysParamInfo).buildEntityKey(#p0)", condition = "#result == 1")
 	})
     int deleteById(Integer paramid);
 
@@ -24,34 +24,34 @@ public interface SysParamExtDao{
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
 	})
-    int updateById(SysParamExt entity);
+    int updateById(SysParamInfo entity);
 	
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
 	})
-    int dynamicUpdateById(SysParamExt entity);
+    int dynamicUpdateById(SysParamInfo entity);
     
-    int count(SysParamExt where);
+    int count(SysParamInfo where);
     
 	@CacheEvict(key = "'selectAll'", condition = "#result == 1")
-    int insert(SysParamExt entity);
+    int insert(SysParamInfo entity);
 
 	@CacheEvict(allEntries=true, condition = "#result > 0")
-    int deleteWhere(SysParamExt where);
+    int deleteWhere(SysParamInfo where);
 
-    List<SysParamExt> selectWhere(SysParamExt where);
+    List<SysParamInfo> selectWhere(SysParamInfo where);
 
 	@Cacheable(key = "'selectAll'", unless = "#result == null")
-    List<SysParamExt> selectAll();
+    List<SysParamInfo> selectAll();
     
 	@CacheEvict(allEntries=true, condition = "#result > 0")
-	int updateBatch(List<SysParamExt> entityList);
+	int updateBatch(List<SysParamInfo> entityList);
 	
 	@CacheEvict(allEntries=true, condition = "#result > 0")
 	int deleteBatch(Integer[] ids);
 	
 	@CacheEvict(key = "'selectAll'", condition = "#result > 0")
-	int insertBatch(List<SysParamExt> entityList);
+	int insertBatch(List<SysParamInfo> entityList);
 	
 }
