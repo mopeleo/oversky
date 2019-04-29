@@ -7,7 +7,7 @@ public class SysOrg extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private Integer orgid;    //机构ID
-	private String unioncode;    //unioncode
+	private String unioncode;    //
 	private String shortname;    //机构简称
 	private String fullname;    //机构全称
 	private String linkman;    //联系人

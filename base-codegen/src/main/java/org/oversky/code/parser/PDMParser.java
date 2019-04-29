@@ -225,7 +225,7 @@ public class PDMParser {
 
 					elementCommont = elementColumn.element(ELEMENT_COMMENT);
 					if(elementCommont == null){
-						column.setComment(elementName.getTextTrim());
+						column.setComment("");
 					}else{
 						column.setComment(elementCommont.getTextTrim());
 					}

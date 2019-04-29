@@ -6,8 +6,8 @@ public class SysUserRole extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long userid;    //userid
-	private Integer roleid;    //roleid
+	private Long userid;    //
+	private Integer roleid;    //
 
 	public Long getUserid() {
 		return this.userid;

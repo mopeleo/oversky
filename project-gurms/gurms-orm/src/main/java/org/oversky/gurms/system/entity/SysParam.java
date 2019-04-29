@@ -6,9 +6,9 @@ public class SysParam extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //unioncode
-	private Integer paramid;    //paramid
-	private String paramvalue;    //paramvalue
+	private String unioncode;    //
+	private Integer paramid;    //
+	private String paramvalue;    //
 
 	public String getUnioncode() {
 		return this.unioncode;

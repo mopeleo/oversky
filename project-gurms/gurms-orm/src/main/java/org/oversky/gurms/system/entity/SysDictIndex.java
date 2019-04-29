@@ -6,7 +6,7 @@ public class SysDictIndex extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //unioncode
+	private String unioncode;    //
 	private Integer dictcode;    //字典代码
 	private String dictname;    //字典名称
 	private String dictgroup;    //所属分组

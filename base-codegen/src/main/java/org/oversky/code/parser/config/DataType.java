@@ -120,7 +120,14 @@ public class DataType {
         if(datatype.equals("SMALLINT") || datatype.equals("TINYINT")){
             return INT;
         }
+        if(datatype.startsWith("SMALLINT") || datatype.startsWith("TINYINT")) {
+        	return INT;
+        }
         if(datatype.equals("INT") || datatype.equals("BIGINT")) {
+        	return LONG;
+        }
+        //从mysql数据库逆向生成的时候，数据保存的是带长度的: int(11),bigint(20)等
+        if(datatype.startsWith("INT") || datatype.startsWith("BIGINT")) {
         	return LONG;
         }
         if(datatype.startsWith("NUMERIC") || datatype.startsWith("DECIMAL")){

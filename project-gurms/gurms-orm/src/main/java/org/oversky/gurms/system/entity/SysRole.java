@@ -6,7 +6,7 @@ public class SysRole extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //unioncode
+	private String unioncode;    //
 	private Integer roleid;    //角色ID
 	private String rolename;    //角色名称
 	private Integer status;    //角色状态，0-无效，1-有效

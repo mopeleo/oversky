@@ -64,7 +64,7 @@ public class DatabaseParser {
 			
 			ps = connect.prepareStatement(getTableColumnList(type));
 			for(Table tab : model.getTables()) {
-				ps.setString(0, tab.getOriginCode());
+				ps.setString(1, tab.getOriginCode());
 				rs = ps.executeQuery();
 				fillTable(type, tab, rs);
 				rs.close();

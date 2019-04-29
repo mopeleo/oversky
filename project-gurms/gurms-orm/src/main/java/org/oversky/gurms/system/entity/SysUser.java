@@ -7,7 +7,7 @@ public class SysUser extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private Long userid;    //用户ID,内部自动生成[identity]
-	private String unioncode;    //unioncode
+	private String unioncode;    //
 	private String username;    //用户名称
 	private String loginid;    //登录名
 	private String loginpasswd;    //登录密码

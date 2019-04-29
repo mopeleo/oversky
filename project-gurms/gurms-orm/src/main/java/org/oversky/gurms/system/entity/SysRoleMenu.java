@@ -6,8 +6,8 @@ public class SysRoleMenu extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer roleid;    //roleid
-	private String menuid;    //menuid
+	private Integer roleid;    //
+	private String menuid;    //
 
 	public Integer getRoleid() {
 		return this.roleid;
