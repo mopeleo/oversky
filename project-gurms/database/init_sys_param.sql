@@ -5,9 +5,9 @@ insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1000, '0')
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, dictcode, valuelist, valuelength, texttitle, texttail) 
 values (1000, '系统模式', '0', '0', 0, 0, '', 1, '', '');
 
-insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1001, 'admin');
+insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1001, '1');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, dictcode, valuelist, valuelength, texttitle, texttail) 
-values (1001, '超级用户', 'admin', '1', 0, 0, '', 32, '', '');
+values (1001, '超级用户UserId', '1', '1', 0, 0, '', 32, '', '');
 
 insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1002, '6');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, dictcode, valuelist, valuelength, texttitle, texttail) 

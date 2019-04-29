@@ -30,8 +30,8 @@ insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('000
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1005, '3', '星期三');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1005, '4', '星期四');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1005, '5', '星期五');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1005, '4', '星期六');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1005, '5', '星期天');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1005, '6', '星期六');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1005, '7', '星期天');
 
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1006, '字典分组', 1, '0');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1006, '0', '系统级字典');
@@ -44,7 +44,7 @@ insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('000
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1008, '操作类型', 1, '0');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1008, '0', '新增');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1008, '1', '修改');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1008, '1', '删除');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1008, '2', '删除');
 
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1009, '复核状态', 1, '0');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1009, '0', '未复核');
@@ -142,7 +142,7 @@ insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('000
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2008, '小数位数处理方式', 1, '1');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2008, '0', '四舍五入');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2008, '1', '截位');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2008, '1', '进位');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2008, '2', '进位');
 
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2009, '区间头尾算法', 1, '1');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2009, '0', '不算头不算尾');

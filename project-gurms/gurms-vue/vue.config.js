@@ -49,22 +49,22 @@ module.exports = {
     pwa: {},
     // webpack-dev-server 相关配置
     devServer: {
-        open: process.platform === 'darwin',
+		//运行程序所在的平台系统 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
+        open: process.platform === 'win32',
         host: 'localhost',
         port: 8088,
         https: false,
         hotOnly: false,
-        // proxy: {
-        //     // 设置代理
-        //     // proxy all requests starting with /api to jsonplaceholder
-        //     'http://localhost:8080/': {
-        //         target: 'http://baidu.com:8080', //真实请求的目标地址
-        //         changeOrigin: true,
-        //         pathRewrite: {
-        //             '^http://localhost:8080/': ''
-        //         }
-        //     }
-        // },
+        proxy: {
+            // 设置代理
+            '/gurms': {
+                target: 'http://localhost:8080/', //真实请求的目标地址
+                changeOrigin: true,          //是否跨域
+                pathRewrite: {
+                    '^/gurms': ''           //如果接口本身没有/gurms需要通过pathRewrite来重写了地址
+                }
+            }
+        },
         before: (app) => {}
     },
     // 第三方插件配置
