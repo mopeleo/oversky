@@ -9,6 +9,7 @@ const state = {
         routeName: 'about'
     },
     openTabs: [],
+    cacheTabs: [],
     activeTab: '',
     user:undefined
 }
@@ -24,6 +25,9 @@ const getters = {
             }
         }
         return state.user;
+    },
+    cacheTabs(state){
+        return state.cacheTabs;
     }
 }
 
@@ -31,14 +35,18 @@ const mutations = {
     LOGIN(state, payload){
         state.user = payload;
         localStorage.setItem(PUBDEFINE.KEY_USER, JSON.stringify(payload));
+        //tab
         state.openTabs.push(state.indexTab);
         state.activeTab = state.indexTab.tabId;
+        let cname = tools.getComponentNameFromTab(state.indexTab);
+        state.cacheTabs.push(cname);
     },
     LOGOUT(state){
         localStorage.removeItem(PUBDEFINE.KEY_USER);
         state.user = undefined;
         state.openTabs = [];
         state.activeTab = '';
+        state.cacheTabs = [];
     },
     ADDROUTES(state){
         if(!state.user){
@@ -70,10 +78,16 @@ const mutations = {
                 state.openTabs.push(state.indexTab);
                 state.openTabs.push(tabObj);
                 state.activeTab = tabObj.tabId;
+
+                state.cacheTabs = [];
+                state.cacheTabs.push( tools.getComponentNameFromTab(state.indexTab) );
+                state.cacheTabs.push( tools.getComponentNameFromTab(tabObj) );
             });
         }else{
             state.activeTab = tabObj.tabId;
             state.openTabs.push(tabObj);
+
+            state.cacheTabs.push( tools.getComponentNameFromTab(tabObj) );
         }
     },
     DELTAB (state, tabId) {
@@ -85,9 +99,11 @@ const mutations = {
             idx++;
         }
         state.openTabs.splice(idx, 1);
+        state.cacheTabs.splice(idx, 1);
         if(state.openTabs.length == 0){
             state.activeTab = state.indexTab.tabId;
             state.openTabs.push(state.indexTab);
+            state.cacheTabs.push( tools.getComponentNameFromTab(state.indexTab) );
             router.push({name: state.indexTab.routeName});
             return;
         }

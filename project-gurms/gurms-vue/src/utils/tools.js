@@ -78,3 +78,13 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
     }
     return routes;
 }
+
+//根据菜单获取组件页面的name
+//routeName : sysuser/list ==> sysuser_list
+export function getComponentNameFromTab(tab) {
+    var routeName = '';
+    if(tab && tab.routeName){
+        routeName = tab.routeName.replace(/\//, '_');
+    }
+    return routeName;
+}

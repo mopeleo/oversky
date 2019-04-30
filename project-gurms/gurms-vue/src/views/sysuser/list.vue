@@ -69,6 +69,7 @@
 import * as tools from '@/utils/tools'
 
 export default{
+    name: 'sysuser_list',
     data(){
         return {
             //表格当前页数据

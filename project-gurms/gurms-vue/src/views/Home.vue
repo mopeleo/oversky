@@ -57,8 +57,8 @@
 
                 <el-main>
                     <menuTab></menuTab>
-                    <keep-alive>
-                    <router-view></router-view>
+                    <keep-alive :include="cacheTabs">
+                        <router-view></router-view>
                     </keep-alive>
                 </el-main>
             </el-container>
@@ -67,11 +67,15 @@
 </template>
 <script>
 import menuTab from "@/components/TopTab.vue";
+import { mapGetters } from 'vuex';
 
 export default {
     components:{menuTab},
     data() {
         return { user: this.$store.state.pub.user };
+    },
+    computed:{
+        ...mapGetters('pub',['cacheTabs'])
     },
     methods:{
         logout:function(){
