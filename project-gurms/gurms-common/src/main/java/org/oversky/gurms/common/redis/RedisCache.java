@@ -1,7 +1,7 @@
 package org.oversky.gurms.common.redis;
 
-import org.oversky.gurms.common.json.JacksonUtils;
 import org.oversky.gurms.common.spring.SpringBeanUtils;
+import org.oversky.util.json.JacksonUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 
 public class RedisCache {

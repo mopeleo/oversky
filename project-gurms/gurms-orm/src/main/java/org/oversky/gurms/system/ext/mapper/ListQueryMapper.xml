@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.gurms.system.ext.dao.ListQueryDao">
+
+	<!-- ========================================================================================= -->
+	<sql id="sysuser_column_list">
+        <include refid="org.oversky.gurms.system.dao.SysUserDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findUsers" parameterType="org.oversky.gurms.system.entity.SysUser" resultMap="org.oversky.gurms.system.dao.SysUserDao.BaseResultMap">
+        select <include refid="sysuser_column_list"/>
+          from sys_user a
+		<where>
+			<if test="username != null and username != ''">
+				<bind name="_username" value="'%' + username + '%'"/>
+				and a.username like #{_username}
+			</if>
+			<if test="mobileno != null and mobileno != ''">
+				and a.mobileno like CONCAT('%',#{mobileno},'%')
+			</if>
+			<if test="status != null and status != ''">
+				and a.status = #{status}
+			</if>
+		</where>
+    </select>
+  
+	<!-- ========================================================================================= -->
+	<sql id="sysrole_column_list">
+        <include refid="org.oversky.gurms.system.dao.SysRoleDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findRoles" parameterType="org.oversky.gurms.system.entity.SysRole" resultMap="org.oversky.gurms.system.dao.SysRoleDao.BaseResultMap">
+        select <include refid="sysuser_column_list"/>
+          from sys_role a
+		<where>
+			<if test="rolename != null and rolename != ''">
+				<bind name="_rolename" value="'%' + rolename + '%'"/>
+				and a.username like #{_rolename}
+			</if>
+		</where>
+    </select>
+  
+</mapper>

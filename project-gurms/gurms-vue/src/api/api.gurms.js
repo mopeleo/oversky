@@ -18,6 +18,14 @@ export default {
     },
 
     //========================================================
+    // 查询字典
+    getDictMap(unioncode, dictkeys){
+        return axios.get(`${baseURL}/sysdict/getmap/${unioncode}/${dictkeys}`);
+    },
+
+
+
+    //========================================================
     // 用户列表
     userList (params) {
         return axios.post(`${baseURL}/sysuser/list`, params);

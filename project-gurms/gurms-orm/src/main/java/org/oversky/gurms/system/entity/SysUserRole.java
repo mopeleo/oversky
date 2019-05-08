@@ -7,7 +7,7 @@ public class SysUserRole extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private Long userid;    //
-	private Integer roleid;    //
+	private Long roleid;    //
 
 	public Long getUserid() {
 		return this.userid;
@@ -17,11 +17,11 @@ public class SysUserRole extends BaseEntity{
 		this.userid = userid;
 	}
 
-	public Integer getRoleid() {
+	public Long getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Integer roleid) {
+	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
 	}
 
@@ -30,7 +30,7 @@ public class SysUserRole extends BaseEntity{
 		return build.append("#userid:").append(this.userid).append("#roleid:").append(this.roleid).toString();
 	}
 
-    public static String buildEntityKey(Long userid, Integer roleid){
+    public static String buildEntityKey(Long userid, Long roleid){
         StringBuilder build = new StringBuilder("SysUserRole");
         return build.append("#userid:").append(userid).append("#roleid:").append(roleid).toString();
     }

@@ -15,7 +15,7 @@ public class SysUser extends BaseEntity{
 	private String passwdvaliddate;    //密码失效日期
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
-	private Integer orgid;    //所属机构
+	private Long orgid;    //所属机构
 	private String idtype;    //证件类型
 	private String idcode;    //证件号码
 	private String idname;    //证件姓名
@@ -98,11 +98,11 @@ public class SysUser extends BaseEntity{
 		this.email = email;
 	}
 
-	public Integer getOrgid() {
+	public Long getOrgid() {
 		return this.orgid;
 	}
 
-	public void setOrgid(Integer orgid) {
+	public void setOrgid(Long orgid) {
 		this.orgid = orgid;
 	}
 

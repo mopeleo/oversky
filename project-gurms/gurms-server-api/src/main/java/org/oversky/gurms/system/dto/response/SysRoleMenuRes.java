@@ -6,14 +6,14 @@ public class SysRoleMenuRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer roleid;    //roleid
-	private String menuid;    //menuid
+	private Long roleid;    //
+	private String menuid;    //
 
-	public Integer getRoleid() {
+	public Long getRoleid() {
 		return this.roleid;
 	}
 
-	public void setRoleid(Integer roleid) {
+	public void setRoleid(Long roleid) {
 		this.roleid = roleid;
 	}
 

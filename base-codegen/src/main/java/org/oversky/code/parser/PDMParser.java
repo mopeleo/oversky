@@ -259,9 +259,14 @@ public class PDMParser {
 					//oracle的pdm没有identity属性
 					Element elementIdentity = elementColumn.element(ELEMENT_IDENTITY);
 					if(elementIdentity == null){
-						column.setIdentity("0");
+						//mysql 检查是否备注字段有自增长定义
+	                    if(column.getComment().toLowerCase().indexOf("[identity]") >= 0) {
+	                    	column.setIdentity("1");
+	                    }else {
+	                    	column.setIdentity("0");
+	                    }
 					}else{
-						column.setIdentity(elementIdentity.getTextTrim());
+						column.setIdentity("1");
 					}
 					
 					//mysql没有sequence属性

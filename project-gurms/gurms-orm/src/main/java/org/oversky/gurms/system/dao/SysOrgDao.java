@@ -12,13 +12,13 @@ import org.springframework.cache.annotation.Caching;
 public interface SysOrgDao{
 
 	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysOrg).buildEntityKey(#p0)", unless = "#result == null")
-    SysOrg getById(Integer orgid);
+    SysOrg getById(Long orgid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysOrg).buildEntityKey(#p0)", condition = "#result == 1")
 	})
-    int deleteById(Integer orgid);
+    int deleteById(Long orgid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
@@ -49,7 +49,7 @@ public interface SysOrgDao{
 	int updateBatch(List<SysOrg> entityList);
 	
 	@CacheEvict(allEntries=true, condition = "#result > 0")
-	int deleteBatch(Integer[] ids);
+	int deleteBatch(Long[] ids);
 	
 	@CacheEvict(key = "'selectAll'", condition = "#result > 0")
 	int insertBatch(List<SysOrg> entityList);

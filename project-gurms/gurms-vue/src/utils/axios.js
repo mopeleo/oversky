@@ -44,7 +44,7 @@ instance.interceptors.response.use(
         if(res.status === 200){
             // tools.errTip(JSON.stringify(res));
             if(res.data && (res.data === true || res.data.success === true)){
-                return Promise.resolve(res);
+                return Promise.resolve(res.data);
             }else{
                 return Promise.reject(res.data.returnmsg);
             }

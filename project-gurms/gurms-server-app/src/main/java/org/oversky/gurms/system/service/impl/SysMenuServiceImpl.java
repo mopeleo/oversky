@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.oversky.base.util.BeanCopyUtils;
 import org.oversky.gurms.system.dao.SysMenuDao;
-import org.oversky.gurms.system.dao.ext.UserRightDao;
 import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.entity.SysMenu;
+import org.oversky.gurms.system.ext.dao.UserRightDao;
 import org.oversky.gurms.system.service.SysMenuService;
+import org.oversky.util.bean.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,7 +42,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	}
 
 	@Override
-	@CacheEvict(key = "'getFullMenuTree'")
+	@Cacheable(key = "'getFullMenuTree'")
 	public SysMenuRes getFullMenuTree() {
 		SysMenuRes root = new SysMenuRes();
 		getSubMenus(root);
@@ -50,6 +50,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	}
 	
 	@Override
+	@Cacheable(key = "'getMenuByUrl-' + #p0")
 	public SysMenuRes getMenuByUrl(String url) {
 		// TODO Auto-generated method stub
 		SysMenu menu = new SysMenu();

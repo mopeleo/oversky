@@ -1,65 +1,24 @@
 package org.oversky.base.service;
 
-import java.io.Serializable;
 import java.util.List;
 
-import org.oversky.base.constant.PubDefine;
-
-public class BaseResListDto<T> implements Serializable{
+public class BaseResListDto<T> extends BaseResDto{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String returncode = PubDefine.RETCODE_SUCCESS;
-	private String returnmsg = PubDefine.RETMSG_SUCCESS;
-	private boolean success = true;
 	private List<T> results;
 	
 	//分页相关
 	private boolean enablePage = false;
 	private BasePage page;
 	
-	public String getReturncode() {
-		return returncode;
-	}
-	public void setReturncode(String returncode) {
-		this.returncode = returncode;
-	}
-	public String getReturnmsg() {
-		return returnmsg;
-	}
-	public void setReturnmsg(String returnmsg) {
-		this.returnmsg = returnmsg;
-	}
-	public boolean isSuccess() {
-		return success;
-	}
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
 	public List<T> getResults() {
 		return results;
 	}
 	public void setResults(List<T> results) {
 		this.results = results;
 	}
-	public void success(String msg) {
-		this.success = true;
-		this.returncode = PubDefine.RETCODE_SUCCESS;
-		this.returnmsg = msg;
-	}
-	
-	public void failure(String msg) {
-		this.success = false;
-		this.returncode = PubDefine.RETCODE_FAILURE;
-		this.returnmsg = msg;
-	}
-	
-	public void failure(String code, String msg) {
-		this.success = false;
-		this.returncode = code;
-		this.returnmsg = msg;
-	}
-	
+
 	public boolean isEnablePage() {
 		return enablePage;
 	}

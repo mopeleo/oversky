@@ -7,7 +7,7 @@ public class SysUserActlogReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private Long logid;    //[identity]
-	private String unioncode;    //unioncode
+	private String unioncode;    //
 	private Long userid;    //用户ID
 	private String menuid;    //菜单ID
 	private String requrl;    //请求URL
@@ -16,7 +16,7 @@ public class SysUserActlogReq extends BaseReqDto {
 	private String actdate;    //行为日期
 	private String acttime;    //行为时间
 	private Integer accesstype;    //登录方式（0-pc，1-手机）
-	private String ipaddress;    //ipaddress
+	private String ipaddress;    //
 
 	public Long getLogid() {
 		return this.logid;

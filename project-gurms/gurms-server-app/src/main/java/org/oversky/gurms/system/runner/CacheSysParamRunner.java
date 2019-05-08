@@ -3,10 +3,12 @@ package org.oversky.gurms.system.runner;
 import java.util.List;
 
 import org.oversky.base.service.BaseServiceException;
-import org.oversky.gurms.system.constant.CacheConsts;
 import org.oversky.gurms.system.constant.ConfigConsts;
+import org.oversky.gurms.system.dao.SysDictIndexDao;
 import org.oversky.gurms.system.dao.SysParamDao;
+import org.oversky.gurms.system.entity.SysDictIndex;
 import org.oversky.gurms.system.entity.SysParam;
+import org.oversky.gurms.system.service.SysDictService;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,12 @@ public class CacheSysParamRunner implements ApplicationRunner {
 	private SysParamDao paramDao;
 	
 	@Autowired
+	private SysDictIndexDao dictIndexDao;
+	
+	@Autowired
+	private SysDictService dictService;
+	
+	@Autowired
 	private SysMenuService menuService;
 	
 	@Autowired
@@ -34,16 +42,20 @@ public class CacheSysParamRunner implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		logger.debug("gurms.config.redis-enable : [{}]", config.isRedisEnable());
 
-		List<SysParam> list = paramDao.selectAll();
-		if(list == null || list.size() == 0) {
+		List<SysParam> paramList = paramDao.selectAll();
+		if(paramList == null || paramList.size() == 0) {
 			logger.error("参数初始化失败：加载数为空" );
 			throw new BaseServiceException("参数初始化失败");
-		}
-		
-		list.forEach(param->{
+		}		
+		paramList.forEach(param->{
 			paramDao.getById(param.getUnioncode(), param.getParamid());
 		});
 		
+		List<SysDictIndex> dictList = dictIndexDao.selectAll();
+		for(SysDictIndex dictIndex : dictList) {
+			dictService.getDict(dictIndex.getUnioncode(), dictIndex.getDictcode());
+		}
+
 		menuService.getFullMenuTree();
 	}
 

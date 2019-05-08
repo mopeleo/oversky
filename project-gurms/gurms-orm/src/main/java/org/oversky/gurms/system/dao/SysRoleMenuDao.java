@@ -6,9 +6,9 @@ import java.util.List;
 public interface SysRoleMenuDao{
 
 	
-    SysRoleMenu getById(Integer roleid, String menuid);
+    SysRoleMenu getById(Long roleid, String menuid);
 
-    int deleteById(Integer roleid, String menuid);
+    int deleteById(Long roleid, String menuid);
 
     int count(SysRoleMenu where);
     

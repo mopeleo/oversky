@@ -7,8 +7,8 @@ public class SysUserLoginReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private Long logid;    //[identity]
-	private String unioncode;    //unioncode
-	private Long userid;    //userid
+	private String unioncode;    //
+	private Long userid;    //
 	private String logindate;    //登录日期
 	private String logintime;    //登录时间
 	private String loginpasswd;    //登录密码

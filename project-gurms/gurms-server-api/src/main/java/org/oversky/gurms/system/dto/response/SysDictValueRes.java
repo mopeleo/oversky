@@ -6,7 +6,7 @@ public class SysDictValueRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //unioncode
+	private String unioncode;    //
 	private Integer dictcode;    //字典代码
 	private String itemcode;    //选项代码
 	private String itemname;    //选项名称

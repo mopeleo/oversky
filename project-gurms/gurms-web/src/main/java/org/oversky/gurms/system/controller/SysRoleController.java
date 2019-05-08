@@ -17,7 +17,7 @@ public class SysRoleController {
 	private SysRoleService roleService;
 	
 	@RequestMapping("/detail/{roleId}")
-	public SysRoleRes detail(@PathVariable Integer roleId) {
+	public SysRoleRes detail(@PathVariable Long roleId) {
 		return roleService.getById(roleId);
 	}
 
@@ -37,7 +37,7 @@ public class SysRoleController {
 	}
 
 	@RequestMapping("/delete/{roleId}")
-	public boolean delete(@PathVariable Integer roleId) {
+	public boolean delete(@PathVariable Long roleId) {
 		return roleService.delete(roleId);
 	}
 }

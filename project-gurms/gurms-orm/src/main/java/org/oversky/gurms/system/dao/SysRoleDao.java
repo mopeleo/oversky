@@ -12,13 +12,13 @@ import org.springframework.cache.annotation.Caching;
 public interface SysRoleDao{
 
 	@Cacheable(key = "T(org.oversky.gurms.system.entity.SysRole).buildEntityKey(#p0)", unless = "#result == null")
-    SysRole getById(Integer roleid);
+    SysRole getById(Long roleid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
 		@CacheEvict(key = "T(org.oversky.gurms.system.entity.SysRole).buildEntityKey(#p0)", condition = "#result == 1")
 	})
-    int deleteById(Integer roleid);
+    int deleteById(Long roleid);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
@@ -49,7 +49,7 @@ public interface SysRoleDao{
 	int updateBatch(List<SysRole> entityList);
 	
 	@CacheEvict(allEntries=true, condition = "#result > 0")
-	int deleteBatch(Integer[] ids);
+	int deleteBatch(Long[] ids);
 	
 	@CacheEvict(key = "'selectAll'", condition = "#result > 0")
 	int insertBatch(List<SysRole> entityList);

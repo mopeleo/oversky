@@ -57,23 +57,33 @@
 
         <el-dialog title="角色信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible">
             <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="80px" :disabled="!edit">
-                <el-form-item label="角色ID" prop="roleid">
-                    <el-input v-model="sysrole.roleid" :disabled="!(edit&&editType ==='insert')"></el-input>
-                </el-form-item>
+                <el-input v-model="sysrole.roleid" type="hidden"></el-input>
                 <el-form-item label="角色名称" prop="rolename">
                     <el-input v-model="sysrole.rolename" :disabled="!(edit&&editType ==='insert')"></el-input>
                 </el-form-item>
                 <el-form-item label="角色状态" prop="status">
-                    <el-input v-model="sysrole.status"></el-input>
+                    <el-select v-model="sysrole.status" value-key="itemcode" placeholder="请选择">
+                        <el-option v-for="item in dictCache['1003']"
+                            :key="item.itemcode"
+                            :label="item.itemcode + ' - ' + item.itemname"
+                            :value="item.itemcode">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="角色类型" prop="roletype">
-                    <el-input v-model="sysrole.roletype"></el-input>
+                    <el-select v-model="sysrole.roletype" placeholder="请选择">
+                        <el-option v-for="item in dictCache['2006']"
+                            :key="item.itemcode"
+                            :label="item.itemcode + ' - ' + item.itemname"
+                            :value="item.itemcode">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
-                <el-form-item label="生效日期" prop="startdate">
-                    <el-input v-model="sysrole.startdate"></el-input>
-                </el-form-item>
-                <el-form-item label="失效日期" prop="enddate">
-                    <el-input v-model="sysrole.enddate"></el-input>
+                <el-form-item label="有效期" prop="startdate">
+                    <el-date-picker type="daterange" range-separator="至"
+                        start-placeholder="开始日期" end-placeholder="结束日期"
+                        v-model="dateArray" value-format="yyyyMMdd" >
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
@@ -95,36 +105,54 @@ export default{
         return {
             //表格当前页数据
             tableData: {},
+            //当前页面字典
+            dictCache:{},
             //查询条件及分页参数
             roleReq: {
                 pageSize: this.$pubdefine.PAGE_SIZE,
                 pageNum:1
             },
-
             //对话框表单属性
             dialogFormVisible: false,
             edit:true,
             editType:'insert',   // insert/update
+            //临时业务数据
             sysrole:null,
+            dateArray:[],
+            unioncode:this.$store.state.pub.user.unioncode,
+            operator:this.$store.state.pub.user.userid,
+            //验证规则
             rules:{
-                roleid:[
-                    {required:true, message:'角色ID不能为空', trigger:'blur'}
+                rolename:[
+                    {required:true, message:'角色名称不能为空', trigger:'blur'}
                 ],
-                status:{
-                    required:true, message:'角色名称不能为空',trigger:'blur'
+                startdate:{
+                    required:true, message:'角色生效日期不能为空',trigger:'blur'
+                },
+                enddate:{
+                    required:true, message:'角色失效日期不能为空',trigger:'blur'
                 }
             }
         }
     },
     mounted(){
+        // tools.initPageDict('1003,2006', this.dictCache);
         this.loadData();
+        this.loadDict();
     },
     methods:{
         loadData:function(){
             this.$api.Gurms.roleList(this.roleReq).then((res)=>{
-                this.tableData = res.data;
+                this.tableData = res;
             }).catch((err)=>{
-                tools.errTip(err.data ? err.data.message : err);
+                tools.errTip(err);
+            });
+        },
+        loadDict:function(){
+            this.$api.Gurms.getDictMap(this.unioncode, '1003,2006').then((res)=>{
+                this.dictCache = res.results;
+            }).catch((err)=>{
+                tools.errTip(err);
             });
         },
         //点击行响应
@@ -156,6 +184,7 @@ export default{
                 enddate:'',
                 creator:''
             };
+            this.dateArray = [];
             this.edit = true;
             this.editType = 'insert';
             // let that = this;
@@ -166,41 +195,49 @@ export default{
         handleDetail(index, row) {
             this.$api.Gurms.roleDetail(row.roleid).then(res =>{
                 this.dialogFormVisible = true;
-                this.sysrole = res.data;
+                this.sysrole = res;
+                this.dateArray[0] = this.sysrole.startdate;
+                this.dateArray[1] = this.sysrole.enddate;
                 this.edit = false;
                 this.editType = null;
             }).catch((err)=>{
-                tools.errTip(err.data ? err.data.message : err);
+                tools.errTip(err);
             });
         },
         handleEdit(index, row) {
             this.$api.Gurms.roleDetail(row.roleid).then(res =>{
                 this.dialogFormVisible = true;
-                this.sysrole = res.data;
+                this.sysrole = res;
+                this.dateArray[0] = this.sysrole.startdate;
+                this.dateArray[1] = this.sysrole.enddate;
                 this.edit = true;
                 this.editType = 'update';
             }).catch((err)=>{
-                tools.errTip(err.data ? err.data.message : err);
+                tools.errTip(err);
             });
         },
         handleDelete(index, row) {
             this.$api.Gurms.roleDelete(row.roleid).then((res)=>{
-                if(res.data === true){
+                if(res === true){
                     tools.succTip('删除成功');
                     this.$options.methods.loadData.bind(this)();
                 }else{
                     tools.errTip('删除失败');
                 }
             }).catch((err)=>{
-                tools.errTip(err.data ? err.data.message : err);
+                tools.errTip(err);
             });
         },
         onSubmit(formName){
+            if(this.dateArray.length == 2){
+                this.sysrole.startdate = this.dateArray[0];
+                this.sysrole.enddate = this.dateArray[1];
+            }
             this.$refs[formName].validate((valid)=>{
                 if(valid){
                     //从session赋值
-                    this.sysrole.unioncode = this.$store.state.pub.user.unioncode;
-                    this.sysrole.creator = this.$store.state.pub.user.userid;
+                    this.sysrole.unioncode = this.unioncode;
+                    this.sysrole.creator = this.operator;
                     var callAPI = null;
                     if(this.edit){
                         if(this.editType === 'update'){
@@ -210,13 +247,13 @@ export default{
                         }
                     }
                     callAPI.then((res)=>{
-                        tools.succTip(res.data.returnmsg);
-                        if(res.data.success === true){
+                        tools.succTip(res.returnmsg);
+                        if(res.success === true){
                             this.dialogFormVisible = false;
                             this.$options.methods.loadData.bind(this)();
                         }
                     }).catch((err)=>{
-                        tools.errTip(err.data ? err.data.message : err);
+                        tools.errTip(err);
                     });
                 }else{
                     return false;

@@ -6,8 +6,8 @@ public class SysOrgRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long orgid;    //机构ID
-	private String unioncode;    //unioncode
+	private Long orgid;    //机构ID,内部自动生成[identity]
+	private String unioncode;    //
 	private String shortname;    //机构简称
 	private String fullname;    //机构全称
 	private String linkman;    //联系人

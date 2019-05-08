@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* Created on:     2019/4/27 0:42:37                            */
+/* Created on:     2019/5/8 10:23:20                            */
 /*==============================================================*/
 
 
@@ -42,7 +42,11 @@ drop table sys_user_role cascade constraints;
 
 drop sequence seq_sys_logid;
 
-drop sequence seq_sys_user;
+drop sequence seq_sys_orgid;
+
+drop sequence seq_sys_roleid;
+
+drop sequence seq_sys_userid;
 
 create sequence seq_sys_logid
 increment by 1
@@ -50,7 +54,17 @@ start with 1
  maxvalue 9999999999999999
  minvalue 1;
 
-create sequence seq_sys_user
+create sequence seq_sys_orgid
+increment by 1
+start with 1
+maxvalue 99999999;
+
+create sequence seq_sys_roleid
+increment by 1
+start with 1
+maxvalue 99999999;
+
+create sequence seq_sys_userid
 increment by 1
 start with 1
  maxvalue 9999999999
@@ -62,7 +76,7 @@ start with 1
 create table sys_confirm 
 (
    confirmid            NUMBER(4)            default 0 not null,
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    tablename            VARCHAR2(32)         not null,
    checklevel           NUMBER(1)            default 0 not null,
    constraint PK_SYS_CONFIRM primary key (unioncode, tablename)
@@ -204,7 +218,7 @@ comment on column sys_confirm_user.checklevel is
 /*==============================================================*/
 create table sys_dict_index 
 (
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    dictcode             NUMBER(4)            default 0 not null,
    dictname             VARCHAR2(32)         not null,
    dictgroup            CHAR(1)              default '0' not null,
@@ -232,7 +246,7 @@ comment on column sys_dict_index.editflag is
 /*==============================================================*/
 create table sys_dict_value 
 (
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    dictcode             NUMBER(4)            default 0 not null,
    itemcode             VARCHAR2(8)          not null,
    itemname             VARCHAR2(32)         not null,
@@ -299,8 +313,8 @@ comment on column sys_menu.menucss is
 /*==============================================================*/
 create table sys_org 
 (
-   orgid                NUMBER(8)            not null,
-   unioncode            CHAR(4)              default '0000' not null,
+   orgid                INTEGER              not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    shortname            VARCHAR2(16)         not null,
    fullname             VARCHAR2(32),
    linkman              VARCHAR2(32),
@@ -309,7 +323,7 @@ create table sys_org
    address              VARCHAR2(64),
    postcode             VARCHAR2(8),
    email                VARCHAR2(64),
-   parentorg            NUMBER(8),
+   parentorg            INTEGER,
    orgtype              NUMBER(1)            default 0 not null,
    remark               VARCHAR2(32),
    constraint PK_SYS_ORG primary key (orgid)
@@ -319,7 +333,7 @@ comment on table sys_org is
 '[cache]';
 
 comment on column sys_org.orgid is
-'机构ID';
+'机构ID,内部自动生成[identity]';
 
 comment on column sys_org.shortname is
 '机构简称';
@@ -359,7 +373,7 @@ comment on column sys_org.remark is
 /*==============================================================*/
 create table sys_param 
 (
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    paramid              NUMBER(4)            default 0 not null,
    paramvalue           VARCHAR2(32)         not null,
    constraint PK_SYS_PARAM primary key (paramid, unioncode)
@@ -424,8 +438,8 @@ comment on column sys_param_info.valuelist is
 /*==============================================================*/
 create table sys_role 
 (
-   unioncode            CHAR(4)              default '0000' not null,
-   roleid               NUMBER(4)            default 0 not null,
+   roleid               INTEGER              not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    rolename             VARCHAR2(32)         not null,
    status               NUMBER(1)            default 0 not null,
    roletype             NUMBER(1)            default 0 not null,
@@ -439,7 +453,7 @@ comment on table sys_role is
 '[cache]';
 
 comment on column sys_role.roleid is
-'角色ID';
+'角色ID,内部自动生成[identity]';
 
 comment on column sys_role.rolename is
 '角色名称';
@@ -464,7 +478,7 @@ comment on column sys_role.creator is
 /*==============================================================*/
 create table sys_role_menu 
 (
-   roleid               NUMBER(8)            default 0 not null,
+   roleid               INTEGER              not null,
    menuid               VARCHAR2(8)          not null,
    constraint PK_SYS_ROLE_MENU primary key (roleid, menuid)
 );
@@ -474,7 +488,7 @@ create table sys_role_menu
 /*==============================================================*/
 create table sys_sno 
 (
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    noid                 NUMBER(4)            default 0 not null,
    noname               VARCHAR2(32)         not null,
    initvalue            INTEGER              not null,
@@ -531,7 +545,7 @@ comment on column sys_sno.suffix is
 create table sys_user 
 (
    userid               INTEGER              not null,
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    username             VARCHAR2(32)         not null,
    loginid              VARCHAR2(32)         not null,
    loginpasswd          CHAR(32)             not null,
@@ -539,7 +553,7 @@ create table sys_user
    passwdvaliddate      CHAR(8)              not null,
    mobileno             VARCHAR2(16)         not null,
    email                VARCHAR2(64),
-   orgid                NUMBER(8)            not null,
+   orgid                INTEGER              not null,
    idtype               CHAR(1)              default '0',
    idcode               VARCHAR2(32),
    idname               VARCHAR2(32),
@@ -612,7 +626,7 @@ comment on column sys_user.canceldate is
 create table sys_user_actlog 
 (
    logid                INTEGER              not null,
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    userid               INTEGER              not null,
    menuid               VARCHAR2(8),
    requrl               VARCHAR2(32),
@@ -709,7 +723,7 @@ comment on column sys_user_info.education is
 create table sys_user_login 
 (
    logid                INTEGER              not null,
-   unioncode            CHAR(4)              default '0000' not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    userid               INTEGER              default 0 not null,
    logindate            CHAR(8),
    logintime            CHAR(6),
@@ -751,7 +765,7 @@ comment on column sys_user_login.summary is
 create table sys_user_role 
 (
    userid               INTEGER              not null,
-   roleid               NUMBER(8)            not null,
+   roleid               INTEGER              not null,
    constraint PK_SYS_USER_ROLE primary key (userid, roleid)
 );
 

@@ -6,7 +6,7 @@ public class SysSnoReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //unioncode
+	private String unioncode;    //
 	private Integer noid;    //流水号ID
 	private String noname;    //流水号名称
 	private Long initvalue;    //初始值

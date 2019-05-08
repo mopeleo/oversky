@@ -6,9 +6,9 @@ import java.util.List;
 public interface SysUserRoleDao{
 
 	
-    SysUserRole getById(Long userid, Integer roleid);
+    SysUserRole getById(Long userid, Long roleid);
 
-    int deleteById(Long userid, Integer roleid);
+    int deleteById(Long userid, Long roleid);
 
     int count(SysUserRole where);
     

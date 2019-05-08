@@ -1,5 +1,7 @@
 import { Message,MessageBox } from "element-ui";
 import router from '../router';
+import PUBDEFINE from './pubdefine';
+import api from '../api';
 
 /**
   * 跳转登录页
@@ -17,7 +19,13 @@ export function toLogin() {
 /**
 * 错误弹窗提示信息
 */
-export function errTip(msg){
+export function errTip(err){
+    let msg = null;
+    if(typeof(err) === 'string'){
+        msg = err;
+    }else if(typeof(err) === 'object'){
+        msg = err.message ? err.message : err.returnmsg;
+    }
     Message({
         showClose: true,     //是否显示关闭按钮,默认false
         message: msg,        //消息文字
@@ -87,4 +95,42 @@ export function getComponentNameFromTab(tab) {
         routeName = tab.routeName.replace(/\//, '_');
     }
     return routeName;
+}
+
+//TODO 待完善
+export function initPageDict(keys, pageDict) {
+    let unioncode = this.getUnioncode();
+    let dictKey = unioncode + "_" + keys.replace(/,/, '_');
+    let dictCache = localStorage.getItem(PUBDEFINE.KEY_DICT_CACHE);
+    if(dictCache){
+        dictCache = JSON.parse(dictCache);
+    }else{
+        dictCache = {};
+    }
+
+    let queryDict = dictCache[dictKey];
+    if(queryDict){
+        pageDict = queryDict;
+            alert(JSON.stringify(pageDict['1003']));
+    }else{
+        api.Gurms.getDictMap(unioncode, keys).then((res)=>{
+            queryDict = res.results;
+            dictCache[dictKey] = queryDict;
+            localStorage.setItem(PUBDEFINE.KEY_DICT_CACHE, JSON.stringify(dictCache));
+            pageDict = queryDict;
+            alert(pageDict['1003']);
+        }).catch((err)=>{
+            this.errTip(err);
+        });
+    }
+}
+
+export function getUnioncode() {
+    let unioncode='';
+    let sessionUser = localStorage.getItem(PUBDEFINE.KEY_USER);
+    if (sessionUser) {
+        unioncode = JSON.parse(sessionUser).unioncode;
+    }
+
+    return unioncode;
 }

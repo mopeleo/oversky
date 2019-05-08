@@ -72,7 +72,7 @@ const mutations = {
             }
         }
 
-        if(state.openTabs.length >= 10){
+        if(state.openTabs.length >= PUBDEFINE.TAB_SIZE){
             tools.confirmTip("打开的标签过多,将删除之前所有标签,是否继续?", function(){
                 state.openTabs = [];
                 state.openTabs.push(state.indexTab);

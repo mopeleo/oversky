@@ -9,11 +9,11 @@ public interface SysRoleService extends BaseService{
 
 	SysRoleRes insert(SysRoleReq roleReq);
 	
-	boolean delete(Integer roleid);
+	boolean delete(Long roleid);
 	
 	SysRoleRes update(SysRoleReq roleReq);
 	
-	SysRoleRes getById(Integer roleid);
+	SysRoleRes getById(Long roleid);
 	
 	BaseResListDto<SysRoleRes> pageSysRole(SysRoleReq roleReq);
 }

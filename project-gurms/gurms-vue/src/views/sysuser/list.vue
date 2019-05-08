@@ -87,7 +87,7 @@ export default{
     methods:{
         loadData:function(){
             this.$api.Gurms.userList(this.userReq).then((res)=>{
-                this.tableData = res.data;
+                this.tableData = res;
             }).catch((err)=>{
                 tools.errTip(err);
             });
@@ -123,14 +123,14 @@ export default{
         },
         handleDelete(index, row) {
             this.$api.Gurms.userDelete(row.userid).then((res)=>{
-                if(res.data === true){
+                if(res === true){
                     this.$message({message: '删除成功', type: 'success', showClose: true});
                     this.$options.methods.loadData.bind(this)();
                 }else{
                     this.$message({message: '删除失败', type: 'error', showClose: true, duration: 0});
                 }
             }).catch((err)=>{
-                tools.errTip(err.data ? err.data.message : err);
+                tools.errTip(err);
             });
         }
     }

@@ -6,8 +6,8 @@ public class SysRoleRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //unioncode
-	private Integer roleid;    //角色ID
+	private Long roleid;    //角色ID,内部自动生成[identity]
+	private String unioncode;    //
 	private String rolename;    //角色名称
 	private Integer status;    //角色状态，0-无效，1-有效
 	private Integer roletype;    //角色类型，0-公共，1-私有
@@ -15,20 +15,20 @@ public class SysRoleRes extends BaseResDto {
 	private String enddate;    //角色失效日期
 	private Long creator;    //创建人
 
+	public Long getRoleid() {
+		return this.roleid;
+	}
+
+	public void setRoleid(Long roleid) {
+		this.roleid = roleid;
+	}
+
 	public String getUnioncode() {
 		return this.unioncode;
 	}
 
 	public void setUnioncode(String unioncode) {
 		this.unioncode = unioncode;
-	}
-
-	public Integer getRoleid() {
-		return this.roleid;
-	}
-
-	public void setRoleid(Integer roleid) {
-		this.roleid = roleid;
 	}
 
 	public String getRolename() {
@@ -86,8 +86,8 @@ public class SysRoleRes extends BaseResDto {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-		sb.append(", unioncode=").append(unioncode);
 		sb.append(", roleid=").append(roleid);
+		sb.append(", unioncode=").append(unioncode);
 		sb.append(", rolename=").append(rolename);
 		sb.append(", status=").append(status);
 		sb.append(", roletype=").append(roletype);

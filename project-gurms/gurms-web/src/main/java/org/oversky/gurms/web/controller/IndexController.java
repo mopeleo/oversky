@@ -1,10 +1,10 @@
 package org.oversky.gurms.web.controller;
 
-import org.oversky.gurms.common.json.JacksonUtils;
 import org.oversky.gurms.common.jwt.JwtTokenUtil;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.service.IndexService;
+import org.oversky.util.json.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

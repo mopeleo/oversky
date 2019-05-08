@@ -6,8 +6,8 @@ public class SysConfirmReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer confirmid;    //confirmid
-	private String unioncode;    //unioncode
+	private Integer confirmid;    //
+	private String unioncode;    //
 	private String tablename;    //复核数据表名
 	private Integer checklevel;    //复核级别
 

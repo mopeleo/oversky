@@ -3,13 +3,13 @@ package org.oversky.gurms.web.filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.oversky.gurms.common.json.JacksonUtils;
 import org.oversky.gurms.common.jwt.JwtTokenUtil;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.gurms.web.config.WebException;
+import org.oversky.util.json.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 

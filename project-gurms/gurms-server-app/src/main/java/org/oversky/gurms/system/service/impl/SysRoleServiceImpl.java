@@ -3,28 +3,45 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
-import org.oversky.base.util.BeanCopyUtils;
 import org.oversky.gurms.system.dao.SysRoleDao;
 import org.oversky.gurms.system.dto.request.SysRoleReq;
 import org.oversky.gurms.system.dto.response.SysRoleRes;
 import org.oversky.gurms.system.entity.SysRole;
+import org.oversky.gurms.system.ext.dao.UniqueCheckDao;
 import org.oversky.gurms.system.service.SysRoleService;
+import org.oversky.util.bean.BeanCopyUtils;
+import org.oversky.valid.GSAValid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+/**
+ * 
+ * @author Blue
+ *
+ */
 @Service
 public class SysRoleServiceImpl implements SysRoleService {
 
 	@Autowired
 	private SysRoleDao roleDao;
 	
+	@Autowired
+	private UniqueCheckDao uniqueDao;
+	
+	@Override
+	@GSAValid(type=SysRoleReq.class)
 	public SysRoleRes insert(SysRoleReq roleReq) {
 		SysRoleRes res = new SysRoleRes();
+		//rolename 唯一性检查
+		if(uniqueDao.existRoleName(roleReq.getRolename()) > 0) {
+			res.failure("角色名称["+roleReq.getRolename()+"]已存在");
+			return res;
+		}
+
 		SysRole role = BeanCopyUtils.convert(roleReq, SysRole.class);
-		
 		if(roleDao.insert(role) == 1) {
 			res.success("新增成功");
 		}else {
@@ -34,7 +51,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
-	public boolean delete(Integer roleid) {
+	public boolean delete(Long roleid) {
 		// TODO Auto-generated method stub
 		return roleDao.deleteById(roleid) == 1;
 	}
@@ -52,7 +69,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return res;
 	}
 
-	public SysRoleRes getById(Integer roleid) {
+	@Override
+	public SysRoleRes getById(Long roleid) {
 		return BeanCopyUtils.convert(roleDao.getById(roleid), SysRoleRes.class);
 	}
 

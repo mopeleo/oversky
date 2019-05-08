@@ -11,8 +11,9 @@ public class SysMenuReq extends BaseReqDto {
 	private String menuurl;    //菜单地址
 	private String parentmenu;    //上级菜单
 	private Integer menutype;    //菜单类型0-目录，1-菜单，2-页面链接
-	private Integer opentype;    //打开方式，0-本页刷新，1-打开新页，2-弹出窗口
+	private Integer accesstype;    //访问权限：0-可任意访问，1-登录访问，2-需授权
 	private Integer status;    //菜单状态，0-无效，1-有效
+	private String menucss;    //菜单样式
 
 	public String getMenuid() {
 		return this.menuid;
@@ -54,12 +55,12 @@ public class SysMenuReq extends BaseReqDto {
 		this.menutype = menutype;
 	}
 
-	public Integer getOpentype() {
-		return this.opentype;
+	public Integer getAccesstype() {
+		return this.accesstype;
 	}
 
-	public void setOpentype(Integer opentype) {
-		this.opentype = opentype;
+	public void setAccesstype(Integer accesstype) {
+		this.accesstype = accesstype;
 	}
 
 	public Integer getStatus() {
@@ -68,6 +69,14 @@ public class SysMenuReq extends BaseReqDto {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getMenucss() {
+		return this.menucss;
+	}
+
+	public void setMenucss(String menucss) {
+		this.menucss = menucss;
 	}
 
 
@@ -82,8 +91,9 @@ public class SysMenuReq extends BaseReqDto {
 		sb.append(", menuurl=").append(menuurl);
 		sb.append(", parentmenu=").append(parentmenu);
 		sb.append(", menutype=").append(menutype);
-		sb.append(", opentype=").append(opentype);
+		sb.append(", accesstype=").append(accesstype);
 		sb.append(", status=").append(status);
+		sb.append(", menucss=").append(menucss);
         sb.append("]");
         return sb.toString();
 	}
