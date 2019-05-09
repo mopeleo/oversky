@@ -6,19 +6,19 @@
         <id column="dictcode" jdbcType="INTEGER" property="dictcode" />
         <result column="dictname" jdbcType="VARCHAR" property="dictname" />
         <result column="dictgroup" jdbcType="VARCHAR" property="dictgroup" />
-        <result column="editflag" jdbcType="INTEGER" property="editflag" />
+        <result column="editflag" jdbcType="VARCHAR" property="editflag" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysDictIndex">
         insert into sys_dict_index (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{dictname, jdbcType=VARCHAR}, #{dictgroup, jdbcType=VARCHAR}, #{editflag, jdbcType=INTEGER})
+        values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{dictname, jdbcType=VARCHAR}, #{dictgroup, jdbcType=VARCHAR}, #{editflag, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_dict_index (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.unioncode, jdbcType=VARCHAR}, #{item.dictcode, jdbcType=INTEGER}, #{item.dictname, jdbcType=VARCHAR}, #{item.dictgroup, jdbcType=VARCHAR}, #{item.editflag, jdbcType=INTEGER})
+		(#{item.unioncode, jdbcType=VARCHAR}, #{item.dictcode, jdbcType=INTEGER}, #{item.dictname, jdbcType=VARCHAR}, #{item.dictgroup, jdbcType=VARCHAR}, #{item.editflag, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -57,7 +57,7 @@
         update sys_dict_index set 
                dictname = #{dictname, jdbcType=VARCHAR}, 
                dictgroup = #{dictgroup, jdbcType=VARCHAR}, 
-               editflag = #{editflag, jdbcType=INTEGER}
+               editflag = #{editflag, jdbcType=VARCHAR}
 		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER}
     </update>
 
@@ -71,7 +71,7 @@
 				dictgroup = #{dictgroup, jdbcType=VARCHAR},
 		    </if>
 		    <if test="editflag != null">
-				editflag = #{editflag, jdbcType=INTEGER},
+				editflag = #{editflag, jdbcType=VARCHAR},
 		    </if>
 		</set>
 		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER}
@@ -96,8 +96,8 @@
 			<if test="dictgroup != null and dictgroup != ''">
 				and dictgroup = #{dictgroup, jdbcType=VARCHAR}
 			</if>
-			<if test="editflag != null">
-				and editflag = #{editflag, jdbcType=INTEGER}
+			<if test="editflag != null and editflag != ''">
+				and editflag = #{editflag, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

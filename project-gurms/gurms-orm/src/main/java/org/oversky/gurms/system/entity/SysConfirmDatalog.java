@@ -8,16 +8,16 @@ public class SysConfirmDatalog extends BaseEntity{
 
 	private Long logid;    //数据流水号[identity]
 	private Integer confirmid;    //复核类型ID
-	private Integer edittype;    //行为（1-insert，2-update，3-delete）
+	private String edittype;    //行为（1-insert，2-update，3-delete）
 	private String dataid;    //数据id，json
 	private String fulldata;    //要复核的完整数据，json字符串
 	private String extdata;    //fulldata保存不下的，可以拆分存在这里
 	private Long editer;    //编辑人
 	private String editdate;    //编辑日期
 	private String edittime;    //编辑时间
-	private Integer currentstatus;    //当前复核状态（0-未复核，1-复核通过，2-复核不通过）
+	private String currentstatus;    //当前复核状态（0-未复核，1-复核通过，2-复核不通过）
 	private Integer currentlevel;    //当前复核级别
-	private Integer endflag;    //完结标志（0-未结束，1-结束）
+	private String endflag;    //完结标志（0-未结束，1-结束）
 
 	public Long getLogid() {
 		return this.logid;
@@ -35,11 +35,11 @@ public class SysConfirmDatalog extends BaseEntity{
 		this.confirmid = confirmid;
 	}
 
-	public Integer getEdittype() {
+	public String getEdittype() {
 		return this.edittype;
 	}
 
-	public void setEdittype(Integer edittype) {
+	public void setEdittype(String edittype) {
 		this.edittype = edittype;
 	}
 
@@ -91,11 +91,11 @@ public class SysConfirmDatalog extends BaseEntity{
 		this.edittime = edittime;
 	}
 
-	public Integer getCurrentstatus() {
+	public String getCurrentstatus() {
 		return this.currentstatus;
 	}
 
-	public void setCurrentstatus(Integer currentstatus) {
+	public void setCurrentstatus(String currentstatus) {
 		this.currentstatus = currentstatus;
 	}
 
@@ -107,11 +107,11 @@ public class SysConfirmDatalog extends BaseEntity{
 		this.currentlevel = currentlevel;
 	}
 
-	public Integer getEndflag() {
+	public String getEndflag() {
 		return this.endflag;
 	}
 
-	public void setEndflag(Integer endflag) {
+	public void setEndflag(String endflag) {
 		this.endflag = endflag;
 	}
 

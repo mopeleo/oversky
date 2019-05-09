@@ -9,7 +9,7 @@ public class UserLoginReq extends BaseReqDto {
 	private Long userid;
 	private String loginid;
 	private String passwd;
-	private Integer logintype;
+	private String logintype;
 	
 	public String getLoginid() {
 		return loginid;
@@ -24,10 +24,10 @@ public class UserLoginReq extends BaseReqDto {
 		this.passwd = passwd;
 	}
 	
-	public Integer getLogintype() {
+	public String getLogintype() {
 		return logintype;
 	}
-	public void setLogintype(Integer logintype) {
+	public void setLogintype(String logintype) {
 		this.logintype = logintype;
 	}
 	public Long getUserid() {

@@ -9,7 +9,7 @@ public class SysConfirmReq extends BaseReqDto {
 	private Integer confirmid;    //
 	private String unioncode;    //
 	private String tablename;    //复核数据表名
-	private Integer checklevel;    //复核级别
+	private Integer checklevel;    //复核级别,递增
 
 	public Integer getConfirmid() {
 		return this.confirmid;

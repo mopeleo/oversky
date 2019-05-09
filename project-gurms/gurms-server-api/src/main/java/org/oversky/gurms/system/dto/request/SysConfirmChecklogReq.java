@@ -9,10 +9,10 @@ public class SysConfirmChecklogReq extends BaseReqDto {
 	private Long logid;    //复核流水号[identity]
 	private Long datalog;    //复核数据流水号
 	private Long checker;    //复核人
-	private Integer checklevel;    //复核级别
+	private Integer checklevel;    //复核级别，递增
 	private String checkdate;    //复核日期
 	private String checktime;    //复核时间
-	private Integer status;    //复核状态（0-未复核，1-复核通过，2-复核不通过）
+	private String status;    //复核状态（0-未复核，1-复核通过，2-复核不通过）
 	private String summary;    //复核意见
 
 	public Long getLogid() {
@@ -63,11 +63,11 @@ public class SysConfirmChecklogReq extends BaseReqDto {
 		this.checktime = checktime;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

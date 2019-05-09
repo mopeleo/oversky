@@ -17,7 +17,7 @@
         <result column="idname" jdbcType="VARCHAR" property="idname" />
         <result column="logindate" jdbcType="VARCHAR" property="logindate" />
         <result column="logintime" jdbcType="VARCHAR" property="logintime" />
-        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
         <result column="loginerror" jdbcType="INTEGER" property="loginerror" />
         <result column="opendate" jdbcType="VARCHAR" property="opendate" />
         <result column="canceldate" jdbcType="VARCHAR" property="canceldate" />
@@ -25,14 +25,14 @@
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUser" useGeneratedKeys="true" keyProperty="userid">
         insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate, canceldate)
-        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=DECIMAL}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=INTEGER}, #{loginerror, jdbcType=INTEGER}, #{opendate, jdbcType=VARCHAR}, #{canceldate, jdbcType=VARCHAR})
+        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=DECIMAL}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{loginerror, jdbcType=INTEGER}, #{opendate, jdbcType=VARCHAR}, #{canceldate, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="userid">
 		insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate, canceldate)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=DECIMAL}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=INTEGER}, #{item.loginerror, jdbcType=INTEGER}, #{item.opendate, jdbcType=VARCHAR}, #{item.canceldate, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=DECIMAL}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.loginerror, jdbcType=INTEGER}, #{item.opendate, jdbcType=VARCHAR}, #{item.canceldate, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -83,7 +83,7 @@
                idname = #{idname, jdbcType=VARCHAR}, 
                logindate = #{logindate, jdbcType=VARCHAR}, 
                logintime = #{logintime, jdbcType=VARCHAR}, 
-               status = #{status, jdbcType=INTEGER}, 
+               status = #{status, jdbcType=VARCHAR}, 
                loginerror = #{loginerror, jdbcType=INTEGER}, 
                opendate = #{opendate, jdbcType=VARCHAR}, 
                canceldate = #{canceldate, jdbcType=VARCHAR}
@@ -136,7 +136,7 @@
 				logintime = #{logintime, jdbcType=VARCHAR},
 		    </if>
 		    <if test="status != null">
-				status = #{status, jdbcType=INTEGER},
+				status = #{status, jdbcType=VARCHAR},
 		    </if>
 		    <if test="loginerror != null">
 				loginerror = #{loginerror, jdbcType=INTEGER},
@@ -297,7 +297,7 @@
 	        <trim prefix="status = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.status != null">
-	                    when userid = #{item.userid} then #{item.status, jdbcType=INTEGER}
+	                    when userid = #{item.userid} then #{item.status, jdbcType=VARCHAR}
 	                </if>
 	                <if test="item.status == null">
 	                    when userid = #{item.userid} then status
@@ -400,8 +400,8 @@
 			<if test="logintime != null and logintime != ''">
 				and logintime = #{logintime, jdbcType=VARCHAR}
 			</if>
-			<if test="status != null">
-				and status = #{status, jdbcType=INTEGER}
+			<if test="status != null and status != ''">
+				and status = #{status, jdbcType=VARCHAR}
 			</if>
 			<if test="loginerror != null">
 				and loginerror = #{loginerror, jdbcType=INTEGER}

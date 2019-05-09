@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* Created on:     2019/5/8 10:23:20                            */
+/* Created on:     2019/5/9 11:24:24                            */
 /*==============================================================*/
 
 
@@ -57,12 +57,12 @@ start with 1
 create sequence seq_sys_orgid
 increment by 1
 start with 1
-maxvalue 99999999;
+ maxvalue 99999999;
 
 create sequence seq_sys_roleid
 increment by 1
 start with 1
-maxvalue 99999999;
+ maxvalue 99999999;
 
 create sequence seq_sys_userid
 increment by 1
@@ -89,7 +89,7 @@ comment on column sys_confirm.tablename is
 '复核数据表名';
 
 comment on column sys_confirm.checklevel is
-'复核级别';
+'复核级别,递增';
 
 /*==============================================================*/
 /* Table: sys_confirm_checklog                                  */
@@ -102,7 +102,7 @@ create table sys_confirm_checklog
    checklevel           NUMBER(1)            default 0 not null,
    checkdate            CHAR(8)              not null,
    checktime            CHAR(6)              not null,
-   status               NUMBER(1)            default 0 not null,
+   status               CHAR(1)              default '0' not null,
    summary              VARCHAR2(256),
    constraint PK_SYS_CONFIRM_CHECKLOG primary key (logid)
 );
@@ -117,7 +117,7 @@ comment on column sys_confirm_checklog.checker is
 '复核人';
 
 comment on column sys_confirm_checklog.checklevel is
-'复核级别';
+'复核级别，递增';
 
 comment on column sys_confirm_checklog.checkdate is
 '复核日期';
@@ -138,16 +138,16 @@ create table sys_confirm_datalog
 (
    logid                INTEGER              not null,
    confirmid            NUMBER(4)            default 0 not null,
-   edittype             NUMBER(1)            default 0 not null,
+   edittype             CHAR(1)              default '0' not null,
    dataid               VARCHAR2(256),
    fulldata             VARCHAR2(2048),
    extdata              VARCHAR2(2048),
    editer               INTEGER              not null,
    editdate             CHAR(8)              not null,
    edittime             CHAR(6)              not null,
-   currentstatus        NUMBER(1)            default 0 not null,
+   currentstatus        CHAR(1)              default '0' not null,
    currentlevel         NUMBER(1)            default 0 not null,
-   endflag              NUMBER(1)            default 0 not null,
+   endflag              CHAR(1)              default '0' not null,
    constraint PK_SYS_CONFIRM_DATALOG primary key (logid)
 );
 
@@ -222,7 +222,7 @@ create table sys_dict_index
    dictcode             NUMBER(4)            default 0 not null,
    dictname             VARCHAR2(32)         not null,
    dictgroup            CHAR(1)              default '0' not null,
-   editflag             NUMBER(1)            default 0 not null,
+   editflag             CHAR(1)              default '0' not null,
    constraint PK_SYS_DICT_INDEX primary key (dictcode, unioncode)
 );
 
@@ -274,9 +274,9 @@ create table sys_menu
    menuname             VARCHAR2(16)         not null,
    menuurl              VARCHAR2(32),
    parentmenu           VARCHAR2(8),
-   menutype             NUMBER(1)            default 0 not null,
-   accesstype           NUMBER(1)            default 0 not null,
-   status               NUMBER(1)            default 0 not null,
+   menutype             CHAR(1)              default '0' not null,
+   accesstype           CHAR(1)              default '0' not null,
+   status               CHAR(1)              default '0' not null,
    menucss              VARCHAR2(32),
    constraint PK_SYS_MENU primary key (menuid)
 );
@@ -324,7 +324,7 @@ create table sys_org
    postcode             VARCHAR2(8),
    email                VARCHAR2(64),
    parentorg            INTEGER,
-   orgtype              NUMBER(1)            default 0 not null,
+   orgtype              CHAR(1)              default '0' not null,
    remark               VARCHAR2(32),
    constraint PK_SYS_ORG primary key (orgid)
 );
@@ -390,7 +390,7 @@ create table sys_param_info
    paramid              NUMBER(4)            default 0 not null,
    paramname            VARCHAR2(32)         not null,
    paramgroup           CHAR(1)              default '0' not null,
-   edittype             NUMBER(1)            default 0 not null,
+   edittype             CHAR(1)              default '0' not null,
    initvalue            VARCHAR2(32)         not null,
    valuelength          NUMBER(4)            default 0,
    texttitle            VARCHAR2(32),
@@ -441,8 +441,8 @@ create table sys_role
    roleid               INTEGER              not null,
    unioncode            VARCHAR2(8)          default '0000' not null,
    rolename             VARCHAR2(32)         not null,
-   status               NUMBER(1)            default 0 not null,
-   roletype             NUMBER(1)            default 0 not null,
+   status               CHAR(1)              default '0' not null,
+   roletype             CHAR(1)              default '0' not null,
    startdate            CHAR(8)              not null,
    enddate              CHAR(8)              not null,
    creator              INTEGER              not null,
@@ -493,10 +493,10 @@ create table sys_sno
    noname               VARCHAR2(32)         not null,
    initvalue            INTEGER              not null,
    nextvalue            INTEGER              not null,
-   fixedflag            NUMBER(1)            default 0 not null,
+   fixedflag            CHAR(1)              default '0' not null,
    fixedlength          NUMBER(4)            default 0,
    fillchar             CHAR(1)              default '0',
-   notype               NUMBER(1)            default 0 not null,
+   notype               CHAR(1)              default '0' not null,
    nodate               CHAR(8),
    prefix               VARCHAR2(8),
    suffix               VARCHAR2(8),
@@ -559,7 +559,7 @@ create table sys_user
    idname               VARCHAR2(32),
    logindate            CHAR(8),
    logintime            CHAR(6),
-   status               NUMBER(1)            default 0 not null,
+   status               CHAR(1)              default '0' not null,
    loginerror           NUMBER(4)            default 0 not null,
    opendate             CHAR(8),
    canceldate           CHAR(8),
@@ -634,7 +634,7 @@ create table sys_user_actlog
    reqdata              VARCHAR2(256),
    actdate              CHAR(8)              not null,
    acttime              CHAR(6)              not null,
-   accesstype           NUMBER(1)            default 0 not null,
+   accesstype           CHAR(1)              default '0' not null,
    ipaddress            VARCHAR2(16),
    constraint PK_SYS_USER_ACTLOG primary key (logid)
 );
@@ -729,8 +729,8 @@ create table sys_user_login
    logintime            CHAR(6),
    loginpasswd          CHAR(32)             not null,
    loginip              VARCHAR2(16),
-   logintype            NUMBER(1)            default 0 not null,
-   loginresult          NUMBER(1)            default 0 not null,
+   logintype            CHAR(1)              default '0' not null,
+   loginresult          CHAR(1)              default '0' not null,
    summary              VARCHAR2(32),
    constraint PK_SYS_USER_LOGIN primary key (logid)
 );

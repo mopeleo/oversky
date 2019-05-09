@@ -7,10 +7,10 @@
         <result column="noname" jdbcType="VARCHAR" property="noname" />
         <result column="initvalue" jdbcType="DECIMAL" property="initvalue" />
         <result column="nextvalue" jdbcType="DECIMAL" property="nextvalue" />
-        <result column="fixedflag" jdbcType="INTEGER" property="fixedflag" />
+        <result column="fixedflag" jdbcType="VARCHAR" property="fixedflag" />
         <result column="fixedlength" jdbcType="INTEGER" property="fixedlength" />
         <result column="fillchar" jdbcType="VARCHAR" property="fillchar" />
-        <result column="notype" jdbcType="INTEGER" property="notype" />
+        <result column="notype" jdbcType="VARCHAR" property="notype" />
         <result column="nodate" jdbcType="VARCHAR" property="nodate" />
         <result column="prefix" jdbcType="VARCHAR" property="prefix" />
         <result column="suffix" jdbcType="VARCHAR" property="suffix" />
@@ -18,14 +18,14 @@
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysSno">
         insert into sys_sno (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{unioncode, jdbcType=VARCHAR}, #{noid, jdbcType=INTEGER}, #{noname, jdbcType=VARCHAR}, #{initvalue, jdbcType=DECIMAL}, #{nextvalue, jdbcType=DECIMAL}, #{fixedflag, jdbcType=INTEGER}, #{fixedlength, jdbcType=INTEGER}, #{fillchar, jdbcType=VARCHAR}, #{notype, jdbcType=INTEGER}, #{nodate, jdbcType=VARCHAR}, #{prefix, jdbcType=VARCHAR}, #{suffix, jdbcType=VARCHAR})
+        values (#{unioncode, jdbcType=VARCHAR}, #{noid, jdbcType=INTEGER}, #{noname, jdbcType=VARCHAR}, #{initvalue, jdbcType=DECIMAL}, #{nextvalue, jdbcType=DECIMAL}, #{fixedflag, jdbcType=VARCHAR}, #{fixedlength, jdbcType=INTEGER}, #{fillchar, jdbcType=VARCHAR}, #{notype, jdbcType=VARCHAR}, #{nodate, jdbcType=VARCHAR}, #{prefix, jdbcType=VARCHAR}, #{suffix, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_sno (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.unioncode, jdbcType=VARCHAR}, #{item.noid, jdbcType=INTEGER}, #{item.noname, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=DECIMAL}, #{item.nextvalue, jdbcType=DECIMAL}, #{item.fixedflag, jdbcType=INTEGER}, #{item.fixedlength, jdbcType=INTEGER}, #{item.fillchar, jdbcType=VARCHAR}, #{item.notype, jdbcType=INTEGER}, #{item.nodate, jdbcType=VARCHAR}, #{item.prefix, jdbcType=VARCHAR}, #{item.suffix, jdbcType=VARCHAR})
+		(#{item.unioncode, jdbcType=VARCHAR}, #{item.noid, jdbcType=INTEGER}, #{item.noname, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=DECIMAL}, #{item.nextvalue, jdbcType=DECIMAL}, #{item.fixedflag, jdbcType=VARCHAR}, #{item.fixedlength, jdbcType=INTEGER}, #{item.fillchar, jdbcType=VARCHAR}, #{item.notype, jdbcType=VARCHAR}, #{item.nodate, jdbcType=VARCHAR}, #{item.prefix, jdbcType=VARCHAR}, #{item.suffix, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -65,10 +65,10 @@
                noname = #{noname, jdbcType=VARCHAR}, 
                initvalue = #{initvalue, jdbcType=DECIMAL}, 
                nextvalue = #{nextvalue, jdbcType=DECIMAL}, 
-               fixedflag = #{fixedflag, jdbcType=INTEGER}, 
+               fixedflag = #{fixedflag, jdbcType=VARCHAR}, 
                fixedlength = #{fixedlength, jdbcType=INTEGER}, 
                fillchar = #{fillchar, jdbcType=VARCHAR}, 
-               notype = #{notype, jdbcType=INTEGER}, 
+               notype = #{notype, jdbcType=VARCHAR}, 
                nodate = #{nodate, jdbcType=VARCHAR}, 
                prefix = #{prefix, jdbcType=VARCHAR}, 
                suffix = #{suffix, jdbcType=VARCHAR}
@@ -88,7 +88,7 @@
 				nextvalue = #{nextvalue, jdbcType=DECIMAL},
 		    </if>
 		    <if test="fixedflag != null">
-				fixedflag = #{fixedflag, jdbcType=INTEGER},
+				fixedflag = #{fixedflag, jdbcType=VARCHAR},
 		    </if>
 		    <if test="fixedlength != null">
 				fixedlength = #{fixedlength, jdbcType=INTEGER},
@@ -97,7 +97,7 @@
 				fillchar = #{fillchar, jdbcType=VARCHAR},
 		    </if>
 		    <if test="notype != null">
-				notype = #{notype, jdbcType=INTEGER},
+				notype = #{notype, jdbcType=VARCHAR},
 		    </if>
 		    <if test="nodate != null">
 				nodate = #{nodate, jdbcType=VARCHAR},
@@ -134,8 +134,8 @@
 			<if test="nextvalue != null">
 				and nextvalue = #{nextvalue, jdbcType=DECIMAL}
 			</if>
-			<if test="fixedflag != null">
-				and fixedflag = #{fixedflag, jdbcType=INTEGER}
+			<if test="fixedflag != null and fixedflag != ''">
+				and fixedflag = #{fixedflag, jdbcType=VARCHAR}
 			</if>
 			<if test="fixedlength != null">
 				and fixedlength = #{fixedlength, jdbcType=INTEGER}
@@ -143,8 +143,8 @@
 			<if test="fillchar != null and fillchar != ''">
 				and fillchar = #{fillchar, jdbcType=VARCHAR}
 			</if>
-			<if test="notype != null">
-				and notype = #{notype, jdbcType=INTEGER}
+			<if test="notype != null and notype != ''">
+				and notype = #{notype, jdbcType=VARCHAR}
 			</if>
 			<if test="nodate != null and nodate != ''">
 				and nodate = #{nodate, jdbcType=VARCHAR}

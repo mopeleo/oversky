@@ -21,7 +21,7 @@ public class SysUserReq extends BaseReqDto {
 	private String idname;    //证件姓名
 	private String logindate;    //上次登录日期
 	private String logintime;    //上次登录时间
-	private Integer status;    //用户状态，0，已注销；1，正常；2，锁定
+	private String status;    //用户状态，0，已注销；1，正常；2，锁定
 	private Integer loginerror;    //连续登录失败次数
 	private String opendate;    //创建日期
 	private String canceldate;    //注销日期
@@ -146,11 +146,11 @@ public class SysUserReq extends BaseReqDto {
 		this.logintime = logintime;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

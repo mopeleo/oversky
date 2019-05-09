@@ -9,9 +9,12 @@
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="角色状态">
-                        <el-select v-model="roleReq.status" placeholder="角色状态">
-                            <el-option label="无效" value="0"></el-option>
-                            <el-option label="有效" value="1"></el-option>
+                        <el-select v-model="roleReq.status" value-key="itemcode" clearable placeholder="请选择">
+                            <el-option v-for="item in dictCache['1003']"
+                                :key="item.itemcode"
+                                :label="item.itemcode + ' - ' + item.itemname"
+                                :value="item.itemcode">
+                            </el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
@@ -30,8 +33,8 @@
                 <el-table-column type="selection"></el-table-column>
                 <el-table-column prop="roleid" label="角色ID" sortable></el-table-column>
                 <el-table-column prop="rolename" label="角色名称" sortable></el-table-column>
-                <el-table-column prop="status" label="角色状态"></el-table-column>
-                <el-table-column prop="roletype" label="角色类型"></el-table-column>
+                <el-table-column prop="status" label="角色状态" :formatter="formatRoleStatus"></el-table-column>
+                <el-table-column prop="roletype" label="角色类型" :formatter="formatRoleType"></el-table-column>
                 <el-table-column prop="startdate" label="生效日期" sortable></el-table-column>
                 <el-table-column prop="enddate" label="失效日期" sortable></el-table-column>
                 <el-table-column prop="creator" label="创建人"></el-table-column>
@@ -59,7 +62,7 @@
             <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="80px" :disabled="!edit">
                 <el-input v-model="sysrole.roleid" type="hidden"></el-input>
                 <el-form-item label="角色名称" prop="rolename">
-                    <el-input v-model="sysrole.rolename" :disabled="!(edit&&editType ==='insert')"></el-input>
+                    <el-input v-model="sysrole.rolename" :disabled="!(edit&&editType === this.$pubdefine.EDIT_TYPE_INSERT)"></el-input>
                 </el-form-item>
                 <el-form-item label="角色状态" prop="status">
                     <el-select v-model="sysrole.status" value-key="itemcode" placeholder="请选择">
@@ -71,7 +74,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="角色类型" prop="roletype">
-                    <el-select v-model="sysrole.roletype" placeholder="请选择">
+                    <el-select v-model="sysrole.roletype" value-key="itemcode" placeholder="请选择">
                         <el-option v-for="item in dictCache['2006']"
                             :key="item.itemcode"
                             :label="item.itemcode + ' - ' + item.itemname"
@@ -106,7 +109,7 @@ export default{
             //表格当前页数据
             tableData: {},
             //当前页面字典
-            dictCache:{},
+            dictCache: {},
             //查询条件及分页参数
             roleReq: {
                 pageSize: this.$pubdefine.PAGE_SIZE,
@@ -114,23 +117,23 @@ export default{
             },
             //对话框表单属性
             dialogFormVisible: false,
-            edit:true,
-            editType:'insert',   // insert/update
+            edit: true,
+            editType: this.$pubdefine.EDIT_TYPE_INSERT,   // insert/update
             //临时业务数据
-            sysrole:null,
-            dateArray:[],
-            unioncode:this.$store.state.pub.user.unioncode,
-            operator:this.$store.state.pub.user.userid,
+            sysrole: null,
+            dateArray: [],
+            unioncode: this.$store.state.pub.user.unioncode,
+            operator: this.$store.state.pub.user.userid,
             //验证规则
-            rules:{
-                rolename:[
+            rules: {
+                rolename: [
                     {required:true, message:'角色名称不能为空', trigger:'blur'}
                 ],
-                startdate:{
-                    required:true, message:'角色生效日期不能为空',trigger:'blur'
+                startdate: {
+                    required:true, message:'有效期开始日期不能为空',trigger:'blur'
                 },
-                enddate:{
-                    required:true, message:'角色失效日期不能为空',trigger:'blur'
+                enddate: {
+                    required:true, message:'有效期结束日期不能为空',trigger:'blur'
                 }
             }
         }
@@ -154,6 +157,26 @@ export default{
             }).catch((err)=>{
                 tools.errTip(err);
             });
+        },
+        formatRoleStatus:function(row){
+            let dict = this.dictCache['1003'];
+            let val = row.status;
+            for(var i = 0; i < dict.length; i++){
+                if(dict[i].itemcode === val){
+                    return val + " - " + dict[i].itemname;
+                }
+            }
+            return val;
+        },
+        formatRoleType:function(row){
+            let dict = this.dictCache['2006'];
+            let val = row.roletype;
+            for(var i = 0; i < dict.length; i++){
+                if(dict[i].itemcode === val){
+                    return val + " - " + dict[i].itemname;
+                }
+            }
+            return val;
         },
         //点击行响应
         handleClick: function(row, column, event){
@@ -186,7 +209,7 @@ export default{
             };
             this.dateArray = [];
             this.edit = true;
-            this.editType = 'insert';
+            this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
             // let that = this;
             // this.$nextTick(function () {
             //     that.sysrole = res.data;
@@ -211,7 +234,7 @@ export default{
                 this.dateArray[0] = this.sysrole.startdate;
                 this.dateArray[1] = this.sysrole.enddate;
                 this.edit = true;
-                this.editType = 'update';
+                this.editType = this.$pubdefine.EDIT_TYPE_UPDATE;
             }).catch((err)=>{
                 tools.errTip(err);
             });
@@ -240,9 +263,9 @@ export default{
                     this.sysrole.creator = this.operator;
                     var callAPI = null;
                     if(this.edit){
-                        if(this.editType === 'update'){
+                        if(this.editType === this.$pubdefine.EDIT_TYPE_UPDATE){
                             callAPI = this.$api.Gurms.roleUpdate(this.sysrole);
-                        }else if(this.editType === 'insert'){
+                        }else if(this.editType === this.$pubdefine.EDIT_TYPE_INSERT){
                             callAPI = this.$api.Gurms.roleAdd(this.sysrole);
                         }
                     }

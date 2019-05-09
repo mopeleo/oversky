@@ -36,7 +36,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter{
 		if(!ignore) {
 			//从数据库获取
 			SysMenuRes menu = menuService.getMenuByUrl(requestUrl);
-			if(menu != null && menu.getAccesstype() != DictConsts.MENU_ACCESSTYPE_ANY) {
+			if(menu != null && !DictConsts.DICT2011_ACCESSTYPE_ANY.equals(menu.getAccesstype())) {
 				String authToken = request.getHeader("Authorization");
 				if(!JwtTokenUtil.verifyToken(authToken)) {
 					throw new WebException(500, "非法的token，请重新登录获取token");
@@ -47,7 +47,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter{
 					throw new WebException(401, "用户已过期，请重新登录");
 				}
 				
-				if(menu.getAccesstype() == DictConsts.MENU_ACCESSTYPE_AUTH) {
+				if(DictConsts.DICT2011_ACCESSTYPE_AUTH.equals(menu.getAccesstype())) {
 					String subject = JwtTokenUtil.getSubject(authToken);
 					UserLoginRes userAuth = JacksonUtils.json2Bean(subject, UserLoginRes.class);
 					
@@ -68,7 +68,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter{
 			return false;
 		}
 		
-		if(menus.getMenutype() == 0){
+		if(DictConsts.DICT2010_MENYTYPE_DIRECTORY.equals(menus.getMenutype())){
 			for(SysMenuRes m : menus.getSubMenus()){
 				if(hasPrivilege(menuId, m)){
 					return true;

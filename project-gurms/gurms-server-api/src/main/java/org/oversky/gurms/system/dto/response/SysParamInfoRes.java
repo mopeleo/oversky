@@ -9,7 +9,7 @@ public class SysParamInfoRes extends BaseResDto {
 	private Integer paramid;    //参数ID
 	private String paramname;    //参数名称
 	private String paramgroup;    //所属分组，字典
-	private Integer edittype;    //0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改
+	private String edittype;    //0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改
 	private String initvalue;    //初始值
 	private Integer valuelength;    //输入值长度,0-不检查长度，其他值效验长度
 	private String texttitle;    //描述头
@@ -41,11 +41,11 @@ public class SysParamInfoRes extends BaseResDto {
 		this.paramgroup = paramgroup;
 	}
 
-	public Integer getEdittype() {
+	public String getEdittype() {
 		return this.edittype;
 	}
 
-	public void setEdittype(Integer edittype) {
+	public void setEdittype(String edittype) {
 		this.edittype = edittype;
 	}
 

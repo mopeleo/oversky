@@ -4,28 +4,28 @@
     <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysConfirmDatalog">
         <id column="logid" jdbcType="DECIMAL" property="logid" />
         <result column="confirmid" jdbcType="INTEGER" property="confirmid" />
-        <result column="edittype" jdbcType="INTEGER" property="edittype" />
+        <result column="edittype" jdbcType="VARCHAR" property="edittype" />
         <result column="dataid" jdbcType="VARCHAR" property="dataid" />
         <result column="fulldata" jdbcType="VARCHAR" property="fulldata" />
         <result column="extdata" jdbcType="VARCHAR" property="extdata" />
         <result column="editer" jdbcType="DECIMAL" property="editer" />
         <result column="editdate" jdbcType="VARCHAR" property="editdate" />
         <result column="edittime" jdbcType="VARCHAR" property="edittime" />
-        <result column="currentstatus" jdbcType="INTEGER" property="currentstatus" />
+        <result column="currentstatus" jdbcType="VARCHAR" property="currentstatus" />
         <result column="currentlevel" jdbcType="INTEGER" property="currentlevel" />
-        <result column="endflag" jdbcType="INTEGER" property="endflag" />
+        <result column="endflag" jdbcType="VARCHAR" property="endflag" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysConfirmDatalog" useGeneratedKeys="true" keyProperty="logid">
         insert into sys_confirm_datalog (confirmid, edittype, dataid, fulldata, extdata, editer, editdate, edittime, currentstatus, currentlevel, endflag)
-        values (#{confirmid, jdbcType=INTEGER}, #{edittype, jdbcType=INTEGER}, #{dataid, jdbcType=VARCHAR}, #{fulldata, jdbcType=VARCHAR}, #{extdata, jdbcType=VARCHAR}, #{editer, jdbcType=DECIMAL}, #{editdate, jdbcType=VARCHAR}, #{edittime, jdbcType=VARCHAR}, #{currentstatus, jdbcType=INTEGER}, #{currentlevel, jdbcType=INTEGER}, #{endflag, jdbcType=INTEGER})
+        values (#{confirmid, jdbcType=INTEGER}, #{edittype, jdbcType=VARCHAR}, #{dataid, jdbcType=VARCHAR}, #{fulldata, jdbcType=VARCHAR}, #{extdata, jdbcType=VARCHAR}, #{editer, jdbcType=DECIMAL}, #{editdate, jdbcType=VARCHAR}, #{edittime, jdbcType=VARCHAR}, #{currentstatus, jdbcType=VARCHAR}, #{currentlevel, jdbcType=INTEGER}, #{endflag, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
 		insert into sys_confirm_datalog (confirmid, edittype, dataid, fulldata, extdata, editer, editdate, edittime, currentstatus, currentlevel, endflag)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.confirmid, jdbcType=INTEGER}, #{item.edittype, jdbcType=INTEGER}, #{item.dataid, jdbcType=VARCHAR}, #{item.fulldata, jdbcType=VARCHAR}, #{item.extdata, jdbcType=VARCHAR}, #{item.editer, jdbcType=DECIMAL}, #{item.editdate, jdbcType=VARCHAR}, #{item.edittime, jdbcType=VARCHAR}, #{item.currentstatus, jdbcType=INTEGER}, #{item.currentlevel, jdbcType=INTEGER}, #{item.endflag, jdbcType=INTEGER})
+        (#{item.confirmid, jdbcType=INTEGER}, #{item.edittype, jdbcType=VARCHAR}, #{item.dataid, jdbcType=VARCHAR}, #{item.fulldata, jdbcType=VARCHAR}, #{item.extdata, jdbcType=VARCHAR}, #{item.editer, jdbcType=DECIMAL}, #{item.editdate, jdbcType=VARCHAR}, #{item.edittime, jdbcType=VARCHAR}, #{item.currentstatus, jdbcType=VARCHAR}, #{item.currentlevel, jdbcType=INTEGER}, #{item.endflag, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -63,16 +63,16 @@
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysConfirmDatalog">
         update sys_confirm_datalog set 
                confirmid = #{confirmid, jdbcType=INTEGER}, 
-               edittype = #{edittype, jdbcType=INTEGER}, 
+               edittype = #{edittype, jdbcType=VARCHAR}, 
                dataid = #{dataid, jdbcType=VARCHAR}, 
                fulldata = #{fulldata, jdbcType=VARCHAR}, 
                extdata = #{extdata, jdbcType=VARCHAR}, 
                editer = #{editer, jdbcType=DECIMAL}, 
                editdate = #{editdate, jdbcType=VARCHAR}, 
                edittime = #{edittime, jdbcType=VARCHAR}, 
-               currentstatus = #{currentstatus, jdbcType=INTEGER}, 
+               currentstatus = #{currentstatus, jdbcType=VARCHAR}, 
                currentlevel = #{currentlevel, jdbcType=INTEGER}, 
-               endflag = #{endflag, jdbcType=INTEGER}
+               endflag = #{endflag, jdbcType=VARCHAR}
 		where logid = #{logid, jdbcType=DECIMAL}
     </update>
 
@@ -83,7 +83,7 @@
 				confirmid = #{confirmid, jdbcType=INTEGER},
 		    </if>
 		    <if test="edittype != null">
-				edittype = #{edittype, jdbcType=INTEGER},
+				edittype = #{edittype, jdbcType=VARCHAR},
 		    </if>
 		    <if test="dataid != null">
 				dataid = #{dataid, jdbcType=VARCHAR},
@@ -104,13 +104,13 @@
 				edittime = #{edittime, jdbcType=VARCHAR},
 		    </if>
 		    <if test="currentstatus != null">
-				currentstatus = #{currentstatus, jdbcType=INTEGER},
+				currentstatus = #{currentstatus, jdbcType=VARCHAR},
 		    </if>
 		    <if test="currentlevel != null">
 				currentlevel = #{currentlevel, jdbcType=INTEGER},
 		    </if>
 		    <if test="endflag != null">
-				endflag = #{endflag, jdbcType=INTEGER},
+				endflag = #{endflag, jdbcType=VARCHAR},
 		    </if>
 		</set>
 		where logid = #{logid, jdbcType=DECIMAL}
@@ -132,7 +132,7 @@
 	        <trim prefix="edittype = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.edittype != null">
-	                    when logid = #{item.logid} then #{item.edittype, jdbcType=INTEGER}
+	                    when logid = #{item.logid} then #{item.edittype, jdbcType=VARCHAR}
 	                </if>
 	                <if test="item.edittype == null">
 	                    when logid = #{item.logid} then edittype
@@ -202,7 +202,7 @@
 	        <trim prefix="currentstatus = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.currentstatus != null">
-	                    when logid = #{item.logid} then #{item.currentstatus, jdbcType=INTEGER}
+	                    when logid = #{item.logid} then #{item.currentstatus, jdbcType=VARCHAR}
 	                </if>
 	                <if test="item.currentstatus == null">
 	                    when logid = #{item.logid} then currentstatus
@@ -222,7 +222,7 @@
 	        <trim prefix="endflag = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.endflag != null">
-	                    when logid = #{item.logid} then #{item.endflag, jdbcType=INTEGER}
+	                    when logid = #{item.logid} then #{item.endflag, jdbcType=VARCHAR}
 	                </if>
 	                <if test="item.endflag == null">
 	                    when logid = #{item.logid} then endflag
@@ -256,8 +256,8 @@
 			<if test="confirmid != null">
 				and confirmid = #{confirmid, jdbcType=INTEGER}
 			</if>
-			<if test="edittype != null">
-				and edittype = #{edittype, jdbcType=INTEGER}
+			<if test="edittype != null and edittype != ''">
+				and edittype = #{edittype, jdbcType=VARCHAR}
 			</if>
 			<if test="dataid != null and dataid != ''">
 				and dataid = #{dataid, jdbcType=VARCHAR}
@@ -277,14 +277,14 @@
 			<if test="edittime != null and edittime != ''">
 				and edittime = #{edittime, jdbcType=VARCHAR}
 			</if>
-			<if test="currentstatus != null">
-				and currentstatus = #{currentstatus, jdbcType=INTEGER}
+			<if test="currentstatus != null and currentstatus != ''">
+				and currentstatus = #{currentstatus, jdbcType=VARCHAR}
 			</if>
 			<if test="currentlevel != null">
 				and currentlevel = #{currentlevel, jdbcType=INTEGER}
 			</if>
-			<if test="endflag != null">
-				and endflag = #{endflag, jdbcType=INTEGER}
+			<if test="endflag != null and endflag != ''">
+				and endflag = #{endflag, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

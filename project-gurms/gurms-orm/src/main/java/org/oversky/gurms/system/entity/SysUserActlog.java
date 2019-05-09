@@ -15,7 +15,7 @@ public class SysUserActlog extends BaseEntity{
 	private String reqdata;    //请求数据，json
 	private String actdate;    //行为日期
 	private String acttime;    //行为时间
-	private Integer accesstype;    //登录方式（0-pc，1-手机）
+	private String accesstype;    //登录方式（0-pc，1-手机）
 	private String ipaddress;    //
 
 	public Long getLogid() {
@@ -90,11 +90,11 @@ public class SysUserActlog extends BaseEntity{
 		this.acttime = acttime;
 	}
 
-	public Integer getAccesstype() {
+	public String getAccesstype() {
 		return this.accesstype;
 	}
 
-	public void setAccesstype(Integer accesstype) {
+	public void setAccesstype(String accesstype) {
 		this.accesstype = accesstype;
 	}
 

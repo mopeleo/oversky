@@ -71,7 +71,7 @@ public class IndexServiceImpl implements IndexService{
 			return res;
 		}
 		SysUser user = userList.get(0);
-		if(user.getStatus() != DictConsts.USER_STATUS_NORMAL) {
+		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户状态异常:" + user.getStatus());
 			return res;
 		}
@@ -127,7 +127,7 @@ public class IndexServiceImpl implements IndexService{
 			upUser.setLoginerror(user.getLoginerror() + 1);
 			String maxPasswdErr = CacheConsts.getParam(user.getUnioncode(), CacheConsts.PK_PASSWD_ERROR_TIMES);
 			if(upUser.getLoginerror() >= Integer.parseInt(maxPasswdErr)) {
-				upUser.setStatus(DictConsts.USER_STATUS_PASSWDLOCK);
+				upUser.setStatus(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK);
 			}
 		}
 		int count = sysUserDao.dynamicUpdateById(upUser);

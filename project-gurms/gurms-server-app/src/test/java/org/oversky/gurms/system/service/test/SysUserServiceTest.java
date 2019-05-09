@@ -48,7 +48,7 @@ public class SysUserServiceTest {
 		userDto.setOrgid(10000L);
 		userDto.setPasswdvaliddate("20190909");
 		userDto.setSalt("123");
-		userDto.setStatus(1);
+		userDto.setStatus("1");
 		userDto.setUnioncode("0000");
 		userDto.setUsername("test");
 		boolean flag = sysUserService.insert(userDto).isSuccess();
@@ -112,7 +112,7 @@ public class SysUserServiceTest {
 			userDto.setOrgid(10000L);
 			userDto.setPasswdvaliddate("20190909");
 			userDto.setSalt("123");
-			userDto.setStatus(1);
+			userDto.setStatus("1");
 			userDto.setUnioncode("0000");
 			userDto.setUsername("test"+i);
 			list.add(userDto);

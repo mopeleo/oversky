@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysMenuDao;
 import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.entity.SysMenu;
@@ -55,7 +56,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 		// TODO Auto-generated method stub
 		SysMenu menu = new SysMenu();
 		menu.setMenuurl(url);
-		menu.setStatus(1);
+		menu.setStatus(DictConsts.DICT1003_VALID);
 		List<SysMenu> menus = menuDao.selectWhere(menu);
 		SysMenuRes res = null;
 		if(menus != null && menus.size() > 0) {
@@ -93,13 +94,13 @@ public class SysMenuServiceImpl implements SysMenuService {
 		if(children != null && children.size() > 0) {
 			List<SysMenuRes> childrenRes = BeanCopyUtils.convertList(children, SysMenuRes.class);
 			if(menuRes.getMenutype() == null) {
-				menuRes.setMenutype(0);
+				menuRes.setMenutype(DictConsts.DICT2010_MENYTYPE_DIRECTORY);
 			}
 			menuRes.setSubMenus(childrenRes);
 			menuRes.setTree(true);
 			for(SysMenuRes child : childrenRes) {
 				//不是按钮，继续向下查询
-				if(child.getMenutype() != 2) {
+				if(!DictConsts.DICT2010_MENYTYPE_ELEMENT.equals(child.getMenutype())) {
 					getSubMenus(child);
 				}
 			}

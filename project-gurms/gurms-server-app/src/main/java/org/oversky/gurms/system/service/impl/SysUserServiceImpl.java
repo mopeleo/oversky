@@ -42,7 +42,7 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
 		user.setSalt(CommonUtils.getRandomString(8));
-		user.setStatus(DictConsts.USER_STATUS_NORMAL);
+		user.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		user.setLoginerror(0);
 		user.setPasswdvaliddate(DateUtils.addMonths(DateUtils.getNowDate(),3));
 		if(!StringUtils.isEmpty(user.getLoginpasswd())) {

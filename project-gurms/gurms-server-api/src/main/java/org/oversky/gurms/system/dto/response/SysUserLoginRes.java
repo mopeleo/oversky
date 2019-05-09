@@ -13,8 +13,8 @@ public class SysUserLoginRes extends BaseResDto {
 	private String logintime;    //登录时间
 	private String loginpasswd;    //登录密码
 	private String loginip;    //登录IP
-	private Integer logintype;    //登录方式（0-pc，1-手机）
-	private Integer loginresult;    //登录是否成功 0-失败，1-成功
+	private String logintype;    //登录方式（0-pc，1-手机）
+	private String loginresult;    //登录是否成功 0-失败，1-成功
 	private String summary;    //说明
 
 	public Long getLogid() {
@@ -73,19 +73,19 @@ public class SysUserLoginRes extends BaseResDto {
 		this.loginip = loginip;
 	}
 
-	public Integer getLogintype() {
+	public String getLogintype() {
 		return this.logintype;
 	}
 
-	public void setLogintype(Integer logintype) {
+	public void setLogintype(String logintype) {
 		this.logintype = logintype;
 	}
 
-	public Integer getLoginresult() {
+	public String getLoginresult() {
 		return this.loginresult;
 	}
 
-	public void setLoginresult(Integer loginresult) {
+	public void setLoginresult(String loginresult) {
 		this.loginresult = loginresult;
 	}
 

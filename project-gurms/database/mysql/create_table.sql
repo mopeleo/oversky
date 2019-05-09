@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/5/8 10:24:46                            */
+/* Created on:     2019/5/9 11:23:28                            */
 /*==============================================================*/
 
 
@@ -48,7 +48,7 @@ create table sys_confirm
    confirmid            numeric(4,0) not null default 0,
    unioncode            varchar(8) not null default '0000',
    tablename            varchar(32) not null comment '复核数据表名',
-   checklevel           numeric(1,0) not null default 0 comment '复核级别',
+   checklevel           numeric(1,0) not null default 0 comment '复核级别,递增',
    primary key (unioncode, tablename)
 );
 
@@ -62,10 +62,10 @@ create table sys_confirm_checklog
    logid                bigint not null auto_increment comment '复核流水号[identity]',
    datalog              bigint not null comment '复核数据流水号',
    checker              bigint not null comment '复核人',
-   checklevel           numeric(1,0) not null default 0 comment '复核级别',
+   checklevel           numeric(1,0) not null default 0 comment '复核级别，递增',
    checkdate            char(8) not null comment '复核日期',
    checktime            char(6) not null comment '复核时间',
-   status               numeric(1,0) not null default 0 comment '复核状态（0-未复核，1-复核通过，2-复核不通过）',
+   status               char(1) not null default '0' comment '复核状态（0-未复核，1-复核通过，2-复核不通过）',
    summary              varchar(256) comment '复核意见',
    primary key (logid)
 );
@@ -77,16 +77,16 @@ create table sys_confirm_datalog
 (
    logid                bigint not null auto_increment comment '数据流水号[identity]',
    confirmid            numeric(4,0) not null default 0 comment '复核类型ID',
-   edittype             numeric(1,0) not null default 0 comment '行为（1-insert，2-update，3-delete）',
+   edittype             char(1) not null default '0' comment '行为（1-insert，2-update，3-delete）',
    dataid               varchar(256) comment '数据id，json',
    fulldata             varchar(2048) comment '要复核的完整数据，json字符串',
    extdata              varchar(2048) comment 'fulldata保存不下的，可以拆分存在这里',
    editer               bigint not null comment '编辑人',
    editdate             char(8) not null comment '编辑日期',
    edittime             char(6) not null comment '编辑时间',
-   currentstatus        numeric(1,0) not null default 0 comment '当前复核状态（0-未复核，1-复核通过，2-复核不通过）',
+   currentstatus        char(1) not null default '0' comment '当前复核状态（0-未复核，1-复核通过，2-复核不通过）',
    currentlevel         numeric(1,0) not null default 0 comment '当前复核级别',
-   endflag              numeric(1,0) not null default 0 comment '完结标志（0-未结束，1-结束）',
+   endflag              char(1) not null default '0' comment '完结标志（0-未结束，1-结束）',
    primary key (logid)
 );
 
@@ -114,7 +114,7 @@ create table sys_dict_index
    dictcode             numeric(4,0) not null default 0 comment '字典代码',
    dictname             varchar(32) not null comment '字典名称',
    dictgroup            char(1) not null default '0' comment '所属分组',
-   editflag             numeric(1,0) not null default 0 comment '是否可编辑（0-不可见，1-只读，2-读写）',
+   editflag             char(1) not null default '0' comment '是否可编辑（0-不可见，1-只读，2-读写）',
    primary key (dictcode, unioncode)
 );
 
@@ -143,9 +143,9 @@ create table sys_menu
    menuname             varchar(16) not null comment '菜单名称',
    menuurl              varchar(32) comment '菜单地址',
    parentmenu           varchar(8) comment '上级菜单',
-   menutype             numeric(1,0) not null default 0 comment '菜单类型0-目录，1-菜单，2-页面链接',
-   accesstype           numeric(1,0) not null default 0 comment '访问权限：0-可任意访问，1-登录访问，2-需授权',
-   status               numeric(1,0) not null default 0 comment '菜单状态，0-无效，1-有效',
+   menutype             char(1) not null default '0' comment '菜单类型0-目录，1-菜单，2-页面链接',
+   accesstype           char(1) not null default '0' comment '访问权限：0-可任意访问，1-登录访问，2-需授权',
+   status               char(1) not null default '0' comment '菜单状态，0-无效，1-有效',
    menucss              varchar(32) comment '菜单样式',
    primary key (menuid)
 );
@@ -168,7 +168,7 @@ create table sys_org
    postcode             varchar(8) comment '邮政编码',
    email                varchar(64) comment '电子邮件',
    parentorg            bigint comment '上级机构',
-   orgtype              numeric(1,0) not null default 0 comment '机构类型(0-虚拟，可选，1-总，2-分，3-支)',
+   orgtype              char(1) not null default '0' comment '机构类型(0-虚拟，可选，1-总，2-分，3-支)',
    remark               varchar(32) comment '备注',
    primary key (orgid)
 );
@@ -196,7 +196,7 @@ create table sys_param_info
    paramid              numeric(4,0) not null default 0 comment '参数ID',
    paramname            varchar(32) not null comment '参数名称',
    paramgroup           char(1) not null default '0' comment '所属分组，字典',
-   edittype             numeric(1,0) not null default 0 comment '0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改',
+   edittype             char(1) not null default '0' comment '0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改',
    initvalue            varchar(32) not null comment '初始值',
    valuelength          numeric(4,0) default 0 comment '输入值长度,0-不检查长度，其他值效验长度',
    texttitle            varchar(32) comment '描述头',
@@ -216,8 +216,8 @@ create table sys_role
    roleid               bigint not null auto_increment comment '角色ID,内部自动生成[identity]',
    unioncode            varchar(8) not null default '0000',
    rolename             varchar(32) not null comment '角色名称',
-   status               numeric(1,0) not null default 0 comment '角色状态，0-无效，1-有效',
-   roletype             numeric(1,0) not null default 0 comment '角色类型，0-公共，1-私有',
+   status               char(1) not null default '0' comment '角色状态，0-无效，1-有效',
+   roletype             char(1) not null default '0' comment '角色类型，0-公共，1-私有',
    startdate            char(8) not null comment '角色生效日期',
    enddate              char(8) not null comment '角色失效日期',
    creator              bigint not null comment '创建人',
@@ -246,10 +246,10 @@ create table sys_sno
    noname               varchar(32) not null comment '流水号名称',
    initvalue            bigint not null comment '初始值',
    nextvalue            bigint not null comment '下个值',
-   fixedflag            numeric(1,0) not null default 0 comment '定长标志(0-不固定，1-定长)',
+   fixedflag            char(1) not null default '0' comment '定长标志(0-不固定，1-定长)',
    fixedlength          numeric(4,0) default 0 comment '定长长度，不包括前后缀',
    fillchar             char(1) default '0' comment '填充字符',
-   notype               numeric(1,0) not null default 0 comment '类型（1-递增，2-按天复位）',
+   notype               char(1) not null default '0' comment '类型（1-递增，2-按天复位）',
    nodate               char(8) comment '使用日期',
    prefix               varchar(8) comment '前缀',
    suffix               varchar(8) comment '后缀',
@@ -278,7 +278,7 @@ create table sys_user
    idname               varchar(32) comment '证件姓名',
    logindate            char(8) comment '上次登录日期',
    logintime            char(6) comment '上次登录时间',
-   status               numeric(1,0) not null default 0 comment '用户状态，0，已注销；1，正常；2，锁定',
+   status               char(1) not null default '0' comment '用户状态，0，已注销；1，正常；2，锁定',
    loginerror           numeric(4,0) not null default 0 comment '连续登录失败次数',
    opendate             char(8) comment '创建日期',
    canceldate           char(8) comment '注销日期',
@@ -299,7 +299,7 @@ create table sys_user_actlog
    reqdata              varchar(256) comment '请求数据，json',
    actdate              char(8) not null comment '行为日期',
    acttime              char(6) not null comment '行为时间',
-   accesstype           numeric(1,0) not null default 0 comment '登录方式（0-pc，1-手机）',
+   accesstype           char(1) not null default '0' comment '登录方式（0-pc，1-手机）',
    ipaddress            varchar(16),
    primary key (logid)
 );
@@ -336,8 +336,8 @@ create table sys_user_login
    logintime            char(6) comment '登录时间',
    loginpasswd          char(32) not null comment '登录密码',
    loginip              varchar(16) comment '登录IP',
-   logintype            numeric(1,0) not null default 0 comment '登录方式（0-pc，1-手机）',
-   loginresult          numeric(1,0) not null default 0 comment '登录是否成功 0-失败，1-成功',
+   logintype            char(1) not null default '0' comment '登录方式（0-pc，1-手机）',
+   loginresult          char(1) not null default '0' comment '登录是否成功 0-失败，1-成功',
    summary              varchar(32) comment '说明',
    primary key (logid)
 );

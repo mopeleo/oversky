@@ -12,8 +12,8 @@ public class SysMenuRes extends BaseResDto {
 	private String menuname;    //菜单名称
 	private String menuurl;    //菜单地址
 	private String parentmenu;    //上级菜单
-	private Integer menutype;    //菜单类型0-目录，1-菜单，2-页面链接
-	private Integer accesstype;    //访问权限：0-可任意访问，1-登录访问，2-需授权
+	private String menutype;    //菜单类型0-目录，1-菜单，2-页面链接
+	private String accesstype;    //访问权限：0-可任意访问，1-登录访问，2-需授权
 	private String menucss;
 	private boolean tree;
 	private List<SysMenuRes> subMenus;
@@ -66,23 +66,23 @@ public class SysMenuRes extends BaseResDto {
 		this.parentmenu = parentmenu;
 	}
 
-	public Integer getAccesstype() {
-		return accesstype;
+    public String getMenutype() {
+		return menutype;
 	}
 
-	public void setAccesstype(Integer accesstype) {
-		this.accesstype = accesstype;
-	}
-
-	public Integer getMenutype() {
-		return this.menutype;
-	}
-
-	public void setMenutype(Integer menutype) {
+	public void setMenutype(String menutype) {
 		this.menutype = menutype;
 	}
 
-    public String getMenucss() {
+	public String getAccesstype() {
+		return accesstype;
+	}
+
+	public void setAccesstype(String accesstype) {
+		this.accesstype = accesstype;
+	}
+
+	public String getMenucss() {
 		return menucss;
 	}
 

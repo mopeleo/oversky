@@ -11,10 +11,10 @@ public class SysSnoRes extends BaseResDto {
 	private String noname;    //流水号名称
 	private Long initvalue;    //初始值
 	private Long nextvalue;    //下个值
-	private Integer fixedflag;    //定长标志(0-不固定，1-定长)
+	private String fixedflag;    //定长标志(0-不固定，1-定长)
 	private Integer fixedlength;    //定长长度，不包括前后缀
 	private String fillchar;    //填充字符
-	private Integer notype;    //类型（1-递增，2-按天复位）
+	private String notype;    //类型（1-递增，2-按天复位）
 	private String nodate;    //使用日期
 	private String prefix;    //前缀
 	private String suffix;    //后缀
@@ -59,11 +59,11 @@ public class SysSnoRes extends BaseResDto {
 		this.nextvalue = nextvalue;
 	}
 
-	public Integer getFixedflag() {
+	public String getFixedflag() {
 		return this.fixedflag;
 	}
 
-	public void setFixedflag(Integer fixedflag) {
+	public void setFixedflag(String fixedflag) {
 		this.fixedflag = fixedflag;
 	}
 
@@ -83,11 +83,11 @@ public class SysSnoRes extends BaseResDto {
 		this.fillchar = fillchar;
 	}
 
-	public Integer getNotype() {
+	public String getNotype() {
 		return this.notype;
 	}
 
-	public void setNotype(Integer notype) {
+	public void setNotype(String notype) {
 		this.notype = notype;
 	}
 

@@ -11,20 +11,20 @@
         <result column="reqdata" jdbcType="VARCHAR" property="reqdata" />
         <result column="actdate" jdbcType="VARCHAR" property="actdate" />
         <result column="acttime" jdbcType="VARCHAR" property="acttime" />
-        <result column="accesstype" jdbcType="INTEGER" property="accesstype" />
+        <result column="accesstype" jdbcType="VARCHAR" property="accesstype" />
         <result column="ipaddress" jdbcType="VARCHAR" property="ipaddress" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserActlog" useGeneratedKeys="true" keyProperty="logid">
         insert into sys_user_actlog (unioncode, userid, menuid, requrl, reqmethod, reqdata, actdate, acttime, accesstype, ipaddress)
-        values (#{unioncode, jdbcType=VARCHAR}, #{userid, jdbcType=DECIMAL}, #{menuid, jdbcType=VARCHAR}, #{requrl, jdbcType=VARCHAR}, #{reqmethod, jdbcType=VARCHAR}, #{reqdata, jdbcType=VARCHAR}, #{actdate, jdbcType=VARCHAR}, #{acttime, jdbcType=VARCHAR}, #{accesstype, jdbcType=INTEGER}, #{ipaddress, jdbcType=VARCHAR})
+        values (#{unioncode, jdbcType=VARCHAR}, #{userid, jdbcType=DECIMAL}, #{menuid, jdbcType=VARCHAR}, #{requrl, jdbcType=VARCHAR}, #{reqmethod, jdbcType=VARCHAR}, #{reqdata, jdbcType=VARCHAR}, #{actdate, jdbcType=VARCHAR}, #{acttime, jdbcType=VARCHAR}, #{accesstype, jdbcType=VARCHAR}, #{ipaddress, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
 		insert into sys_user_actlog (unioncode, userid, menuid, requrl, reqmethod, reqdata, actdate, acttime, accesstype, ipaddress)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.unioncode, jdbcType=VARCHAR}, #{item.userid, jdbcType=DECIMAL}, #{item.menuid, jdbcType=VARCHAR}, #{item.requrl, jdbcType=VARCHAR}, #{item.reqmethod, jdbcType=VARCHAR}, #{item.reqdata, jdbcType=VARCHAR}, #{item.actdate, jdbcType=VARCHAR}, #{item.acttime, jdbcType=VARCHAR}, #{item.accesstype, jdbcType=INTEGER}, #{item.ipaddress, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.userid, jdbcType=DECIMAL}, #{item.menuid, jdbcType=VARCHAR}, #{item.requrl, jdbcType=VARCHAR}, #{item.reqmethod, jdbcType=VARCHAR}, #{item.reqdata, jdbcType=VARCHAR}, #{item.actdate, jdbcType=VARCHAR}, #{item.acttime, jdbcType=VARCHAR}, #{item.accesstype, jdbcType=VARCHAR}, #{item.ipaddress, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -69,7 +69,7 @@
                reqdata = #{reqdata, jdbcType=VARCHAR}, 
                actdate = #{actdate, jdbcType=VARCHAR}, 
                acttime = #{acttime, jdbcType=VARCHAR}, 
-               accesstype = #{accesstype, jdbcType=INTEGER}, 
+               accesstype = #{accesstype, jdbcType=VARCHAR}, 
                ipaddress = #{ipaddress, jdbcType=VARCHAR}
 		where logid = #{logid, jdbcType=DECIMAL}
     </update>
@@ -102,7 +102,7 @@
 				acttime = #{acttime, jdbcType=VARCHAR},
 		    </if>
 		    <if test="accesstype != null">
-				accesstype = #{accesstype, jdbcType=INTEGER},
+				accesstype = #{accesstype, jdbcType=VARCHAR},
 		    </if>
 		    <if test="ipaddress != null">
 				ipaddress = #{ipaddress, jdbcType=VARCHAR},
@@ -197,7 +197,7 @@
 	        <trim prefix="accesstype = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.accesstype != null">
-	                    when logid = #{item.logid} then #{item.accesstype, jdbcType=INTEGER}
+	                    when logid = #{item.logid} then #{item.accesstype, jdbcType=VARCHAR}
 	                </if>
 	                <if test="item.accesstype == null">
 	                    when logid = #{item.logid} then accesstype
@@ -262,8 +262,8 @@
 			<if test="acttime != null and acttime != ''">
 				and acttime = #{acttime, jdbcType=VARCHAR}
 			</if>
-			<if test="accesstype != null">
-				and accesstype = #{accesstype, jdbcType=INTEGER}
+			<if test="accesstype != null and accesstype != ''">
+				and accesstype = #{accesstype, jdbcType=VARCHAR}
 			</if>
 			<if test="ipaddress != null and ipaddress != ''">
 				and ipaddress = #{ipaddress, jdbcType=VARCHAR}

@@ -17,7 +17,7 @@ public class SysOrgReq extends BaseReqDto {
 	private String postcode;    //邮政编码
 	private String email;    //电子邮件
 	private Long parentorg;    //上级机构
-	private Integer orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
+	private String orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
 	private String remark;    //备注
 
 	public Long getOrgid() {
@@ -108,11 +108,11 @@ public class SysOrgReq extends BaseReqDto {
 		this.parentorg = parentorg;
 	}
 
-	public Integer getOrgtype() {
+	public String getOrgtype() {
 		return this.orgtype;
 	}
 
-	public void setOrgtype(Integer orgtype) {
+	public void setOrgtype(String orgtype) {
 		this.orgtype = orgtype;
 	}
 
