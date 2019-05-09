@@ -59,10 +59,10 @@
         </el-form>
 
         <el-dialog title="角色信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible">
-            <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="80px" :disabled="!edit">
+            <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
                 <el-input v-model="sysrole.roleid" type="hidden"></el-input>
                 <el-form-item label="角色名称" prop="rolename">
-                    <el-input v-model="sysrole.rolename" :disabled="!(edit&&editType === this.$pubdefine.EDIT_TYPE_INSERT)"></el-input>
+                    <el-input v-model="sysrole.rolename" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
                 </el-form-item>
                 <el-form-item label="角色状态" prop="status">
                     <el-select v-model="sysrole.status" value-key="itemcode" placeholder="请选择">
@@ -117,7 +117,6 @@ export default{
             },
             //对话框表单属性
             dialogFormVisible: false,
-            edit: true,
             editType: this.$pubdefine.EDIT_TYPE_INSERT,   // insert/update
             //临时业务数据
             sysrole: null,
@@ -208,7 +207,6 @@ export default{
                 creator:''
             };
             this.dateArray = [];
-            this.edit = true;
             this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
             // let that = this;
             // this.$nextTick(function () {
@@ -221,8 +219,7 @@ export default{
                 this.sysrole = res;
                 this.dateArray[0] = this.sysrole.startdate;
                 this.dateArray[1] = this.sysrole.enddate;
-                this.edit = false;
-                this.editType = null;
+                this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
             }).catch((err)=>{
                 tools.errTip(err);
             });
@@ -233,7 +230,6 @@ export default{
                 this.sysrole = res;
                 this.dateArray[0] = this.sysrole.startdate;
                 this.dateArray[1] = this.sysrole.enddate;
-                this.edit = true;
                 this.editType = this.$pubdefine.EDIT_TYPE_UPDATE;
             }).catch((err)=>{
                 tools.errTip(err);
@@ -262,12 +258,10 @@ export default{
                     this.sysrole.unioncode = this.unioncode;
                     this.sysrole.creator = this.operator;
                     var callAPI = null;
-                    if(this.edit){
-                        if(this.editType === this.$pubdefine.EDIT_TYPE_UPDATE){
-                            callAPI = this.$api.Gurms.roleUpdate(this.sysrole);
-                        }else if(this.editType === this.$pubdefine.EDIT_TYPE_INSERT){
-                            callAPI = this.$api.Gurms.roleAdd(this.sysrole);
-                        }
+                    if(this.editType === this.$pubdefine.EDIT_TYPE_UPDATE){
+                        callAPI = this.$api.Gurms.roleUpdate(this.sysrole);
+                    }else if(this.editType === this.$pubdefine.EDIT_TYPE_INSERT){
+                        callAPI = this.$api.Gurms.roleAdd(this.sysrole);
                     }
                     callAPI.then((res)=>{
                         tools.succTip(res.returnmsg);
