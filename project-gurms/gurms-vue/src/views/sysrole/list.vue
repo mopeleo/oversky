@@ -88,6 +88,13 @@
                         v-model="dateArray" value-format="yyyyMMdd" >
                     </el-date-picker>
                 </el-form-item>
+                <el-form-item label="权限列表">
+                    <el-tree show-checkbox ref="menus"
+                        :data="this.$store.state.pub.user.menuTree.subMenus"
+                        node-key="menuid"
+                        :props="{children: 'subMenus',label: 'menuname'}">
+                    </el-tree>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
                     <el-button @click="onReset('detailForm')">重填</el-button>
@@ -177,6 +184,19 @@ export default{
             }
             return val;
         },
+        getMenuList:function(){
+            let ids = this.$refs.menus.getCheckedKeys();
+            let halfIds = this.$refs.menus.getHalfCheckedKeys();
+            let menuString = ids.concat(halfIds).join(",");
+            return menuString;
+        },
+        setMenuList:function(menus){
+            if(menus){
+                alert(menus);
+                let menuArray = menus.split(",");
+                this.$refs.menus.setCheckedKeys(menuArray);
+            }
+        },
         //点击行响应
         handleClick: function(row, column, event){
             console.log(row.roleid + column + event);
@@ -204,6 +224,7 @@ export default{
                 roletype:'',
                 startdate:'',
                 enddate:'',
+                menulist:'',
                 creator:''
             };
             this.dateArray = [];
@@ -220,6 +241,10 @@ export default{
                 this.dateArray[0] = this.sysrole.startdate;
                 this.dateArray[1] = this.sysrole.enddate;
                 this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
+
+                this.$nextTick(function() {
+                    this.setMenuList(this.sysrole.menulist);
+                })
             }).catch((err)=>{
                 tools.errTip(err);
             });
@@ -231,6 +256,10 @@ export default{
                 this.dateArray[0] = this.sysrole.startdate;
                 this.dateArray[1] = this.sysrole.enddate;
                 this.editType = this.$pubdefine.EDIT_TYPE_UPDATE;
+
+                this.$nextTick(function() {
+                    this.setMenuList(this.sysrole.menulist);
+                })
             }).catch((err)=>{
                 tools.errTip(err);
             });
@@ -252,6 +281,7 @@ export default{
                 this.sysrole.startdate = this.dateArray[0];
                 this.sysrole.enddate = this.dateArray[1];
             }
+            this.sysrole.menulist = this.getMenuList();
             this.$refs[formName].validate((valid)=>{
                 if(valid){
                     //从session赋值

@@ -14,6 +14,7 @@ public class SysRoleReq extends BaseReqDto {
 	private String startdate;    //角色生效日期
 	private String enddate;    //角色失效日期
 	private Long creator;    //创建人
+	private String menulist;
 
 	public Long getRoleid() {
 		return this.roleid;
@@ -79,8 +80,15 @@ public class SysRoleReq extends BaseReqDto {
 		this.creator = creator;
 	}
 
+	public String getMenulist() {
+		return menulist;
+	}
 
-    @Override
+	public void setMenulist(String menulist) {
+		this.menulist = menulist;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
