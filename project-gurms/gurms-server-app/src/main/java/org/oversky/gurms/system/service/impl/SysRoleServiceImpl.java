@@ -61,7 +61,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 			return res;
 		}
 		
-		if(!deleteRoleMenus(role.getRoleid(), roleReq.getMenulist())) {
+		if(!freshRoleMenus(role.getRoleid(), roleReq.getMenulist())) {
 			res.failure("新增角色菜单映射关系失败");
 			return res;
 		}
@@ -97,7 +97,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		where.setRoleid(role.getRoleid());
 		roleMenuDao.deleteWhere(where);
 
-		if(!deleteRoleMenus(role.getRoleid(), roleReq.getMenulist())) {
+		if(!freshRoleMenus(role.getRoleid(), roleReq.getMenulist())) {
 			res.failure("修改角色菜单映射关系失败");
 			return res;
 		}
@@ -109,17 +109,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Override
 	public SysRoleRes getById(Long roleid) {
 		SysRoleRes role = BeanCopyUtils.convert(roleDao.getById(roleid), SysRoleRes.class);
-		List<SysMenu> menuList = userRightDao.getRoleMenus(roleid);
-		if(menuList != null && menuList.size() > 0) {
-			String menus = "";
-			for(SysMenu menu : menuList) {
-				menus += menu.getMenuid() + ",";
-			}
-			if(menus.length() > 0) {
-				menus = menus.substring(0, menus.length() - 1);
-			}
-			role.setMenulist(menus);
-		}
+		String menuList = getElementUIMenuList(roleid);
+		role.setMenulist(menuList);
 		return role;
 	}
 
@@ -137,7 +128,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return resList;
 	}
 
-	private boolean deleteRoleMenus(Long roleId, String menuList) {
+	private boolean freshRoleMenus(Long roleId, String menuList) {
 		if(!StringUtils.isEmpty(menuList)) {
 			String[] menus = menuList.split(",");
 			List<SysRoleMenu> rolemenuList = new ArrayList<>(menus.length);
@@ -153,5 +144,40 @@ public class SysRoleServiceImpl implements SysRoleService {
 			}
 		}
 		return true;
+	}
+	
+	private String getMenuList(Long roleid) {
+		String menus = null;
+		List<SysMenu> menuList = userRightDao.getRoleMenus(roleid);
+		if(menuList != null && menuList.size() > 0) {
+			menus = "";
+			for(SysMenu menu : menuList) {
+				menus += menu.getMenuid() + ",";
+			}
+			if(menus.length() > 0) {
+				menus = menus.substring(0, menus.length() - 1);
+			}
+		}
+		return menus;
+	}
+	
+	private String getElementUIMenuList(Long roleid) {
+		String menus = null;
+		List<SysMenu> menuList = userRightDao.getRoleMenus(roleid);
+		if(menuList != null && menuList.size() > 0) {
+			//全部菜单ID
+			List<String> allMenu = new ArrayList<>();
+			for(SysMenu menu : menuList) {
+				allMenu.add(menu.getMenuid());
+			}
+			//排除掉有子菜单的menuid
+			for(SysMenu menu : menuList) {
+				if(menu.getParentmenu() != null && allMenu.contains(menu.getParentmenu())) {
+					allMenu.remove(menu.getParentmenu());
+				}
+			}
+			menus = String.join(",", allMenu);
+		}
+		return menus;
 	}
 }

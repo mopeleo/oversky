@@ -192,7 +192,6 @@ export default{
         },
         setMenuList:function(menus){
             if(menus){
-                alert(menus);
                 let menuArray = menus.split(",");
                 this.$refs.menus.setCheckedKeys(menuArray);
             }

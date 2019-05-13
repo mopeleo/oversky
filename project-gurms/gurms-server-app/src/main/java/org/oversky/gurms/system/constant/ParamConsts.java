@@ -5,7 +5,7 @@ import org.oversky.gurms.common.spring.SpringBeanUtils;
 import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.entity.SysParam;
 
-public final class CacheConsts {
+public final class ParamConsts {
 	
 	private static SysParamDao paramDao = SpringBeanUtils.getBean(SysParamDao.class);
 

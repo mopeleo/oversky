@@ -1,4 +1,4 @@
-package org.oversky.gurms.config;
+package org.oversky.gurms.configuration;
 
 import org.oversky.valid.GSAValidInterceptor;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;

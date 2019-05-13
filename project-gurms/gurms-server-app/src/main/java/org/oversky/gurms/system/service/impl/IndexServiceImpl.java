@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.oversky.base.service.BaseServiceException;
-import org.oversky.gurms.system.constant.CacheConsts;
+import org.oversky.gurms.system.constant.ParamConsts;
+import org.oversky.gurms.system.component.PubDefine;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.SysUserLoginDao;
@@ -86,12 +87,8 @@ public class IndexServiceImpl implements IndexService{
 			BeanCopyUtils.copy(user, res);
 		}
 		
-//		SysUserBO userBo = userRightDao.getUserRolesAndMenus(user.getUserid());
-//		res.setOrgid(userBo.getSysorg().getOrgid());
-//		res.setOrgname(userBo.getSysorg().getShortname());
-		String rootUser = CacheConsts.getParam(user.getUnioncode(), CacheConsts.PK_SYS_ROOTUSER);
-		//是超级用户表
-		if((","+rootUser+",").indexOf("," + user.getUserid() + ",") != -1) {
+		//是超级用户
+		if(PubDefine.isRootUser(user.getUnioncode(), user.getUserid())) {
 			res.setMenuTree(menuService.getFullMenuTree());
 		}else {
 			res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
@@ -125,7 +122,7 @@ public class IndexServiceImpl implements IndexService{
 			upUser.setLoginerror(0);
 		}else {
 			upUser.setLoginerror(user.getLoginerror() + 1);
-			String maxPasswdErr = CacheConsts.getParam(user.getUnioncode(), CacheConsts.PK_PASSWD_ERROR_TIMES);
+			String maxPasswdErr = ParamConsts.getParam(user.getUnioncode(), ParamConsts.PK_PASSWD_ERROR_TIMES);
 			if(upUser.getLoginerror() >= Integer.parseInt(maxPasswdErr)) {
 				upUser.setStatus(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK);
 			}
