@@ -14,9 +14,9 @@ public class BaseResDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected String returncode = PubDefine.RETCODE_SUCCESS;
-	protected String returnmsg = PubDefine.RETMSG_SUCCESS;;
-	protected boolean success = true;
+	private String returncode = PubDefine.RETCODE_SUCCESS;
+	private String returnmsg = PubDefine.RETMSG_SUCCESS;;
+	private boolean success = true;
 
 	public String getReturncode() {
 		return returncode;

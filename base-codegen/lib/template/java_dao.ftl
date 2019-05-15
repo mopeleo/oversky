@@ -1,4 +1,4 @@
-<#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Long<#elseif datatype=="double">Double<#else>Long</#if></#macro>
+<#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
 <#assign enableCache = table.cache&&(param_cache?? && param_cache == 'true')>
 package ${package};
 

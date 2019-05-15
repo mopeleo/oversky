@@ -54,9 +54,9 @@ public class BaseResListDto<T> extends BaseResDto{
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-		sb.append(", returncode=").append(returncode);
-		sb.append(", returnmsg=").append(returnmsg);
-		sb.append(", success=").append(success);
+		sb.append(", returncode=").append(getReturncode());
+		sb.append(", returnmsg=").append(getReturnmsg());
+		sb.append(", success=").append(isSuccess());
 		sb.append(", enablePage=").append(enablePage);
 		sb.append(", Page=").append(page == null ? "null" : page.toString());
         sb.append("]");

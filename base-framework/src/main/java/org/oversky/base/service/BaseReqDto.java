@@ -9,14 +9,20 @@ import java.io.Serializable;
  */
 public abstract class BaseReqDto implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
 	//当前第几页，从第1页开始，若为0则表示不分页
-	protected int pageNum;
+	private int pageNum;
 	//每页数量
-	protected int pageSize;
+	private int pageSize;
+	//排序字段，可选
+	private String orderBy;
+	//排序方向，0-asc，1-desc
+	private String orderType;
 	//效验token
-	protected String token;
+	private String token;
 	//资源ID(如菜单ID，API接口ID等)
-	protected String resourceId;
+	private String resourceId;
 	
 	public int getPageSize() {
 		return pageSize;
@@ -41,6 +47,18 @@ public abstract class BaseReqDto implements Serializable{
 	}
 	public void setResourceId(String resourceId) {
 		this.resourceId = resourceId;
+	}
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+	public String getOrderType() {
+		return orderType;
+	}
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}	
 }
 

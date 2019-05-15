@@ -9,4 +9,7 @@ public final class PubDefine {
 	
 	public static final String RETCODE_FAILURE = "999999";
 	public static final String RETMSG_FAILURE = "失败";
+	
+	public static final String ORDERTYPE_ASC = "0";
+	public static final String ORDERTYPE_DESC = "1";
 }

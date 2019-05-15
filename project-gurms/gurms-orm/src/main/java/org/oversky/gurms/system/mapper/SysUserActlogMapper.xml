@@ -32,6 +32,7 @@
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user_actlog 
           <include refid="where_all_list" />
+          <include refid="orderby_list" />
     </select>
 
     <delete id="deleteWhere" parameterType="org.oversky.gurms.system.entity.SysUserActlog">
@@ -46,6 +47,7 @@
     <select id="selectAll" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from sys_user_actlog
+          <include refid="orderby_list" />
     </select>
 
     <select id="getById" resultMap="BaseResultMap">
@@ -269,5 +271,11 @@
 				and ipaddress = #{ipaddress, jdbcType=VARCHAR}
 			</if>
 		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
 	</sql>
 </mapper>

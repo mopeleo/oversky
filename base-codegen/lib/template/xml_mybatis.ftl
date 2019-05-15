@@ -20,8 +20,11 @@
     </insert>
 <#elseif ((table.dbms)!'')?contains("ORACLE") && (table.identityCol??)>
     <insert id="insert" parameterType="${java_entity_package}.${table.code}">
+	    <selectKey resultType="java.lang.Long" keyProperty="${table.identityCol.code}" order="before">
+	    	select ${table.identityCol.sequence}.nextval from dual
+	    </selectKey>
         insert into ${table.originCode?lower_case} (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (<#list table.columns as column><#if column.identity == "0">#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#else>${table.identityCol.sequence}.nextval</#if><#if column_has_next>, </#if></#list>)
+        values (<#list table.columns as column>#${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}<#if column_has_next>, </#if></#list>)
     </insert>
 <#else>
     <insert id="insert" parameterType="${java_entity_package}.${table.code}">
@@ -74,6 +77,7 @@
         select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case} 
           <include refid="where_all_list" />
+          <include refid="orderby_list" />
     </select>
 
     <delete id="deleteWhere" parameterType="${java_entity_package}.${table.code}">
@@ -88,18 +92,19 @@
     <select id="selectAll" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
+          <include refid="orderby_list" />
     </select>
 
 <#if (table.keys?size > 0)>
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from ${table.originCode?lower_case}
-         where <#list table.keys as column>${column.originCode} = #${r'{'}${column_index}}<#if column_has_next> and </#if></#list>
+         where <#list table.keys as column>${column.originCode} = #${r'{param'}${column_index+1}}<#if column_has_next> and </#if></#list>
     </select>
 
     <delete id="deleteById">
         delete from ${table.originCode?lower_case}
-         where <#list table.keys as column>${column.originCode} = #${r'{'}${column_index}}<#if column_has_next> and </#if></#list>
+         where <#list table.keys as column>${column.originCode} = #${r'{param'}${column_index+1}}<#if column_has_next> and </#if></#list>
     </delete>
   
 	<#if (table.colsExceptKey?size > 0)>
@@ -175,5 +180,11 @@
 			</if>
 </#list>
 		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${r'${'}orderByClause}
+        </if>
 	</sql>
 </mapper>
