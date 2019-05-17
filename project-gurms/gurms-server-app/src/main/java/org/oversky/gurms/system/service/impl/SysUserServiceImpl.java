@@ -14,6 +14,8 @@ import org.oversky.util.bean.BeanCopyUtils;
 import org.oversky.util.common.CommonUtils;
 import org.oversky.util.date.DateUtils;
 import org.oversky.util.encode.EncryptUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,8 @@ import com.github.pagehelper.util.StringUtil;
 @Transactional
 public class SysUserServiceImpl implements SysUserService{
 	
+	private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
+
 	@Autowired
 	private SysUserDao sysUserDao;
 
@@ -80,8 +84,16 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	public SysUserRes getById(Long userid) {
+		log.info("开始查询用户[userid={}]信息...", userid);
 		SysUser user = sysUserDao.getById(userid);
-		return BeanCopyUtils.convert(user, SysUserRes.class);
+		SysUserRes res = new SysUserRes();
+		if(user == null) {
+			res.failure("用户不存在");
+		}else {
+			BeanCopyUtils.copy(user, res);
+		}
+		log.info("查询用户[userid={}]结束: {}", userid, res.getReturnmsg());
+		return res;
 	}
 
 	public List<SysUserRes> find(SysUserReq userReq){

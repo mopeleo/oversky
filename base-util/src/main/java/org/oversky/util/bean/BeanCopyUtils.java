@@ -27,6 +27,9 @@ public class BeanCopyUtils {
     }
     
     public static <S, T> T convert(S source, Class<T> target) {
+    	if(source == null) {
+    		return null;
+    	}
         BeanCopier copier = getBeanCopier(source.getClass(), target);
         T obj = getInstance(target);
         copier.copy(source, obj, null);

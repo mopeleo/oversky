@@ -2,11 +2,11 @@
   	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>org.oversky</groupId>
-  	<artifactId>parent-gurms</artifactId>
+  	<artifactId>parent-msi</artifactId>
   	<!-- 因为是父工程 ，因此此处的packaging必须为pom -->
   	<packaging>pom</packaging>
   	<version>1.0-SNAPSHOT</version>
-  	<name>parent-gurms</name>
+  	<name>parent-msi</name>
   	<url>http://maven.apache.org</url>
   
   	<properties>
@@ -17,9 +17,6 @@
 		
 		<!-- 常用lib版本统一定义 -->
 		<slf4j.version>1.7.25</slf4j.version>
-		<mybatis-spring-boot-starter>1.3.2</mybatis-spring-boot-starter>
-		<druid-spring-boot-starter>1.1.10</druid-spring-boot-starter>
-		<mysql-connector-java>8.0.13</mysql-connector-java>
 		<spring-cloud.version>Greenwich.RC2</spring-cloud.version>
 	</properties>
 
@@ -30,28 +27,25 @@
     </parent>
       
     <modules>
-    	<module>../gurms-common</module>
-    	<module>../gurms-micro-server</module>
-    	<module>../gurms-orm</module>
-    	<module>../gurms-server-api</module>
-    	<module>../gurms-server-app</module>
-    	<module>../gurms-web-controller</module>
-    	<module>../gurms-web-server</module>
+    	<module>../msi-eureka</module>
+    	<module>../msi-gateway</module>
+    	<module>../msi-server-client</module>
     </modules>
     
   	<dependencies>
-    	<dependency>
-			<groupId>org.oversky</groupId>
-			<artifactId>base-framework</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
 		<!-- 配置 log4j2 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
   	</dependencies>
-  	
+
 	<dependencyManagement>
         <dependencies>
             <dependency>
@@ -82,4 +76,5 @@
 	        </snapshots>
 	    </repository>
 	</repositories>
+
 </project>
