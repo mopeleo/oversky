@@ -2,15 +2,16 @@
     <el-row class="tac" :gutter="20">
         <el-col :span="6">
             <h5>机构列表</h5>
-            <el-input clearable
+            <el-input clearable style="width:200px"
                 placeholder="输入关键字进行过滤"
                 v-model="filterText">
             </el-input>
-            <el-tree ref="menus"
-                :data="this.$store.state.pub.user.menuTree.subMenus"
-                node-key="menuid"
+            <el-button type="primary" icon="el-icon-plus" circle></el-button>
+            <el-tree ref="orgTree"
+                :data="treeData"
+                node-key="orgid"
                 :filter-node-method="filterNode"
-                :props="{children: 'subMenus',label: 'menuname'}">
+                :props="{children: 'subOrgs',label: 'shortname'}">
             </el-tree>
         </el-col>
         <el-col :span="12">
@@ -62,7 +63,7 @@ export default{
     data(){
         return {
             //表格当前页数据
-            tableData: {},
+            treeData: [],
             //当前页面字典
             dictCache: {},
             //过滤条件:
@@ -104,25 +105,24 @@ export default{
         }
     },
     mounted(){
-        // tools.initPageDict('1003,2006', this.dictCache);
-        this.loadData();
-        this.loadDict();
+        this.loadOrgTree();
+        this.loadDict('1003,2006');
     },
     watch: {
         filterText(val) {
-            this.$refs.menus.filter(val);
+            this.$refs.orgTree.filter(val);
         }
     },
     methods:{
-        loadData:function(){
-            this.$api.Gurms.roleList(this.roleReq).then((res)=>{
-                this.tableData = res;
+        loadOrgTree:function(){
+            this.$api.Gurms.orgTree(this.roleReq).then((res)=>{
+                this.treeData.push(res);
             }).catch((err)=>{
                 tools.errTip(err);
             });
         },
-        loadDict:function(){
-            this.$api.Gurms.getDictMap(this.unioncode, '1003,2006').then((res)=>{
+        loadDict:function(keys){
+            this.$api.Gurms.getDictMap(keys).then((res)=>{
                 this.dictCache = res.results;
             }).catch((err)=>{
                 tools.errTip(err);
@@ -153,15 +153,15 @@ export default{
             return data.menuname.indexOf(value) !== -1;
         },
         getMenuList:function(){
-            let ids = this.$refs.menus.getCheckedKeys();
-            let halfIds = this.$refs.menus.getHalfCheckedKeys();
-            let menuString = ids.concat(halfIds).join(",");
-            return menuString;
+            let ids = this.$refs.orgTree.getCheckedKeys();
+            let halfIds = this.$refs.orgTree.getHalfCheckedKeys();
+            let orgTreetring = ids.concat(halfIds).join(",");
+            return orgTreetring;
         },
-        setMenuList:function(menus){
-            if(menus){
-                let menuArray = menus.split(",");
-                this.$refs.menus.setCheckedKeys(menuArray);
+        setMenuList:function(orgTree){
+            if(orgTree){
+                let menuArray = orgTree.split(",");
+                this.$refs.orgTree.setCheckedKeys(menuArray);
             }
         },
         handleAdd() {
@@ -213,18 +213,6 @@ export default{
                 tools.errTip(err);
             });
         },
-        handleDelete(index, row) {
-            this.$api.Gurms.roleDelete(row.roleid).then((res)=>{
-                if(res === true){
-                    tools.succTip('删除成功');
-                    this.$options.methods.loadData.bind(this)();
-                }else{
-                    tools.errTip('删除失败');
-                }
-            }).catch((err)=>{
-                tools.errTip(err);
-            });
-        },
         onSubmit(formName){
             if(this.dateArray.length == 2){
                 this.sysrole.startdate = this.dateArray[0];
@@ -246,7 +234,6 @@ export default{
                         tools.succTip(res.returnmsg);
                         if(res.success === true){
                             this.dialogFormVisible = false;
-                            this.$options.methods.loadData.bind(this)();
                         }
                     }).catch((err)=>{
                         tools.errTip(err);

@@ -23,6 +23,8 @@ public abstract class BaseReqDto implements Serializable{
 	private String token;
 	//资源ID(如菜单ID，API接口ID等)
 	private String resourceId;
+	//操作员ID或usersession的userid
+	private Long operator;
 	
 	public int getPageSize() {
 		return pageSize;
@@ -59,6 +61,12 @@ public abstract class BaseReqDto implements Serializable{
 	}
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
+	}
+	public Long getOperator() {
+		return operator;
+	}
+	public void setOperator(Long operator) {
+		this.operator = operator;
 	}	
 }
 

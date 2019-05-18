@@ -14,4 +14,12 @@
         select count(1) from sys_user where mobileno = #{param1}
     </select>
   
+    <select id="existOrgNameInsert" resultType="int">
+        select count(1) from sys_role where rolename = #{param1} and parentorg = #{param2}
+    </select>
+  
+    <select id="existOrgNameUpdate" resultType="int">
+        select count(1) from sys_role where rolename = #{param1} and orgid != #{param2} and parentorg = #{param3}
+    </select>
+  
 </mapper>

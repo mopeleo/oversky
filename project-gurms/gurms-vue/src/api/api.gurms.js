@@ -19,8 +19,12 @@ export default {
 
     //========================================================
     // 查询字典
-    getDictMap(unioncode, dictkeys){
-        return axios.get(`${baseURL}/sysdict/getmap/${unioncode}/${dictkeys}`);
+    getDictMap(dictkeys, unioncode){
+        if(unioncode){
+            return axios.get(`${baseURL}/sysdict/getmap/${unioncode}/${dictkeys}`);
+        }else{
+            return axios.get(`${baseURL}/sysdict/getmap/${dictkeys}`);
+        }
     },
 
 
@@ -69,5 +73,27 @@ export default {
     // 角色删除
     roleDelete (roleid) {
         return axios.get(`${baseURL}/sysrole/delete/${roleid}`);
+    },
+
+    //========================================================
+    // 机构树列表
+    orgTree (params) {
+        return axios.post(`${baseURL}/sysorg/tree`, params);
+    },
+    // 机构新增
+    orgAdd (params) {
+        return axios.post(`${baseURL}/sysorg/add`, params);
+    },
+    // 机构编辑
+    orgUpdate (params) {
+        return axios.post(`${baseURL}/sysorg/update`, params);
+    },
+    // 机构详情
+    orgDetail (roleid) {
+        return axios.get(`${baseURL}/sysorg/detail/${roleid}`)
+    },
+    // 机构删除
+    orgDelete (roleid) {
+        return axios.get(`${baseURL}/sysorg/delete/${roleid}`);
     },
 }

@@ -40,7 +40,6 @@ public class IndexServiceImpl implements IndexService{
 	
 	@Override
 	public void home() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -88,7 +87,7 @@ public class IndexServiceImpl implements IndexService{
 		}
 		
 		//是超级用户
-		if(PubDefine.isRootUser(user.getUnioncode(), user.getUserid())) {
+		if(PubDefine.isRootUser(user.getUserid())) {
 			res.setMenuTree(menuService.getFullMenuTree());
 		}else {
 			res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
@@ -99,7 +98,6 @@ public class IndexServiceImpl implements IndexService{
 
 	@Override
 	public void logout() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -122,7 +120,7 @@ public class IndexServiceImpl implements IndexService{
 			upUser.setLoginerror(0);
 		}else {
 			upUser.setLoginerror(user.getLoginerror() + 1);
-			String maxPasswdErr = ParamConsts.getParam(user.getUnioncode(), ParamConsts.PK_PASSWD_ERROR_TIMES);
+			String maxPasswdErr = ParamConsts.getParam(user.getUnioncode(), ParamConsts.PARAM1003_PASSWD_ERROR_TIMES);
 			if(upUser.getLoginerror() >= Integer.parseInt(maxPasswdErr)) {
 				upUser.setStatus(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK);
 			}

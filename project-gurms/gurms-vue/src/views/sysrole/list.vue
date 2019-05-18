@@ -128,8 +128,6 @@ export default{
             //临时业务数据
             sysrole: null,
             dateArray: [],
-            unioncode: this.$store.state.pub.user.unioncode,
-            operator: this.$store.state.pub.user.userid,
             //验证规则
             rules: {
                 rolename: [
@@ -147,7 +145,7 @@ export default{
     mounted(){
         // tools.initPageDict('1003,2006', this.dictCache);
         this.loadData();
-        this.loadDict();
+        this.loadDict('1003,2006');
     },
     methods:{
         loadData:function(){
@@ -157,8 +155,8 @@ export default{
                 tools.errTip(err);
             });
         },
-        loadDict:function(){
-            this.$api.Gurms.getDictMap(this.unioncode, '1003,2006').then((res)=>{
+        loadDict:function(keys){
+            this.$api.Gurms.getDictMap(keys).then((res)=>{
                 this.dictCache = res.results;
             }).catch((err)=>{
                 tools.errTip(err);
@@ -284,8 +282,7 @@ export default{
             this.$refs[formName].validate((valid)=>{
                 if(valid){
                     //从session赋值
-                    this.sysrole.unioncode = this.unioncode;
-                    this.sysrole.creator = this.operator;
+                    this.sysrole.creator = this.$store.state.pub.user.userid;
                     var callAPI = null;
                     if(this.editType === this.$pubdefine.EDIT_TYPE_UPDATE){
                         callAPI = this.$api.Gurms.roleUpdate(this.sysrole);

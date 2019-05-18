@@ -23,8 +23,8 @@ public class SysDictController {
 		return dictService.getDict(unioncode, dictcode);
 	}
 	
-	@RequestMapping("/getmap/{unioncode}/{dictcode}")
-	public BaseResMapDto<String, List<SysDictValueRes>> getDictMap(@PathVariable String unioncode, @PathVariable String dictcode) {
+	@RequestMapping("/getmap/{dictcode}")
+	public BaseResMapDto<String, List<SysDictValueRes>> getDictMap(String unioncode, @PathVariable String dictcode) {
 		return dictService.getDict(unioncode, dictcode);
 	}
 }

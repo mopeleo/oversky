@@ -7,17 +7,29 @@ public class PubDefine {
 	private PubDefine() {}
 	
 	/**
-	 *	 是否超级管理员
+	 *	 是否超级管理员，超级管理员不允许编辑
 	 * @param unioncode
 	 * @param userid
 	 * @return
 	 */
-	public static boolean isRootUser(String unioncode, Long userid) {
-		String rootUser = ParamConsts.getParam(unioncode, ParamConsts.PK_SYS_ROOTUSER);
+	public static boolean isRootUser(Long userid) {
+		String rootUser = ParamConsts.getParam(ParamConsts.DEFAULT_UNIONCODE, ParamConsts.PARAM1001_SYS_ROOTUSER);
 		if((","+rootUser+",").indexOf("," + userid + ",") != -1) {
 			return true;
 		}
 
+		return false;
+	}
+	
+	/**
+	 * 是否根机构，根机构不允许编辑
+	 * @param orgid
+	 * @return
+	 */
+	public static boolean isRootOrg(Long orgid) {
+		if(orgid != null || orgid == ParamConsts.DEFAULT_ROOTORG) {
+			return true;
+		}
 		return false;
 	}
 }

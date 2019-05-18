@@ -1,5 +1,7 @@
 package org.oversky.gurms.system.dto.response;
 
+import java.util.List;
+
 import org.oversky.base.service.BaseResDto;
 
 public class SysOrgRes extends BaseResDto {
@@ -19,6 +21,8 @@ public class SysOrgRes extends BaseResDto {
 	private Long parentorg;    //上级机构
 	private String orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
 	private String remark;    //备注
+	
+	private List<SysOrgRes> subOrgs;
 
 	public Long getOrgid() {
 		return this.orgid;
@@ -124,8 +128,15 @@ public class SysOrgRes extends BaseResDto {
 		this.remark = remark;
 	}
 
+    public List<SysOrgRes> getSubOrgs() {
+		return subOrgs;
+	}
 
-    @Override
+	public void setSubOrgs(List<SysOrgRes> subOrgs) {
+		this.subOrgs = subOrgs;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
