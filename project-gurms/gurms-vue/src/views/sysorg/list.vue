@@ -88,24 +88,9 @@ export default{
                 pageNum:1
             },
             //对话框表单属性
-            dialogFormVisible: false,
             editType: this.$pubdefine.EDIT_TYPE_DETAIL,   // insert/update
             //临时业务数据
-            sysorg: {
-                orgid:'',
-                unioncode:'',
-                shortname:'',
-                fullname:'',
-                parentorg:'',
-                orgtype:'',
-                linkman:'',
-                linktel:'',
-                faxno:'',
-                address:'',
-                postcode:'',
-                email:'',
-                remark:''
-            },
+            sysorg: {},
             //验证规则
             rules: {
                 shortname: [
@@ -119,7 +104,7 @@ export default{
     },
     mounted(){
         this.loadOrgTree();
-        this.loadDict('1001,2012');
+        this.loadDict('2012');
     },
     watch: {
         filterText(val) {
@@ -129,6 +114,7 @@ export default{
     methods:{
         loadOrgTree:function(){
             this.$api.Gurms.orgTree(this.orgReq).then((res)=>{
+                this.treeData = [];
                 this.treeData.push(res);
             }).catch((err)=>{
                 tools.errTip(err);
@@ -148,15 +134,10 @@ export default{
         leftTreeHandleNodeClick(data){
             this.sysorg = data;
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
+            // let node = this.$refs.leftOrgTree.getCurrentNode();
+            // alert(JSON.stringify(node));
         },
-        setMenuList:function(orgTree){
-            if(orgTree){
-                let menuArray = orgTree.split(",");
-                this.$refs.leftOrgTree.setCheckedKeys(menuArray);
-            }
-        },
-        handleAdd() {
-            this.dialogFormVisible = true;
+        initOrgInfo(){
             this.sysorg = {
                 orgid:'',
                 unioncode:'',
@@ -172,11 +153,20 @@ export default{
                 email:'',
                 remark:''
             };
+            this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
+        },
+        setMenuList:function(orgTree){
+            if(orgTree){
+                let menuArray = orgTree.split(",");
+                this.$refs.leftOrgTree.setCheckedKeys(menuArray);
+            }
+        },
+        handleAdd() {
+            this.initOrgInfo();
             this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
         },
         handleDetail(index, row) {
             this.$api.Gurms.orgDetail(row.orgid).then(res =>{
-                this.dialogFormVisible = true;
                 this.sysorg = res;
                 this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
 
@@ -193,11 +183,13 @@ export default{
         handleDelete() {
             let orgid = this.sysorg.orgid;
             let confirm_msg = "即将删除机构["+ this.sysorg.shortname + "],是否继续?";
+            let that = this;
             tools.confirmTip(confirm_msg, function(){
-                this.$api.Gurms.orgDelete(orgid).then((res)=>{
+                that.$api.Gurms.orgDelete(orgid).then((res)=>{
                     tools.succTip(res.returnmsg);
                     if(res.success === true){
-                        this.dialogFormVisible = false;
+                        that.loadOrgTree();
+                        that.initOrgInfo();
                     }
                 }).catch((err)=>{
                     tools.errTip(err);
@@ -213,10 +205,12 @@ export default{
                     }else if(this.editType === this.$pubdefine.EDIT_TYPE_INSERT){
                         callAPI = this.$api.Gurms.orgAdd(this.sysorg);
                     }
+                    let that = this;
                     callAPI.then((res)=>{
                         tools.succTip(res.returnmsg);
                         if(res.success === true){
-                            this.dialogFormVisible = false;
+                            that.loadOrgTree();
+                            that.initOrgInfo();
                         }
                     }).catch((err)=>{
                         tools.errTip(err);

@@ -27,7 +27,7 @@ public class PubDefine {
 	 * @return
 	 */
 	public static boolean isRootOrg(Long orgid) {
-		if(orgid != null || orgid == ParamConsts.DEFAULT_ROOTORG) {
+		if(orgid != null && orgid == ParamConsts.DEFAULT_ROOTORG) {
 			return true;
 		}
 		return false;

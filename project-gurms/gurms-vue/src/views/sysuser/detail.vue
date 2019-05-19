@@ -72,16 +72,16 @@ export default {
         if(userid && userid != 0){
             this.$api.Gurms.userDetail(userid).then((res)=>{
                 // alert(JSON.stringify(res));
-                this.sysuser.userid = res.data.userid;
-                this.sysuser.unioncode = res.data.unioncode;
-                this.sysuser.username = res.data.username;
-                this.sysuser.loginid = res.data.loginid;
-                this.sysuser.loginpasswd = res.data.loginpasswd;
-                this.sysuser.mobileno = res.data.mobileno;
-                this.sysuser.email = res.data.email;
-                this.sysuser.orgid = res.data.orgid;
-                this.sysuser.idtype = res.data.idtype;
-                this.sysuser.idcode = res.data.idcode;
+                this.sysuser.userid = res.userid;
+                this.sysuser.unioncode = res.unioncode;
+                this.sysuser.username = res.username;
+                this.sysuser.loginid = res.loginid;
+                this.sysuser.loginpasswd = res.loginpasswd;
+                this.sysuser.mobileno = res.mobileno;
+                this.sysuser.email = res.email;
+                this.sysuser.orgid = res.orgid;
+                this.sysuser.idtype = res.idtype;
+                this.sysuser.idcode = res.idcode;
             }).catch((err)=>{
                 tools.errTip(err);
             });
@@ -101,11 +101,11 @@ export default {
                         }
                     }
                     callAPI.then((res)=>{
-                        if(res.data.success === true){
+                        if(res.success === true){
                             this.$router.back(-1);
                         }
                     }).catch((err)=>{
-                        tools.errTip(err.data ? err.data.message : err);
+                        tools.errTip(err);
                     });
                 }else{
                     return false;

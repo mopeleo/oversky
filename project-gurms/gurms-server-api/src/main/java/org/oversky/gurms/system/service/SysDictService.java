@@ -8,7 +8,7 @@ import org.oversky.gurms.system.dto.response.SysDictValueRes;
 
 public interface SysDictService {
 
-	BaseResListDto<SysDictValueRes> getDict(String unioncode, Integer dictcode);
+	BaseResListDto<SysDictValueRes> getDictList(String unioncode, Integer dictcode);
 	
-	BaseResMapDto<String, List<SysDictValueRes>> getDict(String unioncode, String dictcodeList);
+	BaseResMapDto<String, List<SysDictValueRes>> getDictMap(String unioncode, String dictcodeList);
 }

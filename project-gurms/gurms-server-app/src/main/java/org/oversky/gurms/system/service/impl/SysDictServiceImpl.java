@@ -26,8 +26,8 @@ public class SysDictServiceImpl implements SysDictService {
 	private SysDictIndexDao dictIndexDao;
 	
 	@Override
-	@Cacheable(key = "'getDict_' + #p0 + '_' + #p1")
-	public BaseResListDto<SysDictValueRes> getDict(String unioncode, Integer dictcode) {
+	@Cacheable(key = "'getDictList_' + #p0 + '_' + #p1")
+	public BaseResListDto<SysDictValueRes> getDictList(String unioncode, Integer dictcode) {
 		SysDictValue where = new SysDictValue();
 		where.setUnioncode(unioncode);
 		where.setDictcode(dictcode);
@@ -41,12 +41,12 @@ public class SysDictServiceImpl implements SysDictService {
 	}
 
 	@Override
-	@Cacheable(key = "'getDict_' + #p0 + '_' + #p1")
-	public BaseResMapDto<String, List<SysDictValueRes>> getDict(String unioncode, String dictcodeList) {
+	@Cacheable(key = "'getDictMap_' + #p0 + '_' + #p1")
+	public BaseResMapDto<String, List<SysDictValueRes>> getDictMap(String unioncode, String dictcodeList) {
 		String[] codeList = dictcodeList.split(",");
 		BaseResMapDto<String, List<SysDictValueRes>> dictMap = new BaseResMapDto<>();
 		for(String dictcode : codeList) {
-			List<SysDictValueRes> roleResList = getDict(unioncode, Integer.parseInt(dictcode)).getResults();
+			List<SysDictValueRes> roleResList = getDictList(unioncode, Integer.parseInt(dictcode)).getResults();
 			dictMap.putMap(dictcode, roleResList);
 		}
 		

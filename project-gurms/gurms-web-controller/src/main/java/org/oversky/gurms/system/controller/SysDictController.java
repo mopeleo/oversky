@@ -20,11 +20,11 @@ public class SysDictController {
 
 	@RequestMapping("/getlist/{unioncode}/{dictcode}")
 	public BaseResListDto<SysDictValueRes> getDictList(@PathVariable String unioncode, @PathVariable Integer dictcode) {
-		return dictService.getDict(unioncode, dictcode);
+		return dictService.getDictList(unioncode, dictcode);
 	}
 	
 	@RequestMapping("/getmap")
 	public BaseResMapDto<String, List<SysDictValueRes>> getDictMap(String unioncode, String dictcode) {
-		return dictService.getDict(unioncode, dictcode);
+		return dictService.getDictMap(unioncode, dictcode);
 	}
 }

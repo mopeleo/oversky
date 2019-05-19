@@ -76,7 +76,7 @@ export default {
     },
     // 角色详情
     roleDetail (roleid) {
-        return axios.get(`${baseURL}/sysrole/detail/${roleid}`)
+        return axios.get(`${baseURL}/sysrole/detail/${roleid}`);
     },
     // 角色删除
     roleDelete (roleid) {
@@ -97,11 +97,11 @@ export default {
         return axios.post(`${baseURL}/sysorg/update`, params);
     },
     // 机构详情
-    orgDetail (roleid) {
-        return axios.get(`${baseURL}/sysorg/detail/${roleid}`)
+    orgDetail (orgid) {
+        return axios.get(`${baseURL}/sysorg/detail/${orgid}`);
     },
     // 机构删除
-    orgDelete (roleid) {
-        return axios.get(`${baseURL}/sysorg/delete/${roleid}`);
+    orgDelete (orgid) {
+        return axios.get(`${baseURL}/sysorg/delete/${orgid}`);
     },
 }

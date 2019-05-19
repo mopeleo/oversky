@@ -53,7 +53,7 @@ public class CacheSysParamRunner implements ApplicationRunner {
 		
 		List<SysDictIndex> dictList = dictIndexDao.selectAll();
 		for(SysDictIndex dictIndex : dictList) {
-			dictService.getDict(dictIndex.getUnioncode(), dictIndex.getDictcode());
+			dictService.getDictList(dictIndex.getUnioncode(), dictIndex.getDictcode());
 		}
 
 		menuService.getFullMenuTree();
