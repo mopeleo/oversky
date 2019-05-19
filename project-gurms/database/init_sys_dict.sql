@@ -160,6 +160,11 @@ insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('000
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2011, '1', '登录可访问');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2011, '2', '需授权访问');
 
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2012, '机构类型', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2012, '1', '总');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2012, '2', '分');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2012, '3', '支');
+
 commit;
 
 

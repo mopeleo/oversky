@@ -18,13 +18,21 @@ export default {
     },
 
     //========================================================
-    // 查询字典
+    // 查询字典，多个字典
     getDictMap(dictkeys, unioncode){
         if(unioncode){
-            return axios.get(`${baseURL}/sysdict/getmap/${unioncode}/${dictkeys}`);
+            return axios.get(`${baseURL}/sysdict/getmap`, {
+                params: {dictcode: dictkeys, unioncode: unioncode}
+            });
         }else{
-            return axios.get(`${baseURL}/sysdict/getmap/${dictkeys}`);
+            return axios.get(`${baseURL}/sysdict/getmap`, {
+                params: {dictcode: dictkeys}
+            });
         }
+    },
+    // 查询字典，单个字典
+    getDictList(dictcode, unioncode){
+        return axios.get(`${baseURL}/sysdict/getlist/${unioncode}/${dictcode}`);
     },
 
 
