@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.oversky.base.service.BaseServiceException;
-import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.component.PubDefine;
 import org.oversky.gurms.system.constant.DictConsts;
+import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.SysUserLoginDao;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -44,22 +45,18 @@ public class IndexServiceImpl implements IndexService{
 	}
 
 	@Override
+	@Transactional
 	public UserLoginRes login(UserLoginReq loginReq) {
-		log.debug("=== begin login(UserLoginReq loginReq => {})", loginReq);
+		log.info("开始 login(UserLoginReq loginReq => {})", loginReq);
 		UserLoginRes res = new UserLoginRes();
-		if(loginReq == null) {
-			res.failure("请求对象为空");
-			log.warn("请求对象为空");
-			return res;
-		}
 		if(StringUtils.isEmpty(loginReq.getLoginid())) {
 			res.failure("用户名不能为空");
-			log.warn("用户名为空 [{}]", loginReq.getLoginid());
+			log.info(res.getReturnmsg());
 			return res;
 		}
 		if(StringUtils.isEmpty(loginReq.getPasswd())) {
 			res.failure("密码不能为空");
-			log.warn("密码为空 [{}]", loginReq.getPasswd());
+			log.info(res.getReturnmsg());
 			return res;
 		}
 		
@@ -67,21 +64,24 @@ public class IndexServiceImpl implements IndexService{
 		where.setLoginid(loginReq.getLoginid());
 		List<SysUser> userList = sysUserDao.selectWhere(where);
 		if(userList == null || userList.size() != 1) {
-			res.failure("用户名不存在");
+			res.failure("用户名["+loginReq.getLoginid()+"]不存在");
+			log.info(res.getReturnmsg());
 			return res;
 		}
 		SysUser user = userList.get(0);
 		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户状态异常:" + user.getStatus());
+			log.info(res.getReturnmsg());
 			return res;
 		}
 		String md5Passwd = EncryptUtils.md5Encode(loginReq.getPasswd() + user.getSalt());
-		System.out.println(md5Passwd);
 		if(!md5Passwd.equals(user.getLoginpasswd())) {
 			res.failure("用户名或密码错误");
 			this.processPasswd(user, false);
+			log.info(res.getReturnmsg());
+			return res;
 		}else {
-			res.success("登陆成功");
+			res.success("登录成功");
 			this.processPasswd(user, true);
 			BeanCopyUtils.copy(user, res);
 		}
@@ -93,6 +93,7 @@ public class IndexServiceImpl implements IndexService{
 			res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
 		}
 		
+		log.info("登录结束：{}", res.getReturnmsg());
 		return res;
 	}
 
@@ -115,7 +116,7 @@ public class IndexServiceImpl implements IndexService{
 		upUser.copyPrimaryKey(user);
 		upUser.setLogindate(DateUtils.getNowDate());
 		upUser.setLogintime(DateUtils.getNowTime());
-		//登陆成功清除累计错误次数
+		//登录成功清除累计错误次数
 		if(loginSuccess) {
 			upUser.setLoginerror(0);
 		}else {
@@ -127,8 +128,8 @@ public class IndexServiceImpl implements IndexService{
 		}
 		int count = sysUserDao.dynamicUpdateById(upUser);
 		if(count != 1) {
-			log.error("登陆更新用户状态失败，更新条数：{}", count);
-			throw new BaseServiceException("登陆更新用户状态失败");
+			log.info("登录更新用户状态失败，更新条数：{}", count);
+			throw new BaseServiceException("登录更新用户状态失败");
 		}
 	}
 }

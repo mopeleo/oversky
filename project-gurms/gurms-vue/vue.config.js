@@ -22,6 +22,8 @@ module.exports = {
         Object.assign(config, {
             // 开发生产共同配置
             resolve: {
+				//使用import ... from 导入文件可忽略后缀的文件类型，js>vue
+				extensions: ['.js', '.vue', '.json'],
                 alias: {
                     '@': path.resolve(__dirname, './src')
                 }
@@ -37,7 +39,9 @@ module.exports = {
         // 开启 CSS source maps?
         sourceMap: false,
         // css预设器配置项
-        loaderOptions: {},
+        loaderOptions: {
+			less: {javascriptEnabled: true}			//启用less中javascript解析
+		},
         // 启用 CSS modules for all css / pre-processor files.
         modules: false
     },
@@ -57,7 +61,7 @@ module.exports = {
         hotOnly: false,
         proxy: {
             // 设置代理
-            '/gurms': {
+            '/gurms/': {
                 target: 'http://localhost:8080/', //真实请求的目标地址
                 changeOrigin: true,          //是否跨域
                 pathRewrite: {

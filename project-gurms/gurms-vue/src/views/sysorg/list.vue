@@ -30,7 +30,14 @@
                     <el-input v-model="sysorg.fullname"></el-input>
                 </el-form-item>
                 <el-form-item label="上级机构" prop="parentorg">
-                    <el-input v-model="sysorg.parentorg"></el-input>
+                    <el-input v-model="sysorg.parentorg" type="hidden"></el-input>
+                    <el-input v-model="parentname"></el-input>
+                    <el-tree ref="parentOrgTree"
+                        :data="treeData"
+                        node-key="orgid"
+                        @node-click="parentTreeHandleNodeClick"
+                        :props="{children: 'subOrgs',label: 'shortname'}">
+                    </el-tree>
                 </el-form-item>
                 <el-form-item label="机构类型" prop="orgtype">
                     <el-select v-model="sysorg.orgtype" value-key="itemcode" placeholder="请选择">
@@ -91,6 +98,7 @@ export default{
             editType: this.$pubdefine.EDIT_TYPE_DETAIL,   // insert/update
             //临时业务数据
             sysorg: {},
+            parentname: '',
             //验证规则
             rules: {
                 shortname: [
@@ -134,8 +142,15 @@ export default{
         leftTreeHandleNodeClick(data){
             this.sysorg = data;
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
+            this.parentname = data.orgid + " - " + data.shortname;
             // let node = this.$refs.leftOrgTree.getCurrentNode();
             // alert(JSON.stringify(node));
+        },
+        parentTreeHandleNodeClick(data){
+            if(this.editType !== this.$pubdefine.EDIT_TYPE_DETAIL){
+                this.sysorg.parentorg = data.orgid;
+                this.parentname = data.orgid + " - " + data.shortname;
+            }
         },
         initOrgInfo(){
             this.sysorg = {
@@ -154,6 +169,7 @@ export default{
                 remark:''
             };
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
+            this.parentname = '';
         },
         setMenuList:function(orgTree){
             if(orgTree){

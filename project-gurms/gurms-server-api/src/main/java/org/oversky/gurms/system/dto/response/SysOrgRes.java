@@ -22,6 +22,7 @@ public class SysOrgRes extends BaseResDto {
 	private String orgtype;    //机构类型(0-虚拟，可选，1-总，2-分，3-支)
 	private String remark;    //备注
 	
+	private boolean editUnioncode;
 	private List<SysOrgRes> subOrgs;
 
 	public Long getOrgid() {
@@ -134,6 +135,14 @@ public class SysOrgRes extends BaseResDto {
 
 	public void setSubOrgs(List<SysOrgRes> subOrgs) {
 		this.subOrgs = subOrgs;
+	}
+
+	public boolean isEditUnioncode() {
+		return editUnioncode;
+	}
+
+	public void setEditUnioncode(boolean editUnioncode) {
+		this.editUnioncode = editUnioncode;
 	}
 
 	@Override
