@@ -1,19 +1,23 @@
-import enElement from 'element-ui/lib/locale/lang/en'
-
 export default {
-    global: {
-        username: 'User Name',
-        password: 'Password',
-        login: 'Login',
-        captcha: 'Captcha',
-        forgetPassword: 'Forget Password?',
-        loginTip: 'The login result is random. Just fill in the captcha',
-        editpassword: 'Edit Password',
-        logout: 'Logout',
-        errMsg: {
-            inputRequired: 'Please Input {cont}',
-            selectRequired: 'Please Select {cont}'
-        }
-    },
-    ...enElement
+  author: {
+    name: 'yu'
+  },
+  login: {
+    title: 'Content Manage System',
+    account: 'Account',
+    password: 'Pwd',
+    remember: 'Remember',
+    login: 'Login'
+  },
+  navbar: {
+    title: 'vue-cms',
+    screenfull: 'screenfull',
+    profile: 'Profile',
+    avatar: 'Avatar',
+    github: 'GitHub',
+    logOut: 'Log Out'
+  },
+  introduction: {
+    item1: 'Sometimes we also need to access the original DOM event in an inline statement handler. You can pass it into a method using the special $event variable'
+  }
 }

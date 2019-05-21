@@ -97,6 +97,11 @@ instance.interceptors.response.use(
                 case 404:
                     router.replace({name: 'error404', params: {message: resMsg}});
                     break;
+                case 500:
+                    if(!resMsg){
+                        resMsg = "服务器无响应";
+                    }
+                    break;
                 default:
                     break;
             }

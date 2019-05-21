@@ -1,39 +1,41 @@
 <template>
-    <el-form ref="sysuserForm" :model="sysuser" :rules="rules" label-width="80px" :disabled="!edit">
-        <el-form-item label="用户姓名" prop="username">
-            <el-input v-model="sysuser.username" :disabled="sysuser.userid?true:false"></el-input>
-        </el-form-item>
-        <el-form-item label="登录名" prop="loginid">
-            <el-input v-model="sysuser.loginid" :disabled="sysuser.userid?true:false"></el-input>
-        </el-form-item>
-        <el-form-item label="登录密码" prop="loginpasswd">
-            <el-input v-model="sysuser.loginpasswd"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号码" prop="mobileno">
-            <el-input v-model="sysuser.mobileno"></el-input>
-        </el-form-item>
-        <el-form-item label="电子邮件" prop="email">
-            <el-input v-model="sysuser.email"></el-input>
-        </el-form-item>
-        <el-form-item label="所属机构" prop="orgid">
-            <el-input v-model="sysuser.orgid"></el-input>
-        </el-form-item>
-        <el-form-item label="证件类型" prop="idtype">
-            <el-select v-model="sysuser.idtype" placeholder="请选择证件类型">
-                <el-option label="身份证" value="0"></el-option>
-                <el-option label="户口本" value="1"></el-option>
-                <el-option label="其他" value="2"></el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="证件号码" prop="idcode">
-            <el-input v-model="sysuser.idcode"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit('sysuserForm')">保存</el-button>
-            <el-button @click="onReset('sysuserForm')">重填</el-button>
-            <el-button type="primary" @click="$router.back(-1)">返回</el-button>
-        </el-form-item>
-    </el-form>
+    <div>
+        <el-form ref="sysuserForm" :model="sysuser" :rules="rules" label-width="80px" :disabled="!edit">
+            <el-form-item label="用户姓名" prop="username">
+                <el-input v-model="sysuser.username" :disabled="sysuser.userid?true:false"></el-input>
+            </el-form-item>
+            <el-form-item label="登录名" prop="loginid">
+                <el-input v-model="sysuser.loginid" :disabled="sysuser.userid?true:false"></el-input>
+            </el-form-item>
+            <el-form-item label="登录密码" prop="loginpasswd">
+                <el-input v-model="sysuser.loginpasswd"></el-input>
+            </el-form-item>
+            <el-form-item label="手机号码" prop="mobileno">
+                <el-input v-model="sysuser.mobileno"></el-input>
+            </el-form-item>
+            <el-form-item label="电子邮件" prop="email">
+                <el-input v-model="sysuser.email"></el-input>
+            </el-form-item>
+            <el-form-item label="所属机构" prop="orgid">
+                <el-input v-model="sysuser.orgid"></el-input>
+            </el-form-item>
+            <el-form-item label="证件类型" prop="idtype">
+                <el-select v-model="sysuser.idtype" placeholder="请选择证件类型">
+                    <el-option label="身份证" value="0"></el-option>
+                    <el-option label="户口本" value="1"></el-option>
+                    <el-option label="其他" value="2"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="证件号码" prop="idcode">
+                <el-input v-model="sysuser.idcode"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit('sysuserForm')">保存</el-button>
+                <el-button @click="onReset('sysuserForm')">重填</el-button>
+                <el-button type="primary" @click="$router.back(-1)">返回</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 </template>
 
 <script>

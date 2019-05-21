@@ -1,80 +1,82 @@
 <template>
-    <el-row class="tac" :gutter="20">
-        <el-col :span="8">
-            <h5>机构列表</h5>
-            <el-input clearable style="width:200px"
-                placeholder="输入关键字进行过滤"
-                v-model="filterText">
-            </el-input>
-            <el-button type="primary" icon="el-icon-plus" circle @click="handleAdd"></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle @click="handleDelete"></el-button>
-            <el-tree ref="leftOrgTree"
-                :data="treeData"
-                node-key="orgid"
-                @node-click="leftTreeHandleNodeClick"
-                :filter-node-method="filterNode"
-                :props="{children: 'subOrgs',label: 'shortname'}">
-            </el-tree>
-        </el-col>
-        <el-col :span="12">
-            <h5>机构信息</h5>
-            <el-form ref="detailForm" :model="sysorg" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                <el-input v-model="sysorg.orgid" type="hidden"></el-input>
-                <el-form-item label="机构联号" prop="unioncode">
-                    <el-input v-model="sysorg.unioncode" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
-                </el-form-item>
-                <el-form-item label="机构简称" prop="shortname">
-                    <el-input v-model="sysorg.shortname"></el-input>
-                </el-form-item>
-                <el-form-item label="机构全称" prop="fullname">
-                    <el-input v-model="sysorg.fullname"></el-input>
-                </el-form-item>
-                <el-form-item label="上级机构" prop="parentorg">
-                    <el-input v-model="sysorg.parentorg" type="hidden"></el-input>
-                    <el-input v-model="parentname"></el-input>
-                    <el-tree ref="parentOrgTree"
-                        :data="treeData"
-                        node-key="orgid"
-                        @node-click="parentTreeHandleNodeClick"
-                        :props="{children: 'subOrgs',label: 'shortname'}">
-                    </el-tree>
-                </el-form-item>
-                <el-form-item label="机构类型" prop="orgtype">
-                    <el-select v-model="sysorg.orgtype" value-key="itemcode" placeholder="请选择">
-                        <el-option v-for="item in dictCache['2012']"
-                            :key="item.itemcode"
-                            :label="item.itemcode + ' - ' + item.itemname"
-                            :value="item.itemcode">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="联系人" prop="linkman">
-                    <el-input v-model="sysorg.linkman"></el-input>
-                </el-form-item>
-                <el-form-item label="联系电话" prop="linktel">
-                    <el-input v-model="sysorg.linktel"></el-input>
-                </el-form-item>
-                <el-form-item label="传真" prop="faxno">
-                    <el-input v-model="sysorg.faxno"></el-input>
-                </el-form-item>
-                <el-form-item label="联系地址" prop="address">
-                    <el-input v-model="sysorg.address"></el-input>
-                </el-form-item>
-                <el-form-item label="邮政编码" prop="postcode">
-                    <el-input v-model="sysorg.postcode"></el-input>
-                </el-form-item>
-                <el-form-item label="电子邮件" prop="email">
-                    <el-input v-model="sysorg.email"></el-input>
-                </el-form-item>
-                <el-form-item label="备注" prop="remark">
-                    <el-input v-model="sysorg.remark"></el-input>
-                </el-form-item>
-            </el-form>
-            <el-button type="primary" @click="handleEdit">修改</el-button>
-            <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
-            <el-button @click="onReset('detailForm')">重填</el-button>
-        </el-col>
-    </el-row>
+    <div>
+        <el-row class="tac" :gutter="20">
+            <el-col :span="8">
+                <h5>机构列表</h5>
+                <el-input clearable style="width:200px"
+                    placeholder="输入关键字进行过滤"
+                    v-model="filterText">
+                </el-input>
+                <el-button type="primary" icon="el-icon-plus" circle @click="handleAdd"></el-button>
+                <el-button type="danger" icon="el-icon-delete" circle @click="handleDelete"></el-button>
+                <el-tree ref="leftOrgTree"
+                    :data="treeData"
+                    node-key="orgid"
+                    @node-click="leftTreeHandleNodeClick"
+                    :filter-node-method="filterNode"
+                    :props="{children: 'subOrgs',label: 'shortname'}">
+                </el-tree>
+            </el-col>
+            <el-col :span="12">
+                <h5>机构信息</h5>
+                <el-form ref="detailForm" :model="sysorg" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
+                    <el-input v-model="sysorg.orgid" type="hidden"></el-input>
+                    <el-form-item label="机构联号" prop="unioncode">
+                        <el-input v-model="sysorg.unioncode" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
+                    </el-form-item>
+                    <el-form-item label="机构简称" prop="shortname">
+                        <el-input v-model="sysorg.shortname"></el-input>
+                    </el-form-item>
+                    <el-form-item label="机构全称" prop="fullname">
+                        <el-input v-model="sysorg.fullname"></el-input>
+                    </el-form-item>
+                    <el-form-item label="上级机构" prop="parentorg">
+                        <el-input v-model="sysorg.parentorg" type="hidden"></el-input>
+                        <el-input v-model="parentname"></el-input>
+                        <el-tree ref="parentOrgTree"
+                            :data="treeData"
+                            node-key="orgid"
+                            @node-click="parentTreeHandleNodeClick"
+                            :props="{children: 'subOrgs',label: 'shortname'}">
+                        </el-tree>
+                    </el-form-item>
+                    <el-form-item label="机构类型" prop="orgtype">
+                        <el-select v-model="sysorg.orgtype" value-key="itemcode" placeholder="请选择">
+                            <el-option v-for="item in dictCache['2012']"
+                                :key="item.itemcode"
+                                :label="item.itemcode + ' - ' + item.itemname"
+                                :value="item.itemcode">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="联系人" prop="linkman">
+                        <el-input v-model="sysorg.linkman"></el-input>
+                    </el-form-item>
+                    <el-form-item label="联系电话" prop="linktel">
+                        <el-input v-model="sysorg.linktel"></el-input>
+                    </el-form-item>
+                    <el-form-item label="传真" prop="faxno">
+                        <el-input v-model="sysorg.faxno"></el-input>
+                    </el-form-item>
+                    <el-form-item label="联系地址" prop="address">
+                        <el-input v-model="sysorg.address"></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮政编码" prop="postcode">
+                        <el-input v-model="sysorg.postcode"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电子邮件" prop="email">
+                        <el-input v-model="sysorg.email"></el-input>
+                    </el-form-item>
+                    <el-form-item label="备注" prop="remark">
+                        <el-input v-model="sysorg.remark"></el-input>
+                    </el-form-item>
+                </el-form>
+                <el-button type="primary" @click="handleEdit">修改</el-button>
+                <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
+                <el-button @click="onReset('detailForm')">重填</el-button>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>

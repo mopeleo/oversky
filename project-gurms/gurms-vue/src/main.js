@@ -4,9 +4,17 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-// import './assets/css/theme-default.scss'
+// animate动画库
+import 'animate.css'
+// 全局图标
+import './icons'
+// 国际化
+import i18n from './lang'
 
-Vue.use(ElementUI, { size: 'mini'});
+Vue.use(ElementUI, {
+    size: 'medium',
+    i18n: (key, value) => i18n.t(key, value)
+});
 Vue.config.productionTip = false;
 
 import PUBDEFINE from '@/utils/pubdefine';
@@ -68,5 +76,6 @@ router.beforeEach((to, from, next) => {
 new Vue({
     router,
     store,
+    i18n,
     render: h => h(App)
 }).$mount('#app')

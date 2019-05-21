@@ -21,10 +21,16 @@ export function toLogin() {
 */
 export function errTip(err){
     let msg = null;
-    if(typeof(err) === 'string'){
-        msg = err;
-    }else if(typeof(err) === 'object'){
-        msg = err.message ? err.message : err.returnmsg;
+    if(err){
+        if(typeof(err) === 'string'){
+            msg = err;
+        }else if(typeof(err) === 'object'){
+            msg = err.message ? err.message : err.returnmsg;
+        }else{
+            msg = err;
+        }
+    }else{
+        msg = "服务器无响应";
     }
     Message({
         showClose: true,     //是否显示关闭按钮,默认false

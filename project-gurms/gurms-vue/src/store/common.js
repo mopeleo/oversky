@@ -1,6 +1,7 @@
 import router from '@/router'
 import * as tools from '@/utils/tools'
 import PUBDEFINE from '@/utils/pubdefine'
+import { getLang, setLang } from '@/utils/lang'
 
 const state = {
     indexTab:{
@@ -11,6 +12,7 @@ const state = {
     openTabs: [],
     cacheTabs: [],
     activeTab: '',
+    language: getLang() || 'zh',
     user:undefined
 }
 
@@ -127,6 +129,10 @@ const mutations = {
                 break;
             }
         }
+    },
+    SET_LANG(state, language) {
+      state.language = language;
+      setLang(language);
     }
 }
 

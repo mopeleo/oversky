@@ -1,13 +1,14 @@
 <template>
-    <div class="home">
+    <div>
         <el-container>
             <el-header>
-            Header, welcome: {{$store.getters['pub/userinfo'].username}}, 公司123名称： {{$store.state.pub.user.orgid}}
-            <el-button type="primary" @click="logout">注销</el-button>
+                Header, welcome: {{$store.getters['pub/userinfo'].username}}, 公司123名称： {{$store.state.pub.user.orgid}}
+                <el-button type="primary" @click="logout">注销</el-button>
             </el-header>
             <el-container>
-                <el-aside width="200px">
-                    <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose">
+                <el-aside :width="asideWidth">
+                    <el-button type="primary" :icon="iconCollapse" @click="collapseClick"></el-button>
+                    <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
 
                     <el-menu-item :index="'/home/about'" @click="clickMenu({menuid:'index',menuname:'首页',menuurl:'about'})">
                         <i class="el-icon-menu"></i>
@@ -37,21 +38,6 @@
                     </template>
 
 
-                    <el-submenu index="99">
-                        <template slot="title">
-                            <i class="el-icon-location"></i>
-                            <span>测试菜单</span>
-                        </template>
-                        <el-menu-item-group>
-                            <template slot="title">分组一</template>
-                            <el-menu-item :index="'/home/sysuser/list'">选项1</el-menu-item>
-                            <el-menu-item :index="'/home/sysrole/list'">选项2</el-menu-item>
-                        </el-menu-item-group>
-                    </el-submenu>
-
-
-
-
                     </el-menu>
                 </el-aside>
 
@@ -72,7 +58,14 @@ import { mapGetters } from 'vuex';
 export default {
     components:{menuTab},
     data() {
-        return { user: this.$store.state.pub.user };
+        return {
+            //动态样式
+            asideWidth: '200px',
+            iconCollapse: 'el-icon-d-arrow-left',
+            isCollapse: false,
+            //数据
+            user: this.$store.state.pub.user
+        };
     },
     computed:{
         ...mapGetters('pub',['cacheTabs'])
@@ -88,9 +81,19 @@ export default {
             //         this.$router.push({path: '/login'});
             //     }
             // }).catch((error)=>{
-            //     var msg = error.data ? error.data.returnmsg : error;
-            //     tools.errTip(msg);
+            //     tools.errTip(error);
             // });
+        },
+        collapseClick(){
+            if(this.isCollapse == true){
+                this.isCollapse = false;
+                this.iconCollapse = 'el-icon-d-arrow-left';
+                this.asideWidth = '200px';
+            }else{
+                this.isCollapse = true;
+                this.iconCollapse = 'el-icon-d-arrow-right';
+                this.asideWidth = 'auto';
+            }
         },
         clickMenu: function(menuObj){
             let tabObj = {
@@ -110,3 +113,4 @@ export default {
     }
 }
 </script>
+
