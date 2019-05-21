@@ -1,7 +1,8 @@
 <template>
     <div>
-        <el-row class="tac" :gutter="20">
-            <el-col :span="8">
+
+        <el-container style="border: 1px solid #eee">
+            <el-aside width="400px">
                 <h5>机构列表</h5>
                 <el-input clearable style="width:200px"
                     placeholder="输入关键字进行过滤"
@@ -16,8 +17,8 @@
                     :filter-node-method="filterNode"
                     :props="{children: 'subOrgs',label: 'shortname'}">
                 </el-tree>
-            </el-col>
-            <el-col :span="12">
+            </el-aside>
+            <el-main>
                 <h5>机构信息</h5>
                 <el-form ref="detailForm" :model="sysorg" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
                     <el-input v-model="sysorg.orgid" type="hidden"></el-input>
@@ -74,8 +75,8 @@
                 <el-button type="primary" @click="handleEdit">修改</el-button>
                 <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
                 <el-button @click="onReset('detailForm')">重填</el-button>
-            </el-col>
-        </el-row>
+            </el-main>
+        </el-container>
     </div>
 </template>
 

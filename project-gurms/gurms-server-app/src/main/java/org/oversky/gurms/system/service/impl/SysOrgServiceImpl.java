@@ -69,13 +69,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 			log.info("删除机构失败:{}", res.getReturnmsg());
 			return res;
 		}
-		int rows = orgDao.deleteById(orgid);
-		if( rows == 0) {
-			res.failure("删除机构[orgid={" + orgid + "}]失败：机构信息不存在");
-			log.info("删除机构[orgid={}]失败：{}", orgid, res.getReturnmsg());
-			return res;
-		}
-		if(rows > 1) {
+		if(orgDao.deleteById(orgid) > 1) {
 			log.info("删除机构[orgid={}]失败：机构信息不唯一", orgid);
 			throw new BaseServiceException("删除机构[orgid=" + orgid + "]失败：机构信息不唯一");
 		}
@@ -103,13 +97,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 		}
 
 		SysOrg org = BeanCopyUtils.convert(orgReq, SysOrg.class);
-		int rows = orgDao.updateById(org);
-		if(rows == 0) {
-			res.failure("更新机构[orgid={}]失败：机构信息不存在");
-			log.info("修改机构失败 : {}", res.getReturnmsg());
-			return res;
-		}
-		if(rows > 1) {
+		if(orgDao.updateById(org) > 1) {
 			log.info("更新机构[orgid={}]失败：机构信息不唯一", org.getOrgid());
 			throw new BaseServiceException("更新机构[orgid=" + org.getOrgid() + "]失败：机构信息不唯一");
 		}

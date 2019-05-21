@@ -1,9 +1,23 @@
 <template>
     <div>
         <el-container>
-            <el-header>
-                Header, welcome: {{$store.getters['pub/userinfo'].username}}, 公司123名称： {{$store.state.pub.user.orgid}}
-                <el-button type="primary" @click="logout">注销</el-button>
+            <el-header height="20px">
+                <el-row>
+                    <el-col :span="11"><div>1</div></el-col>
+                    <el-col :span="11"><div>2</div></el-col>
+                    <el-col :span="2">
+                        <el-dropdown @command="handleCommand">
+                            <span class="el-dropdown-link">
+                                {{$store.getters['pub/userinfo'].username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="a">修改密码</el-dropdown-item>
+                                <el-dropdown-item command="b">个人信息</el-dropdown-item>
+                                <el-dropdown-item command="c">退出</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </el-col>
+                </el-row>
             </el-header>
             <el-container>
                 <el-aside :width="asideWidth">
@@ -93,6 +107,13 @@ export default {
                 this.isCollapse = true;
                 this.iconCollapse = 'el-icon-d-arrow-right';
                 this.asideWidth = 'auto';
+            }
+        },
+        handleCommand(command) {
+            if(command === 'c'){
+                this.logout();
+            }else{
+                alert(command);
             }
         },
         clickMenu: function(menuObj){

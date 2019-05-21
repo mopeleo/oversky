@@ -3,7 +3,6 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.component.PubDefine;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.constant.ParamConsts;
@@ -126,10 +125,6 @@ public class IndexServiceImpl implements IndexService{
 				upUser.setStatus(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK);
 			}
 		}
-		int count = sysUserDao.dynamicUpdateById(upUser);
-		if(count != 1) {
-			log.info("登录更新用户状态失败，更新条数：{}", count);
-			throw new BaseServiceException("登录更新用户状态失败");
-		}
+		sysUserDao.dynamicUpdateById(upUser);
 	}
 }

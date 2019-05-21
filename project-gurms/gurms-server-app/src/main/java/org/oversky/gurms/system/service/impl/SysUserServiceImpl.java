@@ -3,6 +3,7 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
+import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
@@ -39,6 +40,7 @@ public class SysUserServiceImpl implements SysUserService{
 	
 	@Override
 	public SysUserRes insert(SysUserReq userReq) {
+		log.info("开始新增用户......");
 		SysUserRes res = new SysUserRes();
 		if(!this.check(userReq, res)) {
 			return res;
@@ -53,32 +55,42 @@ public class SysUserServiceImpl implements SysUserService{
 			String md5Passwd = EncryptUtils.md5Encode(user.getLoginpasswd());
 			user.setLoginpasswd(EncryptUtils.md5Encode(md5Passwd + user.getSalt()));
 		}
-		if(sysUserDao.insert(user) == 1) {
-			res.success("新增成功");
-		}else {
+		if(sysUserDao.insert(user) != 1) {
 			res.failure("新增失败");
 		}
+		log.info("新增用户结束 : {}", res.getReturnmsg());
 		return res;
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Long userid) {
-		return sysUserDao.deleteById(userid) == 1;
+		log.info("开始删除用户[userid={}]信息...", userid);
+		int rows = sysUserDao.deleteById(userid);
+		if(rows > 1) {
+			log.info("删除用户[userid={}]失败：用户信息不唯一", userid);
+			throw new BaseServiceException("删除用户[userid=" + userid + "]失败：用户信息不唯一");
+		}
+		
+		log.info("删除用户[userid={}]成功", userid);
+		return true;
 	}
 
 	@Override
+	@Transactional
 	public SysUserRes update(SysUserReq userReq) {
+		log.info("开始修改用户[userid={}]信息......", userReq.getUserid());
 		SysUserRes res = new SysUserRes();
 		if(!this.check(userReq, res)) {
 			return res;
 		}
 		
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
-		if(sysUserDao.dynamicUpdateById(user) == 1) {
-			res.success("修改成功");
-		}else {
-			res.failure("修改失败");
+		if(sysUserDao.dynamicUpdateById(user) > 1) {
+			log.info("更新用户[userid={}]失败：用户信息不唯一", userReq.getUserid());
+			throw new BaseServiceException("更新用户[userid=" + userReq.getUserid() + "]失败：用户信息不唯一");
 		}
+		log.info("修改用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
 		return res;
 	}
 
@@ -88,7 +100,7 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUser user = sysUserDao.getById(userid);
 		SysUserRes res = new SysUserRes();
 		if(user == null) {
-			res.failure("用户不存在");
+			res.failure("用户[" + userid + "]不存在");
 		}else {
 			BeanCopyUtils.copy(user, res);
 		}
@@ -105,6 +117,7 @@ public class SysUserServiceImpl implements SysUserService{
 	//PageHelper 方法使用了静态的 ThreadLocal 参数，分页参数和线程是绑定的
 	//只要你可以保证在 PageHelper 方法调用后紧跟 MyBatis 查询方法，这就是安全的。因为 PageHelper 在 finally 代码段中自动清除了 ThreadLocal 存储的对象。
 	public BaseResListDto<SysUserRes> pageSysUser(SysUserReq userReq){
+		log.info("开始分页查询用户信息...");
 		Page<SysUser> page = PageHelper.startPage(userReq.getPageNum(), userReq.getPageSize());
 		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
 		List<SysUser> userList = queryDao.findUsers(where);
@@ -114,6 +127,7 @@ public class SysUserServiceImpl implements SysUserService{
 		resList.setResults(userResList);
 		resList.success("查询成功");
 		resList.initPage(page.getPageNum(), page.getPageSize(), (int)page.getTotal());
+		log.info("分页查询用户信息结束，共查询到{}条", userResList.size());
 		return resList;
 	}
 	
