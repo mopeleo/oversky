@@ -69,6 +69,16 @@
 		where userid = #{userid, jdbcType=DECIMAL} and confirmid = #{confirmid, jdbcType=INTEGER}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_confirm_user
+		<set>
+		    <if test="field.checklevel != null">
+				checklevel = #{field.checklevel, jdbcType=INTEGER},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 
 	<sql id="column_list">
         ${tab}userid, ${tab}confirmid, ${tab}checklevel
@@ -84,6 +94,20 @@
 			</if>
 			<if test="checklevel != null">
 				and checklevel = #{checklevel, jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.userid != null">
+				and userid = #{condition.userid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.confirmid != null">
+				and confirmid = #{condition.confirmid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.checklevel != null">
+				and checklevel = #{condition.checklevel, jdbcType=INTEGER}
 			</if>
 		</where>
 	</sql>

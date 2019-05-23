@@ -12,7 +12,6 @@ import org.oversky.gurms.system.dto.response.SysRoleRes;
 import org.oversky.gurms.system.entity.SysMenu;
 import org.oversky.gurms.system.entity.SysRole;
 import org.oversky.gurms.system.entity.SysRoleMenu;
-import org.oversky.gurms.system.ext.dao.UniqueCheckDao;
 import org.oversky.gurms.system.ext.dao.UserRightDao;
 import org.oversky.gurms.system.service.SysRoleService;
 import org.oversky.util.bean.BeanCopyUtils;
@@ -39,9 +38,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	private SysRoleMenuDao roleMenuDao;
 	
 	@Autowired
-	private UniqueCheckDao uniqueDao;
-	
-	@Autowired
 	private UserRightDao userRightDao;
 	
 	@Override
@@ -51,13 +47,15 @@ public class SysRoleServiceImpl implements SysRoleService {
 		log.info("开始角色新增......");
 		SysRoleRes res = new SysRoleRes();
 		//rolename 唯一性检查
-		if(uniqueDao.existRoleName(roleReq.getRolename()) > 0) {
+		SysRole role = new SysRole();
+		role.setRolename(roleReq.getRolename());
+		if(roleDao.count(role) > 0) {
 			res.failure("角色名称["+roleReq.getRolename()+"]已存在");
 			log.info("新增角色失败 : {}", res.getReturnmsg());
 			return res;
 		}
 
-		SysRole role = BeanCopyUtils.convert(roleReq, SysRole.class);
+		BeanCopyUtils.copy(roleReq, role);
 		if(roleDao.insert(role) != 1) {
 			res.failure("插入数据库失败");
 			log.info("新增角色失败 : {}", res.getReturnmsg());
@@ -74,11 +72,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Transactional
 	public boolean delete(Long roleid) {
 		log.info("开始删除角色[roleid={}]信息...", roleid);
-		int rows = roleDao.deleteById(roleid);
-		if(rows > 1) {
-			log.info("删除角色[roleid={}]失败：角色信息不唯一", roleid);
-			throw new BaseServiceException("删除角色[roleid=" + roleid + "]失败：角色信息不唯一");
-		}
+		roleDao.deleteById(roleid);
 		
 		SysRoleMenu where = new SysRoleMenu();
 		where.setRoleid(roleid);
@@ -93,10 +87,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		log.info("开始修改角色[roleid={}]信息......", roleReq.getRoleid());
 		SysRoleRes res = new SysRoleRes();
 		SysRole role = BeanCopyUtils.convert(roleReq, SysRole.class);
-		if(roleDao.updateById(role) > 1) {
-			log.info("更新角色[roleid={}]失败：角色信息不唯一", role.getRoleid());
-			throw new BaseServiceException("更新角色[roleid=" + role.getRoleid() + "]失败：角色信息不唯一");
-		}
+		roleDao.updateById(role);
 		
 		SysRoleMenu where = new SysRoleMenu();
 		where.setRoleid(role.getRoleid());

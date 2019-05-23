@@ -101,7 +101,7 @@ export default {
         return axios.get(`${baseURL}/sysorg/detail/${orgid}`);
     },
     // 机构删除
-    orgDelete (orgid) {
-        return axios.get(`${baseURL}/sysorg/delete/${orgid}`);
+    orgDelete (params) {
+        return axios.post(`${baseURL}/sysorg/delete`, params);
     },
 }

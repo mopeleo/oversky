@@ -153,6 +153,67 @@
 		where userid = #{userid, jdbcType=DECIMAL}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_user
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.username != null and field.username != ''">
+				username = #{field.username, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.loginid != null and field.loginid != ''">
+				loginid = #{field.loginid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.loginpasswd != null and field.loginpasswd != ''">
+				loginpasswd = #{field.loginpasswd, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.salt != null and field.salt != ''">
+				salt = #{field.salt, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.passwdvaliddate != null and field.passwdvaliddate != ''">
+				passwdvaliddate = #{field.passwdvaliddate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.mobileno != null and field.mobileno != ''">
+				mobileno = #{field.mobileno, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.email != null and field.email != ''">
+				email = #{field.email, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.orgid != null">
+				orgid = #{field.orgid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.idtype != null and field.idtype != ''">
+				idtype = #{field.idtype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.idcode != null and field.idcode != ''">
+				idcode = #{field.idcode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.idname != null and field.idname != ''">
+				idname = #{field.idname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.logindate != null and field.logindate != ''">
+				logindate = #{field.logindate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.logintime != null and field.logintime != ''">
+				logintime = #{field.logintime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.status != null and field.status != ''">
+				status = #{field.status, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.loginerror != null">
+				loginerror = #{field.loginerror, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.opendate != null and field.opendate != ''">
+				opendate = #{field.opendate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.canceldate != null and field.canceldate != ''">
+				canceldate = #{field.canceldate, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_user
 	    <trim prefix="set" suffixOverrides=",">	
@@ -413,6 +474,68 @@
 			</if>
 			<if test="canceldate != null and canceldate != ''">
 				and canceldate = #{canceldate, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.userid != null">
+				and userid = #{condition.userid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.username != null and condition.username != ''">
+				and username = #{condition.username, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.loginid != null and condition.loginid != ''">
+				and loginid = #{condition.loginid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.loginpasswd != null and condition.loginpasswd != ''">
+				and loginpasswd = #{condition.loginpasswd, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.salt != null and condition.salt != ''">
+				and salt = #{condition.salt, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.passwdvaliddate != null and condition.passwdvaliddate != ''">
+				and passwdvaliddate = #{condition.passwdvaliddate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.mobileno != null and condition.mobileno != ''">
+				and mobileno = #{condition.mobileno, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.email != null and condition.email != ''">
+				and email = #{condition.email, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.orgid != null">
+				and orgid = #{condition.orgid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.idtype != null and condition.idtype != ''">
+				and idtype = #{condition.idtype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.idcode != null and condition.idcode != ''">
+				and idcode = #{condition.idcode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.idname != null and condition.idname != ''">
+				and idname = #{condition.idname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.logindate != null and condition.logindate != ''">
+				and logindate = #{condition.logindate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.logintime != null and condition.logintime != ''">
+				and logintime = #{condition.logintime, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.status != null and condition.status != ''">
+				and status = #{condition.status, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.loginerror != null">
+				and loginerror = #{condition.loginerror, jdbcType=INTEGER}
+			</if>
+			<if test="condition.opendate != null and condition.opendate != ''">
+				and opendate = #{condition.opendate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.canceldate != null and condition.canceldate != ''">
+				and canceldate = #{condition.canceldate, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

@@ -2,6 +2,7 @@ package org.oversky.gurms.system.dao;
 
 import org.oversky.gurms.system.entity.SysUser;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface SysUserDao{
 
@@ -13,6 +14,9 @@ public interface SysUserDao{
     int updateById(SysUser entity);
 	
     int dynamicUpdateById(SysUser entity);
+    
+	
+    int dynamicUpdateWhere(@Param("field") SysUser field, @Param("condition") SysUser where);
     
     int count(SysUser where);
     

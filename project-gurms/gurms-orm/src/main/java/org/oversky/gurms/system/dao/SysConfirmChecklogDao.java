@@ -2,6 +2,7 @@ package org.oversky.gurms.system.dao;
 
 import org.oversky.gurms.system.entity.SysConfirmChecklog;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface SysConfirmChecklogDao{
 
@@ -13,6 +14,9 @@ public interface SysConfirmChecklogDao{
     int updateById(SysConfirmChecklog entity);
 	
     int dynamicUpdateById(SysConfirmChecklog entity);
+    
+	
+    int dynamicUpdateWhere(@Param("field") SysConfirmChecklog field, @Param("condition") SysConfirmChecklog where);
     
     int count(SysConfirmChecklog where);
     

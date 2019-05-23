@@ -118,6 +118,46 @@
 		where logid = #{logid, jdbcType=DECIMAL}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_confirm_datalog
+		<set>
+		    <if test="field.confirmid != null">
+				confirmid = #{field.confirmid, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.edittype != null and field.edittype != ''">
+				edittype = #{field.edittype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.dataid != null and field.dataid != ''">
+				dataid = #{field.dataid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.fulldata != null and field.fulldata != ''">
+				fulldata = #{field.fulldata, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.extdata != null and field.extdata != ''">
+				extdata = #{field.extdata, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.editer != null">
+				editer = #{field.editer, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.editdate != null and field.editdate != ''">
+				editdate = #{field.editdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.edittime != null and field.edittime != ''">
+				edittime = #{field.edittime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.currentstatus != null and field.currentstatus != ''">
+				currentstatus = #{field.currentstatus, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.currentlevel != null">
+				currentlevel = #{field.currentlevel, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.endflag != null and field.endflag != ''">
+				endflag = #{field.endflag, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_confirm_datalog
 	    <trim prefix="set" suffixOverrides=",">	
@@ -287,6 +327,47 @@
 			</if>
 			<if test="endflag != null and endflag != ''">
 				and endflag = #{endflag, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.logid != null">
+				and logid = #{condition.logid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.confirmid != null">
+				and confirmid = #{condition.confirmid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.edittype != null and condition.edittype != ''">
+				and edittype = #{condition.edittype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.dataid != null and condition.dataid != ''">
+				and dataid = #{condition.dataid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.fulldata != null and condition.fulldata != ''">
+				and fulldata = #{condition.fulldata, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.extdata != null and condition.extdata != ''">
+				and extdata = #{condition.extdata, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.editer != null">
+				and editer = #{condition.editer, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.editdate != null and condition.editdate != ''">
+				and editdate = #{condition.editdate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.edittime != null and condition.edittime != ''">
+				and edittime = #{condition.edittime, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.currentstatus != null and condition.currentstatus != ''">
+				and currentstatus = #{condition.currentstatus, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.currentlevel != null">
+				and currentlevel = #{condition.currentlevel, jdbcType=INTEGER}
+			</if>
+			<if test="condition.endflag != null and condition.endflag != ''">
+				and endflag = #{condition.endflag, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

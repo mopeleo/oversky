@@ -108,6 +108,40 @@
 		where paramid = #{paramid, jdbcType=INTEGER}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_param_info
+		<set>
+		    <if test="field.paramname != null and field.paramname != ''">
+				paramname = #{field.paramname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.paramgroup != null and field.paramgroup != ''">
+				paramgroup = #{field.paramgroup, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.edittype != null and field.edittype != ''">
+				edittype = #{field.edittype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.initvalue != null and field.initvalue != ''">
+				initvalue = #{field.initvalue, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.valuelength != null">
+				valuelength = #{field.valuelength, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.texttitle != null and field.texttitle != ''">
+				texttitle = #{field.texttitle, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.texttail != null and field.texttail != ''">
+				texttail = #{field.texttail, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.dictcode != null">
+				dictcode = #{field.dictcode, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.valuelist != null and field.valuelist != ''">
+				valuelist = #{field.valuelist, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_param_info
 	    <trim prefix="set" suffixOverrides=",">	
@@ -251,6 +285,41 @@
 			</if>
 			<if test="valuelist != null and valuelist != ''">
 				and valuelist = #{valuelist, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.paramid != null">
+				and paramid = #{condition.paramid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.paramname != null and condition.paramname != ''">
+				and paramname = #{condition.paramname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.paramgroup != null and condition.paramgroup != ''">
+				and paramgroup = #{condition.paramgroup, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.edittype != null and condition.edittype != ''">
+				and edittype = #{condition.edittype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.initvalue != null and condition.initvalue != ''">
+				and initvalue = #{condition.initvalue, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.valuelength != null">
+				and valuelength = #{condition.valuelength, jdbcType=INTEGER}
+			</if>
+			<if test="condition.texttitle != null and condition.texttitle != ''">
+				and texttitle = #{condition.texttitle, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.texttail != null and condition.texttail != ''">
+				and texttail = #{condition.texttail, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.dictcode != null">
+				and dictcode = #{condition.dictcode, jdbcType=INTEGER}
+			</if>
+			<if test="condition.valuelist != null and condition.valuelist != ''">
+				and valuelist = #{condition.valuelist, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

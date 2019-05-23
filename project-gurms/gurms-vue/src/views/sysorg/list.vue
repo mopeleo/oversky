@@ -145,8 +145,8 @@ export default{
         leftTreeHandleNodeClick(data){
             this.sysorg = data;
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
-            this.parentname = data.orgid + " - " + data.shortname;
-            // let node = this.$refs.leftOrgTree.getCurrentNode();
+            this.parentname = data.parentorg + " - ";
+            // let node = this.$refs.leftOrgTree.getNode(data.parentorg);
             // alert(JSON.stringify(node));
         },
         parentTreeHandleNodeClick(data){
@@ -174,12 +174,6 @@ export default{
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
             this.parentname = '';
         },
-        setMenuList:function(orgTree){
-            if(orgTree){
-                let menuArray = orgTree.split(",");
-                this.$refs.leftOrgTree.setCheckedKeys(menuArray);
-            }
-        },
         handleAdd() {
             this.initOrgInfo();
             this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
@@ -188,10 +182,6 @@ export default{
             this.$api.Gurms.orgDetail(row.orgid).then(res =>{
                 this.sysorg = res;
                 this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
-
-                this.$nextTick(function() {
-                    this.setMenuList(this.sysorg.menulist);
-                })
             }).catch((err)=>{
                 tools.errTip(err);
             });
@@ -204,7 +194,7 @@ export default{
             let confirm_msg = "即将删除机构["+ this.sysorg.shortname + "],是否继续?";
             let that = this;
             tools.confirmTip(confirm_msg, function(){
-                that.$api.Gurms.orgDelete(orgid).then((res)=>{
+                that.$api.Gurms.orgDelete(that.sysorg).then((res)=>{
                     tools.succTip(res.returnmsg);
                     if(res.success === true){
                         that.loadOrgTree();

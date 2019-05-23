@@ -2,6 +2,7 @@ package org.oversky.gurms.system.dao;
 
 import org.oversky.gurms.system.entity.SysParam;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,6 +32,9 @@ public interface SysParamDao{
 		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
 	})
     int dynamicUpdateById(SysParam entity);
+    
+	@CacheEvict(allEntries=true, condition = "#result > 0")
+    int dynamicUpdateWhere(@Param("field") SysParam field, @Param("condition") SysParam where);
     
     int count(SysParam where);
     

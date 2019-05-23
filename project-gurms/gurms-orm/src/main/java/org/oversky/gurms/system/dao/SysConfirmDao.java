@@ -2,6 +2,7 @@ package org.oversky.gurms.system.dao;
 
 import org.oversky.gurms.system.entity.SysConfirm;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,6 +32,9 @@ public interface SysConfirmDao{
 		@CacheEvict(key = "#p0.buildEntityKey()", condition = "#result == 1")
 	})
     int dynamicUpdateById(SysConfirm entity);
+    
+	@CacheEvict(allEntries=true, condition = "#result > 0")
+    int dynamicUpdateWhere(@Param("field") SysConfirm field, @Param("condition") SysConfirm where);
     
     int count(SysConfirm where);
     

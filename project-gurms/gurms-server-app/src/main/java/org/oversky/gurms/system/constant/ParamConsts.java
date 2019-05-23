@@ -24,7 +24,7 @@ public final class ParamConsts {
 	public final static String PARAM1004_CANT_DEL = "0";				//不能删除
 	public final static String PARAM1004_MOVE_PARENT = "1";				//删除后移到父机构
 	
-	public final static Integer PARAM1005_DELORG_DEALORG = 1005;		//删除机构处理子机构
+	public final static Integer PARAM1005_DELORG_DEALCHILD = 1005;		//删除机构处理子机构
 	public final static String PARAM1005_CANT_DEL = "0";				//不能删除
 	public final static String PARAM1005_MOVE_PARENT = "1";				//删除后子机构变为父机构
 	public final static String PARAM1005_DEL_CHILDREN = "2";			//删除子机构

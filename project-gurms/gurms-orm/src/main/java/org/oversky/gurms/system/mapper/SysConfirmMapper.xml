@@ -74,6 +74,19 @@
 		where unioncode = #{unioncode, jdbcType=VARCHAR} and tablename = #{tablename, jdbcType=VARCHAR}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_confirm
+		<set>
+		    <if test="field.confirmid != null">
+				confirmid = #{field.confirmid, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.checklevel != null">
+				checklevel = #{field.checklevel, jdbcType=INTEGER},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 
 	<sql id="column_list">
         ${tab}confirmid, ${tab}unioncode, ${tab}tablename, ${tab}checklevel
@@ -92,6 +105,23 @@
 			</if>
 			<if test="checklevel != null">
 				and checklevel = #{checklevel, jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.confirmid != null">
+				and confirmid = #{condition.confirmid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.tablename != null and condition.tablename != ''">
+				and tablename = #{condition.tablename, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.checklevel != null">
+				and checklevel = #{condition.checklevel, jdbcType=INTEGER}
 			</if>
 		</where>
 	</sql>

@@ -114,6 +114,43 @@
 		where unioncode = #{unioncode, jdbcType=VARCHAR} and noid = #{noid, jdbcType=INTEGER}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_sno
+		<set>
+		    <if test="field.noname != null and field.noname != ''">
+				noname = #{field.noname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.initvalue != null">
+				initvalue = #{field.initvalue, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.nextvalue != null">
+				nextvalue = #{field.nextvalue, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.fixedflag != null and field.fixedflag != ''">
+				fixedflag = #{field.fixedflag, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.fixedlength != null">
+				fixedlength = #{field.fixedlength, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.fillchar != null and field.fillchar != ''">
+				fillchar = #{field.fillchar, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.notype != null and field.notype != ''">
+				notype = #{field.notype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.nodate != null and field.nodate != ''">
+				nodate = #{field.nodate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.prefix != null and field.prefix != ''">
+				prefix = #{field.prefix, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.suffix != null and field.suffix != ''">
+				suffix = #{field.suffix, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 
 	<sql id="column_list">
         ${tab}unioncode, ${tab}noid, ${tab}noname, ${tab}initvalue, ${tab}nextvalue, ${tab}fixedflag, ${tab}fixedlength, ${tab}fillchar, ${tab}notype, ${tab}nodate, ${tab}prefix, ${tab}suffix
@@ -156,6 +193,47 @@
 			</if>
 			<if test="suffix != null and suffix != ''">
 				and suffix = #{suffix, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.noid != null">
+				and noid = #{condition.noid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.noname != null and condition.noname != ''">
+				and noname = #{condition.noname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.initvalue != null">
+				and initvalue = #{condition.initvalue, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.nextvalue != null">
+				and nextvalue = #{condition.nextvalue, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.fixedflag != null and condition.fixedflag != ''">
+				and fixedflag = #{condition.fixedflag, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.fixedlength != null">
+				and fixedlength = #{condition.fixedlength, jdbcType=INTEGER}
+			</if>
+			<if test="condition.fillchar != null and condition.fillchar != ''">
+				and fillchar = #{condition.fillchar, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.notype != null and condition.notype != ''">
+				and notype = #{condition.notype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.nodate != null and condition.nodate != ''">
+				and nodate = #{condition.nodate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.prefix != null and condition.prefix != ''">
+				and prefix = #{condition.prefix, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.suffix != null and condition.suffix != ''">
+				and suffix = #{condition.suffix, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

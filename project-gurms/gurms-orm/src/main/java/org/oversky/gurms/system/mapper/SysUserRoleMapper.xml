@@ -53,6 +53,13 @@
     </delete>
   
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_user_role
+		<set>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 
 	<sql id="column_list">
         ${tab}userid, ${tab}roleid
@@ -65,6 +72,17 @@
 			</if>
 			<if test="roleid != null">
 				and roleid = #{roleid, jdbcType=DECIMAL}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.userid != null">
+				and userid = #{condition.userid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.roleid != null">
+				and roleid = #{condition.roleid, jdbcType=DECIMAL}
 			</if>
 		</where>
 	</sql>

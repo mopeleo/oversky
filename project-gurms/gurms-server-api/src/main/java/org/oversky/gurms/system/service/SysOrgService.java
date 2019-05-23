@@ -8,7 +8,7 @@ public interface SysOrgService extends BaseService{
 
 	SysOrgRes insert(SysOrgReq roleReq);
 	
-	SysOrgRes delete(Long roleid);
+	SysOrgRes delete(SysOrgReq roleReq);
 	
 	SysOrgRes update(SysOrgReq roleReq);
 	

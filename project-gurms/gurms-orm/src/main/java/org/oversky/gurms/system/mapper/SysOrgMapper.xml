@@ -123,6 +123,49 @@
 		where orgid = #{orgid, jdbcType=DECIMAL}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_org
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.shortname != null and field.shortname != ''">
+				shortname = #{field.shortname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.fullname != null and field.fullname != ''">
+				fullname = #{field.fullname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.linkman != null and field.linkman != ''">
+				linkman = #{field.linkman, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.linktel != null and field.linktel != ''">
+				linktel = #{field.linktel, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.faxno != null and field.faxno != ''">
+				faxno = #{field.faxno, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.address != null and field.address != ''">
+				address = #{field.address, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.postcode != null and field.postcode != ''">
+				postcode = #{field.postcode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.email != null and field.email != ''">
+				email = #{field.email, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.parentorg != null">
+				parentorg = #{field.parentorg, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.orgtype != null and field.orgtype != ''">
+				orgtype = #{field.orgtype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.remark != null and field.remark != ''">
+				remark = #{field.remark, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_org
 	    <trim prefix="set" suffixOverrides=",">	
@@ -305,6 +348,50 @@
 			</if>
 			<if test="remark != null and remark != ''">
 				and remark = #{remark, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.orgid != null">
+				and orgid = #{condition.orgid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.shortname != null and condition.shortname != ''">
+				and shortname = #{condition.shortname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.fullname != null and condition.fullname != ''">
+				and fullname = #{condition.fullname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.linkman != null and condition.linkman != ''">
+				and linkman = #{condition.linkman, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.linktel != null and condition.linktel != ''">
+				and linktel = #{condition.linktel, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.faxno != null and condition.faxno != ''">
+				and faxno = #{condition.faxno, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.address != null and condition.address != ''">
+				and address = #{condition.address, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.postcode != null and condition.postcode != ''">
+				and postcode = #{condition.postcode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.email != null and condition.email != ''">
+				and email = #{condition.email, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.parentorg != null">
+				and parentorg = #{condition.parentorg, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.orgtype != null and condition.orgtype != ''">
+				and orgtype = #{condition.orgtype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.remark != null and condition.remark != ''">
+				and remark = #{condition.remark, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

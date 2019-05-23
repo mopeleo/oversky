@@ -113,6 +113,43 @@
 		where logid = #{logid, jdbcType=DECIMAL}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_user_actlog
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.userid != null">
+				userid = #{field.userid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.menuid != null and field.menuid != ''">
+				menuid = #{field.menuid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.requrl != null and field.requrl != ''">
+				requrl = #{field.requrl, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.reqmethod != null and field.reqmethod != ''">
+				reqmethod = #{field.reqmethod, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.reqdata != null and field.reqdata != ''">
+				reqdata = #{field.reqdata, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.actdate != null and field.actdate != ''">
+				actdate = #{field.actdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.acttime != null and field.acttime != ''">
+				acttime = #{field.acttime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.accesstype != null and field.accesstype != ''">
+				accesstype = #{field.accesstype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.ipaddress != null and field.ipaddress != ''">
+				ipaddress = #{field.ipaddress, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_user_actlog
 	    <trim prefix="set" suffixOverrides=",">	
@@ -269,6 +306,44 @@
 			</if>
 			<if test="ipaddress != null and ipaddress != ''">
 				and ipaddress = #{ipaddress, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.logid != null">
+				and logid = #{condition.logid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.userid != null">
+				and userid = #{condition.userid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.menuid != null and condition.menuid != ''">
+				and menuid = #{condition.menuid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.requrl != null and condition.requrl != ''">
+				and requrl = #{condition.requrl, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.reqmethod != null and condition.reqmethod != ''">
+				and reqmethod = #{condition.reqmethod, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.reqdata != null and condition.reqdata != ''">
+				and reqdata = #{condition.reqdata, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.actdate != null and condition.actdate != ''">
+				and actdate = #{condition.actdate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.acttime != null and condition.acttime != ''">
+				and acttime = #{condition.acttime, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.accesstype != null and condition.accesstype != ''">
+				and accesstype = #{condition.accesstype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.ipaddress != null and condition.ipaddress != ''">
+				and ipaddress = #{condition.ipaddress, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

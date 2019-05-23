@@ -98,6 +98,34 @@
 		where menuid = #{menuid, jdbcType=VARCHAR}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_menu
+		<set>
+		    <if test="field.menuname != null and field.menuname != ''">
+				menuname = #{field.menuname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.menuurl != null and field.menuurl != ''">
+				menuurl = #{field.menuurl, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.parentmenu != null and field.parentmenu != ''">
+				parentmenu = #{field.parentmenu, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.menutype != null and field.menutype != ''">
+				menutype = #{field.menutype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.accesstype != null and field.accesstype != ''">
+				accesstype = #{field.accesstype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.status != null and field.status != ''">
+				status = #{field.status, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.menucss != null and field.menucss != ''">
+				menucss = #{field.menucss, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_menu
 	    <trim prefix="set" suffixOverrides=",">	
@@ -215,6 +243,35 @@
 			</if>
 			<if test="menucss != null and menucss != ''">
 				and menucss = #{menucss, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.menuid != null and condition.menuid != ''">
+				and menuid = #{condition.menuid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.menuname != null and condition.menuname != ''">
+				and menuname = #{condition.menuname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.menuurl != null and condition.menuurl != ''">
+				and menuurl = #{condition.menuurl, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.parentmenu != null and condition.parentmenu != ''">
+				and parentmenu = #{condition.parentmenu, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.menutype != null and condition.menutype != ''">
+				and menutype = #{condition.menutype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.accesstype != null and condition.accesstype != ''">
+				and accesstype = #{condition.accesstype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.status != null and condition.status != ''">
+				and status = #{condition.status, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.menucss != null and condition.menucss != ''">
+				and menucss = #{condition.menucss, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

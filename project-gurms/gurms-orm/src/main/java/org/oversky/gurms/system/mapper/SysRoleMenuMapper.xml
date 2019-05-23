@@ -53,6 +53,13 @@
     </delete>
   
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_role_menu
+		<set>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 
 	<sql id="column_list">
         ${tab}roleid, ${tab}menuid
@@ -65,6 +72,17 @@
 			</if>
 			<if test="menuid != null and menuid != ''">
 				and menuid = #{menuid, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.roleid != null">
+				and roleid = #{condition.roleid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.menuid != null and condition.menuid != ''">
+				and menuid = #{condition.menuid, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

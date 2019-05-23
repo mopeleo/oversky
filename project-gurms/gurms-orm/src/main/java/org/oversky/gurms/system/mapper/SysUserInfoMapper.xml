@@ -108,6 +108,40 @@
 		where userid = #{userid, jdbcType=DECIMAL}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_user_info
+		<set>
+		    <if test="field.sex != null and field.sex != ''">
+				sex = #{field.sex, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.birthday != null and field.birthday != ''">
+				birthday = #{field.birthday, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.address != null and field.address != ''">
+				address = #{field.address, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.postcode != null and field.postcode != ''">
+				postcode = #{field.postcode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.phone != null and field.phone != ''">
+				phone = #{field.phone, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.nationality != null and field.nationality != ''">
+				nationality = #{field.nationality, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.province != null and field.province != ''">
+				province = #{field.province, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.city != null and field.city != ''">
+				city = #{field.city, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.education != null and field.education != ''">
+				education = #{field.education, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_user_info
 	    <trim prefix="set" suffixOverrides=",">	
@@ -251,6 +285,41 @@
 			</if>
 			<if test="education != null and education != ''">
 				and education = #{education, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.userid != null">
+				and userid = #{condition.userid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.sex != null and condition.sex != ''">
+				and sex = #{condition.sex, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.birthday != null and condition.birthday != ''">
+				and birthday = #{condition.birthday, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.address != null and condition.address != ''">
+				and address = #{condition.address, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.postcode != null and condition.postcode != ''">
+				and postcode = #{condition.postcode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.phone != null and condition.phone != ''">
+				and phone = #{condition.phone, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.nationality != null and condition.nationality != ''">
+				and nationality = #{condition.nationality, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.province != null and condition.province != ''">
+				and province = #{condition.province, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.city != null and condition.city != ''">
+				and city = #{condition.city, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.education != null and condition.education != ''">
+				and education = #{condition.education, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

@@ -35,8 +35,8 @@ public class SysOrgController {
 		return orgService.orgTree(orgReq);
 	}
 
-	@RequestMapping("/delete/{orgId}")
-	public SysOrgRes delete(@PathVariable Long orgId) {
-		return orgService.delete(orgId);
+	@RequestMapping("/delete")
+	public SysOrgRes delete(@RequestBody SysOrgReq orgReq) {
+		return orgService.delete(orgReq);
 	}
 }

@@ -2,6 +2,7 @@ package org.oversky.gurms.system.dao;
 
 import org.oversky.gurms.system.entity.SysUserRole;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface SysUserRoleDao{
 

@@ -98,6 +98,34 @@
 		where logid = #{logid, jdbcType=DECIMAL}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_confirm_checklog
+		<set>
+		    <if test="field.datalog != null">
+				datalog = #{field.datalog, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.checker != null">
+				checker = #{field.checker, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.checklevel != null">
+				checklevel = #{field.checklevel, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.checkdate != null and field.checkdate != ''">
+				checkdate = #{field.checkdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.checktime != null and field.checktime != ''">
+				checktime = #{field.checktime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.status != null and field.status != ''">
+				status = #{field.status, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.summary != null and field.summary != ''">
+				summary = #{field.summary, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_confirm_checklog
 	    <trim prefix="set" suffixOverrides=",">	
@@ -215,6 +243,35 @@
 			</if>
 			<if test="summary != null and summary != ''">
 				and summary = #{summary, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.logid != null">
+				and logid = #{condition.logid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.datalog != null">
+				and datalog = #{condition.datalog, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.checker != null">
+				and checker = #{condition.checker, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.checklevel != null">
+				and checklevel = #{condition.checklevel, jdbcType=INTEGER}
+			</if>
+			<if test="condition.checkdate != null and condition.checkdate != ''">
+				and checkdate = #{condition.checkdate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.checktime != null and condition.checktime != ''">
+				and checktime = #{condition.checktime, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.status != null and condition.status != ''">
+				and status = #{condition.status, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.summary != null and condition.summary != ''">
+				and summary = #{condition.summary, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

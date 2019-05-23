@@ -2,6 +2,7 @@ package org.oversky.gurms.system.dao;
 
 import org.oversky.gurms.system.entity.SysUserActlog;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface SysUserActlogDao{
 
@@ -13,6 +14,9 @@ public interface SysUserActlogDao{
     int updateById(SysUserActlog entity);
 	
     int dynamicUpdateById(SysUserActlog entity);
+    
+	
+    int dynamicUpdateWhere(@Param("field") SysUserActlog field, @Param("condition") SysUserActlog where);
     
     int count(SysUserActlog where);
     

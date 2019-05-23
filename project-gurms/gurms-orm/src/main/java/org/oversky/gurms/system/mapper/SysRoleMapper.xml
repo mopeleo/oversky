@@ -98,6 +98,34 @@
 		where roleid = #{roleid, jdbcType=DECIMAL}
 	</update>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update sys_role
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.rolename != null and field.rolename != ''">
+				rolename = #{field.rolename, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.status != null and field.status != ''">
+				status = #{field.status, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.roletype != null and field.roletype != ''">
+				roletype = #{field.roletype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.startdate != null and field.startdate != ''">
+				startdate = #{field.startdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.enddate != null and field.enddate != ''">
+				enddate = #{field.enddate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.creator != null">
+				creator = #{field.creator, jdbcType=DECIMAL},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_role
 	    <trim prefix="set" suffixOverrides=",">	
@@ -215,6 +243,35 @@
 			</if>
 			<if test="creator != null">
 				and creator = #{creator, jdbcType=DECIMAL}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.roleid != null">
+				and roleid = #{condition.roleid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.rolename != null and condition.rolename != ''">
+				and rolename = #{condition.rolename, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.status != null and condition.status != ''">
+				and status = #{condition.status, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.roletype != null and condition.roletype != ''">
+				and roletype = #{condition.roletype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.startdate != null and condition.startdate != ''">
+				and startdate = #{condition.startdate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.enddate != null and condition.enddate != ''">
+				and enddate = #{condition.enddate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.creator != null">
+				and creator = #{condition.creator, jdbcType=DECIMAL}
 			</if>
 		</where>
 	</sql>
