@@ -3,7 +3,7 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.oversky.gurms.system.component.PubDefine;
+import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
@@ -74,24 +74,23 @@ public class IndexServiceImpl implements IndexService{
 			return res;
 		}
 		String md5Passwd = EncryptUtils.md5Encode(loginReq.getPasswd() + user.getSalt());
-		if(!md5Passwd.equals(user.getLoginpasswd())) {
+		boolean login = md5Passwd.equals(user.getLoginpasswd());
+		this.updateUserStatus(user, login);
+		this.writeLoginLog(loginReq, login);
+		if(!login) {
 			res.failure("用户名或密码错误");
-			this.processPasswd(user, false);
 			log.info(res.getReturnmsg());
 			return res;
-		}else {
-			res.success("登录成功");
-			this.processPasswd(user, true);
-			BeanCopyUtils.copy(user, res);
 		}
 		
+		BeanCopyUtils.copy(user, res);		
 		//是超级用户
-		if(PubDefine.isRootUser(user.getUserid())) {
+		if(BizFunc.isRootUser(user.getUserid())) {
 			res.setMenuTree(menuService.getFullMenuTree());
 		}else {
 			res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
 		}
-		
+		res.success("登录成功");
 		log.info("登录结束：{}", res.getReturnmsg());
 		return res;
 	}
@@ -101,16 +100,23 @@ public class IndexServiceImpl implements IndexService{
 		
 	}
 	
-	private void writeLoginLog(UserLoginReq user) {
+	private void writeLoginLog(UserLoginReq user, boolean loginSuccess) {
+		log.info("开始写登录日志");
 		SysUserLogin log = new SysUserLogin();
 		log.setLogindate(DateUtils.getNowDate());
 		log.setLogintime(DateUtils.getNowTime());
 		log.setLoginpasswd(user.getPasswd());
 		log.setLogintype(user.getLogintype());
+		if(loginSuccess) {
+			log.setLoginresult(DictConsts.DICT1016_SUCCESS);
+		}else {
+			log.setLoginresult(DictConsts.DICT1016_FAILURE);
+		}
 		sysUserLoginDao.insert(log);
 	}
 	
-	private void processPasswd(SysUser user, boolean loginSuccess) {
+	private void updateUserStatus(SysUser user, boolean loginSuccess) {
+		log.info("重置用户登录时间及密码错误次数");
 		SysUser upUser = new SysUser();
 		upUser.copyPrimaryKey(user);
 		upUser.setLogindate(DateUtils.getNowDate());

@@ -10,6 +10,8 @@ import org.oversky.gurms.system.dto.response.SysDictValueRes;
 import org.oversky.gurms.system.entity.SysDictValue;
 import org.oversky.gurms.system.service.SysDictService;
 import org.oversky.util.bean.BeanCopyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 @CacheConfig(cacheNames = "SysDictValue")
 public class SysDictServiceImpl implements SysDictService {
 
+	private static final Logger log = LoggerFactory.getLogger(SysDictServiceImpl.class);
+	
 	@Autowired
 	private SysDictValueDao dictValueDao;
 	
@@ -28,6 +32,7 @@ public class SysDictServiceImpl implements SysDictService {
 	@Override
 	@Cacheable(key = "'getDictList_' + #p0 + '_' + #p1")
 	public BaseResListDto<SysDictValueRes> getDictList(String unioncode, Integer dictcode) {
+		log.info("查询单个字典 : dictcode = {}" + dictcode);
 		SysDictValue where = new SysDictValue();
 		where.setUnioncode(unioncode);
 		where.setDictcode(dictcode);
@@ -43,6 +48,7 @@ public class SysDictServiceImpl implements SysDictService {
 	@Override
 	@Cacheable(key = "'getDictMap_' + #p0 + '_' + #p1")
 	public BaseResMapDto<String, List<SysDictValueRes>> getDictMap(String unioncode, String dictcodeList) {
+		log.info("查询多个字典 : dictcode = {}" + dictcodeList);
 		String[] codeList = dictcodeList.split(",");
 		BaseResMapDto<String, List<SysDictValueRes>> dictMap = new BaseResMapDto<>();
 		for(String dictcode : codeList) {

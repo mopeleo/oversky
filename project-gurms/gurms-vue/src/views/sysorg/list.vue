@@ -190,7 +190,6 @@ export default{
             this.editType = this.$pubdefine.EDIT_TYPE_UPDATE;
         },
         handleDelete() {
-            let orgid = this.sysorg.orgid;
             let confirm_msg = "即将删除机构["+ this.sysorg.shortname + "],是否继续?";
             let that = this;
             tools.confirmTip(confirm_msg, function(){

@@ -11,21 +11,16 @@ public class SysUserReq extends BaseReqDto {
 	private String username;    //用户名称
 	private String loginid;    //登录名
 	private String loginpasswd;    //登录密码
-	private String salt;    //密码盐
-	private String passwdvaliddate;    //密码失效日期
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
 	private Long orgid;    //所属机构
 	private String idtype;    //证件类型
 	private String idcode;    //证件号码
 	private String idname;    //证件姓名
-	private String logindate;    //上次登录日期
-	private String logintime;    //上次登录时间
 	private String status;    //用户状态，0，已注销；1，正常；2，锁定
-	private Integer loginerror;    //连续登录失败次数
-	private String opendate;    //创建日期
-	private String canceldate;    //注销日期
 
+	private String roleList;
+	
 	public Long getUserid() {
 		return this.userid;
 	}
@@ -64,22 +59,6 @@ public class SysUserReq extends BaseReqDto {
 
 	public void setLoginpasswd(String loginpasswd) {
 		this.loginpasswd = loginpasswd;
-	}
-
-	public String getSalt() {
-		return this.salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
-	public String getPasswdvaliddate() {
-		return this.passwdvaliddate;
-	}
-
-	public void setPasswdvaliddate(String passwdvaliddate) {
-		this.passwdvaliddate = passwdvaliddate;
 	}
 
 	public String getMobileno() {
@@ -130,22 +109,6 @@ public class SysUserReq extends BaseReqDto {
 		this.idname = idname;
 	}
 
-	public String getLogindate() {
-		return this.logindate;
-	}
-
-	public void setLogindate(String logindate) {
-		this.logindate = logindate;
-	}
-
-	public String getLogintime() {
-		return this.logintime;
-	}
-
-	public void setLogintime(String logintime) {
-		this.logintime = logintime;
-	}
-
 	public String getStatus() {
 		return this.status;
 	}
@@ -154,32 +117,15 @@ public class SysUserReq extends BaseReqDto {
 		this.status = status;
 	}
 
-	public Integer getLoginerror() {
-		return this.loginerror;
+    public String getRoleList() {
+		return roleList;
 	}
 
-	public void setLoginerror(Integer loginerror) {
-		this.loginerror = loginerror;
+	public void setRoleList(String roleList) {
+		this.roleList = roleList;
 	}
 
-	public String getOpendate() {
-		return this.opendate;
-	}
-
-	public void setOpendate(String opendate) {
-		this.opendate = opendate;
-	}
-
-	public String getCanceldate() {
-		return this.canceldate;
-	}
-
-	public void setCanceldate(String canceldate) {
-		this.canceldate = canceldate;
-	}
-
-
-    @Override
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -190,20 +136,13 @@ public class SysUserReq extends BaseReqDto {
 		sb.append(", username=").append(username);
 		sb.append(", loginid=").append(loginid);
 		sb.append(", loginpasswd=").append(loginpasswd);
-		sb.append(", salt=").append(salt);
-		sb.append(", passwdvaliddate=").append(passwdvaliddate);
 		sb.append(", mobileno=").append(mobileno);
 		sb.append(", email=").append(email);
 		sb.append(", orgid=").append(orgid);
 		sb.append(", idtype=").append(idtype);
 		sb.append(", idcode=").append(idcode);
 		sb.append(", idname=").append(idname);
-		sb.append(", logindate=").append(logindate);
-		sb.append(", logintime=").append(logintime);
 		sb.append(", status=").append(status);
-		sb.append(", loginerror=").append(loginerror);
-		sb.append(", opendate=").append(opendate);
-		sb.append(", canceldate=").append(canceldate);
         sb.append("]");
         return sb.toString();
 	}

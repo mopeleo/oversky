@@ -17,6 +17,9 @@ public final class DictConsts {
 	public static final String DICT1003_INVALID = "0";	//无效
 	public static final String DICT1003_VALID = "1";	//有效	
 	
+	public static final String DICT1016_SUCCESS = "1";	//成功
+	public static final String DICT1016_FAILURE = "0";	//失败	
+	
 
 	//dictgroup = 2
 	public static final String DICT2001_USER_STATUS_DEL = "0";

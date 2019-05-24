@@ -3,18 +3,21 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
-import org.oversky.base.service.BaseServiceException;
+import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
+import org.oversky.gurms.system.dao.SysUserInfoDao;
+import org.oversky.gurms.system.dao.SysUserRoleDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.entity.SysUser;
+import org.oversky.gurms.system.entity.SysUserRole;
 import org.oversky.gurms.system.ext.dao.ListQueryDao;
 import org.oversky.gurms.system.service.SysUserService;
 import org.oversky.util.bean.BeanCopyUtils;
-import org.oversky.util.common.CommonUtils;
 import org.oversky.util.date.DateUtils;
 import org.oversky.util.encode.EncryptUtils;
+import org.oversky.valid.GSAValid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +37,18 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Autowired
 	private SysUserDao sysUserDao;
+	
+	@Autowired
+	private SysUserInfoDao userInfoDao;
 
+	@Autowired
+	private SysUserRoleDao userRoleDao;
+	
 	@Autowired
 	private ListQueryDao queryDao;
 	
 	@Override
+	@GSAValid(type=SysUserReq.class)
 	public SysUserRes insert(SysUserReq userReq) {
 		log.info("开始新增用户......");
 		SysUserRes res = new SysUserRes();
@@ -47,7 +57,7 @@ public class SysUserServiceImpl implements SysUserService{
 		}
 		
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
-		user.setSalt(CommonUtils.getRandomString(8));
+		user.setSalt(BizFunc.getPasswdSalt());
 		user.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		user.setLoginerror(0);
 		user.setPasswdvaliddate(DateUtils.addMonths(DateUtils.getNowDate(),3));
@@ -66,11 +76,13 @@ public class SysUserServiceImpl implements SysUserService{
 	@Transactional
 	public boolean delete(Long userid) {
 		log.info("开始删除用户[userid={}]信息...", userid);
-		int rows = sysUserDao.deleteById(userid);
-		if(rows > 1) {
-			log.info("删除用户[userid={}]失败：用户信息不唯一", userid);
-			throw new BaseServiceException("删除用户[userid=" + userid + "]失败：用户信息不唯一");
-		}
+		sysUserDao.deleteById(userid);
+		
+		userInfoDao.deleteById(userid);
+		
+		SysUserRole where = new SysUserRole();
+		where.setUserid(userid);
+		userRoleDao.deleteWhere(where);
 		
 		log.info("删除用户[userid={}]成功", userid);
 		return true;
@@ -86,10 +98,7 @@ public class SysUserServiceImpl implements SysUserService{
 		}
 		
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
-		if(sysUserDao.dynamicUpdateById(user) > 1) {
-			log.info("更新用户[userid={}]失败：用户信息不唯一", userReq.getUserid());
-			throw new BaseServiceException("更新用户[userid=" + userReq.getUserid() + "]失败：用户信息不唯一");
-		}
+		sysUserDao.dynamicUpdateById(user);
 		log.info("修改用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
 		return res;
 	}
@@ -105,6 +114,14 @@ public class SysUserServiceImpl implements SysUserService{
 			BeanCopyUtils.copy(user, res);
 		}
 		log.info("查询用户[userid={}]结束: {}", userid, res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public SysUserRes grantRole(SysUserReq userReq) {
+		log.info("开始用户[userid={}]授权...", userReq.getUserid());
+		SysUserRes res = new SysUserRes();
+		log.info("授权用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
 		return res;
 	}
 

@@ -9,7 +9,7 @@ public interface UserOrgDao {
 
 	int countChildOrgUser(List<SysOrg> childOrgs);
 	
-	int updateUserOrg(@Param("orgid") Long parentOrgId, @Param("children") List<SysOrg> childOrgs);
+	int updateUserOrg(@Param("orgid") Long newOrgId, @Param("children") List<SysOrg> childOrgs);
 	
 	int deleteByOrgIds(List<SysOrg> Orgs);
 }

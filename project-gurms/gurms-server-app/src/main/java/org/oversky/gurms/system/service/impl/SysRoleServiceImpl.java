@@ -7,11 +7,13 @@ import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.dao.SysRoleDao;
 import org.oversky.gurms.system.dao.SysRoleMenuDao;
+import org.oversky.gurms.system.dao.SysUserRoleDao;
 import org.oversky.gurms.system.dto.request.SysRoleReq;
 import org.oversky.gurms.system.dto.response.SysRoleRes;
 import org.oversky.gurms.system.entity.SysMenu;
 import org.oversky.gurms.system.entity.SysRole;
 import org.oversky.gurms.system.entity.SysRoleMenu;
+import org.oversky.gurms.system.entity.SysUserRole;
 import org.oversky.gurms.system.ext.dao.UserRightDao;
 import org.oversky.gurms.system.service.SysRoleService;
 import org.oversky.util.bean.BeanCopyUtils;
@@ -36,6 +38,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 	
 	@Autowired
 	private SysRoleMenuDao roleMenuDao;
+	
+	@Autowired
+	private SysUserRoleDao userRoleDao;
 	
 	@Autowired
 	private UserRightDao userRightDao;
@@ -74,9 +79,14 @@ public class SysRoleServiceImpl implements SysRoleService {
 		log.info("开始删除角色[roleid={}]信息...", roleid);
 		roleDao.deleteById(roleid);
 		
-		SysRoleMenu where = new SysRoleMenu();
-		where.setRoleid(roleid);
-		roleMenuDao.deleteWhere(where);
+		SysRoleMenu srmWhere = new SysRoleMenu();
+		srmWhere.setRoleid(roleid);
+		roleMenuDao.deleteWhere(srmWhere);
+		
+		SysUserRole surWhere = new SysUserRole();
+		surWhere.setRoleid(roleid);
+		userRoleDao.deleteWhere(surWhere);
+		
 		log.info("删除角色[roleid={}]成功", roleid);
 		return true;
 	}
@@ -116,6 +126,14 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
+	public SysRoleRes freshUser(SysRoleReq roleReq) {
+		log.info("开始更新角色[roleid={}]的用户...", roleReq.getRoleid());
+		SysRoleRes res = new SysRoleRes();
+		log.info("更新角色[roleid={}]的用户结束: {}", roleReq.getRoleid(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
 	public BaseResListDto<SysRoleRes> pageSysRole(SysRoleReq roleReq) {
 		log.info("开始分页查询角色信息...");
 		Page<SysRole> page = PageHelper.startPage(roleReq.getPageNum(), roleReq.getPageSize());
@@ -150,10 +168,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 	
 	private String getMenuList(Long roleid) {
 		String menus = null;
-		List<SysMenu> menuList = userRightDao.getRoleMenus(roleid);
+		SysRoleMenu where = new SysRoleMenu();
+		where.setRoleid(roleid);
+		List<SysRoleMenu> menuList = roleMenuDao.selectWhere(where);
 		if(menuList != null && menuList.size() > 0) {
 			menus = "";
-			for(SysMenu menu : menuList) {
+			for(SysRoleMenu menu : menuList) {
 				menus += menu.getMenuid() + ",";
 			}
 			if(menus.length() > 0) {

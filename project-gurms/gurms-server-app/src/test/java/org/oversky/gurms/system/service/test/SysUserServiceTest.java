@@ -39,15 +39,10 @@ public class SysUserServiceTest {
 		userDto.setEmail("test@12611.com");
 		userDto.setIdcode("421001297608160946");
 		userDto.setIdtype("1");
-		userDto.setLogindate("20190130");
-		userDto.setLoginerror(0);
 		userDto.setLoginid("test");
 		userDto.setLoginpasswd("1");
-		userDto.setLogintime("150000");
 		userDto.setMobileno("13554600998");
 		userDto.setOrgid(10000L);
-		userDto.setPasswdvaliddate("20190909");
-		userDto.setSalt("123");
 		userDto.setStatus("1");
 		userDto.setUnioncode("0000");
 		userDto.setUsername("test");

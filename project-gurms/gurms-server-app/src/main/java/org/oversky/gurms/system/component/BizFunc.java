@@ -1,10 +1,15 @@
 package org.oversky.gurms.system.component;
 
 import org.oversky.gurms.system.constant.ParamConsts;
+import org.oversky.util.common.CommonUtils;
 
-public class PubDefine {
+public class BizFunc {
 
-	private PubDefine() {}
+	private BizFunc() {}
+	
+	public static String getPasswdSalt() {
+		return CommonUtils.getRandomString(8);
+	}
 	
 	/**
 	 *	 是否超级管理员，超级管理员不允许编辑

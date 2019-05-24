@@ -15,5 +15,7 @@ public interface SysRoleService extends BaseService{
 	
 	SysRoleRes getById(Long roleid);
 	
+	SysRoleRes freshUser(SysRoleReq roleReq);
+	
 	BaseResListDto<SysRoleRes> pageSysRole(SysRoleReq roleReq);
 }
