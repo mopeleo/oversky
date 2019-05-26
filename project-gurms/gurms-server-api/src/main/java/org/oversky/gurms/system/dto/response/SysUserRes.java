@@ -10,8 +10,6 @@ public class SysUserRes extends BaseResDto {
 	private String unioncode;    //
 	private String username;    //用户名称
 	private String loginid;    //登录名
-	private String loginpasswd;    //登录密码
-	private String salt;    //密码盐
 	private String passwdvaliddate;    //密码失效日期
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
@@ -22,7 +20,6 @@ public class SysUserRes extends BaseResDto {
 	private String logindate;    //上次登录日期
 	private String logintime;    //上次登录时间
 	private String status;    //用户状态，0，已注销；1，正常；2，锁定
-	private Integer loginerror;    //连续登录失败次数
 	private String opendate;    //创建日期
 	private String canceldate;    //注销日期
 
@@ -56,22 +53,6 @@ public class SysUserRes extends BaseResDto {
 
 	public void setLoginid(String loginid) {
 		this.loginid = loginid;
-	}
-
-	public String getLoginpasswd() {
-		return this.loginpasswd;
-	}
-
-	public void setLoginpasswd(String loginpasswd) {
-		this.loginpasswd = loginpasswd;
-	}
-
-	public String getSalt() {
-		return this.salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
 	}
 
 	public String getPasswdvaliddate() {
@@ -154,14 +135,6 @@ public class SysUserRes extends BaseResDto {
 		this.status = status;
 	}
 
-	public Integer getLoginerror() {
-		return this.loginerror;
-	}
-
-	public void setLoginerror(Integer loginerror) {
-		this.loginerror = loginerror;
-	}
-
 	public String getOpendate() {
 		return this.opendate;
 	}
@@ -189,8 +162,6 @@ public class SysUserRes extends BaseResDto {
 		sb.append(", unioncode=").append(unioncode);
 		sb.append(", username=").append(username);
 		sb.append(", loginid=").append(loginid);
-		sb.append(", loginpasswd=").append(loginpasswd);
-		sb.append(", salt=").append(salt);
 		sb.append(", passwdvaliddate=").append(passwdvaliddate);
 		sb.append(", mobileno=").append(mobileno);
 		sb.append(", email=").append(email);
@@ -201,7 +172,6 @@ public class SysUserRes extends BaseResDto {
 		sb.append(", logindate=").append(logindate);
 		sb.append(", logintime=").append(logintime);
 		sb.append(", status=").append(status);
-		sb.append(", loginerror=").append(loginerror);
 		sb.append(", opendate=").append(opendate);
 		sb.append(", canceldate=").append(canceldate);
         sb.append("]");

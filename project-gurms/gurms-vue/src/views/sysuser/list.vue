@@ -32,10 +32,8 @@
             </el-row>
 
             <el-table border stripe :data="tableData.results" :highlight-current-row="true" style="width:100%"
-                @selection-change="handleSelectionChange"
                 @row-click="handleClick">
-
-                <el-table-column type="selection"></el-table-column>
+                <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column prop="username" label="姓名" sortable></el-table-column>
                 <el-table-column prop="loginid" label="登录名" sortable></el-table-column>
                 <el-table-column prop="mobileno" label="手机号码" sortable></el-table-column>
@@ -45,11 +43,18 @@
                 <el-table-column prop="logindate" label="登录日期" sortable></el-table-column>
                 <el-table-column prop="logintime" label="登录时间" sortable></el-table-column>
                 <el-table-column prop="passwdvaliddate" label="密码失效日期"></el-table-column>
-                <el-table-column fixed="right" width="240" label="操作">
+                <el-table-column fixed="right" width="200" label="操作">
                     <template slot-scope="scope">
-                        <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">查看</el-button>
-                        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-dropdown split-button size="mini" type="primary" @command="handleCommand"
+                            @click="handleEdit(scope.$index, scope.row)">编辑
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item :command="composeValue('a', scope.row)">详细信息</el-dropdown-item>
+                                <el-dropdown-item :command="composeValue('b', scope.row)">分配角色</el-dropdown-item>
+                                <el-dropdown-item :command="composeValue('c', scope.row)">重置密码</el-dropdown-item>
+                                <el-dropdown-item :command="composeValue('d', scope.row)">冻结账户</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </template>
                 </el-table-column>
             </el-table>
@@ -197,15 +202,21 @@ export default{
             this.userReq.pageNum = val;
             this.$options.methods.loadData.bind(this)();
         },
-        //多选响应
-        handleSelectionChange: function(val) {
-            console.log(val);
-            // this.multipleSelection = val;
+        composeValue(index, row) {
+            return {
+                'index': index,
+                'row': row
+            }
         },
-        // handleAdd() {
-        //     this.$router.push({name: 'sysuser/detail'});
-        // },
+        handleCommand(command) {
+            if(command.index === 'a'){
+                this.handleDetail(command.index, command.row);
+            }else{
+                alert(JSON.stringify(command));
+            }
+        },
         handleAdd() {
+            // this.$router.push({name: 'sysuser/detail'});
             this.dialogFormVisible = true;
             this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
             this.sysuser = {
