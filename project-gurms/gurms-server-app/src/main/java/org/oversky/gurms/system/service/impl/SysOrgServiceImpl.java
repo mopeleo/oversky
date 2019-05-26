@@ -98,10 +98,10 @@ public class SysOrgServiceImpl implements SysOrgService {
 		SysUser userCond = new SysUser();
 		userCond.setOrgid(orgReq.getOrgid());
 		boolean hasUser = userDao.count(userCond) > 0 ? true : false;
-		String param1004 = ParamConsts.getParam(orgReq.getUnioncode(), ParamConsts.PARAM1004_DELORG_DEALUSER);
-		log.info("param 1004 = {}", param1004);
+		String param1006 = ParamConsts.getParam(orgReq.getUnioncode(), ParamConsts.PARAM1006_DELORG_DEALUSER);
+		log.info("param 1006 = {}", param1006);
 		if(hasUser) {
-			if(ParamConsts.PARAM1004_CANT_DEL.equals(param1004)) {
+			if(ParamConsts.PARAM1006_CANT_DEL.equals(param1006)) {
 				res.failure("当前机构存在用户，不允许删除");
 				log.info("删除机构失败:{}", res.getReturnmsg());
 				return res;
@@ -112,7 +112,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 		log.info("param 1005 = {}", param1005);
 		if(hasChild) {
 			if(ParamConsts.PARAM1005_MOVE_PARENT.equals(param1005)) {
-				if(hasUser && ParamConsts.PARAM1004_MOVE_PARENT.equals(param1004)) {
+				if(hasUser && ParamConsts.PARAM1006_MOVE_PARENT.equals(param1006)) {
 					this.batchUpdateUserOrgid(org.getOrgid(), org.getParentorg());
 				}
 				
@@ -127,14 +127,14 @@ public class SysOrgServiceImpl implements SysOrgService {
 			}else if(ParamConsts.PARAM1005_DEL_CHILDREN.equals(param1005)) {
 				List<SysOrg> children = this.getChildOrgs(org.getOrgid());
 				int userNum = userOrgDao.countChildOrgUser(children);
-				if(ParamConsts.PARAM1004_CANT_DEL.equals(param1004) && userNum > 0) {
+				if(ParamConsts.PARAM1006_CANT_DEL.equals(param1006) && userNum > 0) {
 					res.failure("子机构存在用户，不允许删除");
 					log.info("删除机构失败:{}", res.getReturnmsg());
 					return res;
 				}
 				
 				children.add(org);
-				if(ParamConsts.PARAM1004_MOVE_PARENT.equals(param1004) && userNum > 0) {
+				if(ParamConsts.PARAM1006_MOVE_PARENT.equals(param1006) && userNum > 0) {
 					userOrgDao.updateUserOrg(org.getParentorg(), children);
 				}
 				
@@ -145,7 +145,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 				return res;
 			}
 		}else {
-			if(hasUser && ParamConsts.PARAM1004_MOVE_PARENT.equals(param1004)) {
+			if(hasUser && ParamConsts.PARAM1006_MOVE_PARENT.equals(param1006)) {
 				this.batchUpdateUserOrgid(org.getOrgid(), org.getParentorg());
 			}
 			orgDao.deleteById(orgReq.getOrgid());

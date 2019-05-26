@@ -2,6 +2,7 @@ package org.oversky.gurms.system.component;
 
 import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.util.common.CommonUtils;
+import org.oversky.util.date.DateUtils;
 
 public class BizFunc {
 
@@ -36,5 +37,15 @@ public class BizFunc {
 			return true;
 		}
 		return false;
+	}
+	
+	public static String getInitPassword() {
+		return "1";
+	}
+	
+	public static String getPasswordInvalidDate() {
+		String days = ParamConsts.getParam(ParamConsts.DEFAULT_UNIONCODE, ParamConsts.PARAM1004_PASSWD_INVAILD_DAYS);
+		String date = DateUtils.addDays(DateUtils.getNowDate(),Integer.parseInt(days));
+		return date;
 	}
 }

@@ -15,7 +15,6 @@ import org.oversky.gurms.system.entity.SysUserRole;
 import org.oversky.gurms.system.ext.dao.ListQueryDao;
 import org.oversky.gurms.system.service.SysUserService;
 import org.oversky.util.bean.BeanCopyUtils;
-import org.oversky.util.date.DateUtils;
 import org.oversky.util.encode.EncryptUtils;
 import org.oversky.valid.GSAValid;
 import org.slf4j.Logger;
@@ -60,11 +59,13 @@ public class SysUserServiceImpl implements SysUserService{
 		user.setSalt(BizFunc.getPasswdSalt());
 		user.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		user.setLoginerror(0);
-		user.setPasswdvaliddate(DateUtils.addMonths(DateUtils.getNowDate(),3));
-		if(!StringUtils.isEmpty(user.getLoginpasswd())) {
-			String md5Passwd = EncryptUtils.md5Encode(user.getLoginpasswd());
-			user.setLoginpasswd(EncryptUtils.md5Encode(md5Passwd + user.getSalt()));
+		user.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
+		String md5Password = user.getLoginpasswd();
+		if(StringUtils.isEmpty(md5Password)) {
+			String initPw = BizFunc.getInitPassword();
+			md5Password = EncryptUtils.md5Encode(initPw);
 		}
+		user.setLoginpasswd(EncryptUtils.md5Encode(md5Password + user.getSalt()));
 		if(sysUserDao.insert(user) != 1) {
 			res.failure("新增失败");
 		}
