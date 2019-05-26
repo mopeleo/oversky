@@ -5,7 +5,8 @@
 import axios from 'axios';
 import store from '../store';
 import router from '../router';
-import * as tools from '@/utils/tools'
+import * as tools from '@/utils/tools';
+import PUBDEFINE from '@/utils/pubdefine';
 
 
 // 创建axios实例
@@ -27,12 +28,13 @@ instance.interceptors.request.use(
         // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
         // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
         const localUser = store.getters['pub/userinfo'];
-        if(localUser){
-            if(localUser.token){
-                config.headers.Authorization = localUser.token;
-            }
-            // //添加全局参数
-            if(config.method == 'post'){
+
+        if(localUser && localUser.token){
+            config.headers.Authorization = localUser.token;
+        }
+        // //添加全局参数
+        if(config.method == 'post'){
+            if(localUser){
                 if(!config.data.operator){
                     config.data.operator = localUser.userid;
                 }
@@ -40,23 +42,40 @@ instance.interceptors.request.use(
                     config.data.unioncode = localUser.unioncode;
                 }
             }
-            if(config.method == 'get'){
-                if(config.params){
+            if(!config.data.channel){
+                config.data.channel = PUBDEFINE.CHANNEL_TYPE;
+            }
+        }
+        if(config.method == 'get'){
+            if(config.params){
+                if(localUser){
                     if(!config.params.operator){
                         config.params.operator = localUser.userid;
                     }
                     if(!config.params.unioncode){
                         config.params.unioncode = localUser.unioncode;
                     }
-                }else{
+                }
+                if(!config.params.channel){
+                    config.params.channel = PUBDEFINE.CHANNEL_TYPE;
+                }
+            }else{
+                if(localUser){
                     config.params = {
                         operator : localUser.userid,
                         unioncode: localUser.unioncode,
+                        channel : PUBDEFINE.CHANNEL_TYPE,
+                        ...config.params
+                    }
+                }else{
+                    config.params = {
+                        channel : PUBDEFINE.CHANNEL_TYPE,
                         ...config.params
                     }
                 }
             }
         }
+
         return config;
     },
     error => {

@@ -58,7 +58,7 @@
             </div>
         </el-form>
 
-        <el-dialog title="角色信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible">
+        <el-dialog title="角色信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
             <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
                 <el-input v-model="sysrole.roleid" type="hidden"></el-input>
                 <el-form-item label="角色名称" prop="rolename">
@@ -143,9 +143,8 @@ export default{
         }
     },
     mounted(){
-        // tools.initPageDict('1003,2006', this.dictCache);
-        this.loadData();
         this.loadDict('1003,2006');
+        this.loadData();
     },
     methods:{
         loadData:function(){
@@ -262,15 +261,18 @@ export default{
             });
         },
         handleDelete(index, row) {
-            this.$api.Gurms.roleDelete(row.roleid).then((res)=>{
-                if(res === true){
-                    tools.succTip('删除成功');
-                    this.$options.methods.loadData.bind(this)();
-                }else{
-                    tools.errTip('删除失败');
-                }
-            }).catch((err)=>{
-                tools.errTip(err);
+            //回调函数function()会重新将this指向匿名对象,将回调函数改成箭头函数，会将this从匿名对象重新指向外部的vue组件
+            tools.confirmTip("是否确定删除角色?", () => {
+                this.$api.Gurms.roleDelete(row.roleid).then((res)=>{
+                    if(res === true){
+                        tools.succTip('删除成功');
+                        this.$options.methods.loadData.bind(this)();
+                    }else{
+                        tools.errTip('删除失败');
+                    }
+                }).catch((err)=>{
+                    tools.errTip(err);
+                });
             });
         },
         onSubmit(formName){

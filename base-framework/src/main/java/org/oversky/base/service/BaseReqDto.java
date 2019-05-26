@@ -25,6 +25,10 @@ public abstract class BaseReqDto implements Serializable{
 	private String resourceId;
 	//操作员ID或usersession的userid
 	private Long operator;
+	//渠道类型
+	private String channel;
+	//客户端IP
+	private String clientIp;
 	
 	public int getPageSize() {
 		return pageSize;
@@ -67,6 +71,18 @@ public abstract class BaseReqDto implements Serializable{
 	}
 	public void setOperator(Long operator) {
 		this.operator = operator;
-	}	
+	}
+	public String getChannel() {
+		return channel;
+	}
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+	public String getClientIp() {
+		return clientIp;
+	}
+	public void setClientIp(String clientIp) {
+		this.clientIp = clientIp;
+	}
 }
 

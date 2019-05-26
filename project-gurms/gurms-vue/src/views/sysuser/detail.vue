@@ -42,6 +42,8 @@
 import * as tools from '@/utils/tools'
 
 export default {
+    name: 'user_detail_form',
+
     data() {
         return {
             edit:true,

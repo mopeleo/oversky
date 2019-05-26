@@ -10,6 +10,7 @@ public class UserLoginReq extends BaseReqDto {
 	private String loginid;
 	private String passwd;
 	private String logintype;
+	private String unioncode;
 	
 	public String getLoginid() {
 		return loginid;
@@ -36,6 +37,12 @@ public class UserLoginReq extends BaseReqDto {
 	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
+	public String getUnioncode() {
+		return unioncode;
+	}
+	public void setUnioncode(String unioncode) {
+		this.unioncode = unioncode;
+	}
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -44,6 +51,7 @@ public class UserLoginReq extends BaseReqDto {
 		sb.append(", loginid=").append(loginid);
 		sb.append(", passwd=").append(passwd);
 		sb.append(", logintype=").append(logintype);
+		sb.append(", unioncode=").append(unioncode);
 		sb.append(" ]");
 		return sb.toString();
 	}

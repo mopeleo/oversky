@@ -9,6 +9,7 @@ import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.gurms.web.config.WebException;
+import org.oversky.gurms.web.util.WebUtils;
 import org.oversky.util.json.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,6 +21,7 @@ public class JwtAuthTokenInterceptor implements HandlerInterceptor{
 	
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		request.setAttribute("clientIp", WebUtils.getClientIp());
 		String requestUrl = request.getServletPath().substring(1);
 //		String resourceId = request.getParameter("resourceid");
 //		String userId = request.getParameter("userid");

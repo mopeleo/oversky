@@ -68,17 +68,21 @@ public class IndexServiceImpl implements IndexService{
 			return res;
 		}
 		SysUser user = userList.get(0);
-		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
-			res.failure("用户状态异常:" + user.getStatus());
-			log.info(res.getReturnmsg());
-			return res;
-		}
+		loginReq.setUserid(user.getUserid());
+		loginReq.setUnioncode(user.getUnioncode());
+		
 		String md5Passwd = EncryptUtils.md5Encode(loginReq.getPasswd() + user.getSalt());
 		boolean login = md5Passwd.equals(user.getLoginpasswd());
 		this.updateUserStatus(user, login);
 		this.writeLoginLog(loginReq, login);
 		if(!login) {
 			res.failure("用户名或密码错误");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
+			res.failure("用户状态异常:" + user.getStatus());
 			log.info(res.getReturnmsg());
 			return res;
 		}
@@ -106,11 +110,16 @@ public class IndexServiceImpl implements IndexService{
 		log.setLogindate(DateUtils.getNowDate());
 		log.setLogintime(DateUtils.getNowTime());
 		log.setLoginpasswd(user.getPasswd());
-		log.setLogintype(user.getLogintype());
+		log.setLogintype(user.getChannel());
+		log.setUnioncode(user.getUnioncode());
+		log.setLoginip(user.getClientIp());
+		log.setUserid(user.getUserid());
 		if(loginSuccess) {
 			log.setLoginresult(DictConsts.DICT1016_SUCCESS);
+			log.setSummary("登录成功");
 		}else {
 			log.setLoginresult(DictConsts.DICT1016_FAILURE);
+			log.setSummary("登录失败");
 		}
 		sysUserLoginDao.insert(log);
 	}

@@ -104,31 +104,16 @@ export function getComponentNameFromTab(tab) {
 }
 
 //TODO 待完善
-export function initPageDict(keys, pageDict) {
-    let unioncode = this.getUnioncode();
-    let dictKey = unioncode + "_" + keys.replace(/,/, '_');
-    let dictCache = localStorage.getItem(PUBDEFINE.KEY_DICT_CACHE);
-    if(dictCache){
-        dictCache = JSON.parse(dictCache);
-    }else{
-        dictCache = {};
-    }
+export function loadDict(keys, pageDict) {
+    api.Gurms.getDictMap(keys).then((res)=>{
+        let results = res.results;
+        for(var p in results){
+            pageDict[p] = results[p];
+        }
+    }).catch((err)=>{
+        this.errTip(err);
+    });
 
-    let queryDict = dictCache[dictKey];
-    if(queryDict){
-        pageDict = queryDict;
-            alert(JSON.stringify(pageDict['1003']));
-    }else{
-        api.Gurms.getDictMap(unioncode, keys).then((res)=>{
-            queryDict = res.results;
-            dictCache[dictKey] = queryDict;
-            localStorage.setItem(PUBDEFINE.KEY_DICT_CACHE, JSON.stringify(dictCache));
-            pageDict = queryDict;
-            alert(pageDict['1003']);
-        }).catch((err)=>{
-            this.errTip(err);
-        });
-    }
 }
 
 export function getUnioncode() {
