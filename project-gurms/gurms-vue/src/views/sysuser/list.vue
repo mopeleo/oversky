@@ -47,7 +47,7 @@
                     <template slot-scope="scope">
                         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                         <el-dropdown split-button size="mini" type="primary" @command="handleCommand"
-                            @click="handleEdit(scope.$index, scope.row)">编辑
+                            @click="handleEdit(scope.$index, scope.row)" trigger="click">编辑
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item :command="composeValue('a', scope.row)">详细信息</el-dropdown-item>
                                 <el-dropdown-item :command="composeValue('b', scope.row)">分配角色</el-dropdown-item>
@@ -73,8 +73,6 @@
         <el-dialog title="用户信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
             <el-form ref="detailForm" :model="sysuser" :rules="rules" label-width="80px"
                 :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                <el-input v-model="sysuser.userid" type="hidden"></el-input>
-                <el-input v-model="sysuser.orgid" type="hidden"></el-input>
                 <el-form-item label="用户姓名" prop="username">
                     <el-input v-model="sysuser.username" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
                 </el-form-item>
@@ -88,13 +86,9 @@
                     <el-input v-model="sysuser.email"></el-input>
                 </el-form-item>
                 <el-form-item label="所属机构" prop="orgid">
-                    <el-input v-model="sysuser.orgname"></el-input>
-                    <el-tree ref="parentOrgTree"
-                        :data="treeData"
-                        node-key="orgid"
-                        @node-click="parentTreeHandleNodeClick"
-                        :props="{children: 'subOrgs',label: 'shortname'}">
-                    </el-tree>
+                    <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
+                        :value="sysuser.orgid" :accordion="true" @getValue="getOrgId($event)">
+                    </SelectTree>
                 </el-form-item>
                 <el-form-item label="证件类型" prop="idtype">
                     <el-select v-model="sysuser.idtype" value-key="itemcode" clearable placeholder="请选择">
@@ -108,10 +102,11 @@
                 <el-form-item label="证件号码" prop="idcode">
                     <el-input v-model="sysuser.idcode"></el-input>
                 </el-form-item>
+
+                <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
+                <el-button @click="onReset('detailForm')">重填</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false;">关闭</el-button>
             </el-form>
-            <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
-            <el-button @click="onReset('detailForm')">重填</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false;">关闭</el-button>
 
         </el-dialog>
 
@@ -119,10 +114,12 @@
 </template>
 
 <script>
-import * as tools from '@/utils/tools'
+import * as tools from '@/utils/tools';
+import SelectTree from '@/components/SelectTree.vue';
 
 export default{
     name: 'sysuser_list',
+    components:{SelectTree},
     data(){
         return {
             //表格当前页数据
@@ -181,6 +178,9 @@ export default{
             }).catch((err)=>{
                 tools.errTip(err);
             });
+        },
+        getOrgId(value){
+            this.sysuser.orgid = value;
         },
         parentTreeHandleNodeClick(data){
             if(this.editType !== this.$pubdefine.EDIT_TYPE_DETAIL){

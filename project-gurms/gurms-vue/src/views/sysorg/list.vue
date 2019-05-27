@@ -21,7 +21,6 @@
             <el-main>
                 <h5>机构信息</h5>
                 <el-form ref="detailForm" :model="sysorg" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                    <el-input v-model="sysorg.orgid" type="hidden"></el-input>
                     <el-form-item label="机构联号" prop="unioncode">
                         <el-input v-model="sysorg.unioncode" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
                     </el-form-item>
@@ -32,7 +31,6 @@
                         <el-input v-model="sysorg.fullname"></el-input>
                     </el-form-item>
                     <el-form-item label="上级机构" prop="parentorg">
-                        <el-input v-model="sysorg.parentorg" type="hidden"></el-input>
                         <el-input v-model="parentname"></el-input>
                         <el-tree ref="parentOrgTree"
                             :data="treeData"

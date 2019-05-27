@@ -60,7 +60,6 @@
 
         <el-dialog title="角色信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
             <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                <el-input v-model="sysrole.roleid" type="hidden"></el-input>
                 <el-form-item label="角色名称" prop="rolename">
                     <el-input v-model="sysrole.rolename" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
                 </el-form-item>
