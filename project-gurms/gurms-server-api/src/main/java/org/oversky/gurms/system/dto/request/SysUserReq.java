@@ -19,6 +19,7 @@ public class SysUserReq extends BaseReqDto {
 	private String idname;    //证件姓名
 	private String status;    //用户状态，0，已注销；1，正常；2，锁定
 
+	private String newpassword;
 	private String roleList;
 	
 	public Long getUserid() {
@@ -123,6 +124,14 @@ public class SysUserReq extends BaseReqDto {
 
 	public void setRoleList(String roleList) {
 		this.roleList = roleList;
+	}
+
+	public String getNewpassword() {
+		return newpassword;
+	}
+
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
 	}
 
 	@Override

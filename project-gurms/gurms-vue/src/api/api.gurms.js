@@ -57,8 +57,8 @@ export default {
         });
     },
     // 用户删除
-    userDelete (userid) {
-        return axios.get(`${baseURL}/sysuser/delete/${userid}`);
+    userDelete (params) {
+        return axios.post(`${baseURL}/sysuser/delete`, params);
     },
 
     //========================================================

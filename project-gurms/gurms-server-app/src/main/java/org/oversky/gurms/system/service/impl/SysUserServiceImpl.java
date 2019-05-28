@@ -5,6 +5,7 @@ import java.util.List;
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
+import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.SysUserInfoDao;
 import org.oversky.gurms.system.dao.SysUserRoleDao;
@@ -15,6 +16,7 @@ import org.oversky.gurms.system.entity.SysUserRole;
 import org.oversky.gurms.system.ext.dao.ListQueryDao;
 import org.oversky.gurms.system.service.SysUserService;
 import org.oversky.util.bean.BeanCopyUtils;
+import org.oversky.util.date.DateUtils;
 import org.oversky.util.encode.EncryptUtils;
 import org.oversky.valid.GSAValid;
 import org.slf4j.Logger;
@@ -75,18 +77,45 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	@Transactional
-	public boolean delete(Long userid) {
-		log.info("开始删除用户[userid={}]信息...", userid);
-		sysUserDao.deleteById(userid);
+	public SysUserRes delete(SysUserReq userReq) {
+		log.info("开始删除用户[userid={}]信息...", userReq.getUserid());
+		SysUserRes res = new SysUserRes();
 		
-		userInfoDao.deleteById(userid);
+		SysUser user = sysUserDao.getById(userReq.getUserid());
+		if(user == null) {
+			res.failure("用户[" + userReq.getUserid() + "]不存在");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
+			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能删除");
+			log.info(res.getReturnmsg());
+			return res;
+		}
 		
 		SysUserRole where = new SysUserRole();
-		where.setUserid(userid);
+		where.setUserid(userReq.getUserid());
 		userRoleDao.deleteWhere(where);
-		
-		log.info("删除用户[userid={}]成功", userid);
-		return true;
+
+		String param1007 = ParamConsts.getParam(userReq.getUnioncode(), ParamConsts.PARAM1007_DELUSER);
+		log.info("删除用户模式：param 1007 = {}", param1007);
+		if(ParamConsts.PARAM1007_DELETE.equals(param1007)) {
+			sysUserDao.deleteById(userReq.getUserid());			
+			userInfoDao.deleteById(userReq.getUserid());
+		}
+		if(ParamConsts.PARAM1007_CANCEL.equals(param1007)) {
+			SysUser updateUser = new SysUser();
+			updateUser.setUserid(userReq.getUserid());
+			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_CANCEL);
+			updateUser.setCanceldate(DateUtils.getNowDate());
+//			user.setOrgid(orgid);
+			sysUserDao.dynamicUpdateById(updateUser);
+		}
+
+		res.success("删除用户成功");
+		log.info("删除用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
+		return res;
 	}
 
 	@Override

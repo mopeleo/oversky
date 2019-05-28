@@ -29,4 +29,8 @@ insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1006, '0')
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, dictcode, valuelist, valuelength, texttitle, texttail) 
 values (1006, '删除存在用户的机构', '0', '1', '2', 0, '0|不允许删除;1|删除后用户移到上级机构', 2, '', '');
 
+insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1007, '1');
+insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, dictcode, valuelist, valuelength, texttitle, texttail) 
+values (1007, '删除用户是删除还是注销', '1', '1', '2', 0, '0|注销;1|删除', 2, '', '');
+
 commit;

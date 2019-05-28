@@ -30,6 +30,10 @@ public final class ParamConsts {
 	public final static String PARAM1006_CANT_DEL = "0";				//不能删除
 	public final static String PARAM1006_MOVE_PARENT = "1";				//删除后移到父机构
 	
+	public final static Integer PARAM1007_DELUSER = 1007;				//删除用户
+	public final static String PARAM1007_CANCEL = "0";					//不删除，改为注销状态
+	public final static String PARAM1007_DELETE = "1";					//直接删除
+	
 	
 	public static String getParam(String unioncode, Integer paramid) {
 		SysParam value = paramDao.getById(unioncode, paramid);

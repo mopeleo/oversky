@@ -255,13 +255,12 @@ export default{
         },
         handleDelete(index, row) {
             tools.confirmTip("是否确定删除用户?", ()=>{
-                this.$api.Gurms.userDelete(row.userid).then((res)=>{
-                    if(res === true){
-                        tools.succTip('删除成功');
-                        this.$options.methods.loadData.bind(this)();
-                    }else{
-                        tools.succTip('删除失败');
-                    }
+                this.sysuser = {
+                    userid : row.userid
+                },
+                this.$api.Gurms.userDelete(this.sysuser).then((res)=>{
+                    tools.succTip(res.returnmsg);
+                    this.$options.methods.loadData.bind(this)();
                 }).catch((err)=>{
                     tools.errTip(err);
                 });

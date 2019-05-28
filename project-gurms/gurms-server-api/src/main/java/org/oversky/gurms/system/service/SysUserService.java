@@ -9,7 +9,7 @@ public interface SysUserService extends BaseService{
 
 	SysUserRes insert(SysUserReq userReq);
 	
-	boolean delete(Long userid);
+	SysUserRes delete(SysUserReq userReq);
 	
 	SysUserRes update(SysUserReq userReq);
 	
