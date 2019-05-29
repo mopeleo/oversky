@@ -3,6 +3,7 @@ package org.oversky.gurms.system.component;
 import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.util.common.CommonUtils;
 import org.oversky.util.date.DateUtils;
+import org.oversky.util.encode.EncryptUtils;
 
 public class BizFunc {
 
@@ -41,6 +42,10 @@ public class BizFunc {
 	
 	public static String getInitPassword() {
 		return "1";
+	}
+	
+	public static String getEncryptPassword(String password, String salt) {
+		return EncryptUtils.md5Encode(password + salt);
 	}
 	
 	public static String getPasswordInvalidDate() {

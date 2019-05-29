@@ -16,7 +16,6 @@ import org.oversky.gurms.system.service.IndexService;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.oversky.util.date.DateUtils;
-import org.oversky.util.encode.EncryptUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,7 @@ public class IndexServiceImpl implements IndexService{
 		loginReq.setUserid(user.getUserid());
 		loginReq.setUnioncode(user.getUnioncode());
 		
-		String md5Passwd = EncryptUtils.md5Encode(loginReq.getPasswd() + user.getSalt());
+		String md5Passwd = BizFunc.getEncryptPassword(loginReq.getPasswd(), user.getSalt());
 		boolean login = md5Passwd.equals(user.getLoginpasswd());
 		this.updateUserStatus(user, login);
 		this.writeLoginLog(loginReq, login);

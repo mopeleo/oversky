@@ -20,4 +20,6 @@ public interface UserRightDao {
 	List<SysMenu> getRoleMenus(Long roleid);
 
 	List<SysMenu> getSubMenus(String menuid);
+	
+	List<SysRole> getUserCanGrantRoles(Long userid, String unioncode);
 }

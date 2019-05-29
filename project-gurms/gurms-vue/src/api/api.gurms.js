@@ -50,6 +50,10 @@ export default {
     userUpdate (params) {
         return axios.post(`${baseURL}/sysuser/update`, params);
     },
+    // 用户分配角色
+    userGrantRoles (params) {
+        return axios.post(`${baseURL}/sysuser/grantrole`, params);
+    },
     // 用户详情
     userDetail (userid) {
         return axios.get(`${baseURL}/sysuser/detail`, {
@@ -81,6 +85,18 @@ export default {
     // 角色删除
     roleDelete (roleid) {
         return axios.get(`${baseURL}/sysrole/delete/${roleid}`);
+    },
+    // 可授权的角色
+    canGrantRoles (userid, unioncode) {
+        return axios.get(`${baseURL}/sysrole/cangrantroles`, {
+            params: {userid: userid, unioncode: unioncode}
+        });
+    },
+    // 已授权的角色
+    hasRoles (userid, unioncode) {
+        return axios.get(`${baseURL}/sysrole/hasroles`, {
+            params: {userid: userid, unioncode: unioncode}
+        });
     },
 
     //========================================================

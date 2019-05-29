@@ -36,6 +36,16 @@ public class SysRoleController {
 		return roleService.pageSysRole(roleReq);
 	}
 
+	@RequestMapping("/cangrantroles")
+	public BaseResListDto<SysRoleRes> canGrantRoles(Long userid, String unioncode) {
+		return roleService.getCanGrantRoles(userid, unioncode);
+	}
+
+	@RequestMapping("/hasroles")
+	public BaseResListDto<SysRoleRes> hasRoles(Long userid) {
+		return roleService.userRoles(userid);
+	}
+
 	@RequestMapping("/delete/{roleId}")
 	public boolean delete(@PathVariable Long roleId) {
 		return roleService.delete(roleId);

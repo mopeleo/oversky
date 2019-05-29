@@ -134,6 +134,26 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
+	public BaseResListDto<SysRoleRes> getCanGrantRoles(Long userid, String unioncode) {
+		List<SysRole> roles = userRightDao.getUserCanGrantRoles(userid, unioncode);
+		List<SysRoleRes> roleResList = BeanCopyUtils.convertList(roles, SysRoleRes.class);
+		BaseResListDto<SysRoleRes> resList = new BaseResListDto<SysRoleRes>();
+		resList.setResults(roleResList);
+		resList.success("查询成功");
+		return resList;
+	}
+	
+	@Override
+	public BaseResListDto<SysRoleRes> userRoles(Long userid) {
+		List<SysRole> roles = userRightDao.getUserRoles(userid);
+		List<SysRoleRes> roleResList = BeanCopyUtils.convertList(roles, SysRoleRes.class);
+		BaseResListDto<SysRoleRes> resList = new BaseResListDto<SysRoleRes>();
+		resList.setResults(roleResList);
+		resList.success("查询成功");
+		return resList;
+	}
+	
+	@Override
 	public BaseResListDto<SysRoleRes> pageSysRole(SysRoleReq roleReq) {
 		log.info("开始分页查询角色信息...");
 		Page<SysRole> page = PageHelper.startPage(roleReq.getPageNum(), roleReq.getPageSize());

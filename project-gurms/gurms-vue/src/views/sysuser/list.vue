@@ -110,6 +110,19 @@
 
         </el-dialog>
 
+        <el-dialog title="分配角色" v-if="dialogGrantRole" :visible.sync="dialogGrantRole" :close-on-click-modal="false">
+            <el-transfer filterable :filter-method="filterMethod"
+                filter-placeholder="请输入角色"
+                :titles="['待分配角色', '已选择角色']"
+                v-model="selectRoles"
+                :props="{key: 'roleid',label: 'rolename'}"
+                :data="allRoles">
+            </el-transfer>
+            <el-button type="primary" @click="handGrantRoles">确定</el-button>
+            <el-button type="primary" @click="dialogGrantRole = false;selectRoles=[];">取消</el-button>
+
+        </el-dialog>
+
     </div>
 </template>
 
@@ -134,9 +147,12 @@ export default{
             },
             //对话框表单属性
             dialogFormVisible: false,
+            dialogGrantRole: false,
             editType: this.$pubdefine.EDIT_TYPE_INSERT,   // insert/update
             //临时业务数据
             sysuser: null,
+            allRoles:[],    //所有角色
+            selectRoles:[], //已选角色
             rules:{
                 loginid:[
                     {required:true, message:'用户名不能为空', trigger:'blur'},
@@ -179,6 +195,25 @@ export default{
                 tools.errTip(err);
             });
         },
+        loadCanGrantRoles:function(){
+            let operator = this.$store.getters['pub/userinfo'].userid;
+            this.$api.Gurms.canGrantRoles(operator, this.sysuser.unioncode).then((res)=>{
+                this.allRoles = [];
+                this.allRoles = res.results;
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
+        },
+        loadSelectRoles:function(){
+            this.$api.Gurms.hasRoles(this.sysuser.userid, this.sysuser.unioncode).then((res)=>{
+                this.selectRoles = [];
+                for(var i = 0; i < res.results.length; i++){
+                    this.selectRoles[i] = res.results[i].roleid;
+                }
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
+        },
         getOrgId(value){
             this.sysuser.orgid = value;
         },
@@ -187,6 +222,9 @@ export default{
                 this.sysuser.orgid = data.orgid;
                 this.sysuser.orgname = data.orgid + " - " + data.shortname;
             }
+        },
+        filterMethod(query, item) {
+            return item.rolename.indexOf(query) > -1;
         },
         //点击行响应
         handleClick: function(row, column, event){
@@ -211,9 +249,43 @@ export default{
         handleCommand(command) {
             if(command.index === 'a'){
                 this.handleDetail(command.index, command.row);
+            }else if(command.index === 'b'){
+                this.grantRoles(command.row);
+            }else if(command.index === 'c'){
+                this.resetPassword(command.row);
+            }else if(command.index === 'd'){
+                this.freezeUser(command.row);
             }else{
                 alert(JSON.stringify(command));
             }
+        },
+        grantRoles(userInfo){
+            this.sysuser = userInfo;
+            this.dialogGrantRole = true;
+            this.loadCanGrantRoles();
+            this.loadSelectRoles();
+        },
+        resetPassword(userInfo){
+            this.sysuser = userInfo;
+            this.dialogGrantRole = true;
+        },
+        freezeUser(userInfo){
+            this.sysuser = userInfo;
+            this.dialogGrantRole = true;
+        },
+        handGrantRoles(){
+            if(this.selectRoles && this.selectRoles.length > 0){
+                this.sysuser.roleList = this.selectRoles.join(',');
+            }
+            this.$api.Gurms.userGrantRoles(this.sysuser).then(res =>{
+                tools.succTip(res.returnmsg);
+                if(res.success === true){
+                    this.dialogGrantRole = false;
+                    this.selectRoles = [];
+                }
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
         },
         handleAdd() {
             // this.$router.push({name: 'sysuser/detail'});

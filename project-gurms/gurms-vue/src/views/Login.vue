@@ -41,8 +41,8 @@ export default {
     data() {
         return {
             login: {
-                loginid: '',
-                passwd: '',
+                loginid: 'admin',
+                passwd: '1',
                 remember: false
             },
             loginRules: {

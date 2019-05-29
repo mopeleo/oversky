@@ -12,6 +12,7 @@ public final class ParamConsts {
 	//系统初始化默认值
 	public final static String DEFAULT_UNIONCODE = "0000";   			//默认的unioncode
 	public final static Long DEFAULT_ROOTORG = 1L;						//默认的系统虚拟顶级机构
+	public final static Long DEFAULT_NULLORG = -1L;						//默认的系统虚拟不存在机构
 	
 	
 	//sys_param表定义的参数

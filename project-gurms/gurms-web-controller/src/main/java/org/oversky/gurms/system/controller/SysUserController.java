@@ -42,22 +42,22 @@ public class SysUserController {
 
 	@RequestMapping("/resetpassword")
 	public SysUserRes resetPassword(@RequestBody SysUserReq userReq) {
-		return userService.delete(userReq);
+		return userService.resetPassword(userReq);
 	}
 
 	@RequestMapping("/updatepassword")
 	public SysUserRes updatePassword(@RequestBody SysUserReq userReq) {
-		return userService.delete(userReq);
+		return userService.updatePassword(userReq);
 	}
 
 	@RequestMapping("/freeze")
 	public SysUserRes freeze(@RequestBody SysUserReq userReq) {
-		return userService.delete(userReq);
+		return userService.freezeUser(userReq);
 	}
 
 	@RequestMapping("/unfreeze")
 	public SysUserRes unfreeze(@RequestBody SysUserReq userReq) {
-		return userService.delete(userReq);
+		return userService.unfreezeUser(userReq);
 	}
 
 	@RequestMapping("/grantrole")

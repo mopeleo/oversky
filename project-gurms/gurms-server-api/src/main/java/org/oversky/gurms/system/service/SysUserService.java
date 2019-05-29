@@ -17,5 +17,13 @@ public interface SysUserService extends BaseService{
 	
 	SysUserRes grantRole(SysUserReq userReq);
 	
+	SysUserRes resetPassword(SysUserReq userReq);
+	
+	SysUserRes updatePassword(SysUserReq userReq);
+	
+	SysUserRes freezeUser(SysUserReq userReq);
+	
+	SysUserRes unfreezeUser(SysUserReq userReq);
+	
 	BaseResListDto<SysUserRes> pageSysUser(SysUserReq userReq);
 }

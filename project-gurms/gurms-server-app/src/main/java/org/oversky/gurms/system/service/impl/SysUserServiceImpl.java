@@ -1,8 +1,10 @@
 package org.oversky.gurms.system.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
+import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.constant.ParamConsts;
@@ -67,7 +69,7 @@ public class SysUserServiceImpl implements SysUserService{
 			String initPw = BizFunc.getInitPassword();
 			md5Password = EncryptUtils.md5Encode(initPw);
 		}
-		user.setLoginpasswd(EncryptUtils.md5Encode(md5Password + user.getSalt()));
+		user.setLoginpasswd(BizFunc.getEncryptPassword(md5Password, user.getSalt()));
 		if(sysUserDao.insert(user) != 1) {
 			res.failure("新增失败");
 		}
@@ -109,7 +111,7 @@ public class SysUserServiceImpl implements SysUserService{
 			updateUser.setUserid(userReq.getUserid());
 			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_CANCEL);
 			updateUser.setCanceldate(DateUtils.getNowDate());
-//			user.setOrgid(orgid);
+//			updateUser.setOrgid(ParamConsts.DEFAULT_NULLORG);
 			sysUserDao.dynamicUpdateById(updateUser);
 		}
 
@@ -134,6 +136,143 @@ public class SysUserServiceImpl implements SysUserService{
 	}
 
 	@Override
+	public SysUserRes resetPassword(SysUserReq userReq) {
+		log.info("开始重置用户[userid={}]密码......", userReq.getUserid());
+		SysUserRes res = new SysUserRes();
+		
+		SysUser user = sysUserDao.getById(userReq.getUserid());
+		if(user == null) {
+			res.failure("用户[" + userReq.getUserid() + "]不存在");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())
+				|| !DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
+			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能重置密码");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		SysUser updateUser = new SysUser();
+		updateUser.setUserid(userReq.getUserid());
+		updateUser.setSalt(BizFunc.getPasswdSalt());
+		String md5Password = EncryptUtils.md5Encode(BizFunc.getInitPassword());
+		updateUser.setLoginpasswd(BizFunc.getEncryptPassword(md5Password, user.getSalt()));
+		updateUser.setLoginerror(0);
+		updateUser.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
+		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
+			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		}
+		sysUserDao.dynamicUpdateById(updateUser);
+		res.success("重置密码成功");
+		log.info("重置用户[userid={}]密码结束: {}", userReq.getUserid(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public SysUserRes updatePassword(SysUserReq userReq) {
+		log.info("修改用户[userid={}]密码......", userReq.getUserid());
+		SysUserRes res = new SysUserRes();
+		
+		SysUser user = sysUserDao.getById(userReq.getUserid());
+		if(user == null) {
+			res.failure("用户[" + userReq.getUserid() + "]不存在");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		if(userReq.getLoginpasswd().equals(userReq.getNewpassword())) {
+			res.failure("用户新密码不能与原密码相同");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		String oldPassword = BizFunc.getEncryptPassword(userReq.getLoginpasswd(), user.getSalt());
+		if(oldPassword.equals(user.getLoginpasswd())) {
+			res.failure("用户原密码错误，修改密码失败");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+
+		if(DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())
+				|| DictConsts.DICT2001_USER_STATUS_CANCEL.equals(user.getStatus())) {
+			res.failure("用户[" + userReq.getUserid() + "]被冻结，不能修改密码");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		SysUser updateUser = new SysUser();
+		updateUser.setUserid(userReq.getUserid());
+		String newPassword = BizFunc.getEncryptPassword(userReq.getNewpassword(), user.getSalt());
+		updateUser.setLoginpasswd(newPassword);
+		updateUser.setLoginerror(0);
+		updateUser.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
+		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
+			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		}
+		sysUserDao.dynamicUpdateById(updateUser);
+		
+		res.success("修改密码成功");
+		log.info("修改用户[userid={}]密码结束: {}", userReq.getUserid(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public SysUserRes freezeUser(SysUserReq userReq) {
+		log.info("开始冻结用户[userid={}]......", userReq.getUserid());
+		SysUserRes res = new SysUserRes();
+		
+		SysUser user = sysUserDao.getById(userReq.getUserid());
+		if(user == null) {
+			res.failure("用户[" + userReq.getUserid() + "]不存在");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
+			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能冻结");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		SysUser updateUser = new SysUser();
+		updateUser.setUserid(userReq.getUserid());
+		updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_FROZEN);
+		sysUserDao.dynamicUpdateById(updateUser);
+		res.success("冻结用户账号成功");
+		log.info("冻结用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public SysUserRes unfreezeUser(SysUserReq userReq) {
+		log.info("开始解冻用户[userid={}]......", userReq.getUserid());
+		SysUserRes res = new SysUserRes();
+		
+		SysUser user = sysUserDao.getById(userReq.getUserid());
+		if(user == null) {
+			res.failure("用户[" + userReq.getUserid() + "]不存在");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())) {
+			res.failure("用户[" + userReq.getUserid() + "]不为冻结状态，不能冻结");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		SysUser updateUser = new SysUser();
+		updateUser.setUserid(userReq.getUserid());
+		updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		sysUserDao.dynamicUpdateById(updateUser);
+		res.success("解冻用户账号成功");
+		log.info("解冻用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
 	public SysUserRes getById(Long userid) {
 		log.info("开始查询用户[userid={}]信息...", userid);
 		SysUser user = sysUserDao.getById(userid);
@@ -148,19 +287,32 @@ public class SysUserServiceImpl implements SysUserService{
 	}
 
 	@Override
+	@Transactional
 	public SysUserRes grantRole(SysUserReq userReq) {
 		log.info("开始用户[userid={}]授权...", userReq.getUserid());
 		SysUserRes res = new SysUserRes();
+		//删除现有role
+		SysUserRole where = new SysUserRole();
+		where.setUserid(userReq.getUserid());
+		userRoleDao.deleteWhere(where);
+		//插入新的role
+		if(userReq.getRoleList() != null) {
+			String[] roles = userReq.getRoleList().split(",");
+			List<SysUserRole> userRoles = new ArrayList<SysUserRole>();
+			for(String roleid : roles) {
+				SysUserRole sur = new SysUserRole();
+				sur.setUserid(userReq.getUserid());
+				sur.setRoleid(Long.parseLong(roleid));
+				userRoles.add(sur);
+			}
+			if(userRoleDao.insertBatch(userRoles) != roles.length) {
+				throw new BaseServiceException("用户[" + userReq.getUserid() + "]授权失败");
+			}
+		}
 		log.info("授权用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
 		return res;
 	}
 
-	public List<SysUserRes> find(SysUserReq userReq){
-		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
-		List<SysUser> userList = sysUserDao.selectWhere(where);
-		return BeanCopyUtils.convertList(userList, SysUserRes.class);
-	}
-	
 	//PageHelper 方法使用了静态的 ThreadLocal 参数，分页参数和线程是绑定的
 	//只要你可以保证在 PageHelper 方法调用后紧跟 MyBatis 查询方法，这就是安全的。因为 PageHelper 在 finally 代码段中自动清除了 ThreadLocal 存储的对象。
 	public BaseResListDto<SysUserRes> pageSysUser(SysUserReq userReq){
