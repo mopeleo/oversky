@@ -34,14 +34,14 @@ public class ParameterTest {
 	}
 
 	// 5. 进行测试，发现它会将所有的测试用例测试一遍
-	@Test
+//	@Test
 	public void test() {
 		String name = firstName + " " + lastName;
 		assertThat("Mike Black", is(name));
 	}
 	
 	//超时测试
-	@Test(timeout = 1000)
+//	@Test(timeout = 1000)
     public void testTimeout() throws InterruptedException {
         TimeUnit.SECONDS.sleep(2);
         System.out.println("Complete");
