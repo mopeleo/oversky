@@ -52,7 +52,8 @@
                                 <el-dropdown-item :command="composeValue('a', scope.row)">详细信息</el-dropdown-item>
                                 <el-dropdown-item :command="composeValue('b', scope.row)">分配角色</el-dropdown-item>
                                 <el-dropdown-item :command="composeValue('c', scope.row)">重置密码</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue('d', scope.row)">冻结账户</el-dropdown-item>
+                                <el-dropdown-item :command="composeValue('d', scope.row)" v-if="scope.row.status=='1'">冻结账户</el-dropdown-item>
+                                <el-dropdown-item :command="composeValue('e', scope.row)" v-if="scope.row.status=='3'">解冻账户</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </template>
@@ -255,6 +256,8 @@ export default{
                 this.resetPassword(command.row);
             }else if(command.index === 'd'){
                 this.freezeUser(command.row);
+            }else if(command.index === 'e'){
+                this.unfreezeUser(command.row);
             }else{
                 alert(JSON.stringify(command));
             }
@@ -266,12 +269,31 @@ export default{
             this.loadSelectRoles();
         },
         resetPassword(userInfo){
-            this.sysuser = userInfo;
-            this.dialogGrantRole = true;
+            this.$api.Gurms.userResetPassword(userInfo).then(res =>{
+                tools.succTip(res.returnmsg);
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
         },
         freezeUser(userInfo){
-            this.sysuser = userInfo;
-            this.dialogGrantRole = true;
+            this.$api.Gurms.userFreeze(userInfo).then(res =>{
+                tools.succTip(res.returnmsg);
+                if(res.success === true){
+                    userInfo.status ='3';
+                }
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
+        },
+        unfreezeUser(userInfo){
+            this.$api.Gurms.userUnfreeze(userInfo).then(res =>{
+                tools.succTip(res.returnmsg);
+                if(res.success === true){
+                    userInfo.status ='1';
+                }
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
         },
         handGrantRoles(){
             if(this.selectRoles && this.selectRoles.length > 0){

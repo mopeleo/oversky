@@ -148,7 +148,7 @@ public class SysUserServiceImpl implements SysUserService{
 		}
 		
 		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())
-				|| !DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
+				&& !DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能重置密码");
 			log.info(res.getReturnmsg());
 			return res;

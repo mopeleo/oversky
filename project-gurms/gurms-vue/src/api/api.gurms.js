@@ -54,6 +54,18 @@ export default {
     userGrantRoles (params) {
         return axios.post(`${baseURL}/sysuser/grantrole`, params);
     },
+    // 用户冻结
+    userFreeze (params) {
+        return axios.post(`${baseURL}/sysuser/freeze`, params);
+    },
+    // 用户解冻
+    userUnfreeze (params) {
+        return axios.post(`${baseURL}/sysuser/unfreeze`, params);
+    },
+    // 用户解冻
+    userResetPassword (params) {
+        return axios.post(`${baseURL}/sysuser/resetpassword`, params);
+    },
     // 用户详情
     userDetail (userid) {
         return axios.get(`${baseURL}/sysuser/detail`, {
