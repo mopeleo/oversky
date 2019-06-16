@@ -56,12 +56,7 @@
                         <p><span class="tit">当前版本</span>v1.0.0</p>
                         <p><span class="tit">基于框架</span>vue2.0全家桶 + element-ui</p>
                         <p><span class="tit">主要特色</span>单页面 / 响应式 / 无限级菜单 / 权限管理 / 极简</p>
-                        <p><span class="tit">获取渠道</span>
-                            <span class="gitbox">
-                  <a target="_blank" href="https://github.com/Nirongxu/vue-xuAdmin.git"><el-button type="primary" icon="el-icon-download" size="small">github</el-button></a>
-                  <a target="_blank" href="https://gitee.com/nirongxu/xu-webplatform.git"><el-button type="primary" icon="el-icon-download" size="small">码云</el-button></a>
-                </span>
-                        </p>
+                        <p><span class="tit">获取渠道</span>github</p>
                     </div>
                 </div>
             </el-col>
@@ -160,7 +155,6 @@ export default {
             }, 10);
         },
         handleEdit (index, row) {
-            console.log(index, row);
             this.$message({
                 showClose: true,
                 message: index, row,
@@ -168,7 +162,6 @@ export default {
             });
         },
         handleDelete (index, row) {
-            console.log(index, row);
             this.$message({
                 showClose: true,
                 message: index, row,
@@ -212,34 +205,6 @@ export default {
           status: '已付款',
           amount: '190元',
           date: '2018-01-03',
-          tag: '虚拟'
-        }, {
-          odd: '201801012345605',
-          name: '王小虎',
-          status: '已付款',
-          amount: '170元',
-          date: '2018-01-04',
-          tag: '实物'
-        }, {
-          odd: '201801012345606',
-          name: '王小虎',
-          status: '已付款',
-          amount: '670元',
-          date: '2018-01-04',
-          tag: '虚拟'
-        }, {
-          odd: '201801012345607',
-          name: '王小虎',
-          status: '已付款',
-          amount: '1780元',
-          date: '2018-01-04',
-          tag: '实物'
-        }, {
-          odd: '201801012345608',
-          name: '王小虎',
-          status: '已付款',
-          amount: '3180元',
-          date: '2018-01-04',
           tag: '虚拟'
         }, {
           odd: '201801012345609',
