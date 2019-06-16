@@ -48,21 +48,20 @@ export default {
     methods: {
         selectMenu (key) {
             // alert(key);
-            let router = this.user.menuTree.subMenus;
-            let navTitle = function (path, routerARR) {
+            let recursiveMenu = function (path, menuList) {
                 let rst = null;
-                for (let i = 0; i < routerARR.length; i++) {
-                    if (routerARR[i].subMenus.length > 0 || ('/home/'+routerARR[i].menuurl) === path) {
-                        if (('/home/'+routerARR[i].menuurl) === path) {
-                            rst = routerARR[i];
+                for (let i = 0; i < menuList.length; i++) {
+                    if ((menuList[i].subMenus && menuList[i].subMenus.length > 0) || ('/home/'+menuList[i].menuurl) === path) {
+                        if (('/home/'+menuList[i].menuurl) === path) {
+                            rst = menuList[i];
                             break;
                         }
-                        rst = navTitle(path, routerARR[i].subMenus);
+                        rst = recursiveMenu(path, menuList[i].subMenus);
                     }
                 }
                 return rst;
             }
-            let selectedMenu = navTitle(key, router);
+            let selectedMenu = recursiveMenu(key, this.user.menuTree.subMenus);
             let tabObj = {
                 tabId: selectedMenu.menuid,
                 tabName: selectedMenu.menuname,

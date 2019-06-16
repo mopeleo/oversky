@@ -8,7 +8,7 @@
                     :class="{ active: $route.name === item.routeName }">
 
                     <router-link :to="{name:item.routeName}">{{item.tabName}}</router-link>
-                    <i @click="removeTab(item.tabId)" class="el-icon-error" v-if="index !== 0"></i>
+                    <i @click="closeTab(item.tabId)" class="el-icon-error" v-if="index !== 0"></i>
                 </li>
             </transition-group>
         </div>
@@ -39,6 +39,9 @@ export default {
             this.left = e.clientX + 10;
             this.top = e.clientY;
             this.rightTabId = item.tabId;
+        },
+        closeTab(tabId) {
+            this.$store.commit('pub/DELTAB', tabId);
         },
         removeTab() {
             this.$store.commit('pub/DELTAB', this.rightTabId);
