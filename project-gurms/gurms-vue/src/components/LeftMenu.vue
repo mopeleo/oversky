@@ -1,69 +1,165 @@
 <template>
-    <el-row class="tac">
-        <el-col :span="24">
-            <el-menu router unique-opened :default-active="$route.path" class="el-menu-vertical-demo" theme="dark"
-                @open="handleOpen" @close="handleClose">
+    <div>
+        <el-aside id="asideNav">
+            <div class="logo-name">
+                <p v-if="$store.state.pub.logoShow">RM</p>
+                <p v-else>vue-gurms后台模板</p>
+            </div>
 
-            <el-menu-item :index="'/home/about'">
-                <i class="el-icon-menu"></i>
-                <span slot="title">首页</span>
-            </el-menu-item>
+            <el-menu router :default-active="$route.path" class="el-menu-vertical"
+                @select="selectMenu"
+                background-color="#03152A" text-color="rgba(255,255,255,.7)" active-text-color="#ffffff"
+                :collapse="$store.state.pub.menuCollapse" :collapse-transition="true">
 
-            <template v-for="(menu,index) in user.menuTree.subMenus">
-                <el-submenu v-if='menu.subMenus' :index="index + ''" :key="menu.menuid">
-                    <template slot="title">
-                        <i class="el-icon-location"></i>
-                        <span>{{menu.menuname}}</span>
-                    </template>
-                    <template v-for="(menu2, index2) in menu.subMenus">
-                        <el-submenu v-if='menu2.subMenus' :index="index + '-' + index2" :key="menu2.menuid">
-                            <template slot="title">{{menu2.menuname}}</template>
-                            <el-menu-item v-for="(menu3) in menu2.subMenus" :index="'/home/'+menu3.menuurl" :key="menu3.menuid">{{menu3.menuname}}</el-menu-item>
-                        </el-submenu>
-                        <el-menu-item v-else :index="'/home/'+menu2.menuurl" :key="menu2.menuid">
-                            {{menu2.menuname}}
-                        </el-menu-item>
-                    </template>
-                </el-submenu>
-                <el-menu-item v-else :index="index + ''" :key="menu.menuid">
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">{{menu.menuname}}</span>
+                <el-menu-item :index="'/home/about'">
+                    <i class="el-icon-tickets"></i>
+                    <span slot="title">首页</span>
                 </el-menu-item>
-            </template>
 
+                <template v-for="(menu,index) in user.menuTree.subMenus">
+                    <el-submenu v-if="menu.subMenus && menu.menutype === '0'" :index="index + ''" :key="menu.menuid">
+                        <template slot="title">
+                            <i :class="menu.menucss?menu.menucss:'fa fa-server'"></i>
+                            <span slot="title">{{menu.menuname}}</span>
+                        </template>
 
-            <el-submenu index="99">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>测试菜单</span>
+                        <recursive-menu :menuData="menu.subMenus"></recursive-menu>
+                    </el-submenu>
+
+                    <el-menu-item v-else :index="'/home/'+menu.menuurl" :key="menu.menuid">
+                        <i :class="menu.menucss?menu.menucss:'fa fa-file'"></i>
+                        <span slot="title">{{menu.menuname}}</span>
+                    </el-menu-item>
                 </template>
-                <el-menu-item-group>
-                    <template slot="title">分组一</template>
-                    <el-menu-item :index="'/home/sysuser/list'">选项1</el-menu-item>
-                    <el-menu-item :index="'/home/sysrole/list'">选项2</el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-
-
-
-
             </el-menu>
-        </el-col>
-    </el-row>
+        </el-aside>
+    </div>
 </template>
+
 <script>
+import RecursiveMenu from './RecursiveMenu';
+
 export default {
+    name: 'LeftMenu',
+    components: { RecursiveMenu },
     data() {
         return { user: this.$store.state.pub.user };
     },
-    methods:{
-        //点击行响应
-        handleOpen: function(){
-            console.log(1);
-        },
-        handleClose: function(){
-            console.log(2);
+    methods: {
+        selectMenu (key) {
+            // alert(key);
+            let router = this.user.menuTree.subMenus;
+            let navTitle = function (path, routerARR) {
+                let rst = null;
+                for (let i = 0; i < routerARR.length; i++) {
+                    if (routerARR[i].subMenus.length > 0 || ('/home/'+routerARR[i].menuurl) === path) {
+                        if (('/home/'+routerARR[i].menuurl) === path) {
+                            rst = routerARR[i];
+                            break;
+                        }
+                        rst = navTitle(path, routerARR[i].subMenus);
+                    }
+                }
+                return rst;
+            }
+            let selectedMenu = navTitle(key, router);
+            let tabObj = {
+                tabId: selectedMenu.menuid,
+                tabName: selectedMenu.menuname,
+                routeName: selectedMenu.menuurl
+            };
+            this.$store.commit('pub/ADDTAB', tabObj);
         }
     }
 }
 </script>
+<style lang="scss">
+$top: top;
+$bottom: bottom;
+$left: left;
+$right: right;
+
+%w100 {
+    width: 100%;
+}
+
+%h100 {
+    height: 100%;
+}
+
+%cursor {
+    cursor: pointer;
+}
+
+@mixin set-value($side, $value) {
+    @each $prop in $leftright {
+        #{$side}-#{$prop}: $value;
+    }
+}
+
+#asideNav {
+    width: auto !important;
+    display: flex;
+    flex-direction: column;
+    border-right: solid 1px #e6e6e6;
+
+    .logo-name {
+        background-color: #03152A !important;
+        @extend %w100;
+        font-weight: 300;
+        z-index: 999;
+
+        p {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 16px;
+            color: #5e6d82;
+        }
+    }
+
+    .el-menu-vertical:not(.el-menu--collapse) {
+        width: 200px;
+        @extend %h100;
+        overflow-y: scroll;
+    }
+
+    .el-menu {
+        flex: 1;
+        overflow: inherit;
+        border-right: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .fa {
+            vertical-align: middle;
+            margin-right: 5px;
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .el-menu-item {
+            background-color: #020f1d !important;
+            border-bottom: 1px solid #020f1d;
+
+            &:hover {
+                color: #ffffff !important;
+                background-color: #375573 !important;
+            }
+        }
+
+        .el-menu-item.is-active {
+            background-color: #56a9ff !important
+        }
+
+        .is-opened>.el-submenu__title>.el-icon-arrow-down {
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 18px;
+        }
+    }
+}
+</style>

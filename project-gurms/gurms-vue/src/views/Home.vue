@@ -1,137 +1,98 @@
 <template>
-    <div>
+    <div id="loyout">
         <el-container>
-            <el-header height="20px">
-                <el-row>
-                    <el-col :span="11"><div>1</div></el-col>
-                    <el-col :span="11"><div>2</div></el-col>
-                    <el-col :span="2">
-                        <el-dropdown @command="handleCommand">
-                            <span class="el-dropdown-link">
-                                {{$store.getters['pub/userinfo'].username}}<i class="el-icon-arrow-down el-icon--right"></i>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="a">修改密码</el-dropdown-item>
-                                <el-dropdown-item command="b">个人信息</el-dropdown-item>
-                                <el-dropdown-item command="c">退出</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </el-col>
-                </el-row>
-            </el-header>
+            <left-menu />
             <el-container>
-                <el-aside :width="asideWidth">
-                    <el-button type="primary" :icon="iconCollapse" @click="collapseClick"></el-button>
-                    <el-menu router :default-active="$route.path" class="el-menu-vertical-demo" theme="dark" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-
-                    <el-menu-item :index="'/home/about'" @click="clickMenu({menuid:'index',menuname:'首页',menuurl:'about'})">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">首页</span>
-                    </el-menu-item>
-
-                    <template v-for="(menu,index) in user.menuTree.subMenus">
-                        <el-submenu v-if='menu.subMenus' :index="index + ''" :key="menu.menuid">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span>{{menu.menuname}}</span>
-                            </template>
-                            <template v-for="(menu2, index2) in menu.subMenus">
-                                <el-submenu v-if='menu2.subMenus' :index="index + '-' + index2" :key="menu2.menuid">
-                                    <template slot="title">{{menu2.menuname}}</template>
-                                    <el-menu-item v-for="(menu3) in menu2.subMenus" :index="'/home/'+menu3.menuurl" :key="menu3.menuid" @click="clickMenu(menu3)">{{menu3.menuname}}</el-menu-item>
-                                </el-submenu>
-                                <el-menu-item v-else :index="'/home/'+menu2.menuurl" :key="menu2.menuid">
-                                    {{menu2.menuname}}
-                                </el-menu-item>
-                            </template>
-                        </el-submenu>
-                        <el-menu-item v-else :index="index + ''" :key="menu.menuid">
-                            <i class="el-icon-menu"></i>
-                            <span slot="title">{{menu.menuname}}</span>
-                        </el-menu-item>
-                    </template>
-
-
-                    </el-menu>
-                </el-aside>
-
-                <el-main>
-                    <menuTab></menuTab>
+                <TopHeader></TopHeader>
+                <el-main id="elmain">
                     <keep-alive :include="cacheTabs">
                         <router-view></router-view>
                     </keep-alive>
                 </el-main>
+                <el-footer>
+                    <Footer/>
+                </el-footer>
             </el-container>
         </el-container>
     </div>
 </template>
 <script>
-import menuTab from "@/components/TopTab.vue";
+import TopHeader from "@/components/TopHeader.vue";
+import LeftMenu from "@/components/LeftMenu.vue";
+import Footer from "@/components/Footer.vue";
 import { mapGetters } from 'vuex';
 
 export default {
-    components:{menuTab},
-    data() {
-        return {
-            //动态样式
-            asideWidth: '200px',
-            iconCollapse: 'el-icon-d-arrow-left',
-            isCollapse: false,
-            //数据
-            user: this.$store.state.pub.user
-        };
-    },
-    computed:{
-        ...mapGetters('pub',['cacheTabs'])
-    },
-    methods:{
-        logout:function(){
-            //根据jwt判断，服务器不保存状态，所以无需发请求到服务器
-            this.$store.commit('pub/LOGOUT');
-            this.$router.push({path: '/login'});
-            // this.$api.Gurms.logout(this.user.userid).then((res)=>{
-            //     if(res.data === true){
-            //         this.$store.commit('pub/LOGOUT');
-            //         this.$router.push({path: '/login'});
-            //     }
-            // }).catch((error)=>{
-            //     tools.errTip(error);
-            // });
-        },
-        collapseClick(){
-            if(this.isCollapse == true){
-                this.isCollapse = false;
-                this.iconCollapse = 'el-icon-d-arrow-left';
-                this.asideWidth = '200px';
-            }else{
-                this.isCollapse = true;
-                this.iconCollapse = 'el-icon-d-arrow-right';
-                this.asideWidth = 'auto';
-            }
-        },
-        handleCommand(command) {
-            if(command === 'c'){
-                this.logout();
-            }else{
-                alert(command);
-            }
-        },
-        clickMenu: function(menuObj){
-            let tabObj = {
-                tabId: menuObj.menuid,
-                tabName: menuObj.menuname,
-                routeName: menuObj.menuurl
-            };
-            this.$store.commit('pub/ADDTAB', tabObj);
-        },
-        //点击行响应
-        handleOpen: function(){
-
-        },
-        handleClose: function(){
-
-        }
+    components: { TopHeader, LeftMenu, Footer },
+    computed: {
+        ...mapGetters('pub', ['cacheTabs'])
     }
 }
 </script>
+<style>
+.main-enter,.main-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
 
+.main-enter-active {
+    transition: all 0.2s;
+}
+
+.main-leave-active {
+    position: absolute;
+    transition: all 0.3s;
+}
+</style>
+<style lang="scss">
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: #f2f2f2;
+    font-size: 14px;
+    color: #333333;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+$top: top;
+$bottom: bottom;
+$left: left;
+$right: right;
+$leftright: ($left, $right);
+
+%w100 {
+    width: 100%;
+}
+
+%h100 {
+    height: 100%;
+}
+
+%cursor {
+    cursor: pointer;
+}
+
+html,body,#loyout,.el-container,#asideNav,ul.el-menu {
+    @extend %h100;
+}
+
+@mixin set-value($side, $value) {
+    @each $prop in $leftright {
+        #{$side}-#{$prop}: $value;
+    }
+}
+
+#elmain {
+    background-color: #f0f2f5;
+}
+</style>

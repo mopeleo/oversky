@@ -10,7 +10,13 @@ export default
 
     CHANNEL_TYPE: '1',
 
-    TAB_SIZE: 10,
+    NAVTAB_SIZE: 10,
+    NAVTAB_INDEX:{
+        tabId: 'about',
+        tabName: '首页',
+        routeName: 'about'
+    },
+
     PAGE_SIZE: 5,
     PAGE_SIZES: [5, 10, 20, 50]
 }

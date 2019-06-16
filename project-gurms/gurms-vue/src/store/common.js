@@ -1,25 +1,21 @@
 import router from '@/router'
 import * as tools from '@/utils/tools'
 import PUBDEFINE from '@/utils/pubdefine'
-import { getLang, setLang } from '@/utils/lang'
+import storage from '@/utils/storage';
 
 const state = {
-    indexTab:{
-        tabId: 'index',
-        tabName: '首页',
-        routeName: 'about'
-    },
     openTabs: [],
     cacheTabs: [],
     activeTab: '',
-    language: getLang() || 'zh',
+    menuCollapse: false,
+    logoShow: false,
     user:undefined
 }
 
 const getters = {
     userinfo(state){
         if(!state.user){
-            var localUser = localStorage.getItem(PUBDEFINE.KEY_USER);
+            var localUser = storage.get(PUBDEFINE.KEY_USER);
             if(localUser){
                 state.user = JSON.parse(localUser);
             }else{
@@ -27,6 +23,19 @@ const getters = {
             }
         }
         return state.user;
+    },
+    openTabs(state){
+        if(state.openTabs.length === 0 || state.openTabs.indexOf(PUBDEFINE.NAVTAB_INDEX) === -1){
+            state.openTabs.unshift(PUBDEFINE.NAVTAB_INDEX);
+            if(state.openTabs.length === 0){
+                state.activeTab = PUBDEFINE.NAVTAB_INDEX.tabId;
+            }
+            let cache_tab_name = tools.getComponentNameFromTab(PUBDEFINE.NAVTAB_INDEX);
+            if(state.cacheTabs.indexOf(cache_tab_name) === -1){
+                state.cacheTabs.push(cache_tab_name);
+            }
+        }
+        return state.openTabs;
     },
     cacheTabs(state){
         return state.cacheTabs;
@@ -36,15 +45,10 @@ const getters = {
 const mutations = {
     LOGIN(state, payload){
         state.user = payload;
-        localStorage.setItem(PUBDEFINE.KEY_USER, JSON.stringify(payload));
-        //tab
-        state.openTabs.push(state.indexTab);
-        state.activeTab = state.indexTab.tabId;
-        let cname = tools.getComponentNameFromTab(state.indexTab);
-        state.cacheTabs.push(cname);
+        storage.set(PUBDEFINE.KEY_USER, JSON.stringify(payload));
     },
     LOGOUT(state){
-        localStorage.removeItem(PUBDEFINE.KEY_USER);
+        storage.remove(PUBDEFINE.KEY_USER);
         state.user = undefined;
         state.openTabs = [];
         state.activeTab = '';
@@ -52,13 +56,23 @@ const mutations = {
     },
     ADDROUTES(state){
         if(!state.user){
-            state.user = JSON.parse(localStorage.getItem(PUBDEFINE.KEY_USER));
+            state.user = JSON.parse(storage.get(PUBDEFINE.KEY_USER));
         }
         let routes = tools.addDynamicMenuRoutes(state.user.menuTree.subMenus);
         for (var i = 0; i < routes.length; i++) {
             router.options.routes[0].children.push(routes[i]);
         }
         router.addRoutes(router.options.routes);
+    },
+    COLLAPSE_LEFT (state) {
+        state.menuCollapse = !state.menuCollapse;
+        if (state.logoShow) {
+            setTimeout(function () {
+                state.logoShow = false;
+            }, 300);
+        } else {
+            state.logoShow = true;
+        }
     },
     ADDTAB (state, tabObj) {
         //就是打开页
@@ -74,21 +88,17 @@ const mutations = {
             }
         }
 
-        if(state.openTabs.length >= PUBDEFINE.TAB_SIZE){
-            tools.confirmTip("打开的标签过多,将删除之前所有标签,是否继续?", function(){
+        if(state.openTabs.length >= PUBDEFINE.NAVTAB_SIZE){
+            tools.confirmTip("打开的标签过多,将删除之前所有标签,是否继续?", ()=>{
                 state.openTabs = [];
-                state.openTabs.push(state.indexTab);
-                state.openTabs.push(tabObj);
-                state.activeTab = tabObj.tabId;
-
                 state.cacheTabs = [];
-                state.cacheTabs.push( tools.getComponentNameFromTab(state.indexTab) );
+                state.activeTab = tabObj.tabId;
+                state.openTabs.push(tabObj);
                 state.cacheTabs.push( tools.getComponentNameFromTab(tabObj) );
             });
         }else{
             state.activeTab = tabObj.tabId;
             state.openTabs.push(tabObj);
-
             state.cacheTabs.push( tools.getComponentNameFromTab(tabObj) );
         }
     },
@@ -103,10 +113,7 @@ const mutations = {
         state.openTabs.splice(idx, 1);
         state.cacheTabs.splice(idx, 1);
         if(state.openTabs.length == 0){
-            state.activeTab = state.indexTab.tabId;
-            state.openTabs.push(state.indexTab);
-            state.cacheTabs.push( tools.getComponentNameFromTab(state.indexTab) );
-            router.push({name: state.indexTab.routeName});
+            router.push({name: PUBDEFINE.NAVTAB_INDEX.routeName});
             return;
         }
         if(tabId === state.activeTab){
@@ -120,6 +127,28 @@ const mutations = {
             router.push({name: nextTab.routeName});
         }
     },
+    DELALLTAB (state) {
+        state.openTabs = [];
+        state.activeTab = '';
+        state.cacheTabs = [];
+    },
+    DELOTHERTAB (state, tabId) {
+        let selectTab = null;
+        for(var i = 0; i < state.openTabs.length; i++){
+            if(state.openTabs[i].tabId === tabId){
+                selectTab = state.openTabs[i];
+                break;
+            }
+        }
+
+        state.openTabs = [];
+        state.cacheTabs = [];
+
+        state.openTabs.push(selectTab);
+        state.activeTab = selectTab.tabId;
+        state.cacheTabs.push( tools.getComponentNameFromTab(selectTab) );
+        router.push({name: selectTab.routeName});
+    },
     CHANGETAB (state, tabId) {
         for(var i = 0; i < state.openTabs.length; i++){
             var m = state.openTabs[i];
@@ -129,10 +158,6 @@ const mutations = {
                 break;
             }
         }
-    },
-    SET_LANG(state, language) {
-      state.language = language;
-      setLang(language);
     }
 }
 
