@@ -59,15 +59,22 @@
                     </el-card>
                 </div>
             </div>
+
+            <right-panel>
+                <span>123</span>
+                <span>456</span>
+            </right-panel>
         </div>
     </div>
 </template>
 <script>
 import md5 from 'js-md5';
 import * as tools from '@/utils/tools';
+import RightPanel from '@/components/RightPanel';
 
 export default {
     name: 'login',
+    components:{RightPanel},
     data() {
         return {
             smdl: true,

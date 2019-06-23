@@ -67,6 +67,10 @@ public class CodeGenerator {
     	return getConfig("model_exclude").trim();
     }
     
+    public String getModelEnableGroup() {
+    	return getConfig("model_enable_group").trim();
+    }
+    
     public void addGlobalParam(Map<String, String> paramMap){
         if(paramMap == null){
             return;
@@ -213,11 +217,12 @@ public class CodeGenerator {
             params.put("table", table);            
             String[] types = getGenerateType().split(",");
             for(String type : types){
-            	//潜规则不要用！！！
-//                if(table.getGroup() != null && !table.getGroup().equals("")){
-//                    pkg = pkg + "." + table.getGroup();
-//                }
             	String pkg = getPackage(type);
+            	if("true".equals(getModelEnableGroup())) {
+                    if(table.getGroup() != null && !table.getGroup().equals("")){
+                        pkg = pkg + "." + table.getGroup();
+                    }
+            	}
             	params.put("package", pkg);
             	params.put(type + "_package", pkg);
                 outFile = getOutPath(getOutput(type), pkg, table.getCode() + getFilesuffix(type));
