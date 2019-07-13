@@ -51,9 +51,9 @@ export default {
 }
 
 body {
-    background-color: #f2f2f2;
-    font-size: 14px;
-    color: #333333;
+//    background-color: #f2f2f2;
+//    font-size: 14px;
+//    color: #333333;
 }
 
 li {
@@ -93,6 +93,6 @@ html,body,#loyout,.el-container,#asideNav,ul.el-menu {
 }
 
 #elmain {
-    background-color: #f0f2f5;
+//    background-color: #f0f2f5;
 }
 </style>

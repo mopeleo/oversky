@@ -1,89 +1,135 @@
 <template>
-    <div>
+    <div class="app-container">
+        <!-- 左侧树 -->
+        <div class="left">
+            <div class="" style="padding-bottom: 10px;">
+                <el-row :gutter="10" type="flex">
+                    <el-col :span="12">
+                        <el-input clearable style="width:200px" placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
+                    </el-col>
+                    <el-col :span="6">
+                    </el-col>
+                </el-row>
+            </div>
+            <el-tree ref="leftOrgTree" :data="treeData" node-key="orgid" :expand-on-click-node="false" :highlight-current="true"
+                @node-click="leftTreeHandleNodeClick"
+                :filter-node-method="filterNode" :props="{children: 'subOrgs',label: 'shortname'}">
 
-        <el-container style="border: 1px solid #eee">
-            <el-aside width="400px">
-                <h5>机构列表</h5>
-                <el-input clearable style="width:200px"
-                    placeholder="输入关键字进行过滤"
-                    v-model="filterText">
-                </el-input>
-                <el-button type="primary" icon="el-icon-plus" circle @click="handleAdd"></el-button>
-                <el-button type="danger" icon="el-icon-delete" circle @click="handleDelete"></el-button>
-                <el-tree ref="leftOrgTree"
-                    :data="treeData"
-                    node-key="orgid"
-                    @node-click="leftTreeHandleNodeClick"
-                    :filter-node-method="filterNode"
-                    :props="{children: 'subOrgs',label: 'shortname'}">
-                </el-tree>
-            </el-aside>
-            <el-main>
-                <h5>机构信息</h5>
-                <el-form ref="detailForm" :model="sysorg" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                    <el-form-item label="机构联号" prop="unioncode">
-                        <el-input v-model="sysorg.unioncode" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
-                    </el-form-item>
-                    <el-form-item label="机构简称" prop="shortname">
-                        <el-input v-model="sysorg.shortname"></el-input>
-                    </el-form-item>
-                    <el-form-item label="机构全称" prop="fullname">
-                        <el-input v-model="sysorg.fullname"></el-input>
-                    </el-form-item>
-                    <el-form-item label="上级机构" prop="parentorg">
-                        <el-input v-model="parentname"></el-input>
-                        <el-tree ref="parentOrgTree"
-                            :data="treeData"
-                            node-key="orgid"
-                            @node-click="parentTreeHandleNodeClick"
-                            :props="{children: 'subOrgs',label: 'shortname'}">
-                        </el-tree>
-                    </el-form-item>
-                    <el-form-item label="机构类型" prop="orgtype">
-                        <el-select v-model="sysorg.orgtype" value-key="itemcode" placeholder="请选择">
-                            <el-option v-for="item in dictCache['2012']"
-                                :key="item.itemcode"
-                                :label="item.itemcode + ' - ' + item.itemname"
-                                :value="item.itemcode">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="联系人" prop="linkman">
-                        <el-input v-model="sysorg.linkman"></el-input>
-                    </el-form-item>
-                    <el-form-item label="联系电话" prop="linktel">
-                        <el-input v-model="sysorg.linktel"></el-input>
-                    </el-form-item>
-                    <el-form-item label="传真" prop="faxno">
-                        <el-input v-model="sysorg.faxno"></el-input>
-                    </el-form-item>
-                    <el-form-item label="联系地址" prop="address">
-                        <el-input v-model="sysorg.address"></el-input>
-                    </el-form-item>
-                    <el-form-item label="邮政编码" prop="postcode">
-                        <el-input v-model="sysorg.postcode"></el-input>
-                    </el-form-item>
-                    <el-form-item label="电子邮件" prop="email">
-                        <el-input v-model="sysorg.email"></el-input>
-                    </el-form-item>
-                    <el-form-item label="备注" prop="remark">
-                        <el-input v-model="sysorg.remark"></el-input>
-                    </el-form-item>
-                </el-form>
-                <el-button type="primary" @click="handleEdit">修改</el-button>
-                <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
-                <el-button @click="onReset('detailForm')">重填</el-button>
-            </el-main>
-        </el-container>
+                <span class="custom-tree-node" slot-scope="{ node, data }">
+                    <span>{{ node.label }}</span>
+                    <span>
+                        <el-button type="text" @click="() => handleEdit(data)" icon="el-icon-edit"></el-button>
+                        <el-button type="text" @click="() => handleDelete(node, data)" icon="el-icon-delete"></el-button>
+                    </span>
+                </span>
+            </el-tree>
+        </div>
+        <div class="right">
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span class="title">机构信息</span>
+                </div>
+                <div class="text item">
+                    <el-form ref="detailForm" :model="sysorg" :rules="rules" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
+                        <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="机构联号" prop="unioncode">
+                                    <el-input v-model="sysorg.unioncode" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="机构简称" prop="shortname">
+                                    <el-input v-model="sysorg.shortname"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="机构全称" prop="fullname">
+                                    <el-input v-model="sysorg.fullname"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="上级机构" prop="parentorg">
+                                    <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
+                                        :value="sysorg.parentorg" :accordion="true" @getValue="getOrgId($event)">
+                                    </SelectTree>
+
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="机构类型" prop="orgtype">
+                                    <el-select v-model="sysorg.orgtype" value-key="itemcode" placeholder="请选择">
+                                        <el-option v-for="item in dictCache['2012']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="联系人" prop="linkman">
+                                    <el-input v-model="sysorg.linkman"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="联系电话" prop="linktel">
+                                    <el-input v-model="sysorg.linktel"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="传真" prop="faxno">
+                                    <el-input v-model="sysorg.faxno"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="联系地址" prop="address">
+                                    <el-input v-model="sysorg.address"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="邮政编码" prop="postcode">
+                                    <el-input v-model="sysorg.postcode"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="电子邮件" prop="email">
+                                    <el-input v-model="sysorg.email"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="备注" prop="remark">
+                                    <el-input v-model="sysorg.remark"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20" type="flex" justify="center">
+                            <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
+                            <el-button @click="onCancel">取消</el-button>
+                        </el-row>
+                    </el-form>
+                </div>
+            </el-card>
+        </div>
     </div>
 </template>
-
 <script>
 import * as tools from '@/utils/tools';
+import SelectTree from '@/components/SelectTree.vue';
 
-export default{
+export default {
     name: 'sysorg_list',
-    data(){
+    components:{SelectTree},
+    data() {
         return {
             //表格当前页数据
             treeData: [],
@@ -93,144 +139,148 @@ export default{
             filterText: '',
             //查询条件及分页参数
             orgReq: {
-                pageNum:1
+                pageNum: 1
             },
             //对话框表单属性
-            editType: this.$pubdefine.EDIT_TYPE_DETAIL,   // insert/update
+            editType: this.$pubdefine.EDIT_TYPE_DETAIL, // insert/update
             //临时业务数据
             sysorg: {},
-            parentname: '',
             //验证规则
             rules: {
                 shortname: [
-                    {required:true, message:'机构名称不能为空', trigger:'blur'}
+                    { required: true, message: '机构名称不能为空', trigger: 'blur' }
                 ],
                 fullname: {
-                    required:true, message:'机构全称不能为空', trigger:'blur'
+                    required: true,
+                    message: '机构全称不能为空',
+                    trigger: 'blur'
                 }
             }
         }
     },
-    mounted(){
+    mounted() {
+        tools.loadDict('2012', this.dictCache);
         this.loadOrgTree();
-        this.loadDict('2012');
     },
     watch: {
         filterText(val) {
             this.$refs.leftOrgTree.filter(val);
         }
     },
-    methods:{
-        loadOrgTree:function(){
-            this.$api.Gurms.orgTree(this.orgReq).then((res)=>{
+    methods: {
+        loadOrgTree: function() {
+            this.$api.Gurms.orgTree(this.orgReq).then((res) => {
                 this.treeData = [];
                 this.treeData.push(res);
-            }).catch((err)=>{
-                tools.errTip(err);
-            });
-        },
-        loadDict:function(keys){
-            this.$api.Gurms.getDictMap(keys).then((res)=>{
-                this.dictCache = res.results;
-            }).catch((err)=>{
+            }).catch((err) => {
                 tools.errTip(err);
             });
         },
         filterNode(value, data) {
             if (!value) return true;
-            return data.menuname.indexOf(value) !== -1;
+            return data.shortname.indexOf(value) !== -1;
         },
-        leftTreeHandleNodeClick(data){
-            this.sysorg = data;
-            this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
-            this.parentname = data.parentorg + " - ";
-            // let node = this.$refs.leftOrgTree.getNode(data.parentorg);
-            // alert(JSON.stringify(node));
-        },
-        parentTreeHandleNodeClick(data){
-            if(this.editType !== this.$pubdefine.EDIT_TYPE_DETAIL){
-                this.sysorg.parentorg = data.orgid;
-                this.parentname = data.orgid + " - " + data.shortname;
-            }
-        },
-        initOrgInfo(){
+        initOrgInfo() {
             this.sysorg = {
-                orgid:'',
-                unioncode:'',
-                shortname:'',
-                fullname:'',
-                parentorg:'',
-                orgtype:'',
-                linkman:'',
-                linktel:'',
-                faxno:'',
-                address:'',
-                postcode:'',
-                email:'',
-                remark:''
+                orgid: '',
+                unioncode: '',
+                shortname: '',
+                fullname: '',
+                parentorg: '',
+                orgtype: '',
+                linkman: '',
+                linktel: '',
+                faxno: '',
+                address: '',
+                postcode: '',
+                email: '',
+                remark: ''
             };
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
-            this.parentname = '';
+        },
+        getOrgId(value){
+            this.sysorg.parentorg = value;
+        },
+        leftTreeHandleNodeClick(data){
+            if(data.orgid !== this.sysorg.orgid){
+                this.sysorg = data;
+                this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
+            }
         },
         handleAdd() {
             this.initOrgInfo();
             this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
         },
-        handleDetail(index, row) {
-            this.$api.Gurms.orgDetail(row.orgid).then(res =>{
-                this.sysorg = res;
-                this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
-            }).catch((err)=>{
-                tools.errTip(err);
-            });
-        },
-        handleEdit() {
+        handleEdit(data) {
+            this.sysorg = data;
             this.editType = this.$pubdefine.EDIT_TYPE_UPDATE;
         },
-        handleDelete() {
-            let confirm_msg = "即将删除机构["+ this.sysorg.shortname + "],是否继续?";
-            let that = this;
-            tools.confirmTip(confirm_msg, function(){
-                that.$api.Gurms.orgDelete(that.sysorg).then((res)=>{
+        handleDelete(node, data) {
+            let confirm_msg = "即将删除机构[" + data.shortname + "],是否继续?";
+            tools.confirmTip(confirm_msg, () => {
+                this.$api.Gurms.orgDelete(data).then((res) => {
                     tools.succTip(res.returnmsg);
-                    if(res.success === true){
-                        that.loadOrgTree();
-                        that.initOrgInfo();
+                    if (res.success === true) {
+                        this.loadOrgTree();
+                        this.initOrgInfo();
                     }
-                }).catch((err)=>{
+                }).catch((err) => {
                     tools.errTip(err);
                 });
             });
         },
-        onSubmit(formName){
-            this.$refs[formName].validate((valid)=>{
-                if(valid){
+        onSubmit(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
                     var callAPI = null;
-                    if(this.editType === this.$pubdefine.EDIT_TYPE_UPDATE){
+                    if (this.editType === this.$pubdefine.EDIT_TYPE_UPDATE) {
                         callAPI = this.$api.Gurms.orgUpdate(this.sysorg);
-                    }else if(this.editType === this.$pubdefine.EDIT_TYPE_INSERT){
+                    } else if (this.editType === this.$pubdefine.EDIT_TYPE_INSERT) {
                         callAPI = this.$api.Gurms.orgAdd(this.sysorg);
                     }
                     let that = this;
-                    callAPI.then((res)=>{
+                    callAPI.then((res) => {
                         tools.succTip(res.returnmsg);
-                        if(res.success === true){
+                        if (res.success === true) {
                             that.loadOrgTree();
                             that.initOrgInfo();
                         }
-                    }).catch((err)=>{
+                    }).catch((err) => {
                         tools.errTip(err);
                     });
-                }else{
+                } else {
                     return false;
                 }
             })
         },
-        onReset(formName){
-            if(this.$refs[formName]){
-                this.$refs[formName].resetFields();
-            }
+        onCancel() {
+            this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
         }
     }
 }
 </script>
+<style scoped lang="scss">
+.custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-right: 8px;
+}
+
+.title {
+    font-size: 16px;
+    color: red;
+}
+
+.left {
+    width: 400px;
+}
+
+.right {
+    margin-left: 410px;
+    height: 100%;
+    overflow: auto;
+}
+</style>

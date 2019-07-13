@@ -1,18 +1,18 @@
 <template>
     <div>
         <el-form ref="listForm" :model="userReq">
-            <el-row>
-                <el-col :span="6">
-                    <el-form-item label="姓名">
+            <el-row :gutter="10" type="flex">
+                <el-col :span="5">
+                    <el-form-item label="用户姓名">
                         <el-input v-model="userReq.username" placeholder="姓名" style="width:200px"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5">
                     <el-form-item label="手机号码">
                         <el-input v-model="userReq.mobileno" placeholder="手机号码" style="width:200px"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="5">
                     <el-form-item label="用户状态">
                         <el-select v-model="userReq.status" value-key="itemcode" clearable placeholder="请选择">
                             <el-option v-for="item in dictCache['2001']"
@@ -23,10 +23,10 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="4">
                     <el-form-item>
-                        <el-button type="primary" @click="loadData">查询</el-button>
-                        <el-button type="primary" @click="handleAdd">新增</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="loadData">查询</el-button>
+                        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -36,16 +36,20 @@
                 <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column prop="username" label="姓名" sortable></el-table-column>
                 <el-table-column prop="loginid" label="登录名" sortable></el-table-column>
-                <el-table-column prop="mobileno" label="手机号码" sortable></el-table-column>
+                <el-table-column prop="mobileno" width="120" label="手机号码"></el-table-column>
                 <el-table-column prop="email" label="电子邮件" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="orgid" label="所属机构" sortable></el-table-column>
-                <el-table-column prop="status" label="用户状态" :formatter="formatUserStatus"></el-table-column>
-                <el-table-column prop="logindate" label="登录日期" sortable></el-table-column>
-                <el-table-column prop="logintime" label="登录时间" sortable></el-table-column>
-                <el-table-column prop="passwdvaliddate" label="密码失效日期"></el-table-column>
-                <el-table-column fixed="right" width="200" label="操作">
+                <el-table-column prop="status" width="100" label="用户状态" :formatter="formatUserStatus"></el-table-column>
+                <el-table-column prop="logindate" width="120" label="登录日期" sortable></el-table-column>
+                <el-table-column prop="logintime" width="100" label="登录时间"></el-table-column>
+                <el-table-column prop="passwdvaliddate" width="120" label="密码失效日期"></el-table-column>
+                <el-table-column fixed="right" width="180" label="操作">
                     <template slot-scope="scope">
+                    <el-row :gutter="5">
+                    <el-col :span="10">
                         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    </el-col>
+                    <el-col :span="14">
                         <el-dropdown split-button size="mini" type="primary" @command="handleCommand"
                             @click="handleEdit(scope.$index, scope.row)" trigger="click">编辑
                             <el-dropdown-menu slot="dropdown">
@@ -56,6 +60,8 @@
                                 <el-dropdown-item :command="composeValue('e', scope.row)" v-if="scope.row.status=='3'">解冻账户</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
+                    </el-col>
+                    </el-row>
                     </template>
                 </el-table-column>
             </el-table>
@@ -72,41 +78,67 @@
         </el-form>
 
         <el-dialog title="用户信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
-            <el-form ref="detailForm" :model="sysuser" :rules="rules" label-width="80px"
-                :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                <el-form-item label="用户姓名" prop="username">
-                    <el-input v-model="sysuser.username" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
-                </el-form-item>
-                <el-form-item label="登录名" prop="loginid">
-                    <el-input v-model="sysuser.loginid" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号码" prop="mobileno">
-                    <el-input v-model="sysuser.mobileno"></el-input>
-                </el-form-item>
-                <el-form-item label="电子邮件" prop="email">
-                    <el-input v-model="sysuser.email"></el-input>
-                </el-form-item>
-                <el-form-item label="所属机构" prop="orgid">
-                    <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
-                        :value="sysuser.orgid" :accordion="true" @getValue="getOrgId($event)">
-                    </SelectTree>
-                </el-form-item>
-                <el-form-item label="证件类型" prop="idtype">
-                    <el-select v-model="sysuser.idtype" value-key="itemcode" clearable placeholder="请选择">
-                        <el-option v-for="item in dictCache['2004']"
-                            :key="item.itemcode"
-                            :label="item.itemcode + ' - ' + item.itemname"
-                            :value="item.itemcode">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="证件号码" prop="idcode">
-                    <el-input v-model="sysuser.idcode"></el-input>
-                </el-form-item>
-
-                <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
-                <el-button @click="onReset('detailForm')">重填</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false;">关闭</el-button>
+            <el-form ref="detailForm" :model="sysuser" :rules="rules" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                        <el-form-item label="用户姓名" prop="username">
+                            <el-input v-model="sysuser.username" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-form-item label="登录名" prop="loginid">
+                            <el-input v-model="sysuser.loginid" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                        <el-form-item label="手机号码" prop="mobileno">
+                            <el-input v-model="sysuser.mobileno"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-form-item label="电子邮件" prop="email">
+                            <el-input v-model="sysuser.email"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                        <el-form-item label="所属机构" prop="orgid">
+                            <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
+                                :value="sysuser.orgid" :accordion="true" @getValue="getOrgId($event)">
+                            </SelectTree>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-form-item label="证件姓名">
+                            <el-input ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                        <el-form-item label="证件类型" prop="idtype">
+                            <el-select v-model="sysuser.idtype" value-key="itemcode" clearable placeholder="请选择">
+                                <el-option v-for="item in dictCache['2004']"
+                                    :key="item.itemcode"
+                                    :label="item.itemcode + ' - ' + item.itemname"
+                                    :value="item.itemcode">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-form-item label="证件号码" prop="idcode">
+                            <el-input v-model="sysuser.idcode"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row type="flex" justify="end">
+                    <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
+                    <el-button type="primary" @click="dialogFormVisible = false;">关闭</el-button>
+                </el-row>
             </el-form>
 
         </el-dialog>
@@ -124,16 +156,46 @@
 
         </el-dialog>
 
+        <right-panel :show="userDetailDrawer" clickNotClose="true">
+            <el-form label-width="80px">
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                <el-form-item label="用户姓名" prop="username">
+                    <el-input></el-input>
+                </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                <el-form-item label="用户姓名" prop="username">
+                    <el-input></el-input>
+                </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                <el-form-item label="用户姓名" prop="username">
+                    <el-input></el-input>
+                </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                <el-form-item label="用户姓名" prop="username">
+                    <el-input></el-input>
+                </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+        </right-panel>
+
     </div>
 </template>
 
 <script>
 import * as tools from '@/utils/tools';
 import SelectTree from '@/components/SelectTree.vue';
+import RightPanel from '@/components/RightPanel';
 
 export default{
     name: 'sysuser_list',
-    components:{SelectTree},
+    components:{RightPanel, SelectTree},
     data(){
         return {
             //表格当前页数据
@@ -147,6 +209,7 @@ export default{
                 pageNum:1
             },
             //对话框表单属性
+            userDetailDrawer: false,
             dialogFormVisible: false,
             dialogGrantRole: false,
             editType: this.$pubdefine.EDIT_TYPE_INSERT,   // insert/update

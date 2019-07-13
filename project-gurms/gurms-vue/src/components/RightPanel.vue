@@ -24,16 +24,14 @@ export default {
             default: false,
             type: Boolean
         },
+        show: {
+            default: false,
+            type: Boolean
+        },
         buttonTop: {
             default: 250,
             type: Number
         }
-    },
-
-    data() {
-        return {
-            show: false
-        };
     },
 
     watch: {
@@ -95,7 +93,7 @@ export default {
 }
 .rightPanel {
     width: 100%;
-    max-width: 260px;
+    max-width: 720px;
     height: 100vh;
     position: fixed;
     top: 0;
