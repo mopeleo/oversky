@@ -8,22 +8,24 @@
                         <el-input clearable style="width:200px" placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
                     </el-col>
                     <el-col :span="6">
-                        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
+                        <el-button type="primary" icon="el-icon-plus" v-permission="$permission.system.org.add" @click="handleAdd">新增</el-button>
                     </el-col>
                     <el-col :span="6">
                     </el-col>
                 </el-row>
             </div>
-            <el-tree ref="leftOrgTree" :data="treeData" node-key="orgid" :expand-on-click-node="false" :highlight-current="true"
-                @node-click="leftTreeHandleNodeClick"
+            <el-tree ref="leftOrgTree" :data="treeData" node-key="orgid" :expand-on-click-node="false"
+                @node-click="leftTreeHandleNodeClick" :highlight-current="true"
                 :filter-node-method="filterNode" :props="{children: 'subOrgs',label: 'shortname'}">
 
                 <span class="custom-tree-node" slot-scope="{ node, data }">
                     <span>{{ node.label }}</span>
-                    <span>
-                        <el-button type="text" @click="() => handleEdit(data)" icon="el-icon-edit"></el-button>
-                        <el-button type="text" @click="() => handleDelete(node, data)" icon="el-icon-delete"></el-button>
-                    </span>
+                    <div v-if="data.parentorg">
+                        <span>
+                            <el-button type="text" v-permission="$permission.system.org.edit" @click="() => handleEdit(data)" icon="el-icon-edit"></el-button>
+                            <el-button type="text" v-permission="$permission.system.org.delete" @click="() => handleDelete(node, data)" icon="el-icon-delete"></el-button>
+                        </span>
+                    </div>
                 </span>
             </el-tree>
         </div>
@@ -36,20 +38,8 @@
                     <el-form ref="detailForm" :model="sysorg" :rules="rules" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
                         <el-row :gutter="20">
                             <el-col :span="10">
-                                <el-form-item label="机构联号" prop="unioncode">
-                                    <el-input v-model="sysorg.unioncode" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="10">
-                                <el-form-item label="机构简称" prop="shortname">
-                                    <el-input v-model="sysorg.shortname"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <el-col :span="10">
-                                <el-form-item label="机构全称" prop="fullname">
-                                    <el-input v-model="sysorg.fullname"></el-input>
+                                <el-form-item label="机构编号" prop="orgid">
+                                    {{sysorg.orgid}}
                                 </el-form-item>
                             </el-col>
                             <el-col :span="10">
@@ -58,6 +48,18 @@
                                         :value="sysorg.parentorg" :accordion="true" @getValue="getOrgId($event)">
                                     </SelectTree>
 
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="机构简称" prop="shortname">
+                                    <el-input v-model="sysorg.shortname"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="机构全称" prop="fullname">
+                                    <el-input v-model="sysorg.fullname"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -107,12 +109,18 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="10">
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="15">
                                 <el-form-item label="备注" prop="remark">
-                                    <el-input v-model="sysorg.remark"></el-input>
+                                    <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}"
+                                        placeholder="请输入内容" v-model="sysorg.remark">
+                                    </el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="20" type="flex" justify="center">
+                        <el-row type="flex" justify="center">
                             <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
                             <el-button @click="onCancel">取消</el-button>
                         </el-row>

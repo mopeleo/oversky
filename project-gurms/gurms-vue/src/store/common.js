@@ -9,6 +9,7 @@ const state = {
     activeTab: '',
     menuCollapse: false,
     logoShow: false,
+    permissions:null,
     user:undefined
 }
 
@@ -23,6 +24,13 @@ const getters = {
             }
         }
         return state.user;
+    },
+    userPermission(state){
+        if(!state.permissions){
+            var localPermission = tools.addDynamicPermission(state.user.menuTree.subMenus);
+            state.permissions = localPermission;
+        }
+        return state.permissions;
     },
     openTabs(state){
         if(state.openTabs.length === 0 || state.openTabs.indexOf(PUBDEFINE.NAVTAB_INDEX) === -1){
@@ -50,6 +58,7 @@ const mutations = {
     LOGOUT(state){
         storage.remove(PUBDEFINE.KEY_USER);
         state.user = undefined;
+        state.permissions = null;
         state.openTabs = [];
         state.activeTab = '';
         state.cacheTabs = [];

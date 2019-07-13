@@ -36,15 +36,15 @@ public final class DictConsts {
 	public static final String DICT2011_ACCESSTYPE_AUTH = "2";	 		//授权访问
 	
 	
-	public enum SexEnum{
-		MALE(1), FEMALE(0);
-		private int sex;
-		SexEnum(int sex){
-			this.sex=sex;
+	public enum EnumSex{
+		MALE("1"), FEMALE("0");
+		private String val;
+		EnumSex(String sex){
+			this.val=sex;
 		}
 		
-		public int value() {
-			return this.sex;
+		public String value() {
+			return this.val;
 		}
 	}
 }

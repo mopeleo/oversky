@@ -23,9 +23,8 @@ import permissions from './utils/permission';
 Vue.prototype.$permission = permissions;
 Vue.directive('permission', {
     inserted: function(el, binding) {
-        let menus = store.getters['pub/userinfo'].menuTree.subMenus;
-        let menu = menus.find((menu) => menu.menuid === binding.value);
-        if (!menu) {
+        let permissions = store.getters['pub/userPermission'];
+        if (permissions.indexOf(binding.value) === -1) {
             el.parentNode.removeChild(el);
         }
     }

@@ -93,6 +93,25 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
     return routes;
 }
 
+/**
+ * 添加动态(菜单)页面权限
+ * @param {*} menuList 菜单列表
+ * @param {*} permissions 递归创建的动态(菜单)页面权限
+ */
+export function addDynamicPermission(menuList = [], permissions = []) {
+    for (var i = 0; i < menuList.length; i++) {
+        var menu = menuList[i];
+        if (menu.menutype == '2') {
+            permissions.push(menu.menuid);
+        }else{
+            if(menu.subMenus && menu.subMenus.length > 0){
+                addDynamicPermission(menu.subMenus, permissions);
+            }
+        }
+    }
+    return permissions;
+}
+
 //根据菜单获取组件页面的name
 //routeName : sysuser/list ==> sysuser_list
 export function getComponentNameFromTab(tab) {

@@ -26,7 +26,7 @@
                 <el-col :span="4">
                     <el-form-item>
                         <el-button type="primary" icon="el-icon-search" @click="loadData">查询</el-button>
-                        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
+                        <el-button type="primary" v-permission="$permission.system.user.add" icon="el-icon-plus" @click="handleAdd">新增</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -47,17 +47,18 @@
                     <template slot-scope="scope">
                     <el-row :gutter="5">
                     <el-col :span="10">
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="danger" size="mini"
+                            v-permission="$permission.system.user.delete" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </el-col>
                     <el-col :span="14">
-                        <el-dropdown split-button size="mini" type="primary" @command="handleCommand"
-                            @click="handleEdit(scope.$index, scope.row)" trigger="click">编辑
+                        <el-dropdown split-button type="primary" size="mini" @command="handleCommand"
+                            @click="handleDetail(scope.$index, scope.row)" trigger="click">详情
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item :command="composeValue('a', scope.row)">详细信息</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue('b', scope.row)">分配角色</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue('c', scope.row)">重置密码</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue('d', scope.row)" v-if="scope.row.status=='1'">冻结账户</el-dropdown-item>
-                                <el-dropdown-item :command="composeValue('e', scope.row)" v-if="scope.row.status=='3'">解冻账户</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('a', scope.row)">修改信息</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('b', scope.row)">分配角色</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('c', scope.row)">重置密码</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('d', scope.row)" v-if="scope.row.status=='1'">冻结账户</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('e', scope.row)" v-if="scope.row.status=='3'">解冻账户</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </el-col>
@@ -143,47 +144,24 @@
 
         </el-dialog>
 
-        <el-dialog title="分配角色" v-if="dialogGrantRole" :visible.sync="dialogGrantRole" :close-on-click-modal="false">
-            <el-transfer filterable :filter-method="filterMethod"
-                filter-placeholder="请输入角色"
-                :titles="['待分配角色', '已选择角色']"
-                v-model="selectRoles"
-                :props="{key: 'roleid',label: 'rolename'}"
-                :data="allRoles">
-            </el-transfer>
-            <el-button type="primary" @click="handGrantRoles">确定</el-button>
-            <el-button type="primary" @click="dialogGrantRole = false;selectRoles=[];">取消</el-button>
-
+        <el-dialog title="分配角色" v-if="dialogGrantRole" :visible.sync="dialogGrantRole" :close-on-click-modal="false" width="35%">
+            <el-row type="flex" justify="center" class="row-role">
+                待分配用户姓名：{{this.sysuser.username}}({{this.sysuser.loginid}})
+            </el-row>
+            <el-row type="flex" justify="center" class="row-role">
+                <el-transfer filterable :filter-method="filterMethod"
+                    filter-placeholder="请输入角色"
+                    :titles="['待分配角色', '已选择角色']"
+                    v-model="selectRoles"
+                    :props="{key: 'roleid',label: 'rolename'}"
+                    :data="allRoles">
+                </el-transfer>
+            </el-row>
+            <el-row type="flex" justify="center" class="row-role">
+                <el-button type="primary" @click="handGrantRoles">确定</el-button>
+                <el-button @click="dialogGrantRole = false;selectRoles=[];">取消</el-button>
+            </el-row>
         </el-dialog>
-
-        <right-panel :show="userDetailDrawer" clickNotClose="true">
-            <el-form label-width="80px">
-                <el-row :gutter="20">
-                    <el-col :span="10">
-                <el-form-item label="用户姓名" prop="username">
-                    <el-input></el-input>
-                </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                <el-form-item label="用户姓名" prop="username">
-                    <el-input></el-input>
-                </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="10">
-                <el-form-item label="用户姓名" prop="username">
-                    <el-input></el-input>
-                </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                <el-form-item label="用户姓名" prop="username">
-                    <el-input></el-input>
-                </el-form-item>
-                    </el-col>
-                </el-row>
-            </el-form>
-        </right-panel>
 
     </div>
 </template>
@@ -191,11 +169,10 @@
 <script>
 import * as tools from '@/utils/tools';
 import SelectTree from '@/components/SelectTree.vue';
-import RightPanel from '@/components/RightPanel';
 
 export default{
     name: 'sysuser_list',
-    components:{RightPanel, SelectTree},
+    components:{SelectTree},
     data(){
         return {
             //表格当前页数据
@@ -312,7 +289,7 @@ export default{
         },
         handleCommand(command) {
             if(command.index === 'a'){
-                this.handleDetail(command.index, command.row);
+                this.handleEdit(command.index, command.row);
             }else if(command.index === 'b'){
                 this.grantRoles(command.row);
             }else if(command.index === 'c'){
@@ -454,3 +431,11 @@ export default{
     }
 }
 </script>
+<style>
+.row-role {
+    margin-bottom: 20px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+</style>

@@ -1,13 +1,13 @@
 <template>
     <div>
-        <el-form ref="listForm" :model="roleReq">
-            <el-row>
-                <el-col :span="8">
+        <el-form ref="listForm" :model="roleReq" label-width="70px">
+            <el-row :gutter="10" type="flex">
+                <el-col :span="5">
                     <el-form-item label="角色名称">
-                        <el-input v-model="roleReq.rolename" placeholder="角色名称" style="width:300px"></el-input>
+                        <el-input v-model="roleReq.rolename" placeholder="角色名称"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="5">
                     <el-form-item label="角色状态">
                         <el-select v-model="roleReq.status" value-key="itemcode" clearable placeholder="请选择">
                             <el-option v-for="item in dictCache['1003']"
@@ -18,10 +18,10 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="4">
                     <el-form-item>
-                        <el-button type="primary" @click="loadData">查询</el-button>
-                        <el-button type="primary" @click="handleAdd">新增</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="loadData">查询</el-button>
+                        <el-button type="primary" v-permission="$permission.system.role.add" icon="el-icon-plus" @click="handleAdd">新增</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -41,8 +41,8 @@
                 <el-table-column fixed="right" width="240" label="操作">
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">查看</el-button>
-                        <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button size="mini" type="primary" v-permission="$permission.system.role.edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" v-permission="$permission.system.role.delete" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -59,46 +59,59 @@
         </el-form>
 
         <el-dialog title="角色信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
-            <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="80px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                <el-form-item label="角色名称" prop="rolename">
-                    <el-input v-model="sysrole.rolename" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
-                </el-form-item>
-                <el-form-item label="角色状态" prop="status">
-                    <el-select v-model="sysrole.status" value-key="itemcode" placeholder="请选择">
-                        <el-option v-for="item in dictCache['1003']"
-                            :key="item.itemcode"
-                            :label="item.itemcode + ' - ' + item.itemname"
-                            :value="item.itemcode">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="角色类型" prop="roletype">
-                    <el-select v-model="sysrole.roletype" value-key="itemcode" placeholder="请选择">
-                        <el-option v-for="item in dictCache['2006']"
-                            :key="item.itemcode"
-                            :label="item.itemcode + ' - ' + item.itemname"
-                            :value="item.itemcode">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="有效期" prop="startdate">
-                    <el-date-picker type="daterange" range-separator="至"
-                        start-placeholder="开始日期" end-placeholder="结束日期"
-                        v-model="dateArray" value-format="yyyyMMdd" >
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="权限列表">
-                    <el-tree show-checkbox ref="menus"
-                        :data="this.$store.state.pub.user.menuTree.subMenus"
-                        node-key="menuid"
-                        :props="{children: 'subMenus',label: 'menuname'}">
-                    </el-tree>
-                </el-form-item>
-                <el-form-item>
+            <el-form ref="detailForm" :model="sysrole" :rules="rules" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                        <el-form-item label="角色名称" prop="rolename">
+                            <el-input v-model="sysrole.rolename" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-form-item label="角色状态" prop="status">
+                            <el-select v-model="sysrole.status" value-key="itemcode" placeholder="请选择">
+                                <el-option v-for="item in dictCache['1003']"
+                                    :key="item.itemcode"
+                                    :label="item.itemcode + ' - ' + item.itemname"
+                                    :value="item.itemcode">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                        <el-form-item label="角色类型" prop="roletype">
+                            <el-select v-model="sysrole.roletype" value-key="itemcode" placeholder="请选择">
+                                <el-option v-for="item in dictCache['2006']"
+                                    :key="item.itemcode"
+                                    :label="item.itemcode + ' - ' + item.itemname"
+                                    :value="item.itemcode">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-form-item label="有效期" prop="startdate">
+                            <el-date-picker type="daterange" range-separator="至"
+                                start-placeholder="开始日期" end-placeholder="结束日期"
+                                v-model="dateArray" value-format="yyyyMMdd" >
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                        <el-form-item label="权限列表">
+                            <el-tree show-checkbox ref="menus"
+                                :data="this.$store.state.pub.user.menuTree.subMenus"
+                                node-key="menuid"
+                                :props="{children: 'subMenus',label: 'menuname'}">
+                            </el-tree>
+                        </el-form-item>
+                </el-row>
+                <el-row type="flex" justify="end">
                     <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
-                    <el-button @click="onReset('detailForm')">重填</el-button>
-                    <el-button type="primary" @click="dialogFormVisible = false;">关闭</el-button>
-                </el-form-item>
+                    <el-button @click="dialogFormVisible = false;">关闭</el-button>
+                </el-row>
             </el-form>
         </el-dialog>
 

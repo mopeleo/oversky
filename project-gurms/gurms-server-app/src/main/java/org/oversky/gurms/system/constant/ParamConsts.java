@@ -12,11 +12,11 @@ public final class ParamConsts {
 	//系统初始化默认值
 	public final static String DEFAULT_UNIONCODE = "0000";   			//默认的unioncode
 	public final static Long DEFAULT_ROOTORG = 1L;						//默认的系统虚拟顶级机构
-	public final static Long DEFAULT_NULLORG = -1L;						//默认的系统虚拟不存在机构
+//	public final static Long DEFAULT_NULLORG = -1L;						//默认的系统虚拟不存在机构
 	
 	
 	//sys_param表定义的参数
-	public final static Integer PARAM1000_SYS_MODE = 1000;				//模式 1-单用户，2-多法人
+//	public final static Integer PARAM1000_SYS_MODE = 1000;				//模式 1-单用户，2-多法人
 	public final static Integer PARAM1001_SYS_ROOTUSER = 1001;			//超级用户
 	public final static Integer PARAM1002_PASSWD_MIN_LENGTH = 1002;		//密码最小长度
 	public final static Integer PARAM1003_PASSWD_ERROR_TIMES = 1003;	//密码错误次数
