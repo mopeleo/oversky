@@ -43,11 +43,8 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="10">
-                                <el-form-item label="上级机构" prop="parentorg">
-                                    <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
-                                        :value="sysorg.parentorg" :accordion="true" @getValue="getOrgId($event)">
-                                    </SelectTree>
-
+                                <el-form-item label="多法人编号" prop="unioncode" v-if="this.paramSysMode == '2' && sysorg.parentorg == 1">
+                                    <el-input v-model="sysorg.unioncode"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -58,23 +55,26 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="10">
-                                <el-form-item label="机构全称" prop="fullname">
-                                    <el-input v-model="sysorg.fullname"></el-input>
+                                <el-form-item label="上级机构" prop="parentorg">
+                                    <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
+                                        :value="sysorg.parentorg" :accordion="true" :clearable="false" @getValue="getOrgId($event)">
+                                    </SelectTree>
+
                                 </el-form-item>
                             </el-col>
                         </el-row>
                         <el-row :gutter="20">
+                            <el-col :span="10">
+                                <el-form-item label="机构全称" prop="fullname">
+                                    <el-input v-model="sysorg.fullname"></el-input>
+                                </el-form-item>
+                            </el-col>
                             <el-col :span="10">
                                 <el-form-item label="机构类型" prop="orgtype">
                                     <el-select v-model="sysorg.orgtype" value-key="itemcode" placeholder="请选择">
                                         <el-option v-for="item in dictCache['2012']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
                                         </el-option>
                                     </el-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="10">
-                                <el-form-item label="联系人" prop="linkman">
-                                    <el-input v-model="sysorg.linkman"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -92,6 +92,18 @@
                         </el-row>
                         <el-row :gutter="20">
                             <el-col :span="10">
+                                <el-form-item label="联系人" prop="linkman">
+                                    <el-input v-model="sysorg.linkman"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="电子邮件" prop="email">
+                                    <el-input v-model="sysorg.email"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="10">
                                 <el-form-item label="联系地址" prop="address">
                                     <el-input v-model="sysorg.address"></el-input>
                                 </el-form-item>
@@ -100,15 +112,6 @@
                                 <el-form-item label="邮政编码" prop="postcode">
                                     <el-input v-model="sysorg.postcode"></el-input>
                                 </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row :gutter="20">
-                            <el-col :span="10">
-                                <el-form-item label="电子邮件" prop="email">
-                                    <el-input v-model="sysorg.email"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="10">
                             </el-col>
                         </el-row>
                         <el-row :gutter="20">
@@ -143,6 +146,7 @@ export default {
             treeData: [],
             //当前页面字典
             dictCache: {},
+            paramSysMode: null,
             //过滤条件:
             filterText: '',
             //查询条件及分页参数
@@ -169,6 +173,7 @@ export default {
     mounted() {
         tools.loadDict('2012', this.dictCache);
         this.loadOrgTree();
+        this.getParam('1000');
     },
     watch: {
         filterText(val) {
@@ -180,6 +185,14 @@ export default {
             this.$api.Gurms.orgTree(this.orgReq).then((res) => {
                 this.treeData = [];
                 this.treeData.push(res);
+            }).catch((err) => {
+                tools.errTip(err);
+            });
+        },
+        getParam:function(keys){
+            var unioncode = tools.getUnioncode();
+            this.$api.Gurms.getParam(keys, unioncode).then((res) => {
+                this.paramSysMode = res.paramvalue;
             }).catch((err) => {
                 tools.errTip(err);
             });
@@ -207,7 +220,8 @@ export default {
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
         },
         getOrgId(value){
-            this.sysorg.parentorg = value;
+            this.sysorg.parentorg = value.parentorg;
+            this.sysorg.unioncode = value.unioncode;
         },
         leftTreeHandleNodeClick(data){
             if(data.orgid !== this.sysorg.orgid){
@@ -244,6 +258,13 @@ export default {
                     if (this.editType === this.$pubdefine.EDIT_TYPE_UPDATE) {
                         callAPI = this.$api.Gurms.orgUpdate(this.sysorg);
                     } else if (this.editType === this.$pubdefine.EDIT_TYPE_INSERT) {
+                        if(!this.sysorg.unioncode){
+                            if(this.paramSysMode == '1'){
+                                this.sysorg.unioncode = tools.getUnioncode();
+                            }else{
+                                this.sysorg.unioncode;
+                            }
+                        }
                         callAPI = this.$api.Gurms.orgAdd(this.sysorg);
                     }
                     let that = this;

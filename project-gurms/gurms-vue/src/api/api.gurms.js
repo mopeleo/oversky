@@ -32,7 +32,19 @@ export default {
     },
     // 查询字典，单个字典
     getDictList(dictcode, unioncode){
-        return axios.get(`${baseURL}/sysdict/getlist/${unioncode}/${dictcode}`);
+        return axios.get(`${baseURL}/sysdict/getlist/${dictcode}/${unioncode}`);
+    },
+
+    //========================================================
+    // 查询参数，多个参数
+    getParamList(paramids, unioncode){
+        return axios.get(`${baseURL}/sysparam/getlist`, {
+            params: {paramids: paramids, unioncode: unioncode}
+        });
+    },
+    // 查询参数，单个参数
+    getParam(paramid, unioncode){
+        return axios.get(`${baseURL}/sysparam/getparam/${paramid}/${unioncode}`);
     },
 
 

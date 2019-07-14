@@ -78,7 +78,8 @@ export default {
         handleNodeClick(node) {
             this.valueId = node[this.props.value];
             this.valueTitle = this.valueId + ' - ' + node[this.props.label];
-            this.$emit('getValue', this.valueId);
+            // this.$emit('getValue', this.valueId);
+            this.$emit('getValue', node);
             this.defaultExpandedKey = [];
         },
         // 清除选中

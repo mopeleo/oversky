@@ -9,6 +9,7 @@ import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.gurms.web.config.WebException;
+import org.oversky.gurms.web.util.WebContext;
 import org.oversky.gurms.web.util.WebUtils;
 import org.oversky.util.json.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,8 @@ public class JwtAuthTokenInterceptor implements HandlerInterceptor{
 			if(menu.getAccesstype() == DictConsts.DICT2011_ACCESSTYPE_AUTH) {
 				String subject = JwtTokenUtil.getSubject(authToken);
 				UserLoginRes userAuth = JacksonUtils.json2Bean(subject, UserLoginRes.class);
-				
+				//绑定用户session
+				WebContext.setUserSession(userAuth);
 				//用户权限
 				SysMenuRes menus = userAuth.getMenuTree();
 				if(!hasPrivilege(menu.getMenuid(), menus)) {

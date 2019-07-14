@@ -256,7 +256,7 @@ export default{
             });
         },
         getOrgId(value){
-            this.sysuser.orgid = value;
+            this.sysuser.orgid = value.orgid;
         },
         parentTreeHandleNodeClick(data){
             if(this.editType !== this.$pubdefine.EDIT_TYPE_DETAIL){

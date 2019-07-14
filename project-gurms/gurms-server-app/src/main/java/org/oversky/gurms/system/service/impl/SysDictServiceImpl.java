@@ -32,7 +32,7 @@ public class SysDictServiceImpl implements SysDictService {
 	@Override
 	@Cacheable(key = "'getDictList_' + #p0 + '_' + #p1")
 	public BaseResListDto<SysDictValueRes> getDictList(String unioncode, Integer dictcode) {
-		log.info("查询单个字典 : dictcode = {}" + dictcode);
+		log.info("查询单个字典 : dictcode = {}", dictcode);
 		SysDictValue where = new SysDictValue();
 		where.setUnioncode(unioncode);
 		where.setDictcode(dictcode);
@@ -48,7 +48,7 @@ public class SysDictServiceImpl implements SysDictService {
 	@Override
 	@Cacheable(key = "'getDictMap_' + #p0 + '_' + #p1")
 	public BaseResMapDto<String, List<SysDictValueRes>> getDictMap(String unioncode, String dictcodeList) {
-		log.info("查询多个字典 : dictcode = {}" + dictcodeList);
+		log.info("查询多个字典 : dictcode = {}", dictcodeList);
 		String[] codeList = dictcodeList.split(",");
 		BaseResMapDto<String, List<SysDictValueRes>> dictMap = new BaseResMapDto<>();
 		for(String dictcode : codeList) {
