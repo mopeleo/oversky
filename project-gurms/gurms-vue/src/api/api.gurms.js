@@ -144,4 +144,20 @@ export default {
     orgDelete (params) {
         return axios.post(`${baseURL}/sysorg/delete`, params);
     },
+
+
+    //========================================================
+    // 菜单列表
+    menuTree (params) {
+        return axios.post(`${baseURL}/sysmenu/tree`, params);
+    },
+    // 菜单详情
+    menuDetail (menuid) {
+        return axios.get(`${baseURL}/sysmenu/detail/${menuid}`);
+    },
+
+
+
+
+
 }

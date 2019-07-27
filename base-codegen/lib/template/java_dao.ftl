@@ -4,6 +4,7 @@ package ${package};
 
 import ${java_entity_package}.${table.code};
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 <#if enableCache>
 import org.springframework.cache.annotation.CacheConfig;
@@ -43,6 +44,9 @@ public interface ${table.code}Dao{
 	})
 	</#if>
     int dynamicUpdateById(${table.code} entity);
+    
+	<#if enableCache>@CacheEvict(allEntries=true, condition = "#result > 0")</#if>
+    int dynamicUpdateWhere(@Param("field") ${table.code} field, @Param("condition") ${table.code} where);
     
 	</#if>
 </#if>

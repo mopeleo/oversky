@@ -135,16 +135,6 @@ export function loadDict(keys, pageDict) {
 
 }
 
-export function getParam(keys, param) {
-    var unioncode = this.getUnioncode();
-    api.Gurms.getParam(keys, unioncode).then((res) => {
-        param = res.paramvalue;
-        alert(param);
-    }).catch((err) => {
-        this.errTip(err);
-    });
-}
-
 export function getUnioncode() {
     let unioncode = '';
     let sessionUser = localStorage.getItem(PUBDEFINE.KEY_USER);

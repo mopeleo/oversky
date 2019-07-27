@@ -5,7 +5,7 @@ import java.util.List;
 import org.oversky.gurms.system.entity.SysRole;
 import org.oversky.gurms.system.entity.SysUser;
 
-public interface ListQueryDao {
+public interface PageListQueryDao {
 
 	List<SysUser> findUsers(SysUser user);
 	

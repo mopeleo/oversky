@@ -1,7 +1,7 @@
 delete from sys_param;
 delete from sys_param_info;
 
-insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1000, '1');
+insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1000, '2');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, dictcode, valuelist, valuelength, texttitle, texttail) 
 values (1000, '系统模式', '1', '0', '2', 0, '1|单法人;2|多法人', 1, '', '');
 

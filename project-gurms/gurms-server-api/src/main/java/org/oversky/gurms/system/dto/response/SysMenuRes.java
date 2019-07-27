@@ -14,6 +14,7 @@ public class SysMenuRes extends BaseResDto {
 	private String parentmenu;    //上级菜单
 	private String menutype;    //菜单类型0-目录，1-菜单，2-页面链接
 	private String accesstype;    //访问权限：0-可任意访问，1-登录访问，2-需授权
+	private String status;
 	private String menucss;
 	private boolean tree;
 	private List<SysMenuRes> subMenus;
@@ -90,6 +91,14 @@ public class SysMenuRes extends BaseResDto {
 		this.menucss = menucss;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -100,6 +109,7 @@ public class SysMenuRes extends BaseResDto {
 		sb.append(", menuname=").append(menuname);
 		sb.append(", menuurl=").append(menuurl);
 		sb.append(", parentmenu=").append(parentmenu);
+		sb.append(", status=").append(status);
 		sb.append(", menutype=").append(menutype);
         sb.append("]");
         return sb.toString();

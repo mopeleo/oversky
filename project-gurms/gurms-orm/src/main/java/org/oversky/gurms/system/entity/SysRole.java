@@ -13,6 +13,7 @@ public class SysRole extends BaseEntity{
 	private String roletype;    //角色类型，0-公共，1-私有
 	private String startdate;    //角色生效日期
 	private String enddate;    //角色失效日期
+	private String belong;    //归属（预留，机构，角色组等）
 	private Long creator;    //创建人
 
 	public Long getRoleid() {
@@ -71,6 +72,14 @@ public class SysRole extends BaseEntity{
 		this.enddate = enddate;
 	}
 
+	public String getBelong() {
+		return this.belong;
+	}
+
+	public void setBelong(String belong) {
+		this.belong = belong;
+	}
+
 	public Long getCreator() {
 		return this.creator;
 	}
@@ -106,6 +115,7 @@ public class SysRole extends BaseEntity{
 		sb.append(", roletype=").append(roletype);
 		sb.append(", startdate=").append(startdate);
 		sb.append(", enddate=").append(enddate);
+		sb.append(", belong=").append(belong);
 		sb.append(", creator=").append(creator);
         sb.append("]");
         return sb.toString();

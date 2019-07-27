@@ -134,6 +134,20 @@
 	</#if>
 </#if>
 
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update ${table.originCode?lower_case}
+		<set>
+		<#list table.colsExceptKey as column>
+			<#if column.identity == "0">
+		    <if test="field.${column.code} != null<#if column.datatype == "string"> and field.${column.code} != ''</#if>">
+				${column.originCode} = #${r'{'}field.${column.code}, jdbcType=<@type datatype=column.datatype />},
+		    </if>
+		    </#if>
+		</#list>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
 <#if table.keys?size == 1>
 	<update id="updateBatch" parameterType="java.util.List">
 	    update ${table.originCode?lower_case}
@@ -177,6 +191,16 @@
 <#list table.columns as column>
 			<if test="${column.code} != null<#if column.datatype == "string"> and ${column.code} != ''</#if>">
 				and ${column.originCode} = #${r'{'}${column.code}, jdbcType=<@type datatype=column.datatype />}
+			</if>
+</#list>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+<#list table.columns as column>
+			<if test="condition.${column.code} != null<#if column.datatype == "string"> and condition.${column.code} != ''</#if>">
+				and ${column.originCode} = #${r'{'}condition.${column.code}, jdbcType=<@type datatype=column.datatype />}
 			</if>
 </#list>
 		</where>

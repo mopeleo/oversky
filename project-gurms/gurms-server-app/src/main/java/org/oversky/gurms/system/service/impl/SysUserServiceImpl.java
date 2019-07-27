@@ -15,7 +15,7 @@ import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.entity.SysUserRole;
-import org.oversky.gurms.system.ext.dao.ListQueryDao;
+import org.oversky.gurms.system.ext.dao.PageListQueryDao;
 import org.oversky.gurms.system.service.SysUserService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.oversky.util.date.DateUtils;
@@ -48,7 +48,7 @@ public class SysUserServiceImpl implements SysUserService{
 	private SysUserRoleDao userRoleDao;
 	
 	@Autowired
-	private ListQueryDao queryDao;
+	private PageListQueryDao queryDao;
 	
 	@Override
 	@GSAValid(type=SysUserReq.class)

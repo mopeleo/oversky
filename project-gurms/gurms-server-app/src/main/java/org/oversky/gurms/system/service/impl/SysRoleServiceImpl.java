@@ -14,6 +14,7 @@ import org.oversky.gurms.system.entity.SysMenu;
 import org.oversky.gurms.system.entity.SysRole;
 import org.oversky.gurms.system.entity.SysRoleMenu;
 import org.oversky.gurms.system.entity.SysUserRole;
+import org.oversky.gurms.system.ext.dao.PageListQueryDao;
 import org.oversky.gurms.system.ext.dao.UserRightDao;
 import org.oversky.gurms.system.service.SysRoleService;
 import org.oversky.util.bean.BeanCopyUtils;
@@ -45,6 +46,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Autowired
 	private UserRightDao userRightDao;
 	
+	@Autowired
+	private PageListQueryDao pageQueryDao;
+
 	@Override
 	@GSAValid(type=SysRoleReq.class)
 	@Transactional
@@ -158,7 +162,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		log.info("开始分页查询角色信息...");
 		Page<SysRole> page = PageHelper.startPage(roleReq.getPageNum(), roleReq.getPageSize());
 		SysRole where = BeanCopyUtils.convert(roleReq, SysRole.class);
-		List<SysRole> roleList = roleDao.selectWhere(where);
+		List<SysRole> roleList = pageQueryDao.findRoles(where);
 		List<SysRoleRes> roleResList = BeanCopyUtils.convertList(roleList, SysRoleRes.class);
 		
 		BaseResListDto<SysRoleRes> resList = new BaseResListDto<SysRoleRes>();
