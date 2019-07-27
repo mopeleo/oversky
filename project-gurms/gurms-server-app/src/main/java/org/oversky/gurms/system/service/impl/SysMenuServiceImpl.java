@@ -11,6 +11,8 @@ import org.oversky.gurms.system.entity.SysMenu;
 import org.oversky.gurms.system.ext.dao.UserRightDao;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.util.bean.BeanCopyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 @CacheConfig(cacheNames = "SysMenu")
 public class SysMenuServiceImpl implements SysMenuService {
 
+	private static final Logger log = LoggerFactory.getLogger(SysMenuServiceImpl.class);
+
 	@Autowired
 	private SysMenuDao menuDao;
 	
@@ -28,6 +32,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	
 	@Override
 	public SysMenuRes getMenu(String menuId, boolean tree) {
+		log.info("开始查询菜单[menuId={}, tree={}]信息...", menuId, tree);
 		SysMenuRes res = new SysMenuRes();
 		SysMenu menu = menuDao.getById(menuId);
 		if(menu == null) {
@@ -45,6 +50,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	@Override
 	@Cacheable(key = "'getFullMenuTree'")
 	public SysMenuRes getFullMenuTree() {
+		log.info("开始查询整个菜单树信息...");
 		SysMenuRes root = new SysMenuRes();
 		getSubMenus(root);
 		return root;
@@ -53,7 +59,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	@Override
 	@Cacheable(key = "'getMenuByUrl-' + #p0")
 	public SysMenuRes getMenuByUrl(String url) {
-		// TODO Auto-generated method stub
+		log.info("根据url={}查找菜单...", url);
 		SysMenu menu = new SysMenu();
 		menu.setMenuurl(url);
 		menu.setStatus(DictConsts.DICT1003_VALID);
@@ -69,6 +75,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 	@Override
 	public SysMenuRes getUserMenuTree(Long userId) {
+		log.info("查找用户[userid={}]的菜单树...", userId);
 		SysMenuRes root = new SysMenuRes();
 		root.setTree(true);
 		this.getSubMenus(root);
@@ -80,6 +87,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 	@Override
 	public SysMenuRes getRoleMenuTree(Long roleId) {
+		log.info("查找角色[roleId={}]的菜单树...", roleId);
 		SysMenuRes root = new SysMenuRes();
 		root.setTree(true);
 		this.getSubMenus(root);

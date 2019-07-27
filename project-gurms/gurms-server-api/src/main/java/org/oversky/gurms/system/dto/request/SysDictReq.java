@@ -2,7 +2,7 @@ package org.oversky.gurms.system.dto.request;
 
 import org.oversky.base.service.BaseReqDto;
 
-public class SysDictIndexReq extends BaseReqDto {
+public class SysDictReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 

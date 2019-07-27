@@ -48,7 +48,7 @@ public class SysUserServiceImpl implements SysUserService{
 	private SysUserRoleDao userRoleDao;
 	
 	@Autowired
-	private PageListQueryDao queryDao;
+	private PageListQueryDao pageQueryDao;
 	
 	@Override
 	@GSAValid(type=SysUserReq.class)
@@ -319,7 +319,7 @@ public class SysUserServiceImpl implements SysUserService{
 		log.info("开始分页查询用户信息 [req = {}]", userReq.toString());
 		Page<SysUser> page = PageHelper.startPage(userReq.getPageNum(), userReq.getPageSize());
 		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
-		List<SysUser> userList = queryDao.findUsers(where);
+		List<SysUser> userList = pageQueryDao.findUsers(where);
 		List<SysUserRes> userResList = BeanCopyUtils.convertList(userList, SysUserRes.class);
 		
 		BaseResListDto<SysUserRes> resList = new BaseResListDto<SysUserRes>();

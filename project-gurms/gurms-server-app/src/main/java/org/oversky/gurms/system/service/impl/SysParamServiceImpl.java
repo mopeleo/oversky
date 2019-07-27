@@ -1,9 +1,14 @@
 package org.oversky.gurms.system.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.gurms.system.dao.SysParamDao;
+import org.oversky.gurms.system.dao.SysParamInfoDao;
 import org.oversky.gurms.system.dto.response.SysParamRes;
 import org.oversky.gurms.system.entity.SysParam;
+import org.oversky.gurms.system.entity.SysParamInfo;
 import org.oversky.gurms.system.service.SysParamService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
@@ -12,15 +17,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @CacheConfig(cacheNames = "SysParam")
+@Transactional
 public class SysParamServiceImpl implements SysParamService {
 
 	private static final Logger log = LoggerFactory.getLogger(SysParamServiceImpl.class);
 	
 	@Autowired
 	private SysParamDao paramDao;
+	
+	@Autowired
+	private SysParamInfoDao paramInfoDao;
 	
 	@Override
 	@Cacheable(key = "'getParam_' + #p0 + '_' + #p1")
@@ -35,8 +45,43 @@ public class SysParamServiceImpl implements SysParamService {
 	public BaseResListDto<SysParamRes> getParamList(String unioncode, String paramList) {
 		log.info("查询多个参数 : unioncode = {}, paramList = {}" , unioncode, paramList);
 		String[] idList = paramList.split(",");
+		BaseResListDto<SysParamRes> res = new BaseResListDto<SysParamRes>();
+		List<SysParamRes> results = new ArrayList<>(idList.length);
+		for(String paramId : idList) {
+			SysParam param = paramDao.getById(unioncode, Integer.parseInt(paramId));
+			results.add(BeanCopyUtils.convert(param, SysParamRes.class));
+		}
+		
+		res.setResults(results);
+		log.info("查询成功");
+		return res;
+	}
 
-		return null;
+	@Override
+	@Transactional
+	public SysParamRes reset(String unioncode) {
+		log.info("重置unioncode = {}参数" , unioncode);
+		SysParam where = new SysParam();
+		where.setUnioncode(unioncode);
+		int num = paramDao.deleteWhere(where);
+		
+		if(num > 0) {
+			SysParamInfo infoWhere = new SysParamInfo();
+			List<SysParamInfo> paramInfoList = paramInfoDao.selectWhere(infoWhere);
+			List<SysParam> paramList = new ArrayList<>(paramInfoList.size());
+			for(SysParamInfo paramInfo : paramInfoList) {
+				SysParam param = new SysParam();
+				param.setUnioncode(unioncode);
+				param.setParamid(paramInfo.getParamid());
+				param.setParamvalue(paramInfo.getInitvalue());
+				
+				paramList.add(param);
+			}
+			paramDao.insertBatch(paramList);
+		}
+		
+		log.info("重置unioncode = {}参数 : [{}] 条" , unioncode, num);
+		return new SysParamRes();
 	}
 
 }

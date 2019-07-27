@@ -8,17 +8,25 @@
  */
 const permission = {
     system: {
-        user: {
-            detail: '1221',
-            add: '1222',
-            edit: '1223',
-            delete: '1224',
+        param: {
+            edit: '1121',
+            reset: '1122',
         },
         role: {
             detail: '1211',
             add: '1212',
             edit: '1213',
             delete: '1214',
+        },
+        user: {
+            detail: '1221',
+            add: '1222',
+            edit: '1223',
+            delete: '1224',
+            grantrole: '1225',
+            resetpassword: '1226',
+            freeze: '1227',
+            unfreeze: '1228',
         },
         org: {
             add: '1231',

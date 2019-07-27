@@ -4,8 +4,8 @@ INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, a
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1100', '参数设置', '', '1000', 0, 1, 0, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1110', '数据字典', 'sysdict/list', '1100', 1, 1, 2, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1120', '系统参数', 'sysparam/list', '1100', 1, 1, 2, null);
-INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1121', '系统参数', 'sysparam/update', '1120', 1, 1, 2, null);
-INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1122', '系统参数', 'sysparam/reset', '1120', 1, 1, 2, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1121', '参数修改', 'sysparam/update', '1120', 1, 1, 2, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1122', '参数初始化', 'sysparam/reset', '1120', 1, 1, 2, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1200', '角色权限', '', '1000', 0, 1, 0, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1210', '角色列表', 'sysrole/list', '1200', 1, 1, 2, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1211', '角色详情', 'sysrole/detail', '1210', 2, 1, 2, null);
@@ -17,6 +17,10 @@ INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, a
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1222', '用户新增', 'sysuser/add', '1220', 2, 1, 2, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1223', '用户修改', 'sysuser/update', '1220', 2, 1, 2, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1224', '用户删除', 'sysuser/delete', '1220', 2, 1, 2, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1225', '分配角色', 'sysuser/grantrole', '1220', 2, 1, 2, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1226', '重置密码', 'sysuser/resetpassword', '1220', 2, 1, 2, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1227', '冻结用户', 'sysuser/freeze', '1220', 2, 1, 2, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1228', '解冻用户', 'sysuser/unfreeze', '1220', 2, 1, 2, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1230', '机构维护', 'sysorg/list', '1200', 1, 1, 1, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1231', '机构新增', 'sysorg/add', '1230', 2, 1, 1, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1232', '机构修改', 'sysorg/update', '1230', 2, 1, 1, null);

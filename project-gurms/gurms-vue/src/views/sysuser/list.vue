@@ -55,10 +55,10 @@
                             @click="handleDetail(scope.$index, scope.row)" trigger="click">详情
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('a', scope.row)">修改信息</el-dropdown-item>
-                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('b', scope.row)">分配角色</el-dropdown-item>
-                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('c', scope.row)">重置密码</el-dropdown-item>
-                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('d', scope.row)" v-if="scope.row.status=='1'">冻结账户</el-dropdown-item>
-                                <el-dropdown-item v-permission="$permission.system.user.edit" :command="composeValue('e', scope.row)" v-if="scope.row.status=='3'">解冻账户</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.grantrole" :command="composeValue('b', scope.row)">分配角色</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.resetpassword" :command="composeValue('c', scope.row)">重置密码</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.freeze" :command="composeValue('d', scope.row)" v-if="scope.row.status=='1'">冻结账户</el-dropdown-item>
+                                <el-dropdown-item v-permission="$permission.system.user.unfreeze" :command="composeValue('e', scope.row)" v-if="scope.row.status=='3'">解冻账户</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </el-col>

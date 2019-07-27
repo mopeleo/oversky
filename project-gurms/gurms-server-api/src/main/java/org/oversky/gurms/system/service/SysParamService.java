@@ -8,4 +8,6 @@ public interface SysParamService {
 	SysParamRes getParam(String unioncode, Integer paramId);
 	
 	BaseResListDto<SysParamRes> getParamList(String unioncode, String paramList);
+	
+	SysParamRes reset(String unioncode);
 }

@@ -34,6 +34,10 @@ export default {
     getDictList(dictcode, unioncode){
         return axios.get(`${baseURL}/sysdict/getlist/${dictcode}/${unioncode}`);
     },
+    // 字典分页显示
+    dictPage (params) {
+        return axios.post(`${baseURL}/sysdict/list`, params);
+    },
 
     //========================================================
     // 查询参数，多个参数
@@ -45,6 +49,18 @@ export default {
     // 查询参数，单个参数
     getParam(paramid, unioncode){
         return axios.get(`${baseURL}/sysparam/getparam/${paramid}/${unioncode}`);
+    },
+    // 参数展示
+    paramPage (params) {
+        return axios.post(`${baseURL}/sysparam/list`, params);
+    },
+    // 参数修改
+    paramUpdate (params) {
+        return axios.post(`${baseURL}/sysparam/update`, params);
+    },
+    // 参数重置
+    paramReset (params) {
+        return axios.post(`${baseURL}/sysparam/reset`, params);
     },
 
 

@@ -52,4 +52,32 @@
 		</where>
     </select>
   
+  
+	<!-- ========================================================================================= -->
+    <resultMap id="sysdictbo_column_list" type="org.oversky.gurms.system.ext.bo.SysDictBO">
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="dictcode" jdbcType="INTEGER" property="dictcode" />
+        <result column="dictname" jdbcType="VARCHAR" property="dictname" />
+        <result column="dictgroup" jdbcType="VARCHAR" property="dictgroup" />
+        <result column="editflag" jdbcType="VARCHAR" property="editflag" />
+        <result column="itemcode" jdbcType="VARCHAR" property="itemcode" />
+        <result column="itemname" jdbcType="VARCHAR" property="itemname" />
+    </resultMap>
+
+    <select id="findDicts" parameterType="org.oversky.gurms.system.ext.bo.SysDictBO" resultMap="sysdictbo_column_list">
+        select a.unioncode,a.dictcode,a.dictname,a.dictgroup,a.editflag,b.itemcode,b.itemname from sys_dict_index a, sys_dict_value b 
+         where a.dictcode = b.dictcode and a.unioncode = b.unioncode
+		<if test="unioncode != null and unioncode != ''">
+			and a.unioncode = #{unioncode}
+		</if>
+		<if test="dictcode != null and dictcode != ''">
+			and a.dictcode = #{dictcode}
+		</if>
+		<if test="dictname != null and dictname != ''">
+			<bind name="_dictname" value="'%' + dictname + '%'"/>
+			and a.dictname like #{_dictname}
+		</if>
+		order by a.unioncode, a.dictcode, b.itemcode
+    </select>
+  
 </mapper>

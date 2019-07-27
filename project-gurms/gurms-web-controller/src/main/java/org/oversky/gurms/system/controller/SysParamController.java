@@ -32,4 +32,10 @@ public class SysParamController {
 		}
 		return paramService.getParam(unioncode, paramid);
 	}
+
+	@RequestMapping("/reset")
+	public SysParamRes reset() {
+		String unioncode = WebContext.getUserSession().getUnioncode();
+		return paramService.reset(unioncode);
+	}
 }
