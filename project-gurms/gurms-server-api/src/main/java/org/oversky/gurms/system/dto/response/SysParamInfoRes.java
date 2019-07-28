@@ -16,6 +16,7 @@ public class SysParamInfoRes extends BaseResDto {
 	private String texttail;    //描述尾
 	private Integer dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
 	private String valuelist;    //控件显示的值列表，如“0|否;1|是”
+	private String value;		//当前value
 
 	public Integer getParamid() {
 		return this.paramid;
@@ -97,8 +98,15 @@ public class SysParamInfoRes extends BaseResDto {
 		this.valuelist = valuelist;
 	}
 
+    public String getValue() {
+		return value;
+	}
 
-    @Override
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -114,6 +122,7 @@ public class SysParamInfoRes extends BaseResDto {
 		sb.append(", texttail=").append(texttail);
 		sb.append(", dictcode=").append(dictcode);
 		sb.append(", valuelist=").append(valuelist);
+		sb.append(", value=").append(value);
         sb.append("]");
         return sb.toString();
 	}

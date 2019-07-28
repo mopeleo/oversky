@@ -52,7 +52,7 @@ export default {
     },
     // 参数展示
     paramPage (params) {
-        return axios.post(`${baseURL}/sysparam/list`, params);
+        return axios.post(`${baseURL}/sysparam/page`, params);
     },
     // 参数修改
     paramUpdate (params) {

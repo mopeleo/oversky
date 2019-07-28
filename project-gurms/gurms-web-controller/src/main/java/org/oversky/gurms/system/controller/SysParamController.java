@@ -1,6 +1,7 @@
 package org.oversky.gurms.system.controller;
 
 import org.oversky.base.service.BaseResListDto;
+import org.oversky.gurms.system.dto.response.SysParamInfoRes;
 import org.oversky.gurms.system.dto.response.SysParamRes;
 import org.oversky.gurms.system.service.SysParamService;
 import org.oversky.gurms.web.util.WebContext;
@@ -37,5 +38,17 @@ public class SysParamController {
 	public SysParamRes reset() {
 		String unioncode = WebContext.getUserSession().getUnioncode();
 		return paramService.reset(unioncode);
+	}
+
+	@RequestMapping("/update")
+	public SysParamRes update(String params) {
+		String unioncode = WebContext.getUserSession().getUnioncode();
+		return paramService.update(unioncode, params);
+	}
+
+	@RequestMapping("/page")
+	public BaseResListDto<SysParamInfoRes> paramPage() {
+		String unioncode = WebContext.getUserSession().getUnioncode();
+		return paramService.paramInfoList(unioncode);
 	}
 }

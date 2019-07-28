@@ -79,5 +79,18 @@
 		</if>
 		order by a.unioncode, a.dictcode, b.itemcode
     </select>
+    
+	<!-- ========================================================================================= -->
+	<sql id="sysparaminfo_column_list">
+        <include refid="org.oversky.gurms.system.dao.SysParamInfoDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findParams" resultMap="org.oversky.gurms.system.dao.SysParamInfoDao.BaseResultMap">
+        select <include refid="sysparaminfo_column_list"/>
+          from sys_param_info a
+         where exists (select 1 from sys_param b where a.paramid=b.paramid and b.unioncode = #{param1})
+      order by a.paramid
+    </select>
+  
   
 </mapper>

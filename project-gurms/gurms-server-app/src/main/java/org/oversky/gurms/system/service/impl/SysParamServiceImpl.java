@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
+import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.dao.SysParamInfoDao;
+import org.oversky.gurms.system.dto.response.SysParamInfoRes;
 import org.oversky.gurms.system.dto.response.SysParamRes;
 import org.oversky.gurms.system.entity.SysParam;
 import org.oversky.gurms.system.entity.SysParamInfo;
+import org.oversky.gurms.system.ext.dao.PageListQueryDao;
 import org.oversky.gurms.system.service.SysParamService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
@@ -31,6 +34,9 @@ public class SysParamServiceImpl implements SysParamService {
 	
 	@Autowired
 	private SysParamInfoDao paramInfoDao;
+	
+	@Autowired
+	private PageListQueryDao pageQueryDao;
 	
 	@Override
 	@Cacheable(key = "'getParam_' + #p0 + '_' + #p1")
@@ -61,27 +67,93 @@ public class SysParamServiceImpl implements SysParamService {
 	@Transactional
 	public SysParamRes reset(String unioncode) {
 		log.info("重置unioncode = {}参数" , unioncode);
+		SysParamRes res = new SysParamRes();
+		List<SysParamInfo> paramInfoList = pageQueryDao.findParams(unioncode);
+		if(paramInfoList.size() < 1) {
+			res.failure("参数不存在");
+			return res;
+		}
+
 		SysParam where = new SysParam();
 		where.setUnioncode(unioncode);
 		int num = paramDao.deleteWhere(where);
 		
-		if(num > 0) {
-			SysParamInfo infoWhere = new SysParamInfo();
-			List<SysParamInfo> paramInfoList = paramInfoDao.selectWhere(infoWhere);
-			List<SysParam> paramList = new ArrayList<>(paramInfoList.size());
-			for(SysParamInfo paramInfo : paramInfoList) {
-				SysParam param = new SysParam();
-				param.setUnioncode(unioncode);
-				param.setParamid(paramInfo.getParamid());
-				param.setParamvalue(paramInfo.getInitvalue());
-				
-				paramList.add(param);
-			}
-			paramDao.insertBatch(paramList);
+		if(num != paramInfoList.size()) {
+			log.info("重置unioncode = {}参数 : 数量不一致" , unioncode);
+			throw new BaseServiceException("参数重置错误:数量不一致");
 		}
 		
+		List<SysParam> paramList = new ArrayList<>(paramInfoList.size());
+		for(SysParamInfo paramInfo : paramInfoList) {
+			SysParam param = new SysParam();
+			param.setUnioncode(unioncode);
+			param.setParamid(paramInfo.getParamid());
+			param.setParamvalue(paramInfo.getInitvalue());
+			
+			paramList.add(param);
+		}
+		paramDao.insertBatch(paramList);
+		
 		log.info("重置unioncode = {}参数 : [{}] 条" , unioncode, num);
-		return new SysParamRes();
+		return res;
 	}
 
+	@Override
+	public BaseResListDto<SysParamInfoRes> paramInfoList(String unioncode) {
+		BaseResListDto<SysParamInfoRes> res = new BaseResListDto<SysParamInfoRes>();
+		List<SysParamInfo> paramInfoList = pageQueryDao.findParams(unioncode);
+		if(paramInfoList.size() < 1) {
+			res.failure("参数不存在");
+			return res;
+		}
+		
+		SysParam where = new SysParam();
+		where.setUnioncode(unioncode);
+		where.orderBy("paramid");
+		List<SysParam> paramList = paramDao.selectWhere(where);
+		if(paramList.size() != paramInfoList.size()) {
+			log.info("重置unioncode = {}参数 : 数量不一致" , unioncode);
+			throw new BaseServiceException("参数重置错误:数量不一致");
+		}
+		
+		List<SysParamInfoRes> results = BeanCopyUtils.convertList(paramInfoList, SysParamInfoRes.class);
+		for(int i = 0; i < results.size(); i++) {
+			results.get(i).setValue(paramList.get(i).getParamvalue());
+		}
+		
+		res.setResults(results);
+		return res;
+	}
+
+	// paramList =  key1:value1;key2:value2
+	@Override
+	@Transactional
+	public SysParamRes update(String unioncode, String paramList) {
+		log.info("修改unioncode = {}全部参数" , unioncode);
+		SysParamRes res = new SysParamRes();
+		
+		SysParam where = new SysParam();
+		where.setUnioncode(unioncode);
+		int num = paramDao.deleteWhere(where);
+		
+		String[] pairs = paramList.split(";");
+		if(pairs.length != num) {
+			log.info("修改unioncode = {}参数 : 数量不一致" , unioncode);
+			throw new BaseServiceException("参数重置错误:数量不一致");
+		}
+		
+		List<SysParam> sysParamList = new ArrayList<>(num);
+		for(String param : pairs) {
+			String[] keyvalue = param.split(":");
+			SysParam sysParam = new SysParam();
+			sysParam.setParamid(Integer.parseInt(keyvalue[0]));
+			sysParam.setParamvalue(keyvalue[1]);
+			sysParam.setUnioncode(unioncode);
+			
+			sysParamList.add(sysParam);
+		}
+		
+		paramDao.insertBatch(sysParamList);
+		return res;		
+	}
 }
