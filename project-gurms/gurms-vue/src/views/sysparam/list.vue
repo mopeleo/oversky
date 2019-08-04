@@ -1,27 +1,31 @@
 <template>
     <div>
-        <el-form ref="sysparamForm" :model="sysuser" :rules="rules" label-width="80px" :disabled="!edit">
-            <el-form-item label="用户姓名" prop="username">
-                <el-input v-model="sysuser.username" :disabled="sysuser.userid?true:false"></el-input>
-            </el-form-item>
-            <el-form-item label="登录名" prop="loginid">
-                <el-input v-model="sysuser.loginid" :disabled="sysuser.userid?true:false"></el-input>
-            </el-form-item>
-            <el-form-item label="登录密码" prop="loginpasswd">
-                <el-input v-model="sysuser.loginpasswd"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号码" prop="mobileno">
-                <el-input v-model="sysuser.mobileno"></el-input>
-            </el-form-item>
-            <el-form-item label="电子邮件" prop="email">
-                <el-input v-model="sysuser.email"></el-input>
-            </el-form-item>
-            <el-form-item label="所属机构" prop="orgid">
-                <el-input v-model="sysuser.orgid"></el-input>
-            </el-form-item>
+        <el-form ref="sysparamForm" label-width="300px">
+            <template v-for="param in tableData">
+                <el-form-item :label="param.paramname" :key="param.paramid">
+                    {{param.texttitle}}
+                    <template v-if="param.edittype === '1'">
+                        <el-input v-model="param.value" style="width:200px" :disabled="true"></el-input>
+                    </template>
+                    <template v-else-if="param.edittype === '2'">
+                        <el-input v-model="param.value" :maxlength="param.valuelength" style="width:200px"></el-input>
+                    </template>
+                    <template v-else-if="param.edittype === '3'">
+                        <el-select v-model="param.value" style="width:200px">
+                            <el-option v-for="item in param.options" :key="item.value" :label="item.value + ' - ' + item.lable" :value="item.value"></el-option>
+                        </el-select>
+                    </template>
+                    <template v-else>
+                        <el-input v-model="param.value" style="width:200px" :disabled="true"></el-input>
+                    </template>
+                    {{param.texttail}}
+                </el-form-item>
+            </template>
+
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('sysparamForm')">保存</el-button>
-                <el-button @click="onReset('sysparamForm')">重填</el-button>
+                <el-button type="primary" v-permission="$permission.system.param.edit" @click="onSubmit('sysparamForm')">保存</el-button>
+                <el-button @click="onCancel()">取消</el-button>
+                <el-button type="danger" v-permission="$permission.system.param.reset" @click="handleReset()">恢复出厂设置</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -43,29 +47,59 @@ export default {
     },
     methods: {
         loadData:function(){
-            this.$api.Gurms.paramPage().then((res)=>{
-                this.tableData = res;
+            var unioncode = tools.getUnioncode();
+            this.$api.Gurms.paramPage(unioncode).then((res)=>{
+                this.tableData = res.results;
+                for(var i = 0; i< this.tableData.length; i++){
+                    var paraminfo = this.tableData[i];
+                    if(paraminfo.valuelist){
+                        var optString = paraminfo.valuelist.split(";");
+                        var options = new Array();
+                        for(var j = 0; j < optString.length; j++){
+                            var items = optString[j].split("|");
+                            var option = {};
+                            option.value=items[0];
+                            option.lable=items[1];
+                            options.push(option);
+                        }
+                        paraminfo.options = options;
+                    }
+                }
             }).catch((err)=>{
                 tools.errTip(err);
             });
         },
-        handleRest() {
-            this.$api.Gurms.paramReset().then(res =>{
+        handleReset() {
+            var unioncode = tools.getUnioncode();
+            this.$api.Gurms.paramReset(unioncode).then(res =>{
                 tools.succTip(res.returnmsg);
+                this.loadData();
             }).catch((err)=>{
                 tools.errTip(err);
             });
         },
-        handleEdit() {
-            var paramList = null;
-            this.$api.Gurms.paramUpdate(paramList).then(res =>{
-                tools.succTip(res.returnmsg);
-            }).catch((err)=>{
-                tools.errTip(err);
+        onSubmit(formName) {
+            // paramList =  key1:value1;key2:value2
+            tools.confirmTip("是否确定恢复出厂设置?", ()=>{
+                var paramList = '';
+                var unioncode = tools.getUnioncode();
+                for(var i = 0; i< this.tableData.length; i++){
+                    var param = this.tableData[i];
+                    paramList += param.paramid + ':' + param.value + ';';
+                }
+                if(paramList.length > 1){
+                    paramList = paramList.substring(0, paramList.length-1);
+                }
+                // alert(paramList);
+                this.$api.Gurms.paramUpdate(unioncode, paramList).then(res =>{
+                    tools.succTip(res.returnmsg);
+                }).catch((err)=>{
+                    tools.errTip(err);
+                });
             });
         },
-        onReset(formName){
-            this.$refs[formName].resetFields();
+        onCancel(){
+            this.loadData();
         }
     }
 }

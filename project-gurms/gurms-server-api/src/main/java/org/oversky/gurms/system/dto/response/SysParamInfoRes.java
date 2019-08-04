@@ -14,7 +14,6 @@ public class SysParamInfoRes extends BaseResDto {
 	private Integer valuelength;    //输入值长度,0-不检查长度，其他值效验长度
 	private String texttitle;    //描述头
 	private String texttail;    //描述尾
-	private Integer dictcode;    //字典代码，对应的值列表为已知数据字典，优先于valuelist
 	private String valuelist;    //控件显示的值列表，如“0|否;1|是”
 	private String value;		//当前value
 
@@ -82,14 +81,6 @@ public class SysParamInfoRes extends BaseResDto {
 		this.texttail = texttail;
 	}
 
-	public Integer getDictcode() {
-		return this.dictcode;
-	}
-
-	public void setDictcode(Integer dictcode) {
-		this.dictcode = dictcode;
-	}
-
 	public String getValuelist() {
 		return this.valuelist;
 	}
@@ -120,7 +111,6 @@ public class SysParamInfoRes extends BaseResDto {
 		sb.append(", valuelength=").append(valuelength);
 		sb.append(", texttitle=").append(texttitle);
 		sb.append(", texttail=").append(texttail);
-		sb.append(", dictcode=").append(dictcode);
 		sb.append(", valuelist=").append(valuelist);
 		sb.append(", value=").append(value);
         sb.append("]");

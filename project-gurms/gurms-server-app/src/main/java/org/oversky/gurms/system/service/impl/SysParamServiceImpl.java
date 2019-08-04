@@ -3,10 +3,12 @@ package org.oversky.gurms.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.dao.SysParamInfoDao;
+import org.oversky.gurms.system.dto.request.SysParamReq;
 import org.oversky.gurms.system.dto.response.SysParamInfoRes;
 import org.oversky.gurms.system.dto.response.SysParamRes;
 import org.oversky.gurms.system.entity.SysParam;
@@ -128,17 +130,21 @@ public class SysParamServiceImpl implements SysParamService {
 	// paramList =  key1:value1;key2:value2
 	@Override
 	@Transactional
-	public SysParamRes update(String unioncode, String paramList) {
-		log.info("修改unioncode = {}全部参数" , unioncode);
+	public SysParamRes update(SysParamReq paramReq) {
+		log.info("修改unioncode = {}全部参数" , paramReq.getUnioncode());
 		SysParamRes res = new SysParamRes();
+		if(StringUtils.isEmpty(paramReq.getParamlist())) {
+			log.info("修改的参数列表不能为空");
+			throw new BaseServiceException("修改的参数列表不能为空");
+		}
 		
 		SysParam where = new SysParam();
-		where.setUnioncode(unioncode);
+		where.setUnioncode(paramReq.getUnioncode());
 		int num = paramDao.deleteWhere(where);
 		
-		String[] pairs = paramList.split(";");
+		String[] pairs = paramReq.getParamlist().split(";");
 		if(pairs.length != num) {
-			log.info("修改unioncode = {}参数 : 数量不一致" , unioncode);
+			log.info("修改unioncode = {}参数 : 数量不一致" , paramReq.getUnioncode());
 			throw new BaseServiceException("参数重置错误:数量不一致");
 		}
 		
@@ -148,7 +154,7 @@ public class SysParamServiceImpl implements SysParamService {
 			SysParam sysParam = new SysParam();
 			sysParam.setParamid(Integer.parseInt(keyvalue[0]));
 			sysParam.setParamvalue(keyvalue[1]);
-			sysParam.setUnioncode(unioncode);
+			sysParam.setUnioncode(paramReq.getUnioncode());
 			
 			sysParamList.add(sysParam);
 		}

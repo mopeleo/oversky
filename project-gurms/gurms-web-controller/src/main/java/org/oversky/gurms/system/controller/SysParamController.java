@@ -1,6 +1,7 @@
 package org.oversky.gurms.system.controller;
 
 import org.oversky.base.service.BaseResListDto;
+import org.oversky.gurms.system.dto.request.SysParamReq;
 import org.oversky.gurms.system.dto.response.SysParamInfoRes;
 import org.oversky.gurms.system.dto.response.SysParamRes;
 import org.oversky.gurms.system.service.SysParamService;
@@ -8,6 +9,7 @@ import org.oversky.gurms.web.util.WebContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,21 +36,28 @@ public class SysParamController {
 		return paramService.getParam(unioncode, paramid);
 	}
 
-	@RequestMapping("/reset")
-	public SysParamRes reset() {
-		String unioncode = WebContext.getUserSession().getUnioncode();
+	@RequestMapping("/reset/{unioncode}")
+	public SysParamRes reset(@PathVariable String unioncode) {
+		if(StringUtils.isEmpty(unioncode)) {
+			unioncode = WebContext.getUserSession().getUnioncode();
+		}
 		return paramService.reset(unioncode);
 	}
 
 	@RequestMapping("/update")
-	public SysParamRes update(String params) {
-		String unioncode = WebContext.getUserSession().getUnioncode();
-		return paramService.update(unioncode, params);
+	public SysParamRes update(@RequestBody SysParamReq paramReq) {
+		if(StringUtils.isEmpty(paramReq.getUnioncode())) {
+			String unioncode = WebContext.getUserSession().getUnioncode();
+			paramReq.setUnioncode(unioncode);
+		}
+		return paramService.update(paramReq);
 	}
 
-	@RequestMapping("/page")
-	public BaseResListDto<SysParamInfoRes> paramPage() {
-		String unioncode = WebContext.getUserSession().getUnioncode();
+	@RequestMapping("/page/{unioncode}")
+	public BaseResListDto<SysParamInfoRes> paramPage(@PathVariable String unioncode) {
+		if(StringUtils.isEmpty(unioncode)) {
+			unioncode = WebContext.getUserSession().getUnioncode();
+		}
 		return paramService.paramInfoList(unioncode);
 	}
 }

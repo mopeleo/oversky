@@ -51,16 +51,16 @@ export default {
         return axios.get(`${baseURL}/sysparam/getparam/${paramid}/${unioncode}`);
     },
     // 参数展示
-    paramPage (params) {
-        return axios.post(`${baseURL}/sysparam/page`, params);
+    paramPage (unioncode) {
+        return axios.get(`${baseURL}/sysparam/page/${unioncode}`);
     },
     // 参数修改
-    paramUpdate (params) {
-        return axios.post(`${baseURL}/sysparam/update`, params);
+    paramUpdate (unioncode, paramlist) {
+        return axios.post(`${baseURL}/sysparam/update`, {paramlist: paramlist, unioncode: unioncode});
     },
     // 参数重置
-    paramReset (params) {
-        return axios.post(`${baseURL}/sysparam/reset`, params);
+    paramReset (unioncode) {
+        return axios.get(`${baseURL}/sysparam/reset/${unioncode}`);
     },
 
 

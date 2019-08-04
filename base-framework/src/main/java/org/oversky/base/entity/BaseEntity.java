@@ -16,14 +16,14 @@ public abstract class BaseEntity implements Serializable{
 	}
 
 	public BaseEntity orderBy(String column) {
-		return orderByDesc(column);
+		return orderByAsc(column);
 	}
 	
 	public BaseEntity orderBy(BaseReqDto reqDto) {
-		if(PubDefine.ORDERTYPE_ASC.equals(reqDto.getOrderType())) {
-			return orderByAsc(reqDto.getOrderBy());
-		}else {
+		if(PubDefine.ORDERTYPE_DESC.equals(reqDto.getOrderType())) {
 			return orderByDesc(reqDto.getOrderBy());
+		}else {
+			return orderByAsc(reqDto.getOrderBy());
 		}
 	}
 	

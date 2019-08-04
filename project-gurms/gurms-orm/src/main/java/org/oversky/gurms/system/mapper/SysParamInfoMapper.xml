@@ -10,20 +10,19 @@
         <result column="valuelength" jdbcType="INTEGER" property="valuelength" />
         <result column="texttitle" jdbcType="VARCHAR" property="texttitle" />
         <result column="texttail" jdbcType="VARCHAR" property="texttail" />
-        <result column="dictcode" jdbcType="INTEGER" property="dictcode" />
         <result column="valuelist" jdbcType="VARCHAR" property="valuelist" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysParamInfo">
         insert into sys_param_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{paramgroup, jdbcType=VARCHAR}, #{edittype, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{valuelist, jdbcType=VARCHAR})
+        values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{paramgroup, jdbcType=VARCHAR}, #{edittype, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{valuelist, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_param_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.paramgroup, jdbcType=VARCHAR}, #{item.edittype, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.dictcode, jdbcType=INTEGER}, #{item.valuelist, jdbcType=VARCHAR})
+		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.paramgroup, jdbcType=VARCHAR}, #{item.edittype, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.valuelist, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -69,7 +68,6 @@
                valuelength = #{valuelength, jdbcType=INTEGER}, 
                texttitle = #{texttitle, jdbcType=VARCHAR}, 
                texttail = #{texttail, jdbcType=VARCHAR}, 
-               dictcode = #{dictcode, jdbcType=INTEGER}, 
                valuelist = #{valuelist, jdbcType=VARCHAR}
 		where paramid = #{paramid, jdbcType=INTEGER}
     </update>
@@ -97,9 +95,6 @@
 		    </if>
 		    <if test="texttail != null">
 				texttail = #{texttail, jdbcType=VARCHAR},
-		    </if>
-		    <if test="dictcode != null">
-				dictcode = #{dictcode, jdbcType=INTEGER},
 		    </if>
 		    <if test="valuelist != null">
 				valuelist = #{valuelist, jdbcType=VARCHAR},
@@ -131,9 +126,6 @@
 		    </if>
 		    <if test="field.texttail != null and field.texttail != ''">
 				texttail = #{field.texttail, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.dictcode != null">
-				dictcode = #{field.dictcode, jdbcType=INTEGER},
 		    </if>
 		    <if test="field.valuelist != null and field.valuelist != ''">
 				valuelist = #{field.valuelist, jdbcType=VARCHAR},
@@ -215,16 +207,6 @@
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="dictcode = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.dictcode != null">
-	                    when paramid = #{item.paramid} then #{item.dictcode, jdbcType=INTEGER}
-	                </if>
-	                <if test="item.dictcode == null">
-	                    when paramid = #{item.paramid} then dictcode
-	                </if>
-	            </foreach>
-	        </trim>
 	        <trim prefix="valuelist = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.valuelist != null">
@@ -251,7 +233,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}paramid, ${tab}paramname, ${tab}paramgroup, ${tab}edittype, ${tab}initvalue, ${tab}valuelength, ${tab}texttitle, ${tab}texttail, ${tab}dictcode, ${tab}valuelist
+        ${tab}paramid, ${tab}paramname, ${tab}paramgroup, ${tab}edittype, ${tab}initvalue, ${tab}valuelength, ${tab}texttitle, ${tab}texttail, ${tab}valuelist
 	</sql>
 	
 	<sql id="where_all_list">
@@ -279,9 +261,6 @@
 			</if>
 			<if test="texttail != null and texttail != ''">
 				and texttail = #{texttail, jdbcType=VARCHAR}
-			</if>
-			<if test="dictcode != null">
-				and dictcode = #{dictcode, jdbcType=INTEGER}
 			</if>
 			<if test="valuelist != null and valuelist != ''">
 				and valuelist = #{valuelist, jdbcType=VARCHAR}
@@ -314,9 +293,6 @@
 			</if>
 			<if test="condition.texttail != null and condition.texttail != ''">
 				and texttail = #{condition.texttail, jdbcType=VARCHAR}
-			</if>
-			<if test="condition.dictcode != null">
-				and dictcode = #{condition.dictcode, jdbcType=INTEGER}
 			</if>
 			<if test="condition.valuelist != null and condition.valuelist != ''">
 				and valuelist = #{condition.valuelist, jdbcType=VARCHAR}

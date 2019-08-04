@@ -9,6 +9,7 @@ public class SysParamReq extends BaseReqDto {
 	private String unioncode;    //
 	private Integer paramid;    //
 	private String paramvalue;    //
+	private String paramlist;
 
 	public String getUnioncode() {
 		return this.unioncode;
@@ -34,8 +35,15 @@ public class SysParamReq extends BaseReqDto {
 		this.paramvalue = paramvalue;
 	}
 
+    public String getParamlist() {
+		return paramlist;
+	}
 
-    @Override
+	public void setParamlist(String paramlist) {
+		this.paramlist = paramlist;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -44,6 +52,7 @@ public class SysParamReq extends BaseReqDto {
 		sb.append(", unioncode=").append(unioncode);
 		sb.append(", paramid=").append(paramid);
 		sb.append(", paramvalue=").append(paramvalue);
+		sb.append(", paramlist=").append(paramlist);
         sb.append("]");
         return sb.toString();
 	}

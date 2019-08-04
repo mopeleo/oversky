@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/5/9 11:23:28                            */
+/* Created on:     2019/8/4 21:01:41                            */
 /*==============================================================*/
 
 
@@ -173,8 +173,6 @@ create table sys_org
    primary key (orgid)
 );
 
-alter table sys_org comment '[cache]';
-
 /*==============================================================*/
 /* Table: sys_param                                             */
 /*==============================================================*/
@@ -196,13 +194,12 @@ create table sys_param_info
    paramid              numeric(4,0) not null default 0 comment '参数ID',
    paramname            varchar(32) not null comment '参数名称',
    paramgroup           char(1) not null default '0' comment '所属分组，字典',
-   edittype             char(1) not null default '0' comment '0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改',
+   edittype             char(1) not null default '0' comment '1 只读无法修改，2 input 修改，3 select 修改',
    initvalue            varchar(32) not null comment '初始值',
    valuelength          numeric(4,0) default 0 comment '输入值长度,0-不检查长度，其他值效验长度',
    texttitle            varchar(32) comment '描述头',
    texttail             varchar(32) comment '描述尾',
-   dictcode             numeric(4,0) comment '字典代码，对应的值列表为已知数据字典，优先于valuelist',
-   valuelist            varchar(64) comment '控件显示的值列表，如“0|否;1|是”',
+   valuelist            varchar(256) comment '控件显示的值列表，如“0|否;1|是”',
    primary key (paramid)
 );
 
@@ -220,11 +217,13 @@ create table sys_role
    roletype             char(1) not null default '0' comment '角色类型，0-公共，1-私有',
    startdate            char(8) not null comment '角色生效日期',
    enddate              char(8) not null comment '角色失效日期',
+   belong               varchar(16) comment '归属（预留，机构，角色组等）',
    creator              bigint not null comment '创建人',
    primary key (roleid)
 );
 
-alter table sys_role comment '[cache]';
+alter table sys_role comment '[cache]
+角色说明，每个人只能看到他所属机构的所有公共角色+自己创建的角色';
 
 /*==============================================================*/
 /* Table: sys_role_menu                                         */
