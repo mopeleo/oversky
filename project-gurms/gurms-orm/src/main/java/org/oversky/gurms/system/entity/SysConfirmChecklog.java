@@ -7,6 +7,7 @@ public class SysConfirmChecklog extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private Long logid;    //复核流水号[identity]
+	private String unioncode;    //
 	private Long datalog;    //复核数据流水号
 	private Long checker;    //复核人
 	private Integer checklevel;    //复核级别，递增
@@ -21,6 +22,14 @@ public class SysConfirmChecklog extends BaseEntity{
 
 	public void setLogid(Long logid) {
 		this.logid = logid;
+	}
+
+	public String getUnioncode() {
+		return this.unioncode;
+	}
+
+	public void setUnioncode(String unioncode) {
+		this.unioncode = unioncode;
 	}
 
 	public Long getDatalog() {
@@ -100,6 +109,7 @@ public class SysConfirmChecklog extends BaseEntity{
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
 		sb.append(", logid=").append(logid);
+		sb.append(", unioncode=").append(unioncode);
 		sb.append(", datalog=").append(datalog);
 		sb.append(", checker=").append(checker);
 		sb.append(", checklevel=").append(checklevel);

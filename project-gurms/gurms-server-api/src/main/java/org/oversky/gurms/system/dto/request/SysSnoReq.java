@@ -15,7 +15,9 @@ public class SysSnoReq extends BaseReqDto {
 	private Integer fixedlength;    //定长长度，不包括前后缀
 	private String fillchar;    //填充字符
 	private String notype;    //类型（1-递增，2-按天复位）
-	private String nodate;    //使用日期
+	private String cycletype;
+	private String cycledate;
+	private Long endvalue;
 	private String prefix;    //前缀
 	private String suffix;    //后缀
 
@@ -91,12 +93,28 @@ public class SysSnoReq extends BaseReqDto {
 		this.notype = notype;
 	}
 
-	public String getNodate() {
-		return this.nodate;
+	public String getCycletype() {
+		return cycletype;
 	}
 
-	public void setNodate(String nodate) {
-		this.nodate = nodate;
+	public void setCycletype(String cycletype) {
+		this.cycletype = cycletype;
+	}
+
+	public String getCycledate() {
+		return cycledate;
+	}
+
+	public void setCycledate(String cycledate) {
+		this.cycledate = cycledate;
+	}
+
+	public Long getEndvalue() {
+		return endvalue;
+	}
+
+	public void setEndvalue(Long endvalue) {
+		this.endvalue = endvalue;
 	}
 
 	public String getPrefix() {
@@ -131,7 +149,9 @@ public class SysSnoReq extends BaseReqDto {
 		sb.append(", fixedlength=").append(fixedlength);
 		sb.append(", fillchar=").append(fillchar);
 		sb.append(", notype=").append(notype);
-		sb.append(", nodate=").append(nodate);
+		sb.append(", cycletype=").append(cycletype);
+		sb.append(", cycledate=").append(cycledate);
+		sb.append(", endvalue=").append(endvalue);
 		sb.append(", prefix=").append(prefix);
 		sb.append(", suffix=").append(suffix);
         sb.append("]");

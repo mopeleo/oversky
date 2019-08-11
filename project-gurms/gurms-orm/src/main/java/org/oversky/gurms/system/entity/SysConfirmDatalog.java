@@ -7,6 +7,7 @@ public class SysConfirmDatalog extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private Long logid;    //数据流水号[identity]
+	private String unioncode;    //
 	private Integer confirmid;    //复核类型ID
 	private String edittype;    //行为（1-insert，2-update，3-delete）
 	private String dataid;    //数据id，json
@@ -25,6 +26,14 @@ public class SysConfirmDatalog extends BaseEntity{
 
 	public void setLogid(Long logid) {
 		this.logid = logid;
+	}
+
+	public String getUnioncode() {
+		return this.unioncode;
+	}
+
+	public void setUnioncode(String unioncode) {
+		this.unioncode = unioncode;
 	}
 
 	public Integer getConfirmid() {
@@ -136,6 +145,7 @@ public class SysConfirmDatalog extends BaseEntity{
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
 		sb.append(", logid=").append(logid);
+		sb.append(", unioncode=").append(unioncode);
 		sb.append(", confirmid=").append(confirmid);
 		sb.append(", edittype=").append(edittype);
 		sb.append(", dataid=").append(dataid);

@@ -11,21 +11,23 @@
         <result column="fixedlength" jdbcType="INTEGER" property="fixedlength" />
         <result column="fillchar" jdbcType="VARCHAR" property="fillchar" />
         <result column="notype" jdbcType="VARCHAR" property="notype" />
-        <result column="nodate" jdbcType="VARCHAR" property="nodate" />
+        <result column="cycletype" jdbcType="VARCHAR" property="cycletype" />
+        <result column="cycledate" jdbcType="VARCHAR" property="cycledate" />
+        <result column="endvalue" jdbcType="DECIMAL" property="endvalue" />
         <result column="prefix" jdbcType="VARCHAR" property="prefix" />
         <result column="suffix" jdbcType="VARCHAR" property="suffix" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysSno">
         insert into sys_sno (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{unioncode, jdbcType=VARCHAR}, #{noid, jdbcType=INTEGER}, #{noname, jdbcType=VARCHAR}, #{initvalue, jdbcType=DECIMAL}, #{nextvalue, jdbcType=DECIMAL}, #{fixedflag, jdbcType=VARCHAR}, #{fixedlength, jdbcType=INTEGER}, #{fillchar, jdbcType=VARCHAR}, #{notype, jdbcType=VARCHAR}, #{nodate, jdbcType=VARCHAR}, #{prefix, jdbcType=VARCHAR}, #{suffix, jdbcType=VARCHAR})
+        values (#{unioncode, jdbcType=VARCHAR}, #{noid, jdbcType=INTEGER}, #{noname, jdbcType=VARCHAR}, #{initvalue, jdbcType=DECIMAL}, #{nextvalue, jdbcType=DECIMAL}, #{fixedflag, jdbcType=VARCHAR}, #{fixedlength, jdbcType=INTEGER}, #{fillchar, jdbcType=VARCHAR}, #{notype, jdbcType=VARCHAR}, #{cycletype, jdbcType=VARCHAR}, #{cycledate, jdbcType=VARCHAR}, #{endvalue, jdbcType=DECIMAL}, #{prefix, jdbcType=VARCHAR}, #{suffix, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_sno (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.unioncode, jdbcType=VARCHAR}, #{item.noid, jdbcType=INTEGER}, #{item.noname, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=DECIMAL}, #{item.nextvalue, jdbcType=DECIMAL}, #{item.fixedflag, jdbcType=VARCHAR}, #{item.fixedlength, jdbcType=INTEGER}, #{item.fillchar, jdbcType=VARCHAR}, #{item.notype, jdbcType=VARCHAR}, #{item.nodate, jdbcType=VARCHAR}, #{item.prefix, jdbcType=VARCHAR}, #{item.suffix, jdbcType=VARCHAR})
+		(#{item.unioncode, jdbcType=VARCHAR}, #{item.noid, jdbcType=INTEGER}, #{item.noname, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=DECIMAL}, #{item.nextvalue, jdbcType=DECIMAL}, #{item.fixedflag, jdbcType=VARCHAR}, #{item.fixedlength, jdbcType=INTEGER}, #{item.fillchar, jdbcType=VARCHAR}, #{item.notype, jdbcType=VARCHAR}, #{item.cycletype, jdbcType=VARCHAR}, #{item.cycledate, jdbcType=VARCHAR}, #{item.endvalue, jdbcType=DECIMAL}, #{item.prefix, jdbcType=VARCHAR}, #{item.suffix, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -71,7 +73,9 @@
                fixedlength = #{fixedlength, jdbcType=INTEGER}, 
                fillchar = #{fillchar, jdbcType=VARCHAR}, 
                notype = #{notype, jdbcType=VARCHAR}, 
-               nodate = #{nodate, jdbcType=VARCHAR}, 
+               cycletype = #{cycletype, jdbcType=VARCHAR}, 
+               cycledate = #{cycledate, jdbcType=VARCHAR}, 
+               endvalue = #{endvalue, jdbcType=DECIMAL}, 
                prefix = #{prefix, jdbcType=VARCHAR}, 
                suffix = #{suffix, jdbcType=VARCHAR}
 		where unioncode = #{unioncode, jdbcType=VARCHAR} and noid = #{noid, jdbcType=INTEGER}
@@ -101,8 +105,14 @@
 		    <if test="notype != null">
 				notype = #{notype, jdbcType=VARCHAR},
 		    </if>
-		    <if test="nodate != null">
-				nodate = #{nodate, jdbcType=VARCHAR},
+		    <if test="cycletype != null">
+				cycletype = #{cycletype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="cycledate != null">
+				cycledate = #{cycledate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="endvalue != null">
+				endvalue = #{endvalue, jdbcType=DECIMAL},
 		    </if>
 		    <if test="prefix != null">
 				prefix = #{prefix, jdbcType=VARCHAR},
@@ -138,8 +148,14 @@
 		    <if test="field.notype != null and field.notype != ''">
 				notype = #{field.notype, jdbcType=VARCHAR},
 		    </if>
-		    <if test="field.nodate != null and field.nodate != ''">
-				nodate = #{field.nodate, jdbcType=VARCHAR},
+		    <if test="field.cycletype != null and field.cycletype != ''">
+				cycletype = #{field.cycletype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.cycledate != null and field.cycledate != ''">
+				cycledate = #{field.cycledate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.endvalue != null">
+				endvalue = #{field.endvalue, jdbcType=DECIMAL},
 		    </if>
 		    <if test="field.prefix != null and field.prefix != ''">
 				prefix = #{field.prefix, jdbcType=VARCHAR},
@@ -153,7 +169,7 @@
 
 
 	<sql id="column_list">
-        ${tab}unioncode, ${tab}noid, ${tab}noname, ${tab}initvalue, ${tab}nextvalue, ${tab}fixedflag, ${tab}fixedlength, ${tab}fillchar, ${tab}notype, ${tab}nodate, ${tab}prefix, ${tab}suffix
+        ${tab}unioncode, ${tab}noid, ${tab}noname, ${tab}initvalue, ${tab}nextvalue, ${tab}fixedflag, ${tab}fixedlength, ${tab}fillchar, ${tab}notype, ${tab}cycletype, ${tab}cycledate, ${tab}endvalue, ${tab}prefix, ${tab}suffix
 	</sql>
 	
 	<sql id="where_all_list">
@@ -185,8 +201,14 @@
 			<if test="notype != null and notype != ''">
 				and notype = #{notype, jdbcType=VARCHAR}
 			</if>
-			<if test="nodate != null and nodate != ''">
-				and nodate = #{nodate, jdbcType=VARCHAR}
+			<if test="cycletype != null and cycletype != ''">
+				and cycletype = #{cycletype, jdbcType=VARCHAR}
+			</if>
+			<if test="cycledate != null and cycledate != ''">
+				and cycledate = #{cycledate, jdbcType=VARCHAR}
+			</if>
+			<if test="endvalue != null">
+				and endvalue = #{endvalue, jdbcType=DECIMAL}
 			</if>
 			<if test="prefix != null and prefix != ''">
 				and prefix = #{prefix, jdbcType=VARCHAR}
@@ -226,8 +248,14 @@
 			<if test="condition.notype != null and condition.notype != ''">
 				and notype = #{condition.notype, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.nodate != null and condition.nodate != ''">
-				and nodate = #{condition.nodate, jdbcType=VARCHAR}
+			<if test="condition.cycletype != null and condition.cycletype != ''">
+				and cycletype = #{condition.cycletype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.cycledate != null and condition.cycledate != ''">
+				and cycledate = #{condition.cycledate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.endvalue != null">
+				and endvalue = #{condition.endvalue, jdbcType=DECIMAL}
 			</if>
 			<if test="condition.prefix != null and condition.prefix != ''">
 				and prefix = #{condition.prefix, jdbcType=VARCHAR}

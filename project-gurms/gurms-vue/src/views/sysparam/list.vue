@@ -23,7 +23,7 @@
             </template>
 
             <el-form-item>
-                <el-button type="primary" v-permission="$permission.system.param.edit" @click="onSubmit('sysparamForm')">保存</el-button>
+                <el-button type="primary" v-permission="$permission.system.param.edit" @click="onSubmit()">保存</el-button>
                 <el-button @click="onCancel()">取消</el-button>
                 <el-button type="danger" v-permission="$permission.system.param.reset" @click="handleReset()">恢复出厂设置</el-button>
             </el-form-item>
@@ -78,7 +78,7 @@ export default {
                 tools.errTip(err);
             });
         },
-        onSubmit(formName) {
+        onSubmit() {
             // paramList =  key1:value1;key2:value2
             tools.confirmTip("是否确定恢复出厂设置?", ()=>{
                 var paramList = '';

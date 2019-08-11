@@ -12,6 +12,9 @@ const permission = {
             edit: '1121',
             reset: '1122',
         },
+        sno: {
+            edit: '1131',
+        },
         role: {
             detail: '1211',
             add: '1212',

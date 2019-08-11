@@ -74,14 +74,19 @@ insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) v
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1014, '0', '不固定');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1014, '1', '定长');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1015, '序列复位标志', 1, '1');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '0', '不复位');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1015, '序列复位周期', 1, '1');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '0', '指定值复位');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '1', '按天复位');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '2', '按月复位');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '2', '按年复位');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1016, '成功失败标志', 1, '1');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1016, '0', '失败');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1016, '1', '成功');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1016, '增减标志', 1, '1');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1016, '1', '递增');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1016, '2', '递减');
+
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1017, '成功失败标志', 1, '1');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1017, '0', '失败');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1017, '1', '成功');
 
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2000, '性别', 1, '2');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2000, '0', '女');

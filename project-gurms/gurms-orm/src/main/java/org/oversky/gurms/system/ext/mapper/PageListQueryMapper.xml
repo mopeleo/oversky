@@ -93,4 +93,28 @@
     </select>
   
   
+	<!-- ========================================================================================= -->
+	<sql id="syssno_column_list">
+        <include refid="org.oversky.gurms.system.dao.SysSnoDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findSnos" parameterType="org.oversky.gurms.system.entity.SysSno" resultMap="org.oversky.gurms.system.dao.SysSnoDao.BaseResultMap">
+        select <include refid="syssno_column_list"/>
+          from sys_sno a
+		<where>
+			<if test="unioncode != null and unioncode != ''">
+				and a.unioncode = #{unioncode}
+			</if>
+			<if test="noid != null">
+				and a.noid = #{noid}
+			</if>
+			<if test="noname != null and noname != ''">
+				<bind name="_noname" value="'%' + noname + '%'"/>
+				and a.noname like #{_noname}
+			</if>
+		</where>
+    </select>
+  
+  
+  
 </mapper>

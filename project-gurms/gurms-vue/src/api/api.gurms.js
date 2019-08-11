@@ -64,6 +64,22 @@ export default {
     },
 
 
+    //========================================================
+    // 序列号分页显示
+    snoList (params) {
+        return axios.post(`${baseURL}/syssno/list`, params);
+    },
+    // 序列号编辑
+    snoUpdate (params) {
+        return axios.post(`${baseURL}/syssno/update`, params);
+    },
+    // 序列号详情
+    snoDetail (unioncode, noid) {
+        return axios.get(`${baseURL}/syssno/detail`, {
+            params: {unioncode: unioncode,noid: noid}
+        });
+    },
+
 
     //========================================================
     // 用户列表

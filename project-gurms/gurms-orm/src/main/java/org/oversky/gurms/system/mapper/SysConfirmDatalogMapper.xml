@@ -3,6 +3,7 @@
 <mapper namespace="org.oversky.gurms.system.dao.SysConfirmDatalogDao">
     <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysConfirmDatalog">
         <id column="logid" jdbcType="DECIMAL" property="logid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
         <result column="confirmid" jdbcType="INTEGER" property="confirmid" />
         <result column="edittype" jdbcType="VARCHAR" property="edittype" />
         <result column="dataid" jdbcType="VARCHAR" property="dataid" />
@@ -17,15 +18,15 @@
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysConfirmDatalog" useGeneratedKeys="true" keyProperty="logid">
-        insert into sys_confirm_datalog (confirmid, edittype, dataid, fulldata, extdata, editer, editdate, edittime, currentstatus, currentlevel, endflag)
-        values (#{confirmid, jdbcType=INTEGER}, #{edittype, jdbcType=VARCHAR}, #{dataid, jdbcType=VARCHAR}, #{fulldata, jdbcType=VARCHAR}, #{extdata, jdbcType=VARCHAR}, #{editer, jdbcType=DECIMAL}, #{editdate, jdbcType=VARCHAR}, #{edittime, jdbcType=VARCHAR}, #{currentstatus, jdbcType=VARCHAR}, #{currentlevel, jdbcType=INTEGER}, #{endflag, jdbcType=VARCHAR})
+        insert into sys_confirm_datalog (unioncode, confirmid, edittype, dataid, fulldata, extdata, editer, editdate, edittime, currentstatus, currentlevel, endflag)
+        values (#{unioncode, jdbcType=VARCHAR}, #{confirmid, jdbcType=INTEGER}, #{edittype, jdbcType=VARCHAR}, #{dataid, jdbcType=VARCHAR}, #{fulldata, jdbcType=VARCHAR}, #{extdata, jdbcType=VARCHAR}, #{editer, jdbcType=DECIMAL}, #{editdate, jdbcType=VARCHAR}, #{edittime, jdbcType=VARCHAR}, #{currentstatus, jdbcType=VARCHAR}, #{currentlevel, jdbcType=INTEGER}, #{endflag, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
-		insert into sys_confirm_datalog (confirmid, edittype, dataid, fulldata, extdata, editer, editdate, edittime, currentstatus, currentlevel, endflag)
+		insert into sys_confirm_datalog (unioncode, confirmid, edittype, dataid, fulldata, extdata, editer, editdate, edittime, currentstatus, currentlevel, endflag)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.confirmid, jdbcType=INTEGER}, #{item.edittype, jdbcType=VARCHAR}, #{item.dataid, jdbcType=VARCHAR}, #{item.fulldata, jdbcType=VARCHAR}, #{item.extdata, jdbcType=VARCHAR}, #{item.editer, jdbcType=DECIMAL}, #{item.editdate, jdbcType=VARCHAR}, #{item.edittime, jdbcType=VARCHAR}, #{item.currentstatus, jdbcType=VARCHAR}, #{item.currentlevel, jdbcType=INTEGER}, #{item.endflag, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.confirmid, jdbcType=INTEGER}, #{item.edittype, jdbcType=VARCHAR}, #{item.dataid, jdbcType=VARCHAR}, #{item.fulldata, jdbcType=VARCHAR}, #{item.extdata, jdbcType=VARCHAR}, #{item.editer, jdbcType=DECIMAL}, #{item.editdate, jdbcType=VARCHAR}, #{item.edittime, jdbcType=VARCHAR}, #{item.currentstatus, jdbcType=VARCHAR}, #{item.currentlevel, jdbcType=INTEGER}, #{item.endflag, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -64,6 +65,7 @@
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysConfirmDatalog">
         update sys_confirm_datalog set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
                confirmid = #{confirmid, jdbcType=INTEGER}, 
                edittype = #{edittype, jdbcType=VARCHAR}, 
                dataid = #{dataid, jdbcType=VARCHAR}, 
@@ -81,6 +83,9 @@
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysConfirmDatalog">
 		update sys_confirm_datalog
 		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
 		    <if test="confirmid != null">
 				confirmid = #{confirmid, jdbcType=INTEGER},
 		    </if>
@@ -121,6 +126,9 @@
 	<update id="dynamicUpdateWhere" parameterType="map">
 		update sys_confirm_datalog
 		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
 		    <if test="field.confirmid != null">
 				confirmid = #{field.confirmid, jdbcType=INTEGER},
 		    </if>
@@ -161,6 +169,16 @@
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_confirm_datalog
 	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when logid = #{item.logid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when logid = #{item.logid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
 	        <trim prefix="confirmid = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.confirmid != null">
@@ -287,13 +305,16 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}logid, ${tab}confirmid, ${tab}edittype, ${tab}dataid, ${tab}fulldata, ${tab}extdata, ${tab}editer, ${tab}editdate, ${tab}edittime, ${tab}currentstatus, ${tab}currentlevel, ${tab}endflag
+        ${tab}logid, ${tab}unioncode, ${tab}confirmid, ${tab}edittype, ${tab}dataid, ${tab}fulldata, ${tab}extdata, ${tab}editer, ${tab}editdate, ${tab}edittime, ${tab}currentstatus, ${tab}currentlevel, ${tab}endflag
 	</sql>
 	
 	<sql id="where_all_list">
 		<where>
 			<if test="logid != null">
 				and logid = #{logid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
 			<if test="confirmid != null">
 				and confirmid = #{confirmid, jdbcType=INTEGER}
@@ -335,6 +356,9 @@
 		<where>
 			<if test="condition.logid != null">
 				and logid = #{condition.logid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.confirmid != null">
 				and confirmid = #{condition.confirmid, jdbcType=INTEGER}

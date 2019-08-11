@@ -14,8 +14,10 @@ public class SysSno extends BaseEntity{
 	private String fixedflag;    //定长标志(0-不固定，1-定长)
 	private Integer fixedlength;    //定长长度，不包括前后缀
 	private String fillchar;    //填充字符
-	private String notype;    //类型（1-递增，2-按天复位）
-	private String nodate;    //使用日期
+	private String notype;    //类型（1-递增，2-递减）
+	private String cycletype;    //循环周期（0-指定值重置，1-按天循环，2-按月循环，3-按年循环）
+	private String cycledate;    //循环起始日期
+	private Long endvalue;    //指定重置值
 	private String prefix;    //前缀
 	private String suffix;    //后缀
 
@@ -91,12 +93,28 @@ public class SysSno extends BaseEntity{
 		this.notype = notype;
 	}
 
-	public String getNodate() {
-		return this.nodate;
+	public String getCycletype() {
+		return this.cycletype;
 	}
 
-	public void setNodate(String nodate) {
-		this.nodate = nodate;
+	public void setCycletype(String cycletype) {
+		this.cycletype = cycletype;
+	}
+
+	public String getCycledate() {
+		return this.cycledate;
+	}
+
+	public void setCycledate(String cycledate) {
+		this.cycledate = cycledate;
+	}
+
+	public Long getEndvalue() {
+		return this.endvalue;
+	}
+
+	public void setEndvalue(Long endvalue) {
+		this.endvalue = endvalue;
 	}
 
 	public String getPrefix() {
@@ -145,7 +163,9 @@ public class SysSno extends BaseEntity{
 		sb.append(", fixedlength=").append(fixedlength);
 		sb.append(", fillchar=").append(fillchar);
 		sb.append(", notype=").append(notype);
-		sb.append(", nodate=").append(nodate);
+		sb.append(", cycletype=").append(cycletype);
+		sb.append(", cycledate=").append(cycledate);
+		sb.append(", endvalue=").append(endvalue);
 		sb.append(", prefix=").append(prefix);
 		sb.append(", suffix=").append(suffix);
         sb.append("]");
