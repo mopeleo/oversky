@@ -17,8 +17,19 @@ public final class DictConsts {
 	public static final String DICT1003_INVALID = "0";	//无效
 	public static final String DICT1003_VALID = "1";	//有效	
 	
-	public static final String DICT1016_SUCCESS = "1";	//成功
-	public static final String DICT1016_FAILURE = "0";	//失败	
+	public static final String DICT1014_UNFIXED = "0";	//不定长
+	public static final String DICT1014_FIXED = "1";	//定长
+	
+	public static final String DICT1015_RESET_VALUE = "0";	//固定值复位
+	public static final String DICT1015_RESET_DAY = "1";	//按天复位
+	public static final String DICT1015_RESET_MONTH = "2";	//按月复位
+	public static final String DICT1015_RESET_YEAR = "3";	//按年复位
+	
+	public static final String DICT1016_INCREASE = "1";	//递增
+	public static final String DICT1016_DECREASE = "2";	//递减
+	
+	public static final String DICT1017_FAILURE = "0";	//失败	
+	public static final String DICT1017_SUCCESS = "1";	//成功
 	
 
 	//dictgroup = 2

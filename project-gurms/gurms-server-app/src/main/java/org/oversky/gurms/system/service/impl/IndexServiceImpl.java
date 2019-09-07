@@ -114,10 +114,10 @@ public class IndexServiceImpl implements IndexService{
 		log.setLoginip(user.getClientIp());
 		log.setUserid(user.getUserid());
 		if(loginSuccess) {
-			log.setLoginresult(DictConsts.DICT1016_SUCCESS);
+			log.setLoginresult(DictConsts.DICT1017_SUCCESS);
 			log.setSummary("登录成功");
 		}else {
-			log.setLoginresult(DictConsts.DICT1016_FAILURE);
+			log.setLoginresult(DictConsts.DICT1017_FAILURE);
 			log.setSummary("登录失败");
 		}
 		sysUserLoginDao.insert(log);

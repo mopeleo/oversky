@@ -78,7 +78,7 @@ insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) v
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '0', '指定值复位');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '1', '按天复位');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '2', '按月复位');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '2', '按年复位');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1015, '3', '按年复位');
 
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1016, '增减标志', 1, '1');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1016, '1', '递增');

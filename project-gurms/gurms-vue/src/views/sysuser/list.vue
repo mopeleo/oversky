@@ -107,9 +107,11 @@
                 <el-row :gutter="20">
                     <el-col :span="10">
                         <el-form-item label="所属机构" prop="orgid">
-                            <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
+<!--                            <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
                                 :value="sysuser.orgid" :accordion="true" @getValue="getOrgId($event)">
-                            </SelectTree>
+                            </SelectTree>   -->
+                            <el-cascader :options="treeData" :show-all-levels="false" v-model="sysuser.orgid"
+                                :props="{value:'orgid', children:'subOrgs', label:'shortname', checkStrictly:true, emitPath:false}"></el-cascader>
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">

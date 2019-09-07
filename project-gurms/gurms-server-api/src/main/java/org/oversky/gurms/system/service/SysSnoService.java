@@ -11,4 +11,9 @@ public interface SysSnoService {
 	SysSnoRes update(SysSnoReq snoReq);
 	
 	BaseResListDto<SysSnoRes> pageSysSno(SysSnoReq snoReq);
+	
+	String getNextSno(String unioncode, Integer snoid);
+	
+	String[] getBatchSno(String unioncode, Integer snoid, Integer number);
+
 }

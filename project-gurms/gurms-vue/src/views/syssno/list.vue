@@ -101,6 +101,17 @@
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="10">
+                        <el-form-item label="增减类型" prop="notype">
+                            <el-select v-model="syssno.notype" value-key="itemcode" :disabled="true">
+                                <el-option v-for="item in dictCache['1016']"
+                                    :key="item.itemcode"
+                                    :label="item.itemcode + ' - ' + item.itemname"
+                                    :value="item.itemcode">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
                         <el-form-item label="定长标志" prop="fixedflag">
                             <el-select v-model="syssno.fixedflag" value-key="itemcode" placeholder="请选择">
                                 <el-option v-for="item in dictCache['1014']"
@@ -111,27 +122,16 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                </el-row>
+                <el-row :gutter="20" v-if="syssno.fixedflag == '1'">
                     <el-col :span="10">
                         <el-form-item label="定长长度" prop="fixedlength">
                             <el-input v-model="syssno.fixedlength"></el-input>
                         </el-form-item>
                     </el-col>
-                </el-row>
-                <el-row :gutter="20">
                     <el-col :span="10">
                         <el-form-item label="填充字符" prop="fillchar">
                             <el-input v-model="syssno.fillchar"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="10">
-                        <el-form-item label="增减类型" prop="notype">
-                            <el-select v-model="syssno.notype" value-key="itemcode" :disabled="true">
-                                <el-option v-for="item in dictCache['1016']"
-                                    :key="item.itemcode"
-                                    :label="item.itemcode + ' - ' + item.itemname"
-                                    :value="item.itemcode">
-                                </el-option>
-                            </el-select>
                         </el-form-item>
                     </el-col>
                 </el-row>

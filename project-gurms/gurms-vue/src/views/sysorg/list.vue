@@ -220,7 +220,7 @@ export default {
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
         },
         getOrgId(value){
-            this.sysorg.parentorg = value.parentorg;
+            this.sysorg.parentorg = value.orgid;
             this.sysorg.unioncode = value.unioncode;
         },
         leftTreeHandleNodeClick(data){
@@ -267,6 +267,7 @@ export default {
                         }
                         callAPI = this.$api.Gurms.orgAdd(this.sysorg);
                     }
+                    // alert(JSON.stringify(this.sysorg));
                     let that = this;
                     callAPI.then((res) => {
                         tools.succTip(res.returnmsg);

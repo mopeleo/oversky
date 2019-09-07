@@ -3,6 +3,7 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
+import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dao.SysSnoDao;
 import org.oversky.gurms.system.dto.request.SysSnoReq;
 import org.oversky.gurms.system.dto.response.SysSnoRes;
@@ -57,7 +58,7 @@ public class SysSnoServiceImpl implements SysSnoService {
 
 	@Override
 	public BaseResListDto<SysSnoRes> pageSysSno(SysSnoReq snoReq) {
-		log.info("开始分页查询角色信息...");
+		log.info("开始分页查询序列信息...");
 		Page<SysSno> page = PageHelper.startPage(snoReq.getPageNum(), snoReq.getPageSize());
 		SysSno where = BeanCopyUtils.convert(snoReq, SysSno.class);
 		List<SysSno> snoList = pageQueryDao.findSnos(where);
@@ -67,8 +68,24 @@ public class SysSnoServiceImpl implements SysSnoService {
 		resList.setResults(snoResList);
 		resList.success("查询成功");
 		resList.initPage(page.getPageNum(), page.getPageSize(), (int)page.getTotal());
-		log.info("分页查询角色信息结束，共查询到{}条", snoList.size());
+		log.info("分页查询序列信息结束，共查询到{}条", snoList.size());
 		return resList;
 	}
 
+	public synchronized String getNextSno(String unioncode, Integer snoid) {
+		SysSno sno = snoDao.getById(unioncode, snoid);
+		Long nextVal = sno.getNextvalue();
+		if(DictConsts.DICT1016_INCREASE.equals(sno.getNotype())) {
+			nextVal++;
+		}else if(DictConsts.DICT1016_DECREASE.equals(sno.getNotype())) {
+			nextVal--;
+		}
+		sno.setNextvalue(nextVal);
+		snoDao.updateById(sno);
+		return null;
+	}
+	
+	public synchronized String[] getBatchSno(String unioncode, Integer snoid, Integer number) {
+		return null;
+	}
 }
