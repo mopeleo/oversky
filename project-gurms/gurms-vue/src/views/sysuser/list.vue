@@ -23,10 +23,11 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="5">
                     <el-form-item>
                         <el-button type="primary" icon="el-icon-search" @click="loadData">查询</el-button>
                         <el-button type="primary" v-permission="$permission.system.user.add" icon="el-icon-plus" @click="handleAdd">新增</el-button>
+                        <el-button type="primary" icon="el-icon-plus" @click="drawer=true" >drawer</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -165,16 +166,41 @@
             </el-row>
         </el-dialog>
 
+        <!--
+        <el-drawer
+            title="我嵌套了 Form !"
+            :before-close="handleClose"
+            :visible.sync="drawer"
+            custom-class="demo-drawer"
+            ref="drawer">
+            <div class="demo-drawer__content">
+                <el-form :model="form">
+                    <el-form-item label="活动名称" :label-width="formLabelWidth">
+                        <el-input v-model="form.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="活动区域" :label-width="formLabelWidth">
+                        <el-select v-model="form.region" placeholder="请选择活动区域">
+                            <el-option label="区域一" value="shanghai"></el-option>
+                            <el-option label="区域二" value="beijing"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <div class="demo-drawer__footer">
+                    <el-button @click="dialog = false">取 消</el-button>
+                    <el-button type="primary" @click="$refs.drawer.closeDrawer()" :loading="loading">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+                </div>
+            </div>
+        </el-drawer>
+        -->
+
     </div>
 </template>
 
 <script>
 import * as tools from '@/utils/tools';
-import SelectTree from '@/components/SelectTree.vue';
 
 export default{
     name: 'sysuser_list',
-    components:{SelectTree},
     data(){
         return {
             //表格当前页数据
@@ -192,6 +218,7 @@ export default{
             dialogFormVisible: false,
             dialogGrantRole: false,
             editType: this.$pubdefine.EDIT_TYPE_INSERT,   // insert/update
+            drawer: false,
             //临时业务数据
             sysuser: null,
             allRoles:[],    //所有角色
@@ -213,6 +240,12 @@ export default{
         this.loadData();
     },
     methods:{
+        handleClose(done) {
+            this.$confirm('确认关闭？')
+                .then(_ => {
+                    done();
+                }).catch(_ => {});
+        },
         loadData:function(){
             this.$api.Gurms.userList(this.userReq).then((res)=>{
                 this.tableData = res;

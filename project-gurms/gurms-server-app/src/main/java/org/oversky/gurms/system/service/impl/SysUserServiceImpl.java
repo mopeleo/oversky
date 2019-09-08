@@ -82,6 +82,11 @@ public class SysUserServiceImpl implements SysUserService{
 	public SysUserRes delete(SysUserReq userReq) {
 		log.info("开始删除用户[userid={}]信息...", userReq.getUserid());
 		SysUserRes res = new SysUserRes();
+		//是超级用户
+		if(BizFunc.isRootUser(userReq.getUserid())) {
+			res.failure("超级用户不能删除");
+			return res;
+		}
 		
 		SysUser user = sysUserDao.getById(userReq.getUserid());
 		if(user == null) {
@@ -126,6 +131,11 @@ public class SysUserServiceImpl implements SysUserService{
 		log.info("开始修改用户[userid={}]信息......", userReq.getUserid());
 		SysUserRes res = new SysUserRes();
 		if(!this.check(userReq, res)) {
+			return res;
+		}
+		//是超级用户
+		if(BizFunc.isRootUser(userReq.getUserid())) {
+			res.failure("超级用户不能修改");
 			return res;
 		}
 		
@@ -291,6 +301,12 @@ public class SysUserServiceImpl implements SysUserService{
 	public SysUserRes grantRole(SysUserReq userReq) {
 		log.info("开始用户[userid={}]授权...", userReq.getUserid());
 		SysUserRes res = new SysUserRes();
+		//是超级用户
+		if(BizFunc.isRootUser(userReq.getUserid())) {
+			res.failure("超级用户不能授权");
+			return res;
+		}
+		
 		//删除现有role
 		SysUserRole where = new SysUserRole();
 		where.setUserid(userReq.getUserid());
