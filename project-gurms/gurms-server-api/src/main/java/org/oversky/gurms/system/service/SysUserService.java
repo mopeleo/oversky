@@ -15,6 +15,8 @@ public interface SysUserService extends BaseService{
 	
 	SysUserRes getById(Long userid);
 	
+	SysUserRes userDetail(Long userid);
+	
 	SysUserRes grantRole(SysUserReq userReq);
 	
 	SysUserRes resetPassword(SysUserReq userReq);

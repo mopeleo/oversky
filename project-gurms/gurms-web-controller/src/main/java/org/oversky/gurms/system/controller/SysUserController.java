@@ -17,7 +17,7 @@ public class SysUserController {
 	
 	@RequestMapping("/detail")
 	public SysUserRes detail(Long userid) {
-		return userService.getById(userid);
+		return userService.userDetail(userid);
 	}
 
 	@RequestMapping("/add")

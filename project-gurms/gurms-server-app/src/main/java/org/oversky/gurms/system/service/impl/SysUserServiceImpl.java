@@ -325,6 +325,24 @@ public class SysUserServiceImpl implements SysUserService{
 	}
 
 	@Override
+	public SysUserRes userDetail(Long userid) {
+		log.info("开始查询用户[userid={}]详细信息...", userid);
+		SysUser user = sysUserDao.getById(userid);
+		SysUserRes res = new SysUserRes();
+		if(user == null) {
+			res.failure("用户[" + userid + "]不存在");
+		}else {
+			BeanCopyUtils.copy(user, res);
+			SysUserInfo userInfo = userInfoDao.getById(userid);
+			if(userInfo != null) {
+				BeanCopyUtils.copy(userInfo, res);
+			}
+		}
+		log.info("查询用户[userid={}]详细信息结束: {}", userid, res.getReturnmsg());
+		return res;
+	}
+
+	@Override
 	@Transactional
 	public SysUserRes grantRole(SysUserReq userReq) {
 		log.info("开始用户[userid={}]授权...", userReq.getUserid());
