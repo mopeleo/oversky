@@ -12,18 +12,20 @@
         <result column="province" jdbcType="VARCHAR" property="province" />
         <result column="city" jdbcType="VARCHAR" property="city" />
         <result column="education" jdbcType="VARCHAR" property="education" />
+        <result column="ethnicity" jdbcType="VARCHAR" property="ethnicity" />
+        <result column="profession" jdbcType="VARCHAR" property="profession" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUserInfo">
         insert into sys_user_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{userid, jdbcType=DECIMAL}, #{sex, jdbcType=VARCHAR}, #{birthday, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{nationality, jdbcType=VARCHAR}, #{province, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{education, jdbcType=VARCHAR})
+        values (#{userid, jdbcType=DECIMAL}, #{sex, jdbcType=VARCHAR}, #{birthday, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{nationality, jdbcType=VARCHAR}, #{province, jdbcType=VARCHAR}, #{city, jdbcType=VARCHAR}, #{education, jdbcType=VARCHAR}, #{ethnicity, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_user_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.userid, jdbcType=DECIMAL}, #{item.sex, jdbcType=VARCHAR}, #{item.birthday, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.postcode, jdbcType=VARCHAR}, #{item.phone, jdbcType=VARCHAR}, #{item.nationality, jdbcType=VARCHAR}, #{item.province, jdbcType=VARCHAR}, #{item.city, jdbcType=VARCHAR}, #{item.education, jdbcType=VARCHAR})
+		(#{item.userid, jdbcType=DECIMAL}, #{item.sex, jdbcType=VARCHAR}, #{item.birthday, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.postcode, jdbcType=VARCHAR}, #{item.phone, jdbcType=VARCHAR}, #{item.nationality, jdbcType=VARCHAR}, #{item.province, jdbcType=VARCHAR}, #{item.city, jdbcType=VARCHAR}, #{item.education, jdbcType=VARCHAR}, #{item.ethnicity, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -70,7 +72,9 @@
                nationality = #{nationality, jdbcType=VARCHAR}, 
                province = #{province, jdbcType=VARCHAR}, 
                city = #{city, jdbcType=VARCHAR}, 
-               education = #{education, jdbcType=VARCHAR}
+               education = #{education, jdbcType=VARCHAR}, 
+               ethnicity = #{ethnicity, jdbcType=VARCHAR}, 
+               profession = #{profession, jdbcType=VARCHAR}
 		where userid = #{userid, jdbcType=DECIMAL}
     </update>
 
@@ -103,6 +107,12 @@
 		    </if>
 		    <if test="education != null">
 				education = #{education, jdbcType=VARCHAR},
+		    </if>
+		    <if test="ethnicity != null">
+				ethnicity = #{ethnicity, jdbcType=VARCHAR},
+		    </if>
+		    <if test="profession != null">
+				profession = #{profession, jdbcType=VARCHAR},
 		    </if>
 		</set>
 		where userid = #{userid, jdbcType=DECIMAL}
@@ -137,6 +147,12 @@
 		    </if>
 		    <if test="field.education != null and field.education != ''">
 				education = #{field.education, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.ethnicity != null and field.ethnicity != ''">
+				ethnicity = #{field.ethnicity, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.profession != null and field.profession != ''">
+				profession = #{field.profession, jdbcType=VARCHAR},
 		    </if>
 		</set>
         <include refid="where_all_list_criteria" />
@@ -235,6 +251,26 @@
 	                </if>
 	            </foreach>
 	        </trim>
+	        <trim prefix="ethnicity = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ethnicity != null">
+	                    when userid = #{item.userid} then #{item.ethnicity, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.ethnicity == null">
+	                    when userid = #{item.userid} then ethnicity
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="profession = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.profession != null">
+	                    when userid = #{item.userid} then #{item.profession, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.profession == null">
+	                    when userid = #{item.userid} then profession
+	                </if>
+	            </foreach>
+	        </trim>
 	    </trim>
 	    where userid in
 	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -251,7 +287,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}userid, ${tab}sex, ${tab}birthday, ${tab}address, ${tab}postcode, ${tab}phone, ${tab}nationality, ${tab}province, ${tab}city, ${tab}education
+        ${tab}userid, ${tab}sex, ${tab}birthday, ${tab}address, ${tab}postcode, ${tab}phone, ${tab}nationality, ${tab}province, ${tab}city, ${tab}education, ${tab}ethnicity, ${tab}profession
 	</sql>
 	
 	<sql id="where_all_list">
@@ -285,6 +321,12 @@
 			</if>
 			<if test="education != null and education != ''">
 				and education = #{education, jdbcType=VARCHAR}
+			</if>
+			<if test="ethnicity != null and ethnicity != ''">
+				and ethnicity = #{ethnicity, jdbcType=VARCHAR}
+			</if>
+			<if test="profession != null and profession != ''">
+				and profession = #{profession, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>
@@ -320,6 +362,12 @@
 			</if>
 			<if test="condition.education != null and condition.education != ''">
 				and education = #{condition.education, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.ethnicity != null and condition.ethnicity != ''">
+				and ethnicity = #{condition.ethnicity, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.profession != null and condition.profession != ''">
+				and profession = #{condition.profession, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

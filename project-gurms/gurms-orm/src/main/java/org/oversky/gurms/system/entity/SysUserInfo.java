@@ -16,6 +16,8 @@ public class SysUserInfo extends BaseEntity{
 	private String province;    //所在省份
 	private String city;    //所在城市
 	private String education;    //教育程度
+	private String ethnicity;    //民族
+	private String profession;    //职业
 
 	public Long getUserid() {
 		return this.userid;
@@ -97,6 +99,22 @@ public class SysUserInfo extends BaseEntity{
 		this.education = education;
 	}
 
+	public String getEthnicity() {
+		return this.ethnicity;
+	}
+
+	public void setEthnicity(String ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	public String getProfession() {
+		return this.profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
 	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysUserInfo");
 		return build.append("#userid:").append(this.userid).toString();
@@ -127,6 +145,8 @@ public class SysUserInfo extends BaseEntity{
 		sb.append(", province=").append(province);
 		sb.append(", city=").append(city);
 		sb.append(", education=").append(education);
+		sb.append(", ethnicity=").append(ethnicity);
+		sb.append(", profession=").append(profession);
         sb.append("]");
         return sb.toString();
 	}

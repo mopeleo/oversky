@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* Created on:     2019/5/9 11:24:24                            */
+/* Created on:     2019/9/13 22:25:27                           */
 /*==============================================================*/
 
 
@@ -97,11 +97,12 @@ comment on column sys_confirm.checklevel is
 create table sys_confirm_checklog 
 (
    logid                INTEGER              not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    datalog              INTEGER              not null,
    checker              INTEGER              not null,
    checklevel           NUMBER(1)            default 0 not null,
-   checkdate            CHAR(8)              not null,
-   checktime            CHAR(6)              not null,
+   checkdate            VARCHAR2(8)          not null,
+   checktime            VARCHAR2(6)          not null,
    status               CHAR(1)              default '0' not null,
    summary              VARCHAR2(256),
    constraint PK_SYS_CONFIRM_CHECKLOG primary key (logid)
@@ -137,14 +138,15 @@ comment on column sys_confirm_checklog.summary is
 create table sys_confirm_datalog 
 (
    logid                INTEGER              not null,
+   unioncode            VARCHAR2(8)          default '0000' not null,
    confirmid            NUMBER(4)            default 0 not null,
    edittype             CHAR(1)              default '0' not null,
    dataid               VARCHAR2(256),
    fulldata             VARCHAR2(2048),
    extdata              VARCHAR2(2048),
    editer               INTEGER              not null,
-   editdate             CHAR(8)              not null,
-   edittime             CHAR(6)              not null,
+   editdate             VARCHAR2(8)          not null,
+   edittime             VARCHAR2(6)          not null,
    currentstatus        CHAR(1)              default '0' not null,
    currentlevel         NUMBER(1)            default 0 not null,
    endflag              CHAR(1)              default '0' not null,
@@ -329,9 +331,6 @@ create table sys_org
    constraint PK_SYS_ORG primary key (orgid)
 );
 
-comment on table sys_org is
-'[cache]';
-
 comment on column sys_org.orgid is
 '机构ID,内部自动生成[identity]';
 
@@ -395,8 +394,7 @@ create table sys_param_info
    valuelength          NUMBER(4)            default 0,
    texttitle            VARCHAR2(32),
    texttail             VARCHAR2(32),
-   dictcode             NUMBER(4),
-   valuelist            VARCHAR2(64),
+   valuelist            VARCHAR2(256),
    constraint PK_SYS_PARAM_INFO primary key (paramid)
 );
 
@@ -413,7 +411,7 @@ comment on column sys_param_info.paramgroup is
 '所属分组，字典';
 
 comment on column sys_param_info.edittype is
-'0 不可见，1 text 无法修改；2 input 可以修改；3 select 可以修改';
+'1 只读无法修改，2 input 修改，3 select 修改';
 
 comment on column sys_param_info.initvalue is
 '初始值';
@@ -426,9 +424,6 @@ comment on column sys_param_info.texttitle is
 
 comment on column sys_param_info.texttail is
 '描述尾';
-
-comment on column sys_param_info.dictcode is
-'字典代码，对应的值列表为已知数据字典，优先于valuelist';
 
 comment on column sys_param_info.valuelist is
 '控件显示的值列表，如“0|否;1|是”';
@@ -443,14 +438,16 @@ create table sys_role
    rolename             VARCHAR2(32)         not null,
    status               CHAR(1)              default '0' not null,
    roletype             CHAR(1)              default '0' not null,
-   startdate            CHAR(8)              not null,
-   enddate              CHAR(8)              not null,
+   startdate            VARCHAR2(8)          not null,
+   enddate              VARCHAR2(8)          not null,
+   belong               VARCHAR2(16),
    creator              INTEGER              not null,
    constraint PK_SYS_ROLE primary key (roleid)
 );
 
 comment on table sys_role is
-'[cache]';
+'[cache]
+角色说明，每个人只能看到他所属机构的所有公共角色+自己创建的角色';
 
 comment on column sys_role.roleid is
 '角色ID,内部自动生成[identity]';
@@ -469,6 +466,9 @@ comment on column sys_role.startdate is
 
 comment on column sys_role.enddate is
 '角色失效日期';
+
+comment on column sys_role.belong is
+'归属（预留，机构，角色组等）';
 
 comment on column sys_role.creator is
 '创建人';
@@ -497,7 +497,9 @@ create table sys_sno
    fixedlength          NUMBER(4)            default 0,
    fillchar             CHAR(1)              default '0',
    notype               CHAR(1)              default '0' not null,
-   nodate               CHAR(8),
+   cycletype            CHAR(1)              default '0' not null,
+   cycledate            VARCHAR2(8),
+   endvalue             INTEGER              not null,
    prefix               VARCHAR2(8),
    suffix               VARCHAR2(8),
    constraint PK_SYS_SNO primary key (noid, unioncode)
@@ -528,16 +530,22 @@ comment on column sys_sno.fillchar is
 '填充字符';
 
 comment on column sys_sno.notype is
-'类型（1-递增，2-按天复位）';
+'类型（1-递增，2-递减）';
 
-comment on column sys_sno.nodate is
-'使用日期';
+comment on column sys_sno.cycletype is
+'循环周期（0-指定值重置，1-按天循环，2-按月循环，3-按年循环）';
+
+comment on column sys_sno.cycledate is
+'循环起始日期';
+
+comment on column sys_sno.endvalue is
+'指定重置值';
 
 comment on column sys_sno.prefix is
-'前缀';
+'前缀，支持日期模板，如 ab{yyymmdd}cd';
 
 comment on column sys_sno.suffix is
-'后缀';
+'后缀，支持日期模板，如 ab{yyymmdd}cd';
 
 /*==============================================================*/
 /* Table: sys_user                                              */
@@ -550,19 +558,19 @@ create table sys_user
    loginid              VARCHAR2(32)         not null,
    loginpasswd          CHAR(32)             not null,
    salt                 VARCHAR2(8)          not null,
-   passwdvaliddate      CHAR(8)              not null,
+   passwdvaliddate      VARCHAR2(8)          not null,
    mobileno             VARCHAR2(16)         not null,
    email                VARCHAR2(64),
    orgid                INTEGER              not null,
    idtype               CHAR(1)              default '0',
    idcode               VARCHAR2(32),
    idname               VARCHAR2(32),
-   logindate            CHAR(8),
-   logintime            CHAR(6),
+   logindate            VARCHAR2(8),
+   logintime            VARCHAR2(6),
    status               CHAR(1)              default '0' not null,
    loginerror           NUMBER(4)            default 0 not null,
-   opendate             CHAR(8),
-   canceldate           CHAR(8),
+   opendate             VARCHAR2(8),
+   canceldate           VARCHAR2(8),
    constraint PK_SYS_USER primary key (userid)
 );
 
@@ -632,8 +640,8 @@ create table sys_user_actlog
    requrl               VARCHAR2(32),
    reqmethod            VARCHAR2(32),
    reqdata              VARCHAR2(256),
-   actdate              CHAR(8)              not null,
-   acttime              CHAR(6)              not null,
+   actdate              VARCHAR2(8)          not null,
+   acttime              VARCHAR2(6)          not null,
    accesstype           CHAR(1)              default '0' not null,
    ipaddress            VARCHAR2(16),
    constraint PK_SYS_USER_ACTLOG primary key (logid)
@@ -676,7 +684,7 @@ create table sys_user_info
 (
    userid               INTEGER              not null,
    sex                  CHAR(1)              default '0' not null,
-   birthday             CHAR(8),
+   birthday             VARCHAR2(8),
    address              VARCHAR2(64),
    postcode             VARCHAR2(8),
    phone                VARCHAR2(16),
@@ -684,6 +692,8 @@ create table sys_user_info
    province             VARCHAR2(8),
    city                 VARCHAR2(8),
    education            CHAR(1)              default '0',
+   ethnicity            VARCHAR2(4),
+   profession           VARCHAR2(4),
    constraint PK_SYS_USER_INFO primary key (userid)
 );
 
@@ -717,6 +727,12 @@ comment on column sys_user_info.city is
 comment on column sys_user_info.education is
 '教育程度';
 
+comment on column sys_user_info.ethnicity is
+'民族';
+
+comment on column sys_user_info.profession is
+'职业';
+
 /*==============================================================*/
 /* Table: sys_user_login                                        */
 /*==============================================================*/
@@ -725,8 +741,8 @@ create table sys_user_login
    logid                INTEGER              not null,
    unioncode            VARCHAR2(8)          default '0000' not null,
    userid               INTEGER              default 0 not null,
-   logindate            CHAR(8),
-   logintime            CHAR(6),
+   logindate            VARCHAR2(8),
+   logintime            VARCHAR2(6),
    loginpasswd          CHAR(32)             not null,
    loginip              VARCHAR2(16),
    logintype            CHAR(1)              default '0' not null,

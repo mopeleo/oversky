@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/8/4 21:01:41                            */
+/* Created on:     2019/9/13 22:23:49                           */
 /*==============================================================*/
 
 
@@ -60,11 +60,12 @@ alter table sys_confirm comment '复核配置表[cache]';
 create table sys_confirm_checklog
 (
    logid                bigint not null auto_increment comment '复核流水号[identity]',
+   unioncode            varchar(8) not null default '0000',
    datalog              bigint not null comment '复核数据流水号',
    checker              bigint not null comment '复核人',
    checklevel           numeric(1,0) not null default 0 comment '复核级别，递增',
-   checkdate            char(8) not null comment '复核日期',
-   checktime            char(6) not null comment '复核时间',
+   checkdate            varchar(8) not null comment '复核日期',
+   checktime            varchar(6) not null comment '复核时间',
    status               char(1) not null default '0' comment '复核状态（0-未复核，1-复核通过，2-复核不通过）',
    summary              varchar(256) comment '复核意见',
    primary key (logid)
@@ -76,14 +77,15 @@ create table sys_confirm_checklog
 create table sys_confirm_datalog
 (
    logid                bigint not null auto_increment comment '数据流水号[identity]',
+   unioncode            varchar(8) not null default '0000',
    confirmid            numeric(4,0) not null default 0 comment '复核类型ID',
    edittype             char(1) not null default '0' comment '行为（1-insert，2-update，3-delete）',
    dataid               varchar(256) comment '数据id，json',
    fulldata             varchar(2048) comment '要复核的完整数据，json字符串',
    extdata              varchar(2048) comment 'fulldata保存不下的，可以拆分存在这里',
    editer               bigint not null comment '编辑人',
-   editdate             char(8) not null comment '编辑日期',
-   edittime             char(6) not null comment '编辑时间',
+   editdate             varchar(8) not null comment '编辑日期',
+   edittime             varchar(6) not null comment '编辑时间',
    currentstatus        char(1) not null default '0' comment '当前复核状态（0-未复核，1-复核通过，2-复核不通过）',
    currentlevel         numeric(1,0) not null default 0 comment '当前复核级别',
    endflag              char(1) not null default '0' comment '完结标志（0-未结束，1-结束）',
@@ -215,8 +217,8 @@ create table sys_role
    rolename             varchar(32) not null comment '角色名称',
    status               char(1) not null default '0' comment '角色状态，0-无效，1-有效',
    roletype             char(1) not null default '0' comment '角色类型，0-公共，1-私有',
-   startdate            char(8) not null comment '角色生效日期',
-   enddate              char(8) not null comment '角色失效日期',
+   startdate            varchar(8) not null comment '角色生效日期',
+   enddate              varchar(8) not null comment '角色失效日期',
    belong               varchar(16) comment '归属（预留，机构，角色组等）',
    creator              bigint not null comment '创建人',
    primary key (roleid)
@@ -248,10 +250,12 @@ create table sys_sno
    fixedflag            char(1) not null default '0' comment '定长标志(0-不固定，1-定长)',
    fixedlength          numeric(4,0) default 0 comment '定长长度，不包括前后缀',
    fillchar             char(1) default '0' comment '填充字符',
-   notype               char(1) not null default '0' comment '类型（1-递增，2-按天复位）',
-   nodate               char(8) comment '使用日期',
-   prefix               varchar(8) comment '前缀',
-   suffix               varchar(8) comment '后缀',
+   notype               char(1) not null default '0' comment '类型（1-递增，2-递减）',
+   cycletype            char(1) not null default '0' comment '循环周期（0-指定值重置，1-按天循环，2-按月循环，3-按年循环）',
+   cycledate            varchar(8) comment '循环起始日期',
+   endvalue             bigint not null comment '指定重置值',
+   prefix               varchar(8) comment '前缀，支持日期模板，如 ab{yyymmdd}cd',
+   suffix               varchar(8) comment '后缀，支持日期模板，如 ab{yyymmdd}cd',
    primary key (noid, unioncode)
 );
 
@@ -268,19 +272,19 @@ create table sys_user
    loginid              varchar(32) not null comment '登录名',
    loginpasswd          char(32) not null comment '登录密码',
    salt                 varchar(8) not null comment '密码盐',
-   passwdvaliddate      char(8) not null comment '密码失效日期',
+   passwdvaliddate      varchar(8) not null comment '密码失效日期',
    mobileno             varchar(16) not null comment '手机号码',
    email                varchar(64) comment '电子邮件',
    orgid                bigint not null comment '所属机构',
    idtype               char(1) default '0' comment '证件类型',
    idcode               varchar(32) comment '证件号码',
    idname               varchar(32) comment '证件姓名',
-   logindate            char(8) comment '上次登录日期',
-   logintime            char(6) comment '上次登录时间',
+   logindate            varchar(8) comment '上次登录日期',
+   logintime            varchar(6) comment '上次登录时间',
    status               char(1) not null default '0' comment '用户状态，0，已注销；1，正常；2，锁定',
    loginerror           numeric(4,0) not null default 0 comment '连续登录失败次数',
-   opendate             char(8) comment '创建日期',
-   canceldate           char(8) comment '注销日期',
+   opendate             varchar(8) comment '创建日期',
+   canceldate           varchar(8) comment '注销日期',
    primary key (userid)
 );
 
@@ -296,8 +300,8 @@ create table sys_user_actlog
    requrl               varchar(32) comment '请求URL',
    reqmethod            varchar(32) comment '请求方法',
    reqdata              varchar(256) comment '请求数据，json',
-   actdate              char(8) not null comment '行为日期',
-   acttime              char(6) not null comment '行为时间',
+   actdate              varchar(8) not null comment '行为日期',
+   acttime              varchar(6) not null comment '行为时间',
    accesstype           char(1) not null default '0' comment '登录方式（0-pc，1-手机）',
    ipaddress            varchar(16),
    primary key (logid)
@@ -312,7 +316,7 @@ create table sys_user_info
 (
    userid               bigint not null comment '用户ID,内部自动生成',
    sex                  char(1) not null default '0' comment '性别（0-女，1-男）',
-   birthday             char(8) comment '生日',
+   birthday             varchar(8) comment '生日',
    address              varchar(64) comment '联系地址',
    postcode             varchar(8) comment '邮政编码',
    phone                varchar(16) comment '备用电话',
@@ -320,6 +324,8 @@ create table sys_user_info
    province             varchar(8) comment '所在省份',
    city                 varchar(8) comment '所在城市',
    education            char(1) default '0' comment '教育程度',
+   ethnicity            varchar(4) comment '民族',
+   profession           varchar(4) comment '职业',
    primary key (userid)
 );
 
@@ -331,8 +337,8 @@ create table sys_user_login
    logid                bigint not null auto_increment comment '[identity]',
    unioncode            varchar(8) not null default '0000',
    userid               bigint not null default 0,
-   logindate            char(8) comment '登录日期',
-   logintime            char(6) comment '登录时间',
+   logindate            varchar(8) comment '登录日期',
+   logintime            varchar(6) comment '登录时间',
    loginpasswd          char(32) not null comment '登录密码',
    loginip              varchar(16) comment '登录IP',
    logintype            char(1) not null default '0' comment '登录方式（0-pc，1-手机）',

@@ -23,6 +23,18 @@ public class SysUserRes extends BaseResDto {
 	private String opendate;    //创建日期
 	private String canceldate;    //注销日期
 
+	private String sex;    //性别（0-女，1-男）
+	private String birthday;    //生日
+	private String address;    //联系地址
+	private String postcode;    //邮政编码
+	private String phone;    //备用电话
+	private String nationality;    //国籍
+	private String province;    //所在省份
+	private String city;    //所在城市
+	private String education;    //教育程度
+	private String profession; //职业
+	private String ethnicity; 	//民族
+
 	public Long getUserid() {
 		return this.userid;
 	}
@@ -151,8 +163,95 @@ public class SysUserRes extends BaseResDto {
 		this.canceldate = canceldate;
 	}
 
+    public String getSex() {
+		return sex;
+	}
 
-    @Override
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getEthnicity() {
+		return ethnicity;
+	}
+
+	public void setEthnicity(String ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -174,6 +273,17 @@ public class SysUserRes extends BaseResDto {
 		sb.append(", status=").append(status);
 		sb.append(", opendate=").append(opendate);
 		sb.append(", canceldate=").append(canceldate);
+		sb.append(", sex=").append(sex);
+		sb.append(", birthday=").append(birthday);
+		sb.append(", address=").append(address);
+		sb.append(", postcode=").append(postcode);
+		sb.append(", phone=").append(phone);
+		sb.append(", nationality=").append(nationality);
+		sb.append(", province=").append(province);
+		sb.append(", city=").append(city);
+		sb.append(", education=").append(education);
+		sb.append(", profession=").append(profession);
+		sb.append(", ethnicity=").append(ethnicity);
         sb.append("]");
         return sb.toString();
 	}

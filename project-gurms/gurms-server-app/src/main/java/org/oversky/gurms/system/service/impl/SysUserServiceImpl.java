@@ -14,6 +14,7 @@ import org.oversky.gurms.system.dao.SysUserRoleDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.entity.SysUser;
+import org.oversky.gurms.system.entity.SysUserInfo;
 import org.oversky.gurms.system.entity.SysUserRole;
 import org.oversky.gurms.system.ext.dao.PageListQueryDao;
 import org.oversky.gurms.system.ext.dao.UniqueCheckDao;
@@ -55,6 +56,7 @@ public class SysUserServiceImpl implements SysUserService{
 	private UniqueCheckDao uniqueCheckDao;
 	
 	@Override
+	@Transactional
 	@GSAValid(type=SysUserReq.class)
 	public SysUserRes insert(SysUserReq userReq) {
 		log.info("开始新增用户......");
@@ -79,6 +81,7 @@ public class SysUserServiceImpl implements SysUserService{
 		user.setSalt(BizFunc.getPasswdSalt());
 		user.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		user.setLoginerror(0);
+		user.setOpendate(DateUtils.getNowDate());
 		user.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
 		String md5Password = user.getLoginpasswd();
 		if(StringUtils.isEmpty(md5Password)) {
@@ -89,6 +92,10 @@ public class SysUserServiceImpl implements SysUserService{
 		if(sysUserDao.insert(user) != 1) {
 			res.failure("新增失败");
 		}
+		
+		SysUserInfo userInfo = BeanCopyUtils.convert(userReq, SysUserInfo.class);
+		userInfo.setUserid(user.getUserid());
+		userInfoDao.insert(userInfo);
 		log.info("新增用户结束 : {}", res.getReturnmsg());
 		return res;
 	}
@@ -126,8 +133,7 @@ public class SysUserServiceImpl implements SysUserService{
 		if(ParamConsts.PARAM1007_DELETE.equals(param1007)) {
 			sysUserDao.deleteById(userReq.getUserid());			
 			userInfoDao.deleteById(userReq.getUserid());
-		}
-		if(ParamConsts.PARAM1007_CANCEL.equals(param1007)) {
+		}else if(ParamConsts.PARAM1007_CANCEL.equals(param1007)) {
 			SysUser updateUser = new SysUser();
 			updateUser.setUserid(userReq.getUserid());
 			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_CANCEL);
