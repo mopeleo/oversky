@@ -16,6 +16,7 @@ import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.entity.SysUserRole;
 import org.oversky.gurms.system.ext.dao.PageListQueryDao;
+import org.oversky.gurms.system.ext.dao.UniqueCheckDao;
 import org.oversky.gurms.system.service.SysUserService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.oversky.util.date.DateUtils;
@@ -50,12 +51,27 @@ public class SysUserServiceImpl implements SysUserService{
 	@Autowired
 	private PageListQueryDao pageQueryDao;
 	
+	@Autowired
+	private UniqueCheckDao uniqueCheckDao;
+	
 	@Override
 	@GSAValid(type=SysUserReq.class)
 	public SysUserRes insert(SysUserReq userReq) {
 		log.info("开始新增用户......");
 		SysUserRes res = new SysUserRes();
 		if(!this.check(userReq, res)) {
+			return res;
+		}
+		
+		if(uniqueCheckDao.existLoginId(userReq.getLoginid()) > 0) {
+			res.failure("登录名[" + userReq.getLoginid() + "]已存在！");
+			log.info(res.getReturnmsg());
+			return res;
+		}
+		
+		if(uniqueCheckDao.existUserMobile(userReq.getMobileno()) > 0) {
+			res.failure("手机号码[" + userReq.getMobileno() + "]已存在！");
+			log.info(res.getReturnmsg());
 			return res;
 		}
 		
@@ -136,6 +152,12 @@ public class SysUserServiceImpl implements SysUserService{
 		//是超级用户
 		if(BizFunc.isRootUser(userReq.getUserid())) {
 			res.failure("超级用户不能修改");
+			return res;
+		}
+		
+		if(uniqueCheckDao.existUserMobileUpdate(userReq.getUserid(), userReq.getMobileno()) > 0) {
+			res.failure("手机号码[" + userReq.getMobileno() + "]已存在！");
+			log.info(res.getReturnmsg());
 			return res;
 		}
 		

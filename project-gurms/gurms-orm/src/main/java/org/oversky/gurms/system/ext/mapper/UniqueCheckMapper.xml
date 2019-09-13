@@ -2,12 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.oversky.gurms.system.ext.dao.UniqueCheckDao">
 
+    <select id="existLoginId" resultType="int">
+        select count(1) from sys_user where loginid = #{param1}
+    </select>
+  
     <select id="existUserMobile" resultType="int">
         select count(1) from sys_user where mobileno = #{param1}
     </select>
   
+    <select id="existUserMobileUpdate" resultType="int">
+        select count(1) from sys_user where mobileno = #{param2} and userid != #{param1}
+    </select>
+  
     <select id="existOrgNameUpdate" resultType="int">
-        select count(1) from sys_org where shortname = #{param1} and orgid != #{param2} and parentorg = #{param3}
+        select count(1) from sys_org where shortname = #{param2} and orgid != #{param1} and parentorg = #{param3}
     </select>
   
 </mapper>

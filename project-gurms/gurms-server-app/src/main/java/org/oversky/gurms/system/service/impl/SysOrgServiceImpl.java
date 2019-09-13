@@ -167,7 +167,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 			return res;
 		}
 		//orgname 同一父机构下机构名唯一性检查，机构名允许修改
-		if(uniqueDao.existOrgNameUpdate(orgReq.getShortname(), orgReq.getOrgid(), orgReq.getParentorg()) > 0) {
+		if(uniqueDao.existOrgNameUpdate(orgReq.getOrgid(), orgReq.getShortname(), orgReq.getParentorg()) > 0) {
 			res.failure("同级机构中机构名称["+orgReq.getShortname()+"]已存在");
 			log.info("修改机构失败 : {}", res.getReturnmsg());
 			return res;

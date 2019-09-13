@@ -27,7 +27,6 @@
                     <el-form-item>
                         <el-button type="primary" icon="el-icon-search" @click="loadData">查询</el-button>
                         <el-button type="primary" v-permission="$permission.system.user.add" icon="el-icon-plus" @click="handleAdd">新增</el-button>
-                        <el-button type="primary" icon="el-icon-plus" @click="drawer=true" >drawer</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -79,6 +78,7 @@
             </div>
         </el-form>
 
+<!--
         <el-dialog title="用户信息" v-if="dialogFormVisible" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
             <el-form ref="detailForm" :model="sysuser" :rules="rules" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
                 <el-row :gutter="20">
@@ -108,16 +108,13 @@
                 <el-row :gutter="20">
                     <el-col :span="10">
                         <el-form-item label="所属机构" prop="orgid">
-<!--                            <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
-                                :value="sysuser.orgid" :accordion="true" @getValue="getOrgId($event)">
-                            </SelectTree>   -->
                             <el-cascader :options="treeData" :show-all-levels="false" v-model="sysuser.orgid"
                                 :props="{value:'orgid', children:'subOrgs', label:'shortname', checkStrictly:true, emitPath:false}"></el-cascader>
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">
-                        <el-form-item label="证件姓名">
-                            <el-input ></el-input>
+                        <el-form-item label="证件姓名" prop="idname">
+                            <el-input v-model="sysuser.idname"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -146,6 +143,7 @@
             </el-form>
 
         </el-dialog>
+-->
 
         <el-dialog title="分配角色" v-if="dialogGrantRole" :visible.sync="dialogGrantRole" :close-on-click-modal="false" width="35%">
             <el-row type="flex" justify="center" class="row-role">
@@ -166,32 +164,75 @@
             </el-row>
         </el-dialog>
 
-        <!--
-        <el-drawer
-            title="我嵌套了 Form !"
-            :before-close="handleClose"
-            :visible.sync="drawer"
-            custom-class="demo-drawer"
-            ref="drawer">
+        <el-drawer ref="drawer" title="用户信息" custom-class="demo-drawer" size="40%"
+            :wrapperClosable="drawerCloseFlag" :visible.sync="userDetailDrawer">
+
             <div class="demo-drawer__content">
-                <el-form :model="form">
-                    <el-form-item label="活动名称" :label-width="formLabelWidth">
-                        <el-input v-model="form.name" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="活动区域" :label-width="formLabelWidth">
-                        <el-select v-model="form.region" placeholder="请选择活动区域">
-                            <el-option label="区域一" value="shanghai"></el-option>
-                            <el-option label="区域二" value="beijing"></el-option>
-                        </el-select>
-                    </el-form-item>
+                <el-form ref="drawerForm" :model="sysuser" :rules="rules" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
+                    <el-row :gutter="20">
+                        <el-col :span="10">
+                            <el-form-item label="用户姓名" prop="username">
+                                <el-input v-model="sysuser.username" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-form-item label="登录名" prop="loginid">
+                                <el-input v-model="sysuser.loginid" :disabled="editType === this.$pubdefine.EDIT_TYPE_UPDATE"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
+                        <el-col :span="10">
+                            <el-form-item label="手机号码" prop="mobileno">
+                                <el-input v-model="sysuser.mobileno"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-form-item label="电子邮件" prop="email">
+                                <el-input v-model="sysuser.email"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
+                        <el-col :span="10">
+                            <el-form-item label="所属机构" prop="orgid">
+                                <el-cascader :options="treeData" :show-all-levels="false" v-model="sysuser.orgid"
+                                    :props="{value:'orgid', children:'subOrgs', label:'shortname', checkStrictly:true, emitPath:false}"></el-cascader>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-form-item label="证件姓名" prop="idname">
+                                <el-input v-model="sysuser.idname"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
+                        <el-col :span="10">
+                            <el-form-item label="证件类型" prop="idtype">
+                                <el-select v-model="sysuser.idtype" value-key="itemcode" clearable placeholder="请选择">
+                                    <el-option v-for="item in dictCache['2004']"
+                                        :key="item.itemcode"
+                                        :label="item.itemcode + ' - ' + item.itemname"
+                                        :value="item.itemcode">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-form-item label="证件号码" prop="idcode">
+                                <el-input v-model="sysuser.idcode"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                 </el-form>
                 <div class="demo-drawer__footer">
-                    <el-button @click="dialog = false">取 消</el-button>
-                    <el-button type="primary" @click="$refs.drawer.closeDrawer()" :loading="loading">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+                    <el-row type="flex" justify="center" v-if="editType !== this.$pubdefine.EDIT_TYPE_DETAIL">
+                        <el-button type="primary" @click="onSubmit('drawerForm')">保存</el-button>
+                        <el-button type="primary" @click="userDetailDrawer = false;">关闭</el-button>
+                    </el-row>
                 </div>
             </div>
         </el-drawer>
-        -->
 
     </div>
 </template>
@@ -215,12 +256,24 @@ export default{
             },
             //对话框表单属性
             userDetailDrawer: false,
+            drawerCloseFlag: false,
             dialogFormVisible: false,
             dialogGrantRole: false,
             editType: this.$pubdefine.EDIT_TYPE_INSERT,   // insert/update
-            drawer: false,
             //临时业务数据
-            sysuser: null,
+            sysuser: {
+                userid:'',
+                unioncode:'',
+                username:'',
+                loginid:'',
+                mobileno:'',
+                email:'',
+                orgid:'',
+                orgname:'',
+                idname:'',
+                idtype:'',
+                idcode:''
+            },
             allRoles:[],    //所有角色
             selectRoles:[], //已选角色
             rules:{
@@ -240,12 +293,6 @@ export default{
         this.loadData();
     },
     methods:{
-        handleClose(done) {
-            this.$confirm('确认关闭？')
-                .then(_ => {
-                    done();
-                }).catch(_ => {});
-        },
         loadData:function(){
             this.$api.Gurms.userList(this.userReq).then((res)=>{
                 this.tableData = res;
@@ -385,8 +432,8 @@ export default{
             });
         },
         handleAdd() {
-            // this.$router.push({name: 'sysuser/detail'});
-            this.dialogFormVisible = true;
+            // this.dialogFormVisible = true;
+            this.userDetailDrawer = true;
             this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
             this.sysuser = {
                 userid:'',
@@ -405,7 +452,8 @@ export default{
         handleDetail(index, row) {
             // this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: false}});
             this.$api.Gurms.userDetail(row.userid).then(res =>{
-                this.dialogFormVisible = true;
+                // this.dialogFormVisible = true;
+                this.userDetailDrawer = true;
                 this.sysuser = res;
                 this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
             }).catch((err)=>{
@@ -415,7 +463,8 @@ export default{
         handleEdit(index, row) {
             // this.$router.push({name: 'sysuser/detail', params: {userid: row.userid, edit: true}});
             this.$api.Gurms.userDetail(row.userid).then(res =>{
-                this.dialogFormVisible = true;
+                // this.dialogFormVisible = true;
+                this.userDetailDrawer = true;
                 this.sysuser = res;
                 this.editType = this.$pubdefine.EDIT_TYPE_UPDATE;
             }).catch((err)=>{
@@ -447,7 +496,8 @@ export default{
                     callAPI.then((res)=>{
                         tools.succTip(res.returnmsg);
                         if(res.success === true){
-                            this.dialogFormVisible = false;
+                            // this.dialogFormVisible = true;
+                            this.userDetailDrawer = false;
                             this.$options.methods.loadData.bind(this)();
                         }
                     }).catch((err)=>{
