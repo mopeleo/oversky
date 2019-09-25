@@ -1,7 +1,6 @@
 package org.oversky.util.number;
 
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import org.oversky.util.exception.BaseUtilException;
 
@@ -47,17 +46,6 @@ public class NumberUtils {
 		}
 		return binaryArray;
 	}
-	
-	/**
-	 * 判断字符窜是否为数字
-	 * @param str
-	 * @return
-	 */
-	public static boolean isNumber(String str) {
-		Pattern pattern = Pattern.compile("^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$");
-		return pattern.matcher(str).matches();
-	}
-	
 	
 	public static void main(String[] args) {
 		int num = 777;

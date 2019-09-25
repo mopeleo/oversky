@@ -30,7 +30,7 @@ public class JwtAuthTokenInterceptor implements HandlerInterceptor{
 //		System.out.println("================userId : " + userId + "===================");
 		//从数据库获取
 		SysMenuRes menu = menuService.getMenuByUrl(requestUrl);
-		if(menu != null && menu.getAccesstype() != DictConsts.DICT2011_ACCESSTYPE_ANY) {
+		if(menu != null && !DictConsts.DICT2011_ACCESSTYPE_ANY.equals(menu.getAccesstype())) {
 			String authToken = request.getHeader("Authorization");
 			//过期返回登陆页面
 			if(JwtTokenUtil.isExpiration(authToken)) {
@@ -41,7 +41,7 @@ public class JwtAuthTokenInterceptor implements HandlerInterceptor{
 				throw new WebException(500, "非法的token，请重新登录获取token");
 			}
 			
-			if(menu.getAccesstype() == DictConsts.DICT2011_ACCESSTYPE_AUTH) {
+			if(DictConsts.DICT2011_ACCESSTYPE_AUTH.equals(menu.getAccesstype())) {
 				String subject = JwtTokenUtil.getSubject(authToken);
 				UserLoginRes userAuth = JacksonUtils.json2Bean(subject, UserLoginRes.class);
 				//绑定用户session

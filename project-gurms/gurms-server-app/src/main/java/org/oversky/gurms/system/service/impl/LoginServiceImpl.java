@@ -12,7 +12,7 @@ import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.entity.SysUserLogin;
-import org.oversky.gurms.system.service.IndexService;
+import org.oversky.gurms.system.service.LoginService;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.oversky.util.date.DateUtils;
@@ -24,9 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class IndexServiceImpl implements IndexService{
+public class LoginServiceImpl implements LoginService{
 
-	private static final Logger log = LoggerFactory.getLogger(IndexServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(LoginServiceImpl.class);
 	
 	@Autowired
 	private SysUserDao sysUserDao;

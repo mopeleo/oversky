@@ -20,8 +20,8 @@ public class JwtTokenUtil {
 	
 	private static final String RAS_PASSWORD = "oversky";  //密钥库口令
 	private static final String RAS_ALIAS = "jwt";          //密钥别名
-    private static int expirationSeconds = 24 * 3600;    // 过期时间
-    private static int type = 1;      // 1- keytool 生成的jks, 2- openssl生成的 pem
+    private static int EXPIRATION_SECONDS = 24 * 3600;    // 过期时间,1天
+    private static int TYPE = 1;      // 1- keytool 生成的jks, 2- openssl生成的 pem
 
     private static PrivateKey PRIVATE_KEY = null;
     private static PublicKey PUBLIC_KET = null;
@@ -33,7 +33,7 @@ public class JwtTokenUtil {
                 .setId(String.valueOf(now)) 	//jti:(JWT ID)是JWT的唯一标识，可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击
                 .setSubject(subject)			//sub:代表这个JWT的主体，可以是一个json格式的字符串
                 .setIssuedAt(new Date(now))		//iat:jwt的签发时间
-                .setExpiration(new Date(now + expirationSeconds * 1000))  // 过期时间
+                .setExpiration(new Date(now + EXPIRATION_SECONDS * 1000))  // 过期时间
                 .signWith(SignatureAlgorithm.RS256, getPrivateKey())
                 .compact();
     }
@@ -71,7 +71,7 @@ public class JwtTokenUtil {
     	}
     	
     	try {
-    		if(type == 1) {
+    		if(TYPE == 1) {
             	InputStream is = JwtTokenUtil.class.getClassLoader().getResourceAsStream("jwt.jks");
             	KeyStore keyStore = KeyStore.getInstance("JKS");
 				keyStore.load(is, RAS_PASSWORD.toCharArray());
@@ -96,7 +96,7 @@ public class JwtTokenUtil {
     	}
     	
     	try {
-    		if(type == 1) {
+    		if(TYPE == 1) {
             	InputStream is = JwtTokenUtil.class.getClassLoader().getResourceAsStream("jwt.jks");
             	KeyStore keyStore = KeyStore.getInstance("JKS");
 				keyStore.load(is, RAS_PASSWORD.toCharArray());

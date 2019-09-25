@@ -196,7 +196,7 @@ public class SysUserServiceImpl implements SysUserService{
 		updateUser.setUserid(userReq.getUserid());
 		updateUser.setSalt(BizFunc.getPasswdSalt());
 		String md5Password = EncryptUtils.md5Encode(BizFunc.getInitPassword());
-		updateUser.setLoginpasswd(BizFunc.getEncryptPassword(md5Password, user.getSalt()));
+		updateUser.setLoginpasswd(BizFunc.getEncryptPassword(md5Password, updateUser.getSalt()));
 		updateUser.setLoginerror(0);
 		updateUser.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
 		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {

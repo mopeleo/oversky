@@ -9,6 +9,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.oversky.util.date.DateUtils;
 import org.oversky.util.format.IDCodeUtils;
 import org.oversky.util.number.DoubleUtils;
+import org.oversky.util.regex.RegExCheck;
 
 
 public class GSAValidRule implements Serializable{
@@ -115,7 +116,7 @@ public class GSAValidRule implements Serializable{
 			case NotNull:
 				return StringUtils.isNotBlank(fieldValue);
 			case Number:
-				if(org.oversky.util.number.NumberUtils.isNumber(fieldValue)){
+				if(RegExCheck.isNumber(fieldValue)){
 					if(StringUtils.isNotEmpty(getPattern())) {
 						if("int".equalsIgnoreCase(getPattern())) {
 							result = result && NumberUtils.isDigits(fieldValue);
@@ -150,7 +151,7 @@ public class GSAValidRule implements Serializable{
 			case IdCard:
 				return IDCodeUtils.validateIDCode(fieldValue);
 			case Date:
-				return DateUtils.isDate(fieldValue);
+				return RegExCheck.isDate(fieldValue);
 			case Length:
 				if(StringUtils.isNotEmpty(fieldValue)){
 					if(StringUtils.isNotEmpty(getEq())){

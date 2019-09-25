@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.oversky.util.date.DateUtils;
 import org.oversky.util.exception.BaseUtilException;
+import org.oversky.util.regex.RegExCheck;
 
 public class IDCodeUtils {
 
@@ -47,7 +48,7 @@ public class IDCodeUtils {
 		//身份证出生年月
 		String year = Ai.substring(6, 10);
 		String birth = Ai.substring(6, 14);
-		if (!DateUtils.isDate(birth)) {
+		if (!RegExCheck.isDate(birth)) {
 			return false;
 		}
 		

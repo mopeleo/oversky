@@ -44,7 +44,7 @@
                 <el-table-column prop="logintime" width="100" label="登录时间"></el-table-column>
                 <el-table-column prop="passwdvaliddate" width="120" label="密码失效日期"></el-table-column>
                 <el-table-column fixed="right" width="180" label="操作">
-                    <template slot-scope="scope">
+                    <template slot-scope="scope" v-if="scope.row.userid !== $store.state.pub.user.userid">
                     <el-row :gutter="5">
                     <el-col :span="10">
                         <el-button type="danger" size="mini"

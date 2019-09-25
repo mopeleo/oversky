@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-header id="header">
-            <span class="hideAside" @click="collapse"><i class="fa fa-indent fa-lg"></i></span>
+            <span class="hideAside" @click="collapse"><i :class="isCollapse == true ? 'el-icon-d-arrow-left' : 'el-icon-d-arrow-right'"></i></span>
             <ul class="personal">
                 <li class="fullScreen" @click="fullScreen">
                     <el-tooltip class="item" effect="dark" content="全屏" placement="bottom">
@@ -39,11 +39,17 @@ export default {
     components: { tabNav, langSelect },
     data() {
         return {
+            isCollapse:true,
             isfullScreen: true
         }
     },
     methods: {
         collapse() {
+            if(this.isCollapse){
+                this.isCollapse = false;
+            }else{
+                this.isCollapse = true;
+            }
             this.$store.commit('pub/COLLAPSE_LEFT');
         },
         fullScreen() {
