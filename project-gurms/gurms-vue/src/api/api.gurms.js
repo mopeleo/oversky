@@ -106,9 +106,13 @@ export default {
     userUnfreeze (params) {
         return axios.post(`${baseURL}/sysuser/unfreeze`, params);
     },
-    // 用户解冻
+    // 重置密码
     userResetPassword (params) {
         return axios.post(`${baseURL}/sysuser/resetpassword`, params);
+    },
+    // 修改密码
+    userUpdatePassword (params) {
+        return axios.post(`${baseURL}/sysuser/updatepassword`, params);
     },
     // 用户详情
     userDetail (userid) {

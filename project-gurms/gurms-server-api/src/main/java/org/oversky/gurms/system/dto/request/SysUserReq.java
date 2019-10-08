@@ -34,7 +34,7 @@ public class SysUserReq extends BaseReqDto {
 	private String ethnicity; 	//民族
 
 	//----
-	private String newpassword;
+	private String newpasswd;
 	private String roleList;
 	
 	public Long getUserid() {
@@ -213,12 +213,12 @@ public class SysUserReq extends BaseReqDto {
 		this.roleList = roleList;
 	}
 
-	public String getNewpassword() {
-		return newpassword;
+	public String getNewpasswd() {
+		return newpasswd;
 	}
 
-	public void setNewpassword(String newpassword) {
-		this.newpassword = newpassword;
+	public void setNewpasswd(String newpasswd) {
+		this.newpasswd = newpasswd;
 	}
 
 	public String getProfession() {
@@ -266,7 +266,7 @@ public class SysUserReq extends BaseReqDto {
 		sb.append(", education=").append(education);
 		sb.append(", profession=").append(profession);
 		sb.append(", ethnicity=").append(ethnicity);
-		sb.append(", newpassword=").append(newpassword);
+		sb.append(", newpasswd=").append(newpasswd);
 		sb.append(", roleList=").append(roleList);
         sb.append("]");
         return sb.toString();

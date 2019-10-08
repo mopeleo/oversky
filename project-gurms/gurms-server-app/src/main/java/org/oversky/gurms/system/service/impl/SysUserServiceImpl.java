@@ -220,14 +220,14 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 		
-		if(userReq.getLoginpasswd().equals(userReq.getNewpassword())) {
+		if(userReq.getLoginpasswd().equals(userReq.getNewpasswd())) {
 			res.failure("用户新密码不能与原密码相同");
 			log.info(res.getReturnmsg());
 			return res;
 		}
 		
 		String oldPassword = BizFunc.getEncryptPassword(userReq.getLoginpasswd(), user.getSalt());
-		if(oldPassword.equals(user.getLoginpasswd())) {
+		if(!oldPassword.equals(user.getLoginpasswd())) {
 			res.failure("用户原密码错误，修改密码失败");
 			log.info(res.getReturnmsg());
 			return res;
@@ -242,7 +242,7 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser updateUser = new SysUser();
 		updateUser.setUserid(userReq.getUserid());
-		String newPassword = BizFunc.getEncryptPassword(userReq.getNewpassword(), user.getSalt());
+		String newPassword = BizFunc.getEncryptPassword(userReq.getNewpasswd(), user.getSalt());
 		updateUser.setLoginpasswd(newPassword);
 		updateUser.setLoginerror(0);
 		updateUser.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());

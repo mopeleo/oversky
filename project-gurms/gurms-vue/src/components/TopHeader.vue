@@ -26,21 +26,96 @@
                 </li>
                 <li class="icon"><img src="../assets/icon.jpg"/></li>
             </ul>
+
+            <el-dialog title="修改密码" v-if="dialogFormVisible" :visible.sync="dialogFormVisible" :close-on-click-modal="false" width="35%">
+                <el-form ref="detailForm" :model="sysuser" :rules="rules" label-width="120px">
+                    <el-row>
+                        <el-form-item label="用户姓名">
+                            {{$store.getters['pub/userinfo'].username}}
+                        </el-form-item>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="15">
+                            <el-form-item label="原密码" prop="loginpasswd">
+                                <el-input type="password" v-model="sysuser.loginpasswd"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="15">
+                            <el-form-item label="新密码" prop="newpasswd">
+                                <el-input type="password" v-model="sysuser.newpasswd"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="15">
+                            <el-form-item label="确认新密码" prop="newpasswd2">
+                                <el-input type="password" v-model="sysuser.newpasswd2"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row type="flex" justify="end">
+                        <el-button type="primary" @click="onSubmit('detailForm')">修改</el-button>
+                        <el-button type="primary" @click="dialogFormVisible = false;">关闭</el-button>
+                    </el-row>
+                </el-form>
+            </el-dialog>
+
         </el-header>
         <tabNav></tabNav>
     </div>
 </template>
 <script>
-import langSelect from '@/components/lang/langSelect'
-import tabNav from './TransitionNav'
+import langSelect from '@/components/lang/langSelect';
+import tabNav from './TransitionNav';
+import * as tools from '@/utils/tools';
+import md5 from 'js-md5';
 
 export default {
     name: 'Header',
     components: { tabNav, langSelect },
     data() {
+        var validateNewPasswd = (rule, value, callback) => {
+            if (value && value === this.sysuser.loginpasswd) {
+                callback(new Error("新密码不能与原密码相同"));
+            } else {
+                callback();
+            }
+        };
+        var validateNewPasswdAgain = (rule, value, callback) => {
+            if (value && value !== this.sysuser.newpasswd) {
+                callback(new Error("两次输入密码不一致!"));
+            } else {
+                callback();
+            }
+        };
         return {
+            dialogFormVisible: false,
+            //临时业务数据
+            sysuser: {
+                loginpasswd:'',
+                newpasswd:'',
+                newpasswd2:''
+            },
             isCollapse:true,
-            isfullScreen: true
+            isfullScreen: true,
+            rules:{
+                loginpasswd:[
+                    {required:true, message:'原密码不能为空', trigger:'blur'},
+                    {min:8, max:16, message:'输入长度在8-16之间', trigger:'blur'}
+                ],
+                newpasswd:[
+                    {required:true, message:'新密码不能为空', trigger:'blur'},
+                    {min:8, max:16, message:'输入长度在8-16之间', trigger:'blur'},
+                    {validator: validateNewPasswd, trigger:'blur'}
+                ],
+                newpasswd2:[
+                    {required:true, message:'再次输入新密码不能为空', trigger:'blur'},
+                    {min:8, max:16, message:'输入长度在8-16之间', trigger:'blur'},
+                    {validator: validateNewPasswdAgain, trigger:'blur'}
+                ]
+            }
         }
     },
     methods: {
@@ -79,7 +154,10 @@ export default {
             }
         },
         handleCommand(command) {
-            if (command === 'c') {
+            if (command === 'a') {
+                this.sysuser = {};
+                this.dialogFormVisible = true;
+            } else if(command === 'c'){
                 this.logout();
             } else {
                 alert(command);
@@ -98,6 +176,27 @@ export default {
             //     tools.errTip(error);
             // });
         },
+        onSubmit(formName){
+            this.$refs[formName].validate((valid)=>{
+                if(valid){
+                    //从session赋值
+                    var userReq = {};
+                    userReq.userid = this.$store.state.pub.user.userid;
+                    userReq.loginpasswd = md5(this.sysuser.loginpasswd);
+                    userReq.newpasswd = md5(this.sysuser.newpasswd);
+                    this.$api.Gurms.userUpdatePassword(userReq).then((res)=>{
+                        tools.succTip(res.returnmsg);
+                        if(res.success === true){
+                            this.dialogFormVisible = false;
+                        }
+                    }).catch((err)=>{
+                        tools.errTip(err);
+                    });
+                }else{
+                    return false;
+                }
+            })
+        }
 
     }
 }

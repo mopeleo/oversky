@@ -56,7 +56,7 @@
                             </el-col>
                             <el-col :span="10">
                                 <el-form-item label="上级机构" prop="parentorg">
-                                    <SelectTree :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
+                                    <SelectTree ref="selectTree" :props="{value:'orgid', children: 'subOrgs',label: 'shortname'}" :options="treeData"
                                         :value="sysorg.parentorg" :accordion="true" :clearable="false" @getValue="getOrgId($event)">
                                     </SelectTree>
 
@@ -217,6 +217,7 @@ export default {
                 email: '',
                 remark: ''
             };
+            this.$refs['selectTree'].clearHandle();     //父组件调用子组件方法
             this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
         },
         getOrgId(value){

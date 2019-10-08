@@ -90,6 +90,12 @@ export default {
             }
         };
     },
+    // created(){
+    //     let token = this.$store.getters['pub/userinfo'];
+    //     if(token){
+    //         this.$router.push({ name: 'about' });
+    //     }
+    // },
     methods: {
         // 用户名输入框回车后切换到密码输入框
         goToPwdInput() {

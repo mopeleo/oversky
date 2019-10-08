@@ -20,6 +20,7 @@ export default new Router({
                 {
                     path: 'about',
                     name: 'about',
+                    meta: {accesstype: '1'},
                     component: () => import('@/views/About.vue')
                 },
                 {
