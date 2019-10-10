@@ -9,9 +9,9 @@ insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1001, '1')
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, valuelist, valuelength, texttitle, texttail) 
 values (1001, '超级用户UserId', '1', '1', '2', '', 32, '', '(多个用户用逗号[,]分隔)');
 
-insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1002, '6');
+insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1002, '1');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, valuelist, valuelength, texttitle, texttail) 
-values (1002, '密码最小长度', '6', '1', '2', '', 2, '', '');
+values (1002, '初始/重置密码', '1', '1', '2', '', 16, '', '');
 
 insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1003, '10');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, valuelist, valuelength, texttitle, texttail) 

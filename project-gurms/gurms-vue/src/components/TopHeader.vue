@@ -77,10 +77,19 @@ export default {
     components: { tabNav, langSelect },
     data() {
         var validateNewPasswd = (rule, value, callback) => {
-            if (value && value === this.sysuser.loginpasswd) {
-                callback(new Error("新密码不能与原密码相同"));
-            } else {
+            if (value){
+                if(value === this.sysuser.loginpasswd) {
+                    callback(new Error("新密码不能与原密码相同"));
+                }
+
+                var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).');
+                if (!regex.test(value)) {
+                    callback(new Error("密码中必须包含字母、数字、特殊字符"));
+                }
+
                 callback();
+            } else {
+                callback(new Error("新密码不能为空"));
             }
         };
         var validateNewPasswdAgain = (rule, value, callback) => {

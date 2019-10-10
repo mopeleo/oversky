@@ -22,7 +22,7 @@
             <el-table border stripe :data="tableData.results" :highlight-current-row="true" style="width:100%">
 
                 <el-table-column type="index" width="50"></el-table-column>
-                <el-table-column prop="unioncode" label="法人行代码"></el-table-column>
+                <el-table-column prop="unioncode" label="机构代码"></el-table-column>
                 <el-table-column prop="noid" label="序列编号"></el-table-column>
                 <el-table-column prop="noname" label="序列名称"></el-table-column>
                 <el-table-column prop="initvalue" label="初始值"></el-table-column>
@@ -59,7 +59,7 @@
             <el-form ref="detailForm" :model="syssno" :rules="rules" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
                 <el-row :gutter="20">
                     <el-col :span="10">
-                        <el-form-item label="法人行代码" prop="unioncode">
+                        <el-form-item label="机构代码" prop="unioncode">
                             <el-input v-model="syssno.unioncode" :disabled="true"></el-input>
                         </el-form-item>
                     </el-col>

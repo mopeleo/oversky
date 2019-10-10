@@ -22,7 +22,7 @@
             <el-table border stripe :data="tableData.results" :highlight-current-row="true" style="width:100%">
 
                 <el-table-column type="index" width="50"></el-table-column>
-                <el-table-column prop="unioncode" label="法人行代码"></el-table-column>
+                <el-table-column prop="unioncode" label="机构代码"></el-table-column>
                 <el-table-column prop="dictcode" label="字典代码"></el-table-column>
                 <el-table-column prop="dictname" label="字典名称"></el-table-column>
                 <el-table-column prop="itemcode" label="字典项"></el-table-column>

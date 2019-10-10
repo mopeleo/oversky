@@ -93,7 +93,6 @@ insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('000
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2000, '1', '男');
 
 insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2001, '账户状态', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2001, '0', '注销');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2001, '1', '正常');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2001, '2', '密码锁定');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2001, '3', '冻结');

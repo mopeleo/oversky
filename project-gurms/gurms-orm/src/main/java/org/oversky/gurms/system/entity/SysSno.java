@@ -18,8 +18,8 @@ public class SysSno extends BaseEntity{
 	private String cycletype;    //循环周期（0-指定值重置，1-按天循环，2-按月循环，3-按年循环）
 	private String cycledate;    //循环起始日期
 	private Long endvalue;    //指定重置值
-	private String prefix;    //前缀，支持日期模板，如 ab{yyymmdd}cd
-	private String suffix;    //后缀，支持日期模板，如 ab{yyymmdd}cd
+	private String prefix;    //前缀，支持日期/时间模板，如 ab{date}{time}cd
+	private String suffix;    //后缀，支持日期/时间模板，如 ab{date}{time}cd
 
 	public String getUnioncode() {
 		return this.unioncode;

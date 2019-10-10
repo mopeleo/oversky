@@ -9,10 +9,6 @@ public class BizFunc {
 
 	private BizFunc() {}
 	
-	public static String getPasswdSalt() {
-		return CommonUtils.getRandomString(8);
-	}
-	
 	/**
 	 *	 是否超级管理员，超级管理员不允许编辑
 	 * @param unioncode
@@ -40,8 +36,12 @@ public class BizFunc {
 		return false;
 	}
 	
+	public static String createPasswdSalt() {
+		return CommonUtils.getRandomString(8);
+	}
+	
 	public static String getInitPassword() {
-		return "1";
+		return ParamConsts.getParam(ParamConsts.DEFAULT_UNIONCODE, ParamConsts.PARAM1002_PASSWD_INIT);
 	}
 	
 	public static String getEncryptPassword(String password, String salt) {

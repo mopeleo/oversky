@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* Created on:     2019/9/13 22:25:27                           */
+/* Created on:     2019/10/10 17:23:41                          */
 /*==============================================================*/
 
 
@@ -500,8 +500,8 @@ create table sys_sno
    cycletype            CHAR(1)              default '0' not null,
    cycledate            VARCHAR2(8),
    endvalue             INTEGER              not null,
-   prefix               VARCHAR2(8),
-   suffix               VARCHAR2(8),
+   prefix               VARCHAR2(16),
+   suffix               VARCHAR2(16),
    constraint PK_SYS_SNO primary key (noid, unioncode)
 );
 
@@ -542,10 +542,10 @@ comment on column sys_sno.endvalue is
 '指定重置值';
 
 comment on column sys_sno.prefix is
-'前缀，支持日期模板，如 ab{yyymmdd}cd';
+'前缀，支持日期/时间模板，如 ab{date}{time}cd';
 
 comment on column sys_sno.suffix is
-'后缀，支持日期模板，如 ab{yyymmdd}cd';
+'后缀，支持日期/时间模板，如 ab{date}{time}cd';
 
 /*==============================================================*/
 /* Table: sys_user                                              */
@@ -570,7 +570,6 @@ create table sys_user
    status               CHAR(1)              default '0' not null,
    loginerror           NUMBER(4)            default 0 not null,
    opendate             VARCHAR2(8),
-   canceldate           VARCHAR2(8),
    constraint PK_SYS_USER primary key (userid)
 );
 
@@ -617,16 +616,13 @@ comment on column sys_user.logintime is
 '上次登录时间';
 
 comment on column sys_user.status is
-'用户状态，0，已注销；1，正常；2，锁定';
+'用户状态，1，正常；2，锁定；3，冻结';
 
 comment on column sys_user.loginerror is
 '连续登录失败次数';
 
 comment on column sys_user.opendate is
 '创建日期';
-
-comment on column sys_user.canceldate is
-'注销日期';
 
 /*==============================================================*/
 /* Table: sys_user_actlog                                       */

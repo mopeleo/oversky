@@ -20,19 +20,18 @@
         <result column="status" jdbcType="VARCHAR" property="status" />
         <result column="loginerror" jdbcType="INTEGER" property="loginerror" />
         <result column="opendate" jdbcType="VARCHAR" property="opendate" />
-        <result column="canceldate" jdbcType="VARCHAR" property="canceldate" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUser" useGeneratedKeys="true" keyProperty="userid">
-        insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate, canceldate)
-        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=DECIMAL}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{loginerror, jdbcType=INTEGER}, #{opendate, jdbcType=VARCHAR}, #{canceldate, jdbcType=VARCHAR})
+        insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate)
+        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=DECIMAL}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{loginerror, jdbcType=INTEGER}, #{opendate, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="userid">
-		insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate, canceldate)
+		insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=DECIMAL}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.loginerror, jdbcType=INTEGER}, #{item.opendate, jdbcType=VARCHAR}, #{item.canceldate, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=DECIMAL}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.loginerror, jdbcType=INTEGER}, #{item.opendate, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -87,8 +86,7 @@
                logintime = #{logintime, jdbcType=VARCHAR}, 
                status = #{status, jdbcType=VARCHAR}, 
                loginerror = #{loginerror, jdbcType=INTEGER}, 
-               opendate = #{opendate, jdbcType=VARCHAR}, 
-               canceldate = #{canceldate, jdbcType=VARCHAR}
+               opendate = #{opendate, jdbcType=VARCHAR}
 		where userid = #{userid, jdbcType=DECIMAL}
     </update>
 
@@ -145,9 +143,6 @@
 		    </if>
 		    <if test="opendate != null">
 				opendate = #{opendate, jdbcType=VARCHAR},
-		    </if>
-		    <if test="canceldate != null">
-				canceldate = #{canceldate, jdbcType=VARCHAR},
 		    </if>
 		</set>
 		where userid = #{userid, jdbcType=DECIMAL}
@@ -206,9 +201,6 @@
 		    </if>
 		    <if test="field.opendate != null and field.opendate != ''">
 				opendate = #{field.opendate, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.canceldate != null and field.canceldate != ''">
-				canceldate = #{field.canceldate, jdbcType=VARCHAR},
 		    </if>
 		</set>
         <include refid="where_all_list_criteria" />
@@ -387,16 +379,6 @@
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="canceldate = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.canceldate != null">
-	                    when userid = #{item.userid} then #{item.canceldate, jdbcType=VARCHAR}
-	                </if>
-	                <if test="item.canceldate == null">
-	                    when userid = #{item.userid} then canceldate
-	                </if>
-	            </foreach>
-	        </trim>
 	    </trim>
 	    where userid in
 	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -413,7 +395,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}userid, ${tab}unioncode, ${tab}username, ${tab}loginid, ${tab}loginpasswd, ${tab}salt, ${tab}passwdvaliddate, ${tab}mobileno, ${tab}email, ${tab}orgid, ${tab}idtype, ${tab}idcode, ${tab}idname, ${tab}logindate, ${tab}logintime, ${tab}status, ${tab}loginerror, ${tab}opendate, ${tab}canceldate
+        ${tab}userid, ${tab}unioncode, ${tab}username, ${tab}loginid, ${tab}loginpasswd, ${tab}salt, ${tab}passwdvaliddate, ${tab}mobileno, ${tab}email, ${tab}orgid, ${tab}idtype, ${tab}idcode, ${tab}idname, ${tab}logindate, ${tab}logintime, ${tab}status, ${tab}loginerror, ${tab}opendate
 	</sql>
 	
 	<sql id="where_all_list">
@@ -471,9 +453,6 @@
 			</if>
 			<if test="opendate != null and opendate != ''">
 				and opendate = #{opendate, jdbcType=VARCHAR}
-			</if>
-			<if test="canceldate != null and canceldate != ''">
-				and canceldate = #{canceldate, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>
@@ -533,9 +512,6 @@
 			</if>
 			<if test="condition.opendate != null and condition.opendate != ''">
 				and opendate = #{condition.opendate, jdbcType=VARCHAR}
-			</if>
-			<if test="condition.canceldate != null and condition.canceldate != ''">
-				and canceldate = #{condition.canceldate, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

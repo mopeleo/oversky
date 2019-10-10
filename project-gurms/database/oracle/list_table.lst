@@ -1,10 +1,12 @@
 spool list_table.log
 set echo off
 
+@@..\clear_data.sql
 @@..\init_sys_dict.sql
 @@..\init_sys_menu.sql
 @@..\init_sys_org.sql
 @@..\init_sys_param.sql
+@@..\init_sys_sno.sql
 @@..\init_sys_user.sql
 
 prompt ...............finished................

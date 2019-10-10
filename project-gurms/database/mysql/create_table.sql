@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/9/13 22:23:49                           */
+/* Created on:     2019/10/10 17:22:43                          */
 /*==============================================================*/
 
 
@@ -254,8 +254,8 @@ create table sys_sno
    cycletype            char(1) not null default '0' comment '循环周期（0-指定值重置，1-按天循环，2-按月循环，3-按年循环）',
    cycledate            varchar(8) comment '循环起始日期',
    endvalue             bigint not null comment '指定重置值',
-   prefix               varchar(8) comment '前缀，支持日期模板，如 ab{yyymmdd}cd',
-   suffix               varchar(8) comment '后缀，支持日期模板，如 ab{yyymmdd}cd',
+   prefix               varchar(16) comment '前缀，支持日期/时间模板，如 ab{date}{time}cd',
+   suffix               varchar(16) comment '后缀，支持日期/时间模板，如 ab{date}{time}cd',
    primary key (noid, unioncode)
 );
 
@@ -281,10 +281,9 @@ create table sys_user
    idname               varchar(32) comment '证件姓名',
    logindate            varchar(8) comment '上次登录日期',
    logintime            varchar(6) comment '上次登录时间',
-   status               char(1) not null default '0' comment '用户状态，0，已注销；1，正常；2，锁定',
+   status               char(1) not null default '0' comment '用户状态，1，正常；2，锁定；3，冻结',
    loginerror           numeric(4,0) not null default 0 comment '连续登录失败次数',
    opendate             varchar(8) comment '创建日期',
-   canceldate           varchar(8) comment '注销日期',
    primary key (userid)
 );
 

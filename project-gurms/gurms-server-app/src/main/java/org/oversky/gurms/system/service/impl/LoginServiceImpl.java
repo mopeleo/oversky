@@ -71,18 +71,21 @@ public class LoginServiceImpl implements LoginService{
 		loginReq.setUnioncode(user.getUnioncode());
 		
 		String md5Passwd = BizFunc.getEncryptPassword(loginReq.getPasswd(), user.getSalt());
-		boolean login = md5Passwd.equals(user.getLoginpasswd());
-		this.updateUserStatus(user, login);
-		this.writeLoginLog(loginReq, login);
-		if(!login) {
+		boolean passwdRight = md5Passwd.equals(user.getLoginpasswd());
+		this.updateUserStatus(user, passwdRight);
+		if(!passwdRight) {
 			res.failure("用户名或密码错误");
 			log.info(res.getReturnmsg());
+			
+			this.writeLoginLog(loginReq, res);
 			return res;
 		}
 		
 		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户状态异常:" + user.getStatus());
 			log.info(res.getReturnmsg());
+			
+			this.writeLoginLog(loginReq, res);
 			return res;
 		}
 		
@@ -94,6 +97,7 @@ public class LoginServiceImpl implements LoginService{
 			res.setMenuTree(menuService.getUserMenuTree(user.getUserid()));
 		}
 		res.success("登录成功");
+		this.writeLoginLog(loginReq, res);
 		log.info("登录结束：{}", res.getReturnmsg());
 		return res;
 	}
@@ -103,7 +107,7 @@ public class LoginServiceImpl implements LoginService{
 		
 	}
 	
-	private void writeLoginLog(UserLoginReq user, boolean loginSuccess) {
+	private void writeLoginLog(UserLoginReq user, UserLoginRes res) {
 		log.info("开始写登录日志");
 		SysUserLogin log = new SysUserLogin();
 		log.setLogindate(DateUtils.getNowDate());
@@ -113,12 +117,11 @@ public class LoginServiceImpl implements LoginService{
 		log.setUnioncode(user.getUnioncode());
 		log.setLoginip(user.getClientIp());
 		log.setUserid(user.getUserid());
-		if(loginSuccess) {
+		log.setSummary(res.getReturnmsg());
+		if(res.isSuccess()) {
 			log.setLoginresult(DictConsts.DICT1017_SUCCESS);
-			log.setSummary("登录成功");
 		}else {
 			log.setLoginresult(DictConsts.DICT1017_FAILURE);
-			log.setSummary("登录失败");
 		}
 		sysUserLoginDao.insert(log);
 	}

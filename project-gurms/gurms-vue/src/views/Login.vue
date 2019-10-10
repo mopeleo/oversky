@@ -104,8 +104,11 @@ export default {
         onSubmit() {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    this.login.passwd = md5(this.login.passwd);
-                    this.$api.Gurms.login(this.login).then((res) => {
+                    var loginReq = {};
+                    loginReq.loginid = this.login.loginid;
+                    loginReq.remember = this.login.remember;
+                    loginReq.passwd = md5(this.login.passwd);
+                    this.$api.Gurms.login(loginReq).then((res) => {
                         this.$store.commit('pub/LOGIN', res);
                         this.$store.commit('pub/ADDROUTES');
                         this.$router.push({ name: 'about' });

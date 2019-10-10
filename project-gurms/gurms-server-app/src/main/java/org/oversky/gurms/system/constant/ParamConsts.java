@@ -21,7 +21,7 @@ public final class ParamConsts {
 	public final static String PARAM1000_SYS_MODE_MULTI = "2";			//模式 2-多法人
 	
 	public final static Integer PARAM1001_SYS_ROOTUSER = 1001;			//超级用户
-	public final static Integer PARAM1002_PASSWD_MIN_LENGTH = 1002;		//密码最小长度
+	public final static Integer PARAM1002_PASSWD_INIT = 1002;			//初始化密码
 	public final static Integer PARAM1003_PASSWD_ERROR_TIMES = 1003;	//密码错误次数
 	public final static Integer PARAM1004_PASSWD_INVAILD_DAYS = 1004;	//密码失效天数
 	
@@ -34,10 +34,8 @@ public final class ParamConsts {
 	public final static String PARAM1006_CANT_DEL = "0";				//不能删除
 	public final static String PARAM1006_MOVE_PARENT = "1";				//删除后移到父机构
 	
-	public final static Integer PARAM1007_DELUSER = 1007;				//删除用户
-	public final static String PARAM1007_CANCEL = "0";					//不删除，改为注销状态
-	public final static String PARAM1007_DELETE = "1";					//直接删除
-	
+	//常用常量
+	public final static Integer SEQUENCE_TEST = 1;						//测试序列主键
 	
 	public static String getParam(String unioncode, Integer paramid) {
 		SysParam value = paramDao.getById(unioncode, paramid);

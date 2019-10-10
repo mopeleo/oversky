@@ -7,7 +7,6 @@ import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
-import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.SysUserInfoDao;
 import org.oversky.gurms.system.dao.SysUserRoleDao;
@@ -78,7 +77,7 @@ public class SysUserServiceImpl implements SysUserService{
 		}
 		
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
-		user.setSalt(BizFunc.getPasswdSalt());
+		user.setSalt(BizFunc.createPasswdSalt());
 		user.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		user.setLoginerror(0);
 		user.setOpendate(DateUtils.getNowDate());
@@ -128,19 +127,8 @@ public class SysUserServiceImpl implements SysUserService{
 		where.setUserid(userReq.getUserid());
 		userRoleDao.deleteWhere(where);
 
-		String param1007 = ParamConsts.getParam(userReq.getUnioncode(), ParamConsts.PARAM1007_DELUSER);
-		log.info("删除用户模式：param 1007 = {}", param1007);
-		if(ParamConsts.PARAM1007_DELETE.equals(param1007)) {
-			sysUserDao.deleteById(userReq.getUserid());			
-			userInfoDao.deleteById(userReq.getUserid());
-		}else if(ParamConsts.PARAM1007_CANCEL.equals(param1007)) {
-			SysUser updateUser = new SysUser();
-			updateUser.setUserid(userReq.getUserid());
-			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_CANCEL);
-			updateUser.setCanceldate(DateUtils.getNowDate());
-//			updateUser.setOrgid(ParamConsts.DEFAULT_NULLORG);
-			sysUserDao.dynamicUpdateById(updateUser);
-		}
+		sysUserDao.deleteById(userReq.getUserid());			
+		userInfoDao.deleteById(userReq.getUserid());
 
 		res.success("删除用户成功");
 		log.info("删除用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
@@ -194,7 +182,7 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser updateUser = new SysUser();
 		updateUser.setUserid(userReq.getUserid());
-		updateUser.setSalt(BizFunc.getPasswdSalt());
+		updateUser.setSalt(BizFunc.createPasswdSalt());
 		String md5Password = EncryptUtils.md5Encode(BizFunc.getInitPassword());
 		updateUser.setLoginpasswd(BizFunc.getEncryptPassword(md5Password, updateUser.getSalt()));
 		updateUser.setLoginerror(0);
@@ -233,8 +221,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 
-		if(DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())
-				|| DictConsts.DICT2001_USER_STATUS_CANCEL.equals(user.getStatus())) {
+		if(DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]被冻结，不能修改密码");
 			log.info(res.getReturnmsg());
 			return res;

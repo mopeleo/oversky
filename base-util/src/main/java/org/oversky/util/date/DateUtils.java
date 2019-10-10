@@ -113,5 +113,10 @@ public class DateUtils {
 		System.out.println(dateMinus(start, end));
 		System.out.println(dateBetween("20190131", start, end));
 		System.out.println(addDays(end, -10));
+		String st = "ab{date}cd{date}ef";
+		System.out.println(st.indexOf("{date}"));
+		System.out.println(st.replaceAll("\\{date\\}", "0000"));
+		String sf = "90";
+		System.out.println(String.format("%06d", 90));
 	}
 }

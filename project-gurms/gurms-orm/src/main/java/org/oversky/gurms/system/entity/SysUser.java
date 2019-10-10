@@ -21,10 +21,9 @@ public class SysUser extends BaseEntity{
 	private String idname;    //证件姓名
 	private String logindate;    //上次登录日期
 	private String logintime;    //上次登录时间
-	private String status;    //用户状态，0，已注销；1，正常；2，锁定
+	private String status;    //用户状态，1，正常；2，锁定；3，冻结
 	private Integer loginerror;    //连续登录失败次数
 	private String opendate;    //创建日期
-	private String canceldate;    //注销日期
 
 	public Long getUserid() {
 		return this.userid;
@@ -170,14 +169,6 @@ public class SysUser extends BaseEntity{
 		this.opendate = opendate;
 	}
 
-	public String getCanceldate() {
-		return this.canceldate;
-	}
-
-	public void setCanceldate(String canceldate) {
-		this.canceldate = canceldate;
-	}
-
 	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("SysUser");
 		return build.append("#userid:").append(this.userid).toString();
@@ -216,7 +207,6 @@ public class SysUser extends BaseEntity{
 		sb.append(", status=").append(status);
 		sb.append(", loginerror=").append(loginerror);
 		sb.append(", opendate=").append(opendate);
-		sb.append(", canceldate=").append(canceldate);
         sb.append("]");
         return sb.toString();
 	}
