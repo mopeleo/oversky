@@ -36,6 +36,13 @@ public class BizFunc {
 		return false;
 	}
 	
+	public static boolean isRootUnioncode(String unioncode) {
+		if(ParamConsts.DEFAULT_UNIONCODE.equals(unioncode)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static String createPasswdSalt() {
 		return CommonUtils.getRandomString(8);
 	}

@@ -73,6 +73,8 @@ public class LoginServiceImpl implements LoginService{
 		String md5Passwd = BizFunc.getEncryptPassword(loginReq.getPasswd(), user.getSalt());
 		boolean passwdRight = md5Passwd.equals(user.getLoginpasswd());
 		this.updateUserStatus(user, passwdRight);
+		
+		loginReq.setPasswd(md5Passwd);//为了记录正确的登录密码
 		if(!passwdRight) {
 			res.failure("用户名或密码错误");
 			log.info(res.getReturnmsg());

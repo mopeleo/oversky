@@ -230,12 +230,18 @@
                     <el-row :gutter="20">
                         <el-col :span="10">
                             <el-form-item label="性别" prop="sex">
-                                <el-input v-model="sysuser.sex"></el-input>
+                                <el-select v-model="sysuser.sex" value-key="itemcode" placeholder="请选择">
+                                    <el-option v-for="item in dictCache['2000']"
+                                        :key="item.itemcode"
+                                        :label="item.itemcode + ' - ' + item.itemname"
+                                        :value="item.itemcode">
+                                    </el-option>
+                                </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10">
                             <el-form-item label="生日" prop="birthday">
-                                <el-input v-model="sysuser.birthday"></el-input>
+                                <el-date-picker v-model="sysuser.birthday" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -351,17 +357,25 @@ export default{
             selectRoles:[], //已选角色
             rules:{
                 loginid:[
-                    {required:true, message:'用户名不能为空', trigger:'blur'},
-                    {min:3, max:8, message:'输入长度在3-8之间', trigger:'blur'}
+                    {required:true, message:'登录名不能为空', trigger:'blur'},
+                    {min:6, max:32, message:'登录名长度在6-32之间', trigger:'blur'}
                 ],
-                username:{
-                    required:true, message:'用户姓名不能为空',trigger:'blur'
-                }
+                username:[
+                    {required:true, message:'用户姓名不能为空', trigger:'blur'},
+                    {min:6, max:32, message:'用户姓名长度在6-32之间', trigger:'blur'}
+                ],
+                mobileno:{required:true, message:'手机号码不能为空', trigger:'blur'},
+                orgid:{required:true, message:'所属机构不能为空', trigger:'blur'},
+                birthday:{type:'date', message:'请输入正确的日期', trigger:'blur'},
+                email:[
+                    {max:64, message:'email长度不能超过64位', trigger:'blur'},
+                    {type:'email', message:'请输入正确的email地址', trigger:'blur'}
+                ]
             }
         }
     },
     mounted(){
-        tools.loadDict('2001,2004', this.dictCache);
+        tools.loadDict('2000,2001,2004', this.dictCache);
         this.loadOrgTree();
         this.loadData();
     },

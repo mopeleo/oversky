@@ -43,7 +43,8 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="10">
-                                <el-form-item label="多法人编号" prop="unioncode" v-if="this.paramSysMode == '2' && sysorg.parentorg == 1">
+                                <el-form-item label="多法人编号" prop="unioncode"
+                                    v-if="this.paramSysMode == '2' && sysorg.unioncode == this.$pubdefine.ROOT_UNIONCODE && sysorg.parentorg == 1">
                                     <el-input v-model="sysorg.unioncode"></el-input>
                                 </el-form-item>
                             </el-col>
@@ -160,13 +161,13 @@ export default {
             //验证规则
             rules: {
                 shortname: [
-                    { required: true, message: '机构名称不能为空', trigger: 'blur' }
+                    { required: true, message: '机构简称不能为空', trigger: 'blur' },
+                    { max: 16, message: '机构简称不能超过16位', trigger: 'blur' }
                 ],
-                fullname: {
-                    required: true,
-                    message: '机构全称不能为空',
-                    trigger: 'blur'
-                }
+                fullname: {required: true, message: '机构全称不能为空', trigger: 'blur'},
+                parentorg: {required: true, message: '上级机构不能为空', trigger: 'blur'},
+                orgtype: {required: true, message: '机构类型不能为空', trigger: 'blur'},
+                linkman: {required: true, message: '联系人不能为空', trigger: 'blur'}
             }
         }
     },

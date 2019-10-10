@@ -10,6 +10,7 @@ export default
     EDIT_TYPE_DETAIL: 'DETAIL',
 
     CHANNEL_TYPE: '1',
+    ROOT_UNIONCODE: '0000',
 
     NAVTAB_SIZE: 10,
     NAVTAB_INDEX:{

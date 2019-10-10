@@ -3,15 +3,18 @@ package org.oversky.gurms.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
+import org.oversky.gurms.system.dao.SysOrgDao;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.SysUserInfoDao;
 import org.oversky.gurms.system.dao.SysUserRoleDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
+import org.oversky.gurms.system.entity.SysOrg;
 import org.oversky.gurms.system.entity.SysUser;
 import org.oversky.gurms.system.entity.SysUserInfo;
 import org.oversky.gurms.system.entity.SysUserRole;
@@ -28,10 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.util.StringUtil;
 
 @Service
 @Transactional
@@ -39,6 +40,9 @@ public class SysUserServiceImpl implements SysUserService{
 	
 	private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
+	@Autowired
+	private SysOrgDao sysOrgDao;
+	
 	@Autowired
 	private SysUserDao sysUserDao;
 	
@@ -137,6 +141,7 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	@Transactional
+	@GSAValid(type=SysUserReq.class)
 	public SysUserRes update(SysUserReq userReq) {
 		log.info("开始修改用户[userid={}]信息......", userReq.getUserid());
 		SysUserRes res = new SysUserRes();
@@ -367,6 +372,10 @@ public class SysUserServiceImpl implements SysUserService{
 	public BaseResListDto<SysUserRes> pageSysUser(SysUserReq userReq){
 		log.info("开始分页查询用户信息 [req = {}]", userReq.toString());
 		Page<SysUser> page = PageHelper.startPage(userReq.getPageNum(), userReq.getPageSize());
+		
+		if(BizFunc.isRootUnioncode(userReq.getUnioncode())) {
+			userReq.setUnioncode(null);
+		}
 		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
 		List<SysUser> userList = pageQueryDao.findUsers(where);
 		List<SysUserRes> userResList = BeanCopyUtils.convertList(userList, SysUserRes.class);
@@ -380,10 +389,23 @@ public class SysUserServiceImpl implements SysUserService{
 	}
 	
 	private boolean check(SysUserReq userReq, SysUserRes res) {
-		if(StringUtil.isEmpty(userReq.getLoginid())) {
+		if(StringUtils.isEmpty(userReq.getLoginid())) {
 			res.failure("登录名不能为空");
 			return false;
 		}
+		
+		if(userReq.getOrgid() == null) {
+			res.failure("所属机构不能为空");
+			return false;
+		}
+		
+		SysOrg org = sysOrgDao.getById(userReq.getOrgid());
+		if(org == null) {
+			res.failure("所属机构不存在");
+			return false;			
+		}
+		userReq.setUnioncode(org.getUnioncode());
+		
 		return true;
 	}
 }
