@@ -1,6 +1,7 @@
 package org.oversky.gurms.system.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseResMapDto;
@@ -29,6 +30,11 @@ public class SysDictController {
 		}else {
 			return dictService.getDictList(unioncode, dictcode);
 		}
+	}
+	
+	@RequestMapping("/gettype")
+	public BaseResListDto<SysDictRes> getDictList(@RequestBody Map<String, String> req) {
+		return dictService.getSpecialDict(req);
 	}
 	
 	@RequestMapping("/getmap")

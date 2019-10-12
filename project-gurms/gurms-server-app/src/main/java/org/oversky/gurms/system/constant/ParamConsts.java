@@ -1,13 +1,11 @@
 package org.oversky.gurms.system.constant;
 
-import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.common.spring.SpringBeanUtils;
-import org.oversky.gurms.system.dao.SysParamDao;
-import org.oversky.gurms.system.entity.SysParam;
+import org.oversky.gurms.system.service.SysParamService;
 
 public final class ParamConsts {
 	
-	private static SysParamDao paramDao = SpringBeanUtils.getBean(SysParamDao.class);
+	private static SysParamService paramService = SpringBeanUtils.getBean(SysParamService.class);
 
 	//系统初始化默认值
 	public final static String DEFAULT_UNIONCODE = "0000";   			//默认的unioncode
@@ -37,16 +35,8 @@ public final class ParamConsts {
 	//常用常量
 	public final static Integer SEQUENCE_TEST = 1;						//测试序列主键
 	
-	public static String getParam(String unioncode, Integer paramid) {
-		SysParam value = paramDao.getById(unioncode, paramid);
-		if(value == null) {
-			value = paramDao.getById(DEFAULT_UNIONCODE, paramid);
-			if(value == null) {
-				throw new BaseServiceException("错误的系统参数 : " + paramid);
-			}			
-		}
-		
-		return value.getParamvalue();
+	public static String getParam(String unioncode, Integer paramid) {		
+		return paramService.getParam(unioncode, paramid).getParamvalue();
 	}
 	
 }

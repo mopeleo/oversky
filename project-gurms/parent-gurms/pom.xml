@@ -21,6 +21,7 @@
 		<druid-spring-boot-starter>1.1.10</druid-spring-boot-starter>
 		<mysql-connector-java>8.0.13</mysql-connector-java>
 		<spring-cloud.version>Greenwich.RC2</spring-cloud.version>
+		<guava.version>28.0-jre</guava.version>
 	</properties>
 
 	<parent>

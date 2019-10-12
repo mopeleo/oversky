@@ -8,6 +8,7 @@ import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
+import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysOrgDao;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dao.SysUserInfoDao;
@@ -85,13 +86,13 @@ public class SysUserServiceImpl implements SysUserService{
 		user.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		user.setLoginerror(0);
 		user.setOpendate(DateUtils.getNowDate());
-		user.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
+		user.setPasswdvaliddate(BizFunc.passwordInvalidDate());
 		String md5Password = user.getLoginpasswd();
 		if(StringUtils.isEmpty(md5Password)) {
-			String initPw = BizFunc.getInitPassword();
+			String initPw = ParamConsts.getParam(user.getUnioncode(), ParamConsts.PARAM1002_PASSWD_INIT);
 			md5Password = EncryptUtils.md5Encode(initPw);
 		}
-		user.setLoginpasswd(BizFunc.getEncryptPassword(md5Password, user.getSalt()));
+		user.setLoginpasswd(BizFunc.encryptPassword(md5Password, user.getSalt()));
 		if(sysUserDao.insert(user) != 1) {
 			res.failure("新增失败");
 		}
@@ -188,10 +189,10 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUser updateUser = new SysUser();
 		updateUser.setUserid(userReq.getUserid());
 		updateUser.setSalt(BizFunc.createPasswdSalt());
-		String md5Password = EncryptUtils.md5Encode(BizFunc.getInitPassword());
-		updateUser.setLoginpasswd(BizFunc.getEncryptPassword(md5Password, updateUser.getSalt()));
+		String md5Password = EncryptUtils.md5Encode(ParamConsts.getParam(user.getUnioncode(), ParamConsts.PARAM1002_PASSWD_INIT));
+		updateUser.setLoginpasswd(BizFunc.encryptPassword(md5Password, updateUser.getSalt()));
 		updateUser.setLoginerror(0);
-		updateUser.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
+		updateUser.setPasswdvaliddate(BizFunc.passwordInvalidDate());
 		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
 			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		}
@@ -219,7 +220,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 		
-		String oldPassword = BizFunc.getEncryptPassword(userReq.getLoginpasswd(), user.getSalt());
+		String oldPassword = BizFunc.encryptPassword(userReq.getLoginpasswd(), user.getSalt());
 		if(!oldPassword.equals(user.getLoginpasswd())) {
 			res.failure("用户原密码错误，修改密码失败");
 			log.info(res.getReturnmsg());
@@ -234,10 +235,10 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser updateUser = new SysUser();
 		updateUser.setUserid(userReq.getUserid());
-		String newPassword = BizFunc.getEncryptPassword(userReq.getNewpasswd(), user.getSalt());
+		String newPassword = BizFunc.encryptPassword(userReq.getNewpasswd(), user.getSalt());
 		updateUser.setLoginpasswd(newPassword);
 		updateUser.setLoginerror(0);
-		updateUser.setPasswdvaliddate(BizFunc.getPasswordInvalidDate());
+		updateUser.setPasswdvaliddate(BizFunc.passwordInvalidDate());
 		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
 			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
 		}

@@ -34,6 +34,10 @@ export default {
     getDictList(dictcode, unioncode){
         return axios.get(`${baseURL}/sysdict/getlist/${dictcode}/${unioncode}`);
     },
+    // 查询特殊字典
+    getDictType (params) {
+        return axios.post(`${baseURL}/sysdict/gettype`, params);
+    },
     // 字典分页显示
     dictPage (params) {
         return axios.post(`${baseURL}/sysdict/list`, params);

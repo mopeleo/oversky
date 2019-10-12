@@ -38,7 +38,7 @@
                 <el-table-column prop="loginid" label="登录名" sortable></el-table-column>
                 <el-table-column prop="mobileno" width="120" label="手机号码"></el-table-column>
                 <el-table-column prop="email" label="电子邮件" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="orgid" label="所属机构" sortable></el-table-column>
+                <el-table-column prop="orgid" label="所属机构" sortable :formatter="formatOrgName"></el-table-column>
                 <el-table-column prop="status" width="100" label="用户状态" :formatter="formatUserStatus"></el-table-column>
                 <el-table-column prop="logindate" width="120" label="登录日期" sortable></el-table-column>
                 <el-table-column prop="logintime" width="100" label="登录时间"></el-table-column>
@@ -318,6 +318,7 @@ export default{
             treeData: [],
             //当前页面字典
             dictCache: {},
+            dictOrg: [],
             //查询条件及分页参数
             userReq: {
                 pageSize: this.$pubdefine.PAGE_SIZE,
@@ -358,11 +359,11 @@ export default{
             rules:{
                 loginid:[
                     {required:true, message:'登录名不能为空', trigger:'blur'},
-                    {min:6, max:32, message:'登录名长度在6-32之间', trigger:'blur'}
+                    {min:4, max:32, message:'登录名长度在4-32之间', trigger:'blur'}
                 ],
                 username:[
                     {required:true, message:'用户姓名不能为空', trigger:'blur'},
-                    {min:6, max:32, message:'用户姓名长度在6-32之间', trigger:'blur'}
+                    {min:2, max:16, message:'用户姓名长度在2-16之间', trigger:'blur'}
                 ],
                 mobileno:{required:true, message:'手机号码不能为空', trigger:'blur'},
                 orgid:{required:true, message:'所属机构不能为空', trigger:'blur'},
@@ -377,6 +378,7 @@ export default{
     mounted(){
         tools.loadDict('2000,2001,2004', this.dictCache);
         this.loadOrgTree();
+        this.loadDict({type:'T01'});
         this.loadData();
     },
     methods:{
@@ -387,11 +389,28 @@ export default{
                 tools.errTip(err);
             });
         },
+        loadDict:function(keys){
+            this.$api.Gurms.getDictType(keys).then((res)=>{
+                this.dictOrg = res.results;
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
+        },
+        formatOrgName:function(row){
+            let dict = this.dictOrg;
+            let val = row.orgid;
+            for(var i = 0; i < dict.length; i++){
+                if(dict[i].itemcode == val){
+                    return val + " - " + dict[i].itemname;
+                }
+            }
+            return val;
+        },
         formatUserStatus:function(row){
             let dict = this.dictCache['2001'];
             let val = row.status;
             for(var i = 0; i < dict.length; i++){
-                if(dict[i].itemcode === val){
+                if(dict[i].itemcode == val){
                     return val + " - " + dict[i].itemname;
                 }
             }

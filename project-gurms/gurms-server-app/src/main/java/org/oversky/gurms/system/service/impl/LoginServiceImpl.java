@@ -70,7 +70,7 @@ public class LoginServiceImpl implements LoginService{
 		loginReq.setUserid(user.getUserid());
 		loginReq.setUnioncode(user.getUnioncode());
 		
-		String md5Passwd = BizFunc.getEncryptPassword(loginReq.getPasswd(), user.getSalt());
+		String md5Passwd = BizFunc.encryptPassword(loginReq.getPasswd(), user.getSalt());
 		boolean passwdRight = md5Passwd.equals(user.getLoginpasswd());
 		this.updateUserStatus(user, passwdRight);
 		

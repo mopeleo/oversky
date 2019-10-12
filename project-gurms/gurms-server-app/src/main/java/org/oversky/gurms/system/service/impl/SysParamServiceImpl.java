@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
+import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysParamDao;
 import org.oversky.gurms.system.dao.SysParamInfoDao;
 import org.oversky.gurms.system.dto.request.SysParamReq;
@@ -19,13 +20,10 @@ import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@CacheConfig(cacheNames = "SysParam")
 @Transactional
 public class SysParamServiceImpl implements SysParamService {
 
@@ -41,23 +39,28 @@ public class SysParamServiceImpl implements SysParamService {
 	private PageListQueryDao pageQueryDao;
 	
 	@Override
-	@Cacheable(key = "'getParam_' + #p0 + '_' + #p1")
 	public SysParamRes getParam(String unioncode, Integer paramId) {
 		log.info("查询单个参数 : unioncode = {}, paramId = {}" , unioncode, paramId);
 		SysParam param = paramDao.getById(unioncode, paramId);
+		if(param == null) {
+			param = paramDao.getById(ParamConsts.DEFAULT_UNIONCODE, paramId);
+			if(param == null) {
+				throw new BaseServiceException("错误的系统参数 : " + paramId);
+			}			
+		}
+
 		return BeanCopyUtils.convert(param, SysParamRes.class);
 	}
 
 	@Override
-	@Cacheable(key = "'getParamList_' + #p0 + '_' + #p1")
 	public BaseResListDto<SysParamRes> getParamList(String unioncode, String paramList) {
 		log.info("查询多个参数 : unioncode = {}, paramList = {}" , unioncode, paramList);
 		String[] idList = paramList.split(",");
 		BaseResListDto<SysParamRes> res = new BaseResListDto<SysParamRes>();
 		List<SysParamRes> results = new ArrayList<>(idList.length);
 		for(String paramId : idList) {
-			SysParam param = paramDao.getById(unioncode, Integer.parseInt(paramId));
-			results.add(BeanCopyUtils.convert(param, SysParamRes.class));
+			SysParamRes param = this.getParam(unioncode, Integer.parseInt(paramId));
+			results.add(param);
 		}
 		
 		res.setResults(results);

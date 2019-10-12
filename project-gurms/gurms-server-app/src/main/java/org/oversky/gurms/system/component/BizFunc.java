@@ -20,7 +20,6 @@ public class BizFunc {
 		if((","+rootUser+",").indexOf("," + userid + ",") != -1) {
 			return true;
 		}
-
 		return false;
 	}
 	
@@ -36,6 +35,11 @@ public class BizFunc {
 		return false;
 	}
 	
+	/**
+	 * 是否根法人
+	 * @param unioncode
+	 * @return
+	 */
 	public static boolean isRootUnioncode(String unioncode) {
 		if(ParamConsts.DEFAULT_UNIONCODE.equals(unioncode)) {
 			return true;
@@ -43,21 +47,26 @@ public class BizFunc {
 		return false;
 	}
 	
+	/**
+	 * 是否多法人模式
+	 * @return
+	 */
+	public static boolean isMultiLegal() {
+		String param = ParamConsts.getParam(ParamConsts.DEFAULT_UNIONCODE, ParamConsts.PARAM1000_SYS_MODE);
+		return ParamConsts.PARAM1000_SYS_MODE_MULTI.equals(param);
+	}
+	
 	public static String createPasswdSalt() {
 		return CommonUtils.getRandomString(8);
 	}
 	
-	public static String getInitPassword() {
-		return ParamConsts.getParam(ParamConsts.DEFAULT_UNIONCODE, ParamConsts.PARAM1002_PASSWD_INIT);
-	}
-	
-	public static String getEncryptPassword(String password, String salt) {
+	public static String encryptPassword(String password, String salt) {
 		return EncryptUtils.md5Encode(password + salt);
 	}
 	
-	public static String getPasswordInvalidDate() {
+	public static String passwordInvalidDate() {
 		String days = ParamConsts.getParam(ParamConsts.DEFAULT_UNIONCODE, ParamConsts.PARAM1004_PASSWD_INVAILD_DAYS);
-		String date = DateUtils.addDays(DateUtils.getNowDate(),Integer.parseInt(days));
+		String date = DateUtils.addDays(DateUtils.getNowDate(), Integer.parseInt(days));
 		return date;
 	}
 }
