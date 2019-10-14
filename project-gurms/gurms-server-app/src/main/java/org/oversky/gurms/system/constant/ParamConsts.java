@@ -39,4 +39,31 @@ public final class ParamConsts {
 		return paramService.getParam(unioncode, paramid).getParamvalue();
 	}
 	
+	
+	/**
+	 * 是否根机构，根机构不允许编辑
+	 * @param orgid
+	 * @return
+	 */
+	public static boolean isRootOrg(Long orgid) {
+		return orgid == DEFAULT_ROOTORG;
+	}
+	
+	/**
+	 * 是否根法人
+	 * @param unioncode
+	 * @return
+	 */
+	public static boolean isRootUnioncode(String unioncode) {
+		return DEFAULT_UNIONCODE.equals(unioncode);
+	}
+	
+	/**
+	 * 是否多法人模式
+	 * @return
+	 */
+	public static boolean isMultiLegal() {
+		return PARAM1000_SYS_MODE_MULTI.equals(paramService.getSysMode());
+	}
+	
 }

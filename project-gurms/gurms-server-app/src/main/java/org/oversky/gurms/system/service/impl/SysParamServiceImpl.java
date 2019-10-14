@@ -8,7 +8,6 @@ import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
 import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysParamDao;
-import org.oversky.gurms.system.dao.SysParamInfoDao;
 import org.oversky.gurms.system.dto.request.SysParamReq;
 import org.oversky.gurms.system.dto.response.SysParamInfoRes;
 import org.oversky.gurms.system.dto.response.SysParamRes;
@@ -22,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @Transactional
@@ -33,22 +33,37 @@ public class SysParamServiceImpl implements SysParamService {
 	private SysParamDao paramDao;
 	
 	@Autowired
-	private SysParamInfoDao paramInfoDao;
-	
-	@Autowired
 	private PageListQueryDao pageQueryDao;
+	
+	public String getSysMode() {
+		SysParam param = paramDao.getById(ParamConsts.DEFAULT_UNIONCODE, ParamConsts.PARAM1000_SYS_MODE);
+		if(param == null) {
+			log.error("系统模式参数不存在，paramId = {}", ParamConsts.PARAM1000_SYS_MODE);
+			throw new BaseServiceException("系统模式参数不存在");
+		}
+		
+		String sysMode = param.getParamvalue();
+		if(!ParamConsts.PARAM1000_SYS_MODE_SINGLE.equals(sysMode) 
+				&& !ParamConsts.PARAM1000_SYS_MODE_MULTI.equals(sysMode)) {
+			
+			log.error("系统模式参数值配置错误，paramValue = {}", sysMode);
+			throw new BaseServiceException("系统模式参数值配置错误");
+		}
+		return sysMode;
+	}
 	
 	@Override
 	public SysParamRes getParam(String unioncode, Integer paramId) {
 		log.info("查询单个参数 : unioncode = {}, paramId = {}" , unioncode, paramId);
 		SysParam param = paramDao.getById(unioncode, paramId);
-		if(param == null) {
+		//参数为空，且unioncode不是0000，且是多法人模式，再去查一次
+		if(param == null && !ParamConsts.isRootUnioncode(unioncode) && ParamConsts.isMultiLegal()) {
 			param = paramDao.getById(ParamConsts.DEFAULT_UNIONCODE, paramId);
-			if(param == null) {
-				throw new BaseServiceException("错误的系统参数 : " + paramId);
-			}			
 		}
 
+		if(param == null) {
+			throw new BaseServiceException("错误的系统参数 : " + paramId);
+		}			
 		return BeanCopyUtils.convert(param, SysParamRes.class);
 	}
 
@@ -74,7 +89,7 @@ public class SysParamServiceImpl implements SysParamService {
 		log.info("重置unioncode = {}参数" , unioncode);
 		SysParamRes res = new SysParamRes();
 		List<SysParamInfo> paramInfoList = pageQueryDao.findParams(unioncode);
-		if(paramInfoList.size() < 1) {
+		if(CollectionUtils.isEmpty(paramInfoList)) {
 			res.failure("参数不存在");
 			return res;
 		}
@@ -104,10 +119,10 @@ public class SysParamServiceImpl implements SysParamService {
 	}
 
 	@Override
-	public BaseResListDto<SysParamInfoRes> paramInfoList(String unioncode) {
+	public BaseResListDto<SysParamInfoRes> paramInfoPage(String unioncode) {
 		BaseResListDto<SysParamInfoRes> res = new BaseResListDto<SysParamInfoRes>();
 		List<SysParamInfo> paramInfoList = pageQueryDao.findParams(unioncode);
-		if(paramInfoList.size() < 1) {
+		if(CollectionUtils.isEmpty(paramInfoList)) {
 			res.failure("参数不存在");
 			return res;
 		}

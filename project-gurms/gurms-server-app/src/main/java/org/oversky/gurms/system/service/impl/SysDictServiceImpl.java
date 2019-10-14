@@ -56,7 +56,7 @@ public class SysDictServiceImpl implements SysDictService {
 		where.setUnioncode(unioncode);
 		where.setDictcode(dictcode);
 		List<SysDictValue> list = dictValueDao.selectWhere(where);
-		if(CollectionUtils.isEmpty(list) && BizFunc.isMultiLegal()) {
+		if(CollectionUtils.isEmpty(list) && !ParamConsts.isRootUnioncode(unioncode) && ParamConsts.isMultiLegal()) {
 			where.setUnioncode(ParamConsts.DEFAULT_UNIONCODE);
 			list = dictValueDao.selectWhere(where);
 		}
@@ -88,7 +88,7 @@ public class SysDictServiceImpl implements SysDictService {
 		log.info("开始分页查询数据字典...");
 		Page<SysDictBO> page = PageHelper.startPage(dictReq.getPageNum(), dictReq.getPageSize());
 		SysDictBO where = BeanCopyUtils.convert(dictReq, SysDictBO.class);
-		if(BizFunc.isRootUnioncode(where.getUnioncode())) {
+		if(ParamConsts.isRootUnioncode(where.getUnioncode())) {
 			where.setUnioncode(null);
 		}
 		List<SysDictBO> dictList = pageQueryDao.findDicts(where);
@@ -112,7 +112,7 @@ public class SysDictServiceImpl implements SysDictService {
 				log.info("转换机构[sys_org]信息为字典");
 				SysOrg where = new SysOrg();
 				String unioncode = req.get("unioncode");
-				if(!BizFunc.isRootUnioncode(unioncode)) {
+				if(!ParamConsts.isRootUnioncode(unioncode)) {
 					where.setUnioncode(unioncode);
 				}
 				List<SysOrg> orgList = orgDao.selectWhere(where);

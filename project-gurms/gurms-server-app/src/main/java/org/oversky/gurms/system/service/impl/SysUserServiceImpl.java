@@ -374,7 +374,7 @@ public class SysUserServiceImpl implements SysUserService{
 		log.info("开始分页查询用户信息 [req = {}]", userReq.toString());
 		Page<SysUser> page = PageHelper.startPage(userReq.getPageNum(), userReq.getPageSize());
 		
-		if(BizFunc.isRootUnioncode(userReq.getUnioncode())) {
+		if(ParamConsts.isRootUnioncode(userReq.getUnioncode())) {
 			userReq.setUnioncode(null);
 		}
 		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);

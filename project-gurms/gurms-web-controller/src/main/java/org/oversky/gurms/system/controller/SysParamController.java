@@ -58,6 +58,6 @@ public class SysParamController {
 		if(StringUtils.isEmpty(unioncode)) {
 			unioncode = WebContext.getUserSession().getUnioncode();
 		}
-		return paramService.paramInfoList(unioncode);
+		return paramService.paramInfoPage(unioncode);
 	}
 }

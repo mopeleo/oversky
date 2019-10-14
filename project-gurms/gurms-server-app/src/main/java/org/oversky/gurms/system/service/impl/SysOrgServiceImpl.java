@@ -2,7 +2,6 @@ package org.oversky.gurms.system.service.impl;
 
 import java.util.List;
 
-import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysOrgDao;
 import org.oversky.gurms.system.dao.SysUserDao;
@@ -70,7 +69,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 	public SysOrgRes delete(SysOrgReq orgReq) {
 		log.info("开始删除机构[orgid={}]信息...", orgReq.getOrgid());
 		SysOrgRes res = new SysOrgRes();
-		if(BizFunc.isRootOrg(orgReq.getOrgid())) {
+		if(ParamConsts.isRootOrg(orgReq.getOrgid())) {
 			res.failure("系统根机构不允许删除");
 			log.info("删除机构失败:{}", res.getReturnmsg());
 			return res;
@@ -161,7 +160,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 	public SysOrgRes update(SysOrgReq orgReq) {
 		log.info("开始修改机构[orgid={}]信息......", orgReq.getOrgid());
 		SysOrgRes res = new SysOrgRes();
-		if(BizFunc.isRootOrg(orgReq.getOrgid())) {
+		if(ParamConsts.isRootOrg(orgReq.getOrgid())) {
 			res.failure("系统根机构不允许修改");
 			log.info("修改机构失败:{}", res.getReturnmsg());
 			return res;

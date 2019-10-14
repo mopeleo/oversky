@@ -15,5 +15,7 @@ public interface SysParamService {
 
 	SysParamRes update(SysParamReq paramReq);
 	
-	BaseResListDto<SysParamInfoRes> paramInfoList(String unioncode);
+	BaseResListDto<SysParamInfoRes> paramInfoPage(String unioncode);
+	
+	String getSysMode();
 }
