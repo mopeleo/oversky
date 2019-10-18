@@ -178,6 +178,7 @@ public class SysParamServiceImpl implements SysParamService {
 		}
 		
 		paramDao.insertBatch(sysParamList);
+		log.info("修改unioncode = {}全部参数成功" , paramReq.getUnioncode());
 		return res;		
 	}
 }

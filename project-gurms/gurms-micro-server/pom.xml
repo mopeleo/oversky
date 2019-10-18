@@ -55,4 +55,81 @@
         </dependency>
         
 	</dependencies>
+	
+	<build>
+        <plugins>
+        	<!-- 直接从父类的pluginManagement继承 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			
+			<!--  只需要自定义与父类不同的属性即可，没有重新定义的属性默认用父类的 -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+                    <archive>  
+                        <manifest>  
+                            <addClasspath>true</addClasspath>
+                            <!--MANIFEST.MF 中 Class-Path 加入前缀-->
+                            <classpathPrefix>lib/</classpathPrefix>
+	                        <!-- 此处指定main方法入口的class -->
+	                        <mainClass>org.oversky.gurms.GurmsMicroServer</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <!--MANIFEST.MF 中 Class-Path 加入资源文件目录-->
+                            <Class-Path>./conf/</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>appassembler-maven-plugin</artifactId>
+		        <version>1.10</version>
+		        <configuration>
+		            <!-- 生成linux, windows两种平台的执行脚本 -->
+		            <platforms>
+		                <platform>windows</platform>
+		                <platform>unix</platform>
+		            </platforms>
+		            <binFileExtensions>  
+                        <unix>.sh</unix>  
+                    </binFileExtensions>
+		            <!-- 根目录 -->
+		            <assembleDirectory>${project.build.directory}/bin</assembleDirectory>
+		            <!-- 打包的jar，以及maven依赖的jar放到这个目录里面 -->
+		            <repositoryName>lib</repositoryName>
+		            <!-- lib目录中jar的存放规则，默认是${groupId}/${artifactId}的目录格式，flat表示直接把jar放到lib目录 -->
+		            <repositoryLayout>flat</repositoryLayout>
+		            <!-- 可执行脚本的目录 -->
+		            <binFolder>bin</binFolder>
+		            <configurationDirectory>conf</configurationDirectory>
+		            <logsDirectory>logs</logsDirectory>
+		            <encoding>UTF-8</encoding>
+		            <programs>
+		                <program>
+		                	<name>startup</name>
+		                    <!-- 启动类 -->
+		                    <mainClass>org.oversky.gurms.GurmsMicroServer</mainClass>
+		                    <jvmSettings>
+		                        <extraArguments>
+		                            <extraArgument>-server</extraArgument>
+		                            <extraArgument>-Xmx2G</extraArgument>
+		                            <extraArgument>-Xms2G</extraArgument>
+		                        </extraArguments>
+		                    </jvmSettings>
+		                </program>
+		            </programs>
+		        </configuration>
+		    </plugin>
+    
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+    </build>
+        
 </project>

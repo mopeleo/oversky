@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseResMapDto;
-import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysDictIndexDao;
 import org.oversky.gurms.system.dao.SysDictValueDao;

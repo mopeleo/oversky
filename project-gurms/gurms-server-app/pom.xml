@@ -85,5 +85,28 @@
 		</dependency>
 		
     </dependencies>
+
+	<build>
+        <plugins>
+        	<!-- 直接从父类的pluginManagement继承 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+
+			<!-- 打包跳过单元测试，因为resource没有打进jar包，单元测试会报错 -->
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		        	<skipTests>true</skipTests>
+		        </configuration>
+		    </plugin>
+
+        </plugins>
+    </build>
     
 </project>

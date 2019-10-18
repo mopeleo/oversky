@@ -32,12 +32,13 @@
       
     <modules>
     	<module>../gurms-common</module>
-    	<module>../gurms-micro-server</module>
     	<module>../gurms-orm</module>
     	<module>../gurms-server-api</module>
     	<module>../gurms-server-app</module>
     	<module>../gurms-web-controller</module>
     	<module>../gurms-web-server</module>
+
+    	<module>../gurms-micro-server</module>
     </modules>
     
   	<dependencies>
@@ -73,6 +74,57 @@
         </dependencies>
     </dependencyManagement>
     
+	<build>
+		<pluginManagement> 
+	        <plugins>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-compiler-plugin</artifactId>
+	                <configuration>
+	                    <source>${maven.compiler.source}</source>
+	                    <target>${maven.compiler.target}</target>
+	                    <encoding>${project.build.sourceEncoding}</encoding>
+	                </configuration>
+	            </plugin>
+	
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<!-- 过滤掉不希望包含在jar中的文件  -->
+						<excludes>
+							<exclude>*.properties</exclude>
+							<exclude>*.xml</exclude>
+							<exclude>*.yml</exclude>
+							<exclude>spring/**</exclude>
+							<exclude>config/**</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+	
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<configuration>
+						<outputDirectory>../build</outputDirectory> 
+			          	<descriptors>
+			            	<descriptor>src/assembly/assembly.xml</descriptor>
+			          	</descriptors>
+			        </configuration>
+			        <executions>
+				        <execution>
+				            <phase>package</phase>
+				            <goals>
+				                <goal>single</goal>
+				            </goals>
+				        </execution>
+				    </executions>
+				</plugin>
+
+	        </plugins>
+        </pluginManagement>
+    </build>
+
 	<repositories>
 	    <repository>
 	        <id>spring-milestones</id>
