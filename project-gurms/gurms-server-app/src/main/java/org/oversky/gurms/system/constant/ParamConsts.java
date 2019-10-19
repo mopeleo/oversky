@@ -32,6 +32,8 @@ public final class ParamConsts {
 	public final static String PARAM1006_CANT_DEL = "0";				//不能删除
 	public final static String PARAM1006_MOVE_PARENT = "1";				//删除后移到父机构
 	
+	public final static Integer PARAM2001_JWT_VALID_DAYS = 2001;		//身份token有效天数
+
 	//常用常量
 	public final static Integer SEQUENCE_TEST = 1;						//测试序列主键
 	

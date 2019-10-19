@@ -13,7 +13,9 @@ public class SysUserClientHystrix implements SysUserClient {
 	public SysUserRes userInfo(Long userId) {
 		// TODO Auto-generated method stub
 		System.out.println("userInfo call failure......");
-		return null;
+		SysUserRes res= new SysUserRes();
+		res.setUserid(userId);
+		return res;
 	}
 
 	@Override

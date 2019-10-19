@@ -14,10 +14,13 @@ import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.gurms.web.config.WebException;
+import org.oversky.gurms.web.util.WebContext;
 import org.oversky.util.common.CommonUtils;
 import org.oversky.util.json.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import io.jsonwebtoken.ExpiredJwtException;
 
 public class JwtAuthTokenFilter extends OncePerRequestFilter{
 
@@ -37,23 +40,22 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter{
 			//从数据库获取
 			SysMenuRes menu = menuService.getMenuByUrl(requestUrl);
 			if(menu != null && !DictConsts.DICT2011_ACCESSTYPE_ANY.equals(menu.getAccesstype())) {
-				String authToken = request.getHeader("Authorization");
-				if(!JwtTokenUtil.verifyToken(authToken)) {
-					throw new WebException(500, "非法的token，请重新登录获取token");
-				}
-				
-				//过期返回登陆页面
-				if(JwtTokenUtil.isExpiration(authToken)) {
-					throw new WebException(401, "用户已过期，请重新登录");
-				}
-				
 				if(DictConsts.DICT2011_ACCESSTYPE_AUTH.equals(menu.getAccesstype())) {
-					String subject = JwtTokenUtil.getSubject(authToken);
+					String authToken = request.getHeader("Authorization");
+					String subject = null;
+					try {
+						subject = JwtTokenUtil.getSubject(authToken);
+					}catch(ExpiredJwtException e) {
+						throw new WebException(401, "用户已过期，请重新登录");
+					}catch(Exception e) {
+						throw new WebException(500, "非法的token，请重新登录获取合法token");
+					}
 					UserLoginRes userAuth = JacksonUtils.json2Bean(subject, UserLoginRes.class);
-					
+					//绑定用户session
+					WebContext.setUserSession(userAuth);
 					//用户权限
-					SysMenuRes menus = userAuth.getMenuTree();
-					if(!hasPrivilege(menu.getMenuid(), menus)) {
+					String menuList = userAuth.getToken();
+					if(("," + menuList + ",").indexOf("," + menu.getMenuid() + ",") < 0) {
 						throw new WebException(404, "此页面需授权才能访问");
 					}
 				}				

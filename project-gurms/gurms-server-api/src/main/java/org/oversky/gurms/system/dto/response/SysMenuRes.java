@@ -99,6 +99,23 @@ public class SysMenuRes extends BaseResDto {
 		this.status = status;
 	}
 
+	public String getMenuIdList() {
+		StringBuffer sb = new StringBuffer();
+		if(this.getMenuid() != null && !this.getMenuid().equals("")) {
+			sb.append(this.getMenuid()).append(",");
+		}
+		if(this.getSubMenus() != null && !this.getSubMenus().isEmpty()) {
+			for(SysMenuRes menu : this.getSubMenus()) {
+				sb.append(menu.getMenuIdList()).append(",");
+			}
+		}
+		String list = sb.toString();
+		if(list.endsWith(",")) {
+			list = list.substring(0, list.length() - 1);
+		}
+		return list;
+	}
+	
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -3,6 +3,7 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.oversky.gurms.common.jwt.JwtTokenUtil;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.constant.ParamConsts;
@@ -16,6 +17,7 @@ import org.oversky.gurms.system.service.LoginService;
 import org.oversky.gurms.system.service.SysMenuService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.oversky.util.date.DateUtils;
+import org.oversky.util.json.JacksonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,5 +147,23 @@ public class LoginServiceImpl implements LoginService{
 			}
 		}
 		sysUserDao.dynamicUpdateById(upUser);
+	}
+
+	@Override
+	public String getJWToken(UserLoginRes userInfo) {
+		UserLoginRes payload = new UserLoginRes();
+		payload.clear();
+		payload.setSuccess(true);
+		payload.setUnioncode(userInfo.getUnioncode());
+		payload.setUserid(userInfo.getUserid());
+		if(userInfo.getMenuTree() != null) {
+			payload.setToken(userInfo.getMenuTree().getMenuIdList());
+		}		
+		String payloadString = JacksonUtils.bean2JsonIgnoreNull(payload);
+
+		int days = Integer.parseInt(ParamConsts.getParam(userInfo.getUnioncode(), ParamConsts.PARAM2001_JWT_VALID_DAYS));
+		String token = JwtTokenUtil.generateToken(payloadString, days);
+		
+		return token;
 	}
 }

@@ -21,12 +21,20 @@ spring:
             - Path=/client/**
           filters:
             - StripPrefix=1
-        - id: gurms-server            #网关路由到用户服务gurms-server
-          uri: lb://gurms-server
+        - id: gurms-server1            #网关路由到用户服务gurms-server
+          uri: lb://gurms-server1
           predicates:
-            - Path=/gurms/**
+            - Path=/gurms/1/**
+#            - Header=Service-Id, 1
           filters:
-            - StripPrefix=1
+            - StripPrefix=2
+        - id: gurms-server2            #网关路由到用户服务gurms-server
+          uri: lb://gurms-server2
+          predicates:
+            - Path=/gurms/2/**
+#            - Header=Service-Id, 2
+          filters:
+            - StripPrefix=2
 
 
 server:

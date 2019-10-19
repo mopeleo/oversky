@@ -1,11 +1,9 @@
 package org.oversky.gurms.system.controller;
 
-import org.oversky.gurms.common.jwt.JwtTokenUtil;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.service.LoginService;
 import org.oversky.gurms.web.util.WebUtils;
-import org.oversky.util.json.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,14 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
 	@Autowired
-	private LoginService indexService;
+	private LoginService loginService;
 	
 	@RequestMapping("/login")
 	public UserLoginRes login(@RequestBody UserLoginReq user) {
 		user.setClientIp(WebUtils.getClientIp());
-		UserLoginRes res = indexService.login(user);
+		UserLoginRes res = loginService.login(user);
+		
 		if(res.isSuccess()) {
-			String token = JwtTokenUtil.generateToken(JacksonUtils.bean2JsonIgnoreNull(res));
+			String token = loginService.getJWToken(res);
 			res.setToken(token);
 		}
 		return res;

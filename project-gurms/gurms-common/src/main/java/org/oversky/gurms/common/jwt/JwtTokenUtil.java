@@ -11,12 +11,16 @@ import java.util.Base64;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JwtTokenUtil {
+	
+	private static final Logger log = LoggerFactory.getLogger(JwtTokenUtil.class);
 	
 	private static final String RAS_PASSWORD = "oversky";  //密钥库口令
 	private static final String RAS_ALIAS = "jwt";          //密钥别名
@@ -25,46 +29,33 @@ public class JwtTokenUtil {
 
     private static PrivateKey PRIVATE_KEY = null;
     private static PublicKey PUBLIC_KET = null;
+    private static SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS256; //指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。
 
-    public static String generateToken(String subject) {
+    public static String generateToken(String subject, int days) {
+    	log.info("generateToken : subject ==> {}" , subject);
     	long now = System.currentTimeMillis();
         return Jwts.builder()
-                .setClaims(null)	//如果有私有声明，一定要先设置这个自己创建的私有的声明，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明
+                .setClaims(null)				//如果有私有声明，一定要先设置这个自己创建的私有的声明，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明
                 .setId(String.valueOf(now)) 	//jti:(JWT ID)是JWT的唯一标识，可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击
                 .setSubject(subject)			//sub:代表这个JWT的主体，可以是一个json格式的字符串
                 .setIssuedAt(new Date(now))		//iat:jwt的签发时间
-                .setExpiration(new Date(now + EXPIRATION_SECONDS * 1000))  // 过期时间
-                .signWith(SignatureAlgorithm.RS256, getPrivateKey())
+                .setExpiration(new Date(now + EXPIRATION_SECONDS * 1000 * days))  // 过期时间
+                .signWith(ALGORITHM, getSignKey())
                 .compact();
-    }
-
-    public static boolean verifyToken(String recvToken) {
-    	Claims claims = getTokenBody(recvToken);
-        String genToken = Jwts.builder()
-                .setClaims(null)
-                .setId(claims.getId()) 	
-                .setSubject(claims.getSubject())	
-                .setIssuedAt(claims.getIssuedAt())	
-                .setExpiration(claims.getExpiration()) 
-                .signWith(SignatureAlgorithm.RS256, getPrivateKey())
-                .compact();
-        
-        return genToken.equals(recvToken);
     }
 
     public static String getSubject(String recvToken) {
-        return getTokenBody(recvToken).getSubject();
+        return getBodyClaims(recvToken).getSubject();
     }
     
-    // 是否已过期
-    public static boolean isExpiration(String recvToken){
-        return getTokenBody(recvToken).getExpiration().before(new Date(System.currentTimeMillis()));
-    }    
-    
-    private static Claims getTokenBody(String token){
-        return Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJws(token).getBody();
+    private static Claims getBodyClaims(String token){
+        return Jwts.parser().setSigningKey(getSignKey()).parseClaimsJws(token).getBody();
     }
 
+    private static String getSignKey() {
+    	return RAS_PASSWORD;
+    }
+    
     private static PublicKey getPublicKey(){
     	if(PUBLIC_KET != null) {
     		return PUBLIC_KET;

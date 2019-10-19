@@ -10,14 +10,13 @@ public class UserLoginRes extends BaseResDto {
 	private String unioncode;    //unioncode
 	private String username;    //用户名称
 	private String loginid;    //登录名
-	private String mobileno;    //手机号码
-	private String email;    //电子邮件
 	private Long orgid;    //所属机构
 	private String orgname;
 	private Integer status;    //用户状态，0，已删除；1，正常；2，锁定
 	private String token;
 	
 	private SysMenuRes menuTree;
+	
 	public Long getUserid() {
 		return userid;
 	}
@@ -41,18 +40,6 @@ public class UserLoginRes extends BaseResDto {
 	}
 	public void setLoginid(String loginid) {
 		this.loginid = loginid;
-	}
-	public String getMobileno() {
-		return mobileno;
-	}
-	public void setMobileno(String mobileno) {
-		this.mobileno = mobileno;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public Long getOrgid() {
 		return orgid;

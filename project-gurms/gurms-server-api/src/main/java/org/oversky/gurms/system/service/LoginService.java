@@ -9,5 +9,7 @@ public interface LoginService {
 	
 	public UserLoginRes login(UserLoginReq loginReq);
 	
+	public String getJWToken(UserLoginRes userInfo);
+	
 	public void logout();
 }

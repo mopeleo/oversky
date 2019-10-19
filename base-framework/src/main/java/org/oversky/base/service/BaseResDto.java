@@ -42,6 +42,12 @@ public class BaseResDto implements Serializable {
 		this.success = success;
 	}
 	
+	public void clear() {
+		this.success = false;
+		this.returncode = null;
+		this.returnmsg = null;
+	}
+	
 	public void success(String msg) {
 		this.success = true;
 		this.returncode = PubDefine.RETCODE_SUCCESS;
