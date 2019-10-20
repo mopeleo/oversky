@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.cust.CustPayAcctDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.cust.CustPayAcct">
+        <id column="acctno" jdbcType="DECIMAL" property="acctno" />
+        <result column="custno" jdbcType="DECIMAL" property="custno" />
+        <result column="paytype" jdbcType="VARCHAR" property="paytype" />
+        <result column="payno" jdbcType="VARCHAR" property="payno" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct">
+        insert into cust_pay_acct (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{acctno, jdbcType=DECIMAL}, #{custno, jdbcType=DECIMAL}, #{paytype, jdbcType=VARCHAR}, #{payno, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into cust_pay_acct (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.acctno, jdbcType=DECIMAL}, #{item.custno, jdbcType=DECIMAL}, #{item.paytype, jdbcType=VARCHAR}, #{item.payno, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from cust_pay_acct 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct">
+        delete from cust_pay_acct 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct">
+        select count(1) from cust_pay_acct <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from cust_pay_acct
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from cust_pay_acct
+         where acctno = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from cust_pay_acct
+         where acctno = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct">
+        update cust_pay_acct set 
+               custno = #{custno, jdbcType=DECIMAL}, 
+               paytype = #{paytype, jdbcType=VARCHAR}, 
+               payno = #{payno, jdbcType=VARCHAR}
+		where acctno = #{acctno, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct">
+		update cust_pay_acct
+		<set>
+		    <if test="custno != null">
+				custno = #{custno, jdbcType=DECIMAL},
+		    </if>
+		    <if test="paytype != null">
+				paytype = #{paytype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="payno != null">
+				payno = #{payno, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where acctno = #{acctno, jdbcType=DECIMAL}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update cust_pay_acct
+		<set>
+		    <if test="field.custno != null">
+				custno = #{field.custno, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.paytype != null and field.paytype != ''">
+				paytype = #{field.paytype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.payno != null and field.payno != ''">
+				payno = #{field.payno, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update cust_pay_acct
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="custno = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.custno != null">
+	                    when acctno = #{item.acctno} then #{item.custno, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.custno == null">
+	                    when acctno = #{item.acctno} then custno
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="paytype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.paytype != null">
+	                    when acctno = #{item.acctno} then #{item.paytype, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.paytype == null">
+	                    when acctno = #{item.acctno} then paytype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="payno = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.payno != null">
+	                    when acctno = #{item.acctno} then #{item.payno, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.payno == null">
+	                    when acctno = #{item.acctno} then payno
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where acctno in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.acctno}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from cust_pay_acct
+	     where acctno in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}acctno, ${tab}custno, ${tab}paytype, ${tab}payno
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="acctno != null">
+				and acctno = #{acctno, jdbcType=DECIMAL}
+			</if>
+			<if test="custno != null">
+				and custno = #{custno, jdbcType=DECIMAL}
+			</if>
+			<if test="paytype != null and paytype != ''">
+				and paytype = #{paytype, jdbcType=VARCHAR}
+			</if>
+			<if test="payno != null and payno != ''">
+				and payno = #{payno, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.acctno != null">
+				and acctno = #{condition.acctno, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.custno != null">
+				and custno = #{condition.custno, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.paytype != null and condition.paytype != ''">
+				and paytype = #{condition.paytype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.payno != null and condition.payno != ''">
+				and payno = #{condition.payno, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

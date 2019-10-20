@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameAttributeInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameAttributeInfo">
+        <id column="attrid" jdbcType="DECIMAL" property="attrid" />
+        <result column="attrtype" jdbcType="VARCHAR" property="attrtype" />
+        <result column="attrfield" jdbcType="INTEGER" property="attrfield" />
+        <result column="unlock" jdbcType="VARCHAR" property="unlock" />
+        <result column="act" jdbcType="VARCHAR" property="act" />
+        <result column="valtype" jdbcType="VARCHAR" property="valtype" />
+        <result column="valmin" jdbcType="DOUBLE" property="valmin" />
+        <result column="valmax" jdbcType="DOUBLE" property="valmax" />
+        <result column="initval" jdbcType="DOUBLE" property="initval" />
+        <result column="upval" jdbcType="DOUBLE" property="upval" />
+        <result column="position" jdbcType="VARCHAR" property="position" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo">
+        insert into game_attribute_info (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{attrid, jdbcType=DECIMAL}, #{attrtype, jdbcType=VARCHAR}, #{attrfield, jdbcType=INTEGER}, #{unlock, jdbcType=VARCHAR}, #{act, jdbcType=VARCHAR}, #{valtype, jdbcType=VARCHAR}, #{valmin, jdbcType=DOUBLE}, #{valmax, jdbcType=DOUBLE}, #{initval, jdbcType=DOUBLE}, #{upval, jdbcType=DOUBLE}, #{position, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into game_attribute_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.attrid, jdbcType=DECIMAL}, #{item.attrtype, jdbcType=VARCHAR}, #{item.attrfield, jdbcType=INTEGER}, #{item.unlock, jdbcType=VARCHAR}, #{item.act, jdbcType=VARCHAR}, #{item.valtype, jdbcType=VARCHAR}, #{item.valmin, jdbcType=DOUBLE}, #{item.valmax, jdbcType=DOUBLE}, #{item.initval, jdbcType=DOUBLE}, #{item.upval, jdbcType=DOUBLE}, #{item.position, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_attribute_info 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo">
+        delete from game_attribute_info 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo">
+        select count(1) from game_attribute_info <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_attribute_info
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_attribute_info
+         where attrid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_attribute_info
+         where attrid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo">
+        update game_attribute_info set 
+               attrtype = #{attrtype, jdbcType=VARCHAR}, 
+               attrfield = #{attrfield, jdbcType=INTEGER}, 
+               unlock = #{unlock, jdbcType=VARCHAR}, 
+               act = #{act, jdbcType=VARCHAR}, 
+               valtype = #{valtype, jdbcType=VARCHAR}, 
+               valmin = #{valmin, jdbcType=DOUBLE}, 
+               valmax = #{valmax, jdbcType=DOUBLE}, 
+               initval = #{initval, jdbcType=DOUBLE}, 
+               upval = #{upval, jdbcType=DOUBLE}, 
+               position = #{position, jdbcType=VARCHAR}
+		where attrid = #{attrid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo">
+		update game_attribute_info
+		<set>
+		    <if test="attrtype != null">
+				attrtype = #{attrtype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="attrfield != null">
+				attrfield = #{attrfield, jdbcType=INTEGER},
+		    </if>
+		    <if test="unlock != null">
+				unlock = #{unlock, jdbcType=VARCHAR},
+		    </if>
+		    <if test="act != null">
+				act = #{act, jdbcType=VARCHAR},
+		    </if>
+		    <if test="valtype != null">
+				valtype = #{valtype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="valmin != null">
+				valmin = #{valmin, jdbcType=DOUBLE},
+		    </if>
+		    <if test="valmax != null">
+				valmax = #{valmax, jdbcType=DOUBLE},
+		    </if>
+		    <if test="initval != null">
+				initval = #{initval, jdbcType=DOUBLE},
+		    </if>
+		    <if test="upval != null">
+				upval = #{upval, jdbcType=DOUBLE},
+		    </if>
+		    <if test="position != null">
+				position = #{position, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where attrid = #{attrid, jdbcType=DECIMAL}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_attribute_info
+		<set>
+		    <if test="field.attrtype != null and field.attrtype != ''">
+				attrtype = #{field.attrtype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.attrfield != null">
+				attrfield = #{field.attrfield, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.unlock != null and field.unlock != ''">
+				unlock = #{field.unlock, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.act != null and field.act != ''">
+				act = #{field.act, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.valtype != null and field.valtype != ''">
+				valtype = #{field.valtype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.valmin != null">
+				valmin = #{field.valmin, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.valmax != null">
+				valmax = #{field.valmax, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.initval != null">
+				initval = #{field.initval, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.upval != null">
+				upval = #{field.upval, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.position != null and field.position != ''">
+				position = #{field.position, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update game_attribute_info
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="attrtype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.attrtype != null">
+	                    when attrid = #{item.attrid} then #{item.attrtype, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.attrtype == null">
+	                    when attrid = #{item.attrid} then attrtype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="attrfield = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.attrfield != null">
+	                    when attrid = #{item.attrid} then #{item.attrfield, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.attrfield == null">
+	                    when attrid = #{item.attrid} then attrfield
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="unlock = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unlock != null">
+	                    when attrid = #{item.attrid} then #{item.unlock, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unlock == null">
+	                    when attrid = #{item.attrid} then unlock
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="act = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.act != null">
+	                    when attrid = #{item.attrid} then #{item.act, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.act == null">
+	                    when attrid = #{item.attrid} then act
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valtype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valtype != null">
+	                    when attrid = #{item.attrid} then #{item.valtype, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.valtype == null">
+	                    when attrid = #{item.attrid} then valtype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valmin = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valmin != null">
+	                    when attrid = #{item.attrid} then #{item.valmin, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.valmin == null">
+	                    when attrid = #{item.attrid} then valmin
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valmax = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valmax != null">
+	                    when attrid = #{item.attrid} then #{item.valmax, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.valmax == null">
+	                    when attrid = #{item.attrid} then valmax
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="initval = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.initval != null">
+	                    when attrid = #{item.attrid} then #{item.initval, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.initval == null">
+	                    when attrid = #{item.attrid} then initval
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="upval = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.upval != null">
+	                    when attrid = #{item.attrid} then #{item.upval, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.upval == null">
+	                    when attrid = #{item.attrid} then upval
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="position = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.position != null">
+	                    when attrid = #{item.attrid} then #{item.position, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.position == null">
+	                    when attrid = #{item.attrid} then position
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where attrid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.attrid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from game_attribute_info
+	     where attrid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}attrid, ${tab}attrtype, ${tab}attrfield, ${tab}unlock, ${tab}act, ${tab}valtype, ${tab}valmin, ${tab}valmax, ${tab}initval, ${tab}upval, ${tab}position
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="attrid != null">
+				and attrid = #{attrid, jdbcType=DECIMAL}
+			</if>
+			<if test="attrtype != null and attrtype != ''">
+				and attrtype = #{attrtype, jdbcType=VARCHAR}
+			</if>
+			<if test="attrfield != null">
+				and attrfield = #{attrfield, jdbcType=INTEGER}
+			</if>
+			<if test="unlock != null and unlock != ''">
+				and unlock = #{unlock, jdbcType=VARCHAR}
+			</if>
+			<if test="act != null and act != ''">
+				and act = #{act, jdbcType=VARCHAR}
+			</if>
+			<if test="valtype != null and valtype != ''">
+				and valtype = #{valtype, jdbcType=VARCHAR}
+			</if>
+			<if test="valmin != null">
+				and valmin = #{valmin, jdbcType=DOUBLE}
+			</if>
+			<if test="valmax != null">
+				and valmax = #{valmax, jdbcType=DOUBLE}
+			</if>
+			<if test="initval != null">
+				and initval = #{initval, jdbcType=DOUBLE}
+			</if>
+			<if test="upval != null">
+				and upval = #{upval, jdbcType=DOUBLE}
+			</if>
+			<if test="position != null and position != ''">
+				and position = #{position, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.attrid != null">
+				and attrid = #{condition.attrid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.attrtype != null and condition.attrtype != ''">
+				and attrtype = #{condition.attrtype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.attrfield != null">
+				and attrfield = #{condition.attrfield, jdbcType=INTEGER}
+			</if>
+			<if test="condition.unlock != null and condition.unlock != ''">
+				and unlock = #{condition.unlock, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.act != null and condition.act != ''">
+				and act = #{condition.act, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.valtype != null and condition.valtype != ''">
+				and valtype = #{condition.valtype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.valmin != null">
+				and valmin = #{condition.valmin, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.valmax != null">
+				and valmax = #{condition.valmax, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.initval != null">
+				and initval = #{condition.initval, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.upval != null">
+				and upval = #{condition.upval, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.position != null and condition.position != ''">
+				and position = #{condition.position, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

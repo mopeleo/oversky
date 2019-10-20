@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameSceneMenuDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameSceneMenu">
+        <id column="sceneid" jdbcType="INTEGER" property="sceneid" />
+        <id column="menuid" jdbcType="VARCHAR" property="menuid" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameSceneMenu">
+        insert into game_scene_menu (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{sceneid, jdbcType=INTEGER}, #{menuid, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into game_scene_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.sceneid, jdbcType=INTEGER}, #{item.menuid, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameSceneMenu" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_scene_menu 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameSceneMenu">
+        delete from game_scene_menu 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameSceneMenu">
+        select count(1) from game_scene_menu <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_scene_menu
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_scene_menu
+         where sceneid = #{param1} and menuid = #{param2}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_scene_menu
+         where sceneid = #{param1} and menuid = #{param2}
+    </delete>
+  
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_scene_menu
+		<set>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+
+	<sql id="column_list">
+        ${tab}sceneid, ${tab}menuid
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="sceneid != null">
+				and sceneid = #{sceneid, jdbcType=INTEGER}
+			</if>
+			<if test="menuid != null and menuid != ''">
+				and menuid = #{menuid, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.sceneid != null">
+				and sceneid = #{condition.sceneid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.menuid != null and condition.menuid != ''">
+				and menuid = #{condition.menuid, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

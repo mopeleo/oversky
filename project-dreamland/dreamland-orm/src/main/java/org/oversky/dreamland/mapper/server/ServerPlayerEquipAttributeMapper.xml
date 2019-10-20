@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.server.ServerPlayerEquipAttributeDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.server.ServerPlayerEquipAttribute">
+        <id column="peid" jdbcType="DECIMAL" property="peid" />
+        <id column="attrid" jdbcType="VARCHAR" property="attrid" />
+        <result column="attrval" jdbcType="DOUBLE" property="attrval" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerPlayerEquipAttribute">
+        insert into server_player_equip_attribute (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{peid, jdbcType=DECIMAL}, #{attrid, jdbcType=VARCHAR}, #{attrval, jdbcType=DOUBLE})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into server_player_equip_attribute (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.peid, jdbcType=DECIMAL}, #{item.attrid, jdbcType=VARCHAR}, #{item.attrval, jdbcType=DOUBLE})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.server.ServerPlayerEquipAttribute" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_player_equip_attribute 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.server.ServerPlayerEquipAttribute">
+        delete from server_player_equip_attribute 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.server.ServerPlayerEquipAttribute">
+        select count(1) from server_player_equip_attribute <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_player_equip_attribute
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_player_equip_attribute
+         where peid = #{param1} and attrid = #{param2}
+    </select>
+
+    <delete id="deleteById">
+        delete from server_player_equip_attribute
+         where peid = #{param1} and attrid = #{param2}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.server.ServerPlayerEquipAttribute">
+        update server_player_equip_attribute set 
+               attrval = #{attrval, jdbcType=DOUBLE}
+		where peid = #{peid, jdbcType=DECIMAL} and attrid = #{attrid, jdbcType=VARCHAR}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.server.ServerPlayerEquipAttribute">
+		update server_player_equip_attribute
+		<set>
+		    <if test="attrval != null">
+				attrval = #{attrval, jdbcType=DOUBLE},
+		    </if>
+		</set>
+		where peid = #{peid, jdbcType=DECIMAL} and attrid = #{attrid, jdbcType=VARCHAR}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update server_player_equip_attribute
+		<set>
+		    <if test="field.attrval != null">
+				attrval = #{field.attrval, jdbcType=DOUBLE},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+
+	<sql id="column_list">
+        ${tab}peid, ${tab}attrid, ${tab}attrval
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="peid != null">
+				and peid = #{peid, jdbcType=DECIMAL}
+			</if>
+			<if test="attrid != null and attrid != ''">
+				and attrid = #{attrid, jdbcType=VARCHAR}
+			</if>
+			<if test="attrval != null">
+				and attrval = #{attrval, jdbcType=DOUBLE}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.peid != null">
+				and peid = #{condition.peid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.attrid != null and condition.attrid != ''">
+				and attrid = #{condition.attrid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.attrval != null">
+				and attrval = #{condition.attrval, jdbcType=DOUBLE}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

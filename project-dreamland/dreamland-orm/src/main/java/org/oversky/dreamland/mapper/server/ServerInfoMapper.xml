@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.server.ServerInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.server.ServerInfo">
+        <id column="serverid" jdbcType="VARCHAR" property="serverid" />
+        <result column="servername" jdbcType="VARCHAR" property="servername" />
+        <result column="opendate" jdbcType="VARCHAR" property="opendate" />
+        <result column="opentime" jdbcType="VARCHAR" property="opentime" />
+        <result column="maxplayer" jdbcType="INTEGER" property="maxplayer" />
+        <result column="regplayer" jdbcType="INTEGER" property="regplayer" />
+        <result column="onlineplayer" jdbcType="INTEGER" property="onlineplayer" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerInfo">
+        insert into server_info (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{serverid, jdbcType=VARCHAR}, #{servername, jdbcType=VARCHAR}, #{opendate, jdbcType=VARCHAR}, #{opentime, jdbcType=VARCHAR}, #{maxplayer, jdbcType=INTEGER}, #{regplayer, jdbcType=INTEGER}, #{onlineplayer, jdbcType=INTEGER}, #{status, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into server_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.serverid, jdbcType=VARCHAR}, #{item.servername, jdbcType=VARCHAR}, #{item.opendate, jdbcType=VARCHAR}, #{item.opentime, jdbcType=VARCHAR}, #{item.maxplayer, jdbcType=INTEGER}, #{item.regplayer, jdbcType=INTEGER}, #{item.onlineplayer, jdbcType=INTEGER}, #{item.status, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.server.ServerInfo" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_info 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.server.ServerInfo">
+        delete from server_info 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.server.ServerInfo">
+        select count(1) from server_info <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_info
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_info
+         where serverid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from server_info
+         where serverid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.server.ServerInfo">
+        update server_info set 
+               servername = #{servername, jdbcType=VARCHAR}, 
+               opendate = #{opendate, jdbcType=VARCHAR}, 
+               opentime = #{opentime, jdbcType=VARCHAR}, 
+               maxplayer = #{maxplayer, jdbcType=INTEGER}, 
+               regplayer = #{regplayer, jdbcType=INTEGER}, 
+               onlineplayer = #{onlineplayer, jdbcType=INTEGER}, 
+               status = #{status, jdbcType=VARCHAR}
+		where serverid = #{serverid, jdbcType=VARCHAR}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.server.ServerInfo">
+		update server_info
+		<set>
+		    <if test="servername != null">
+				servername = #{servername, jdbcType=VARCHAR},
+		    </if>
+		    <if test="opendate != null">
+				opendate = #{opendate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="opentime != null">
+				opentime = #{opentime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="maxplayer != null">
+				maxplayer = #{maxplayer, jdbcType=INTEGER},
+		    </if>
+		    <if test="regplayer != null">
+				regplayer = #{regplayer, jdbcType=INTEGER},
+		    </if>
+		    <if test="onlineplayer != null">
+				onlineplayer = #{onlineplayer, jdbcType=INTEGER},
+		    </if>
+		    <if test="status != null">
+				status = #{status, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where serverid = #{serverid, jdbcType=VARCHAR}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update server_info
+		<set>
+		    <if test="field.servername != null and field.servername != ''">
+				servername = #{field.servername, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.opendate != null and field.opendate != ''">
+				opendate = #{field.opendate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.opentime != null and field.opentime != ''">
+				opentime = #{field.opentime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.maxplayer != null">
+				maxplayer = #{field.maxplayer, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.regplayer != null">
+				regplayer = #{field.regplayer, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.onlineplayer != null">
+				onlineplayer = #{field.onlineplayer, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.status != null and field.status != ''">
+				status = #{field.status, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update server_info
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="servername = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.servername != null">
+	                    when serverid = #{item.serverid} then #{item.servername, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.servername == null">
+	                    when serverid = #{item.serverid} then servername
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="opendate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.opendate != null">
+	                    when serverid = #{item.serverid} then #{item.opendate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.opendate == null">
+	                    when serverid = #{item.serverid} then opendate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="opentime = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.opentime != null">
+	                    when serverid = #{item.serverid} then #{item.opentime, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.opentime == null">
+	                    when serverid = #{item.serverid} then opentime
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="maxplayer = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.maxplayer != null">
+	                    when serverid = #{item.serverid} then #{item.maxplayer, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.maxplayer == null">
+	                    when serverid = #{item.serverid} then maxplayer
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="regplayer = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.regplayer != null">
+	                    when serverid = #{item.serverid} then #{item.regplayer, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.regplayer == null">
+	                    when serverid = #{item.serverid} then regplayer
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="onlineplayer = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.onlineplayer != null">
+	                    when serverid = #{item.serverid} then #{item.onlineplayer, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.onlineplayer == null">
+	                    when serverid = #{item.serverid} then onlineplayer
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="status = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.status != null">
+	                    when serverid = #{item.serverid} then #{item.status, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.status == null">
+	                    when serverid = #{item.serverid} then status
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where serverid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.serverid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from server_info
+	     where serverid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}serverid, ${tab}servername, ${tab}opendate, ${tab}opentime, ${tab}maxplayer, ${tab}regplayer, ${tab}onlineplayer, ${tab}status
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="serverid != null and serverid != ''">
+				and serverid = #{serverid, jdbcType=VARCHAR}
+			</if>
+			<if test="servername != null and servername != ''">
+				and servername = #{servername, jdbcType=VARCHAR}
+			</if>
+			<if test="opendate != null and opendate != ''">
+				and opendate = #{opendate, jdbcType=VARCHAR}
+			</if>
+			<if test="opentime != null and opentime != ''">
+				and opentime = #{opentime, jdbcType=VARCHAR}
+			</if>
+			<if test="maxplayer != null">
+				and maxplayer = #{maxplayer, jdbcType=INTEGER}
+			</if>
+			<if test="regplayer != null">
+				and regplayer = #{regplayer, jdbcType=INTEGER}
+			</if>
+			<if test="onlineplayer != null">
+				and onlineplayer = #{onlineplayer, jdbcType=INTEGER}
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.serverid != null and condition.serverid != ''">
+				and serverid = #{condition.serverid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.servername != null and condition.servername != ''">
+				and servername = #{condition.servername, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.opendate != null and condition.opendate != ''">
+				and opendate = #{condition.opendate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.opentime != null and condition.opentime != ''">
+				and opentime = #{condition.opentime, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.maxplayer != null">
+				and maxplayer = #{condition.maxplayer, jdbcType=INTEGER}
+			</if>
+			<if test="condition.regplayer != null">
+				and regplayer = #{condition.regplayer, jdbcType=INTEGER}
+			</if>
+			<if test="condition.onlineplayer != null">
+				and onlineplayer = #{condition.onlineplayer, jdbcType=INTEGER}
+			</if>
+			<if test="condition.status != null and condition.status != ''">
+				and status = #{condition.status, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

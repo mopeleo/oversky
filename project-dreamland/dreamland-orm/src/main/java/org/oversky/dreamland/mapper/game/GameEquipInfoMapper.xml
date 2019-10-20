@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameEquipInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameEquipInfo">
+        <id column="equipid" jdbcType="VARCHAR" property="equipid" />
+        <result column="equipname" jdbcType="VARCHAR" property="equipname" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="position" jdbcType="VARCHAR" property="position" />
+        <result column="rank" jdbcType="VARCHAR" property="rank" />
+        <result column="profession" jdbcType="VARCHAR" property="profession" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
+        insert into game_equip_info (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{equipid, jdbcType=VARCHAR}, #{equipname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{position, jdbcType=VARCHAR}, #{rank, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{remark, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into game_equip_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.equipid, jdbcType=VARCHAR}, #{item.equipname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.position, jdbcType=VARCHAR}, #{item.rank, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.remark, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_equip_info 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
+        delete from game_equip_info 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
+        select count(1) from game_equip_info <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_equip_info
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_equip_info
+         where equipid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_equip_info
+         where equipid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
+        update game_equip_info set 
+               equipname = #{equipname, jdbcType=VARCHAR}, 
+               icon = #{icon, jdbcType=VARCHAR}, 
+               position = #{position, jdbcType=VARCHAR}, 
+               rank = #{rank, jdbcType=VARCHAR}, 
+               profession = #{profession, jdbcType=VARCHAR}, 
+               remark = #{remark, jdbcType=VARCHAR}
+		where equipid = #{equipid, jdbcType=VARCHAR}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
+		update game_equip_info
+		<set>
+		    <if test="equipname != null">
+				equipname = #{equipname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="icon != null">
+				icon = #{icon, jdbcType=VARCHAR},
+		    </if>
+		    <if test="position != null">
+				position = #{position, jdbcType=VARCHAR},
+		    </if>
+		    <if test="rank != null">
+				rank = #{rank, jdbcType=VARCHAR},
+		    </if>
+		    <if test="profession != null">
+				profession = #{profession, jdbcType=VARCHAR},
+		    </if>
+		    <if test="remark != null">
+				remark = #{remark, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where equipid = #{equipid, jdbcType=VARCHAR}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_equip_info
+		<set>
+		    <if test="field.equipname != null and field.equipname != ''">
+				equipname = #{field.equipname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.icon != null and field.icon != ''">
+				icon = #{field.icon, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.position != null and field.position != ''">
+				position = #{field.position, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.rank != null and field.rank != ''">
+				rank = #{field.rank, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.profession != null and field.profession != ''">
+				profession = #{field.profession, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.remark != null and field.remark != ''">
+				remark = #{field.remark, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update game_equip_info
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="equipname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.equipname != null">
+	                    when equipid = #{item.equipid} then #{item.equipname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.equipname == null">
+	                    when equipid = #{item.equipid} then equipname
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="icon = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.icon != null">
+	                    when equipid = #{item.equipid} then #{item.icon, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.icon == null">
+	                    when equipid = #{item.equipid} then icon
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="position = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.position != null">
+	                    when equipid = #{item.equipid} then #{item.position, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.position == null">
+	                    when equipid = #{item.equipid} then position
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="rank = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.rank != null">
+	                    when equipid = #{item.equipid} then #{item.rank, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.rank == null">
+	                    when equipid = #{item.equipid} then rank
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="profession = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.profession != null">
+	                    when equipid = #{item.equipid} then #{item.profession, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.profession == null">
+	                    when equipid = #{item.equipid} then profession
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="remark = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.remark != null">
+	                    when equipid = #{item.equipid} then #{item.remark, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.remark == null">
+	                    when equipid = #{item.equipid} then remark
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where equipid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.equipid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from game_equip_info
+	     where equipid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}equipid, ${tab}equipname, ${tab}icon, ${tab}position, ${tab}rank, ${tab}profession, ${tab}remark
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="equipid != null and equipid != ''">
+				and equipid = #{equipid, jdbcType=VARCHAR}
+			</if>
+			<if test="equipname != null and equipname != ''">
+				and equipname = #{equipname, jdbcType=VARCHAR}
+			</if>
+			<if test="icon != null and icon != ''">
+				and icon = #{icon, jdbcType=VARCHAR}
+			</if>
+			<if test="position != null and position != ''">
+				and position = #{position, jdbcType=VARCHAR}
+			</if>
+			<if test="rank != null and rank != ''">
+				and rank = #{rank, jdbcType=VARCHAR}
+			</if>
+			<if test="profession != null and profession != ''">
+				and profession = #{profession, jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.equipid != null and condition.equipid != ''">
+				and equipid = #{condition.equipid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.equipname != null and condition.equipname != ''">
+				and equipname = #{condition.equipname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.icon != null and condition.icon != ''">
+				and icon = #{condition.icon, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.position != null and condition.position != ''">
+				and position = #{condition.position, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.rank != null and condition.rank != ''">
+				and rank = #{condition.rank, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.profession != null and condition.profession != ''">
+				and profession = #{condition.profession, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.remark != null and condition.remark != ''">
+				and remark = #{condition.remark, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.server.ServerBulletinDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.server.ServerBulletin">
+        <id column="id" jdbcType="DECIMAL" property="id" />
+        <result column="serverid" jdbcType="VARCHAR" property="serverid" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="startdate" jdbcType="VARCHAR" property="startdate" />
+        <result column="enddate" jdbcType="VARCHAR" property="enddate" />
+        <result column="issuer" jdbcType="VARCHAR" property="issuer" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerBulletin">
+        insert into server_bulletin (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{id, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{issuer, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into server_bulletin (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.id, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.title, jdbcType=VARCHAR}, #{item.content, jdbcType=VARCHAR}, #{item.startdate, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.issuer, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.server.ServerBulletin" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_bulletin 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.server.ServerBulletin">
+        delete from server_bulletin 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.server.ServerBulletin">
+        select count(1) from server_bulletin <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_bulletin
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_bulletin
+         where id = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from server_bulletin
+         where id = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.server.ServerBulletin">
+        update server_bulletin set 
+               serverid = #{serverid, jdbcType=VARCHAR}, 
+               title = #{title, jdbcType=VARCHAR}, 
+               content = #{content, jdbcType=VARCHAR}, 
+               startdate = #{startdate, jdbcType=VARCHAR}, 
+               enddate = #{enddate, jdbcType=VARCHAR}, 
+               issuer = #{issuer, jdbcType=VARCHAR}
+		where id = #{id, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.server.ServerBulletin">
+		update server_bulletin
+		<set>
+		    <if test="serverid != null">
+				serverid = #{serverid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="title != null">
+				title = #{title, jdbcType=VARCHAR},
+		    </if>
+		    <if test="content != null">
+				content = #{content, jdbcType=VARCHAR},
+		    </if>
+		    <if test="startdate != null">
+				startdate = #{startdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="enddate != null">
+				enddate = #{enddate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="issuer != null">
+				issuer = #{issuer, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where id = #{id, jdbcType=DECIMAL}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update server_bulletin
+		<set>
+		    <if test="field.serverid != null and field.serverid != ''">
+				serverid = #{field.serverid, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.title != null and field.title != ''">
+				title = #{field.title, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.content != null and field.content != ''">
+				content = #{field.content, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.startdate != null and field.startdate != ''">
+				startdate = #{field.startdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.enddate != null and field.enddate != ''">
+				enddate = #{field.enddate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.issuer != null and field.issuer != ''">
+				issuer = #{field.issuer, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update server_bulletin
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="serverid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.serverid != null">
+	                    when id = #{item.id} then #{item.serverid, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.serverid == null">
+	                    when id = #{item.id} then serverid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="title = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.title != null">
+	                    when id = #{item.id} then #{item.title, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.title == null">
+	                    when id = #{item.id} then title
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="content = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.content != null">
+	                    when id = #{item.id} then #{item.content, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.content == null">
+	                    when id = #{item.id} then content
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="startdate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.startdate != null">
+	                    when id = #{item.id} then #{item.startdate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.startdate == null">
+	                    when id = #{item.id} then startdate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="enddate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.enddate != null">
+	                    when id = #{item.id} then #{item.enddate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.enddate == null">
+	                    when id = #{item.id} then enddate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="issuer = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.issuer != null">
+	                    when id = #{item.id} then #{item.issuer, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.issuer == null">
+	                    when id = #{item.id} then issuer
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where id in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.id}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from server_bulletin
+	     where id in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}id, ${tab}serverid, ${tab}title, ${tab}content, ${tab}startdate, ${tab}enddate, ${tab}issuer
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="id != null">
+				and id = #{id, jdbcType=DECIMAL}
+			</if>
+			<if test="serverid != null and serverid != ''">
+				and serverid = #{serverid, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null and title != ''">
+				and title = #{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null and content != ''">
+				and content = #{content, jdbcType=VARCHAR}
+			</if>
+			<if test="startdate != null and startdate != ''">
+				and startdate = #{startdate, jdbcType=VARCHAR}
+			</if>
+			<if test="enddate != null and enddate != ''">
+				and enddate = #{enddate, jdbcType=VARCHAR}
+			</if>
+			<if test="issuer != null and issuer != ''">
+				and issuer = #{issuer, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.id != null">
+				and id = #{condition.id, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.serverid != null and condition.serverid != ''">
+				and serverid = #{condition.serverid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.title != null and condition.title != ''">
+				and title = #{condition.title, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.content != null and condition.content != ''">
+				and content = #{condition.content, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.startdate != null and condition.startdate != ''">
+				and startdate = #{condition.startdate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.enddate != null and condition.enddate != ''">
+				and enddate = #{condition.enddate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.issuer != null and condition.issuer != ''">
+				and issuer = #{condition.issuer, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

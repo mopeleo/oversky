@@ -13,4 +13,8 @@ public class WebContext {
 	public static void setUserSession(UserLoginRes user) {
 		USER_SESSION.set(user);
 	}
+	
+	public static void removeUserSession() {
+		USER_SESSION.remove();;
+	}
 }

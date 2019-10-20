@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.com.ComParamInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.com.ComParamInfo">
+        <id column="paramid" jdbcType="INTEGER" property="paramid" />
+        <result column="paramname" jdbcType="VARCHAR" property="paramname" />
+        <result column="paramgroup" jdbcType="VARCHAR" property="paramgroup" />
+        <result column="edittype" jdbcType="VARCHAR" property="edittype" />
+        <result column="initvalue" jdbcType="VARCHAR" property="initvalue" />
+        <result column="valuelength" jdbcType="INTEGER" property="valuelength" />
+        <result column="texttitle" jdbcType="VARCHAR" property="texttitle" />
+        <result column="texttail" jdbcType="VARCHAR" property="texttail" />
+        <result column="valuelist" jdbcType="VARCHAR" property="valuelist" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.com.ComParamInfo">
+        insert into com_param_info (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{paramgroup, jdbcType=VARCHAR}, #{edittype, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{valuelist, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into com_param_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.paramgroup, jdbcType=VARCHAR}, #{item.edittype, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.valuelist, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.com.ComParamInfo" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from com_param_info 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.com.ComParamInfo">
+        delete from com_param_info 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.com.ComParamInfo">
+        select count(1) from com_param_info <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from com_param_info
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from com_param_info
+         where paramid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from com_param_info
+         where paramid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.com.ComParamInfo">
+        update com_param_info set 
+               paramname = #{paramname, jdbcType=VARCHAR}, 
+               paramgroup = #{paramgroup, jdbcType=VARCHAR}, 
+               edittype = #{edittype, jdbcType=VARCHAR}, 
+               initvalue = #{initvalue, jdbcType=VARCHAR}, 
+               valuelength = #{valuelength, jdbcType=INTEGER}, 
+               texttitle = #{texttitle, jdbcType=VARCHAR}, 
+               texttail = #{texttail, jdbcType=VARCHAR}, 
+               valuelist = #{valuelist, jdbcType=VARCHAR}
+		where paramid = #{paramid, jdbcType=INTEGER}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.com.ComParamInfo">
+		update com_param_info
+		<set>
+		    <if test="paramname != null">
+				paramname = #{paramname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="paramgroup != null">
+				paramgroup = #{paramgroup, jdbcType=VARCHAR},
+		    </if>
+		    <if test="edittype != null">
+				edittype = #{edittype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="initvalue != null">
+				initvalue = #{initvalue, jdbcType=VARCHAR},
+		    </if>
+		    <if test="valuelength != null">
+				valuelength = #{valuelength, jdbcType=INTEGER},
+		    </if>
+		    <if test="texttitle != null">
+				texttitle = #{texttitle, jdbcType=VARCHAR},
+		    </if>
+		    <if test="texttail != null">
+				texttail = #{texttail, jdbcType=VARCHAR},
+		    </if>
+		    <if test="valuelist != null">
+				valuelist = #{valuelist, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where paramid = #{paramid, jdbcType=INTEGER}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update com_param_info
+		<set>
+		    <if test="field.paramname != null and field.paramname != ''">
+				paramname = #{field.paramname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.paramgroup != null and field.paramgroup != ''">
+				paramgroup = #{field.paramgroup, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.edittype != null and field.edittype != ''">
+				edittype = #{field.edittype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.initvalue != null and field.initvalue != ''">
+				initvalue = #{field.initvalue, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.valuelength != null">
+				valuelength = #{field.valuelength, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.texttitle != null and field.texttitle != ''">
+				texttitle = #{field.texttitle, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.texttail != null and field.texttail != ''">
+				texttail = #{field.texttail, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.valuelist != null and field.valuelist != ''">
+				valuelist = #{field.valuelist, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update com_param_info
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="paramname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.paramname != null">
+	                    when paramid = #{item.paramid} then #{item.paramname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.paramname == null">
+	                    when paramid = #{item.paramid} then paramname
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="paramgroup = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.paramgroup != null">
+	                    when paramid = #{item.paramid} then #{item.paramgroup, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.paramgroup == null">
+	                    when paramid = #{item.paramid} then paramgroup
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="edittype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.edittype != null">
+	                    when paramid = #{item.paramid} then #{item.edittype, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.edittype == null">
+	                    when paramid = #{item.paramid} then edittype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="initvalue = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.initvalue != null">
+	                    when paramid = #{item.paramid} then #{item.initvalue, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.initvalue == null">
+	                    when paramid = #{item.paramid} then initvalue
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valuelength = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valuelength != null">
+	                    when paramid = #{item.paramid} then #{item.valuelength, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.valuelength == null">
+	                    when paramid = #{item.paramid} then valuelength
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="texttitle = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.texttitle != null">
+	                    when paramid = #{item.paramid} then #{item.texttitle, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.texttitle == null">
+	                    when paramid = #{item.paramid} then texttitle
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="texttail = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.texttail != null">
+	                    when paramid = #{item.paramid} then #{item.texttail, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.texttail == null">
+	                    when paramid = #{item.paramid} then texttail
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="valuelist = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.valuelist != null">
+	                    when paramid = #{item.paramid} then #{item.valuelist, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.valuelist == null">
+	                    when paramid = #{item.paramid} then valuelist
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where paramid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.paramid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from com_param_info
+	     where paramid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}paramid, ${tab}paramname, ${tab}paramgroup, ${tab}edittype, ${tab}initvalue, ${tab}valuelength, ${tab}texttitle, ${tab}texttail, ${tab}valuelist
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="paramid != null">
+				and paramid = #{paramid, jdbcType=INTEGER}
+			</if>
+			<if test="paramname != null and paramname != ''">
+				and paramname = #{paramname, jdbcType=VARCHAR}
+			</if>
+			<if test="paramgroup != null and paramgroup != ''">
+				and paramgroup = #{paramgroup, jdbcType=VARCHAR}
+			</if>
+			<if test="edittype != null and edittype != ''">
+				and edittype = #{edittype, jdbcType=VARCHAR}
+			</if>
+			<if test="initvalue != null and initvalue != ''">
+				and initvalue = #{initvalue, jdbcType=VARCHAR}
+			</if>
+			<if test="valuelength != null">
+				and valuelength = #{valuelength, jdbcType=INTEGER}
+			</if>
+			<if test="texttitle != null and texttitle != ''">
+				and texttitle = #{texttitle, jdbcType=VARCHAR}
+			</if>
+			<if test="texttail != null and texttail != ''">
+				and texttail = #{texttail, jdbcType=VARCHAR}
+			</if>
+			<if test="valuelist != null and valuelist != ''">
+				and valuelist = #{valuelist, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.paramid != null">
+				and paramid = #{condition.paramid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.paramname != null and condition.paramname != ''">
+				and paramname = #{condition.paramname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.paramgroup != null and condition.paramgroup != ''">
+				and paramgroup = #{condition.paramgroup, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.edittype != null and condition.edittype != ''">
+				and edittype = #{condition.edittype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.initvalue != null and condition.initvalue != ''">
+				and initvalue = #{condition.initvalue, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.valuelength != null">
+				and valuelength = #{condition.valuelength, jdbcType=INTEGER}
+			</if>
+			<if test="condition.texttitle != null and condition.texttitle != ''">
+				and texttitle = #{condition.texttitle, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.texttail != null and condition.texttail != ''">
+				and texttail = #{condition.texttail, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.valuelist != null and condition.valuelist != ''">
+				and valuelist = #{condition.valuelist, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

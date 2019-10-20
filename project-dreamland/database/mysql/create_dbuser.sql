@@ -1,12 +1,12 @@
 
-DROP DATABASE IF EXISTS gurmstest;
+DROP DATABASE IF EXISTS dreamlanddb;
 
-CREATE DATABASE IF NOT EXISTS gurmstest DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS dreamlanddb DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-DROP USER IF EXISTS 'gurms';
+DROP USER IF EXISTS 'dreamland';
 
-CREATE USER 'gurms'@'%' IDENTIFIED BY 'gurms';
+CREATE USER 'dreamland'@'%' IDENTIFIED BY 'dreamland';
 
-GRANT ALL PRIVILEGES ON gurmstest.* TO gurms;
+GRANT ALL PRIVILEGES ON dreamlanddb.* TO dreamland;
 
 FLUSH PRIVILEGES;

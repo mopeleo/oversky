@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameActorInfoDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameActorInfo">
+        <id column="actorid" jdbcType="VARCHAR" property="actorid" />
+        <result column="actorname" jdbcType="VARCHAR" property="actorname" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="race" jdbcType="VARCHAR" property="race" />
+        <result column="profession" jdbcType="VARCHAR" property="profession" />
+        <result column="actorscene" jdbcType="INTEGER" property="actorscene" />
+        <result column="str" jdbcType="INTEGER" property="str" />
+        <result column="intelligence" jdbcType="INTEGER" property="intelligence" />
+        <result column="hp" jdbcType="INTEGER" property="hp" />
+        <result column="mp" jdbcType="INTEGER" property="mp" />
+        <result column="agl" jdbcType="INTEGER" property="agl" />
+        <result column="luck" jdbcType="INTEGER" property="luck" />
+        <result column="initrank" jdbcType="INTEGER" property="initrank" />
+        <result column="maxrank" jdbcType="INTEGER" property="maxrank" />
+        <result column="ratiotype" jdbcType="VARCHAR" property="ratiotype" />
+        <result column="ratiostr" jdbcType="DOUBLE" property="ratiostr" />
+        <result column="ratioint" jdbcType="DOUBLE" property="ratioint" />
+        <result column="ratiohp" jdbcType="DOUBLE" property="ratiohp" />
+        <result column="ratiomp" jdbcType="DOUBLE" property="ratiomp" />
+        <result column="ratioagl" jdbcType="DOUBLE" property="ratioagl" />
+        <result column="ratioluck" jdbcType="DOUBLE" property="ratioluck" />
+        <result column="father" jdbcType="VARCHAR" property="father" />
+        <result column="mother" jdbcType="VARCHAR" property="mother" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameActorInfo">
+        insert into game_actor_info (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{actorid, jdbcType=VARCHAR}, #{actorname, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER}, #{race, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{actorscene, jdbcType=INTEGER}, #{str, jdbcType=INTEGER}, #{intelligence, jdbcType=INTEGER}, #{hp, jdbcType=INTEGER}, #{mp, jdbcType=INTEGER}, #{agl, jdbcType=INTEGER}, #{luck, jdbcType=INTEGER}, #{initrank, jdbcType=INTEGER}, #{maxrank, jdbcType=INTEGER}, #{ratiotype, jdbcType=VARCHAR}, #{ratiostr, jdbcType=DOUBLE}, #{ratioint, jdbcType=DOUBLE}, #{ratiohp, jdbcType=DOUBLE}, #{ratiomp, jdbcType=DOUBLE}, #{ratioagl, jdbcType=DOUBLE}, #{ratioluck, jdbcType=DOUBLE}, #{father, jdbcType=VARCHAR}, #{mother, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into game_actor_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.actorid, jdbcType=VARCHAR}, #{item.actorname, jdbcType=VARCHAR}, #{item.sex, jdbcType=INTEGER}, #{item.race, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.actorscene, jdbcType=INTEGER}, #{item.str, jdbcType=INTEGER}, #{item.intelligence, jdbcType=INTEGER}, #{item.hp, jdbcType=INTEGER}, #{item.mp, jdbcType=INTEGER}, #{item.agl, jdbcType=INTEGER}, #{item.luck, jdbcType=INTEGER}, #{item.initrank, jdbcType=INTEGER}, #{item.maxrank, jdbcType=INTEGER}, #{item.ratiotype, jdbcType=VARCHAR}, #{item.ratiostr, jdbcType=DOUBLE}, #{item.ratioint, jdbcType=DOUBLE}, #{item.ratiohp, jdbcType=DOUBLE}, #{item.ratiomp, jdbcType=DOUBLE}, #{item.ratioagl, jdbcType=DOUBLE}, #{item.ratioluck, jdbcType=DOUBLE}, #{item.father, jdbcType=VARCHAR}, #{item.mother, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameActorInfo" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_actor_info 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameActorInfo">
+        delete from game_actor_info 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameActorInfo">
+        select count(1) from game_actor_info <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_actor_info
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_actor_info
+         where actorid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_actor_info
+         where actorid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameActorInfo">
+        update game_actor_info set 
+               actorname = #{actorname, jdbcType=VARCHAR}, 
+               sex = #{sex, jdbcType=INTEGER}, 
+               race = #{race, jdbcType=VARCHAR}, 
+               profession = #{profession, jdbcType=VARCHAR}, 
+               actorscene = #{actorscene, jdbcType=INTEGER}, 
+               str = #{str, jdbcType=INTEGER}, 
+               intelligence = #{intelligence, jdbcType=INTEGER}, 
+               hp = #{hp, jdbcType=INTEGER}, 
+               mp = #{mp, jdbcType=INTEGER}, 
+               agl = #{agl, jdbcType=INTEGER}, 
+               luck = #{luck, jdbcType=INTEGER}, 
+               initrank = #{initrank, jdbcType=INTEGER}, 
+               maxrank = #{maxrank, jdbcType=INTEGER}, 
+               ratiotype = #{ratiotype, jdbcType=VARCHAR}, 
+               ratiostr = #{ratiostr, jdbcType=DOUBLE}, 
+               ratioint = #{ratioint, jdbcType=DOUBLE}, 
+               ratiohp = #{ratiohp, jdbcType=DOUBLE}, 
+               ratiomp = #{ratiomp, jdbcType=DOUBLE}, 
+               ratioagl = #{ratioagl, jdbcType=DOUBLE}, 
+               ratioluck = #{ratioluck, jdbcType=DOUBLE}, 
+               father = #{father, jdbcType=VARCHAR}, 
+               mother = #{mother, jdbcType=VARCHAR}
+		where actorid = #{actorid, jdbcType=VARCHAR}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameActorInfo">
+		update game_actor_info
+		<set>
+		    <if test="actorname != null">
+				actorname = #{actorname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="sex != null">
+				sex = #{sex, jdbcType=INTEGER},
+		    </if>
+		    <if test="race != null">
+				race = #{race, jdbcType=VARCHAR},
+		    </if>
+		    <if test="profession != null">
+				profession = #{profession, jdbcType=VARCHAR},
+		    </if>
+		    <if test="actorscene != null">
+				actorscene = #{actorscene, jdbcType=INTEGER},
+		    </if>
+		    <if test="str != null">
+				str = #{str, jdbcType=INTEGER},
+		    </if>
+		    <if test="intelligence != null">
+				intelligence = #{intelligence, jdbcType=INTEGER},
+		    </if>
+		    <if test="hp != null">
+				hp = #{hp, jdbcType=INTEGER},
+		    </if>
+		    <if test="mp != null">
+				mp = #{mp, jdbcType=INTEGER},
+		    </if>
+		    <if test="agl != null">
+				agl = #{agl, jdbcType=INTEGER},
+		    </if>
+		    <if test="luck != null">
+				luck = #{luck, jdbcType=INTEGER},
+		    </if>
+		    <if test="initrank != null">
+				initrank = #{initrank, jdbcType=INTEGER},
+		    </if>
+		    <if test="maxrank != null">
+				maxrank = #{maxrank, jdbcType=INTEGER},
+		    </if>
+		    <if test="ratiotype != null">
+				ratiotype = #{ratiotype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="ratiostr != null">
+				ratiostr = #{ratiostr, jdbcType=DOUBLE},
+		    </if>
+		    <if test="ratioint != null">
+				ratioint = #{ratioint, jdbcType=DOUBLE},
+		    </if>
+		    <if test="ratiohp != null">
+				ratiohp = #{ratiohp, jdbcType=DOUBLE},
+		    </if>
+		    <if test="ratiomp != null">
+				ratiomp = #{ratiomp, jdbcType=DOUBLE},
+		    </if>
+		    <if test="ratioagl != null">
+				ratioagl = #{ratioagl, jdbcType=DOUBLE},
+		    </if>
+		    <if test="ratioluck != null">
+				ratioluck = #{ratioluck, jdbcType=DOUBLE},
+		    </if>
+		    <if test="father != null">
+				father = #{father, jdbcType=VARCHAR},
+		    </if>
+		    <if test="mother != null">
+				mother = #{mother, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where actorid = #{actorid, jdbcType=VARCHAR}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_actor_info
+		<set>
+		    <if test="field.actorname != null and field.actorname != ''">
+				actorname = #{field.actorname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.sex != null">
+				sex = #{field.sex, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.race != null and field.race != ''">
+				race = #{field.race, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.profession != null and field.profession != ''">
+				profession = #{field.profession, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.actorscene != null">
+				actorscene = #{field.actorscene, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.str != null">
+				str = #{field.str, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.intelligence != null">
+				intelligence = #{field.intelligence, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.hp != null">
+				hp = #{field.hp, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.mp != null">
+				mp = #{field.mp, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.agl != null">
+				agl = #{field.agl, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.luck != null">
+				luck = #{field.luck, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.initrank != null">
+				initrank = #{field.initrank, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.maxrank != null">
+				maxrank = #{field.maxrank, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.ratiotype != null and field.ratiotype != ''">
+				ratiotype = #{field.ratiotype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.ratiostr != null">
+				ratiostr = #{field.ratiostr, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.ratioint != null">
+				ratioint = #{field.ratioint, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.ratiohp != null">
+				ratiohp = #{field.ratiohp, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.ratiomp != null">
+				ratiomp = #{field.ratiomp, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.ratioagl != null">
+				ratioagl = #{field.ratioagl, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.ratioluck != null">
+				ratioluck = #{field.ratioluck, jdbcType=DOUBLE},
+		    </if>
+		    <if test="field.father != null and field.father != ''">
+				father = #{field.father, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.mother != null and field.mother != ''">
+				mother = #{field.mother, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update game_actor_info
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="actorname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.actorname != null">
+	                    when actorid = #{item.actorid} then #{item.actorname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.actorname == null">
+	                    when actorid = #{item.actorid} then actorname
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="sex = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.sex != null">
+	                    when actorid = #{item.actorid} then #{item.sex, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.sex == null">
+	                    when actorid = #{item.actorid} then sex
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="race = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.race != null">
+	                    when actorid = #{item.actorid} then #{item.race, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.race == null">
+	                    when actorid = #{item.actorid} then race
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="profession = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.profession != null">
+	                    when actorid = #{item.actorid} then #{item.profession, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.profession == null">
+	                    when actorid = #{item.actorid} then profession
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="actorscene = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.actorscene != null">
+	                    when actorid = #{item.actorid} then #{item.actorscene, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.actorscene == null">
+	                    when actorid = #{item.actorid} then actorscene
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="str = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.str != null">
+	                    when actorid = #{item.actorid} then #{item.str, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.str == null">
+	                    when actorid = #{item.actorid} then str
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="intelligence = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.intelligence != null">
+	                    when actorid = #{item.actorid} then #{item.intelligence, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.intelligence == null">
+	                    when actorid = #{item.actorid} then intelligence
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="hp = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.hp != null">
+	                    when actorid = #{item.actorid} then #{item.hp, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.hp == null">
+	                    when actorid = #{item.actorid} then hp
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="mp = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.mp != null">
+	                    when actorid = #{item.actorid} then #{item.mp, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.mp == null">
+	                    when actorid = #{item.actorid} then mp
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="agl = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.agl != null">
+	                    when actorid = #{item.actorid} then #{item.agl, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.agl == null">
+	                    when actorid = #{item.actorid} then agl
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="luck = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.luck != null">
+	                    when actorid = #{item.actorid} then #{item.luck, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.luck == null">
+	                    when actorid = #{item.actorid} then luck
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="initrank = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.initrank != null">
+	                    when actorid = #{item.actorid} then #{item.initrank, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.initrank == null">
+	                    when actorid = #{item.actorid} then initrank
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="maxrank = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.maxrank != null">
+	                    when actorid = #{item.actorid} then #{item.maxrank, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.maxrank == null">
+	                    when actorid = #{item.actorid} then maxrank
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ratiotype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ratiotype != null">
+	                    when actorid = #{item.actorid} then #{item.ratiotype, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.ratiotype == null">
+	                    when actorid = #{item.actorid} then ratiotype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ratiostr = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ratiostr != null">
+	                    when actorid = #{item.actorid} then #{item.ratiostr, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.ratiostr == null">
+	                    when actorid = #{item.actorid} then ratiostr
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ratioint = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ratioint != null">
+	                    when actorid = #{item.actorid} then #{item.ratioint, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.ratioint == null">
+	                    when actorid = #{item.actorid} then ratioint
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ratiohp = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ratiohp != null">
+	                    when actorid = #{item.actorid} then #{item.ratiohp, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.ratiohp == null">
+	                    when actorid = #{item.actorid} then ratiohp
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ratiomp = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ratiomp != null">
+	                    when actorid = #{item.actorid} then #{item.ratiomp, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.ratiomp == null">
+	                    when actorid = #{item.actorid} then ratiomp
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ratioagl = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ratioagl != null">
+	                    when actorid = #{item.actorid} then #{item.ratioagl, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.ratioagl == null">
+	                    when actorid = #{item.actorid} then ratioagl
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="ratioluck = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.ratioluck != null">
+	                    when actorid = #{item.actorid} then #{item.ratioluck, jdbcType=DOUBLE}
+	                </if>
+	                <if test="item.ratioluck == null">
+	                    when actorid = #{item.actorid} then ratioluck
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="father = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.father != null">
+	                    when actorid = #{item.actorid} then #{item.father, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.father == null">
+	                    when actorid = #{item.actorid} then father
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="mother = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.mother != null">
+	                    when actorid = #{item.actorid} then #{item.mother, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.mother == null">
+	                    when actorid = #{item.actorid} then mother
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where actorid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.actorid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from game_actor_info
+	     where actorid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}actorid, ${tab}actorname, ${tab}sex, ${tab}race, ${tab}profession, ${tab}actorscene, ${tab}str, ${tab}intelligence, ${tab}hp, ${tab}mp, ${tab}agl, ${tab}luck, ${tab}initrank, ${tab}maxrank, ${tab}ratiotype, ${tab}ratiostr, ${tab}ratioint, ${tab}ratiohp, ${tab}ratiomp, ${tab}ratioagl, ${tab}ratioluck, ${tab}father, ${tab}mother
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="actorid != null and actorid != ''">
+				and actorid = #{actorid, jdbcType=VARCHAR}
+			</if>
+			<if test="actorname != null and actorname != ''">
+				and actorname = #{actorname, jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null">
+				and sex = #{sex, jdbcType=INTEGER}
+			</if>
+			<if test="race != null and race != ''">
+				and race = #{race, jdbcType=VARCHAR}
+			</if>
+			<if test="profession != null and profession != ''">
+				and profession = #{profession, jdbcType=VARCHAR}
+			</if>
+			<if test="actorscene != null">
+				and actorscene = #{actorscene, jdbcType=INTEGER}
+			</if>
+			<if test="str != null">
+				and str = #{str, jdbcType=INTEGER}
+			</if>
+			<if test="intelligence != null">
+				and intelligence = #{intelligence, jdbcType=INTEGER}
+			</if>
+			<if test="hp != null">
+				and hp = #{hp, jdbcType=INTEGER}
+			</if>
+			<if test="mp != null">
+				and mp = #{mp, jdbcType=INTEGER}
+			</if>
+			<if test="agl != null">
+				and agl = #{agl, jdbcType=INTEGER}
+			</if>
+			<if test="luck != null">
+				and luck = #{luck, jdbcType=INTEGER}
+			</if>
+			<if test="initrank != null">
+				and initrank = #{initrank, jdbcType=INTEGER}
+			</if>
+			<if test="maxrank != null">
+				and maxrank = #{maxrank, jdbcType=INTEGER}
+			</if>
+			<if test="ratiotype != null and ratiotype != ''">
+				and ratiotype = #{ratiotype, jdbcType=VARCHAR}
+			</if>
+			<if test="ratiostr != null">
+				and ratiostr = #{ratiostr, jdbcType=DOUBLE}
+			</if>
+			<if test="ratioint != null">
+				and ratioint = #{ratioint, jdbcType=DOUBLE}
+			</if>
+			<if test="ratiohp != null">
+				and ratiohp = #{ratiohp, jdbcType=DOUBLE}
+			</if>
+			<if test="ratiomp != null">
+				and ratiomp = #{ratiomp, jdbcType=DOUBLE}
+			</if>
+			<if test="ratioagl != null">
+				and ratioagl = #{ratioagl, jdbcType=DOUBLE}
+			</if>
+			<if test="ratioluck != null">
+				and ratioluck = #{ratioluck, jdbcType=DOUBLE}
+			</if>
+			<if test="father != null and father != ''">
+				and father = #{father, jdbcType=VARCHAR}
+			</if>
+			<if test="mother != null and mother != ''">
+				and mother = #{mother, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.actorid != null and condition.actorid != ''">
+				and actorid = #{condition.actorid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.actorname != null and condition.actorname != ''">
+				and actorname = #{condition.actorname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.sex != null">
+				and sex = #{condition.sex, jdbcType=INTEGER}
+			</if>
+			<if test="condition.race != null and condition.race != ''">
+				and race = #{condition.race, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.profession != null and condition.profession != ''">
+				and profession = #{condition.profession, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.actorscene != null">
+				and actorscene = #{condition.actorscene, jdbcType=INTEGER}
+			</if>
+			<if test="condition.str != null">
+				and str = #{condition.str, jdbcType=INTEGER}
+			</if>
+			<if test="condition.intelligence != null">
+				and intelligence = #{condition.intelligence, jdbcType=INTEGER}
+			</if>
+			<if test="condition.hp != null">
+				and hp = #{condition.hp, jdbcType=INTEGER}
+			</if>
+			<if test="condition.mp != null">
+				and mp = #{condition.mp, jdbcType=INTEGER}
+			</if>
+			<if test="condition.agl != null">
+				and agl = #{condition.agl, jdbcType=INTEGER}
+			</if>
+			<if test="condition.luck != null">
+				and luck = #{condition.luck, jdbcType=INTEGER}
+			</if>
+			<if test="condition.initrank != null">
+				and initrank = #{condition.initrank, jdbcType=INTEGER}
+			</if>
+			<if test="condition.maxrank != null">
+				and maxrank = #{condition.maxrank, jdbcType=INTEGER}
+			</if>
+			<if test="condition.ratiotype != null and condition.ratiotype != ''">
+				and ratiotype = #{condition.ratiotype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.ratiostr != null">
+				and ratiostr = #{condition.ratiostr, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.ratioint != null">
+				and ratioint = #{condition.ratioint, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.ratiohp != null">
+				and ratiohp = #{condition.ratiohp, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.ratiomp != null">
+				and ratiomp = #{condition.ratiomp, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.ratioagl != null">
+				and ratioagl = #{condition.ratioagl, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.ratioluck != null">
+				and ratioluck = #{condition.ratioluck, jdbcType=DOUBLE}
+			</if>
+			<if test="condition.father != null and condition.father != ''">
+				and father = #{condition.father, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.mother != null and condition.mother != ''">
+				and mother = #{condition.mother, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

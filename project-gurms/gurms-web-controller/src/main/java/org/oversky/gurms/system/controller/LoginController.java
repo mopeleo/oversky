@@ -1,9 +1,10 @@
 package org.oversky.gurms.system.controller;
 
+import org.oversky.common.web.WebUtils;
 import org.oversky.gurms.system.dto.request.UserLoginReq;
 import org.oversky.gurms.system.dto.response.UserLoginRes;
 import org.oversky.gurms.system.service.LoginService;
-import org.oversky.gurms.web.util.WebUtils;
+import org.oversky.gurms.web.util.WebContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ public class LoginController {
 	
 	@RequestMapping("/logout/{userId}")
 	public boolean logout(@PathVariable Long userId) {
+		WebContext.removeUserSession();
 		return true;
 	}
 }

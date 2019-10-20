@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.server.ServerPromotionDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.server.ServerPromotion">
+        <id column="serverid" jdbcType="VARCHAR" property="serverid" />
+        <id column="promid" jdbcType="INTEGER" property="promid" />
+        <result column="startdate" jdbcType="VARCHAR" property="startdate" />
+        <result column="starttime" jdbcType="VARCHAR" property="starttime" />
+        <result column="enddate" jdbcType="VARCHAR" property="enddate" />
+        <result column="endtime" jdbcType="VARCHAR" property="endtime" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerPromotion">
+        insert into server_promotion (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{serverid, jdbcType=VARCHAR}, #{promid, jdbcType=INTEGER}, #{startdate, jdbcType=VARCHAR}, #{starttime, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{endtime, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into server_promotion (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.serverid, jdbcType=VARCHAR}, #{item.promid, jdbcType=INTEGER}, #{item.startdate, jdbcType=VARCHAR}, #{item.starttime, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.endtime, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.server.ServerPromotion" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_promotion 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.server.ServerPromotion">
+        delete from server_promotion 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.server.ServerPromotion">
+        select count(1) from server_promotion <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_promotion
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from server_promotion
+         where serverid = #{param1} and promid = #{param2}
+    </select>
+
+    <delete id="deleteById">
+        delete from server_promotion
+         where serverid = #{param1} and promid = #{param2}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.server.ServerPromotion">
+        update server_promotion set 
+               startdate = #{startdate, jdbcType=VARCHAR}, 
+               starttime = #{starttime, jdbcType=VARCHAR}, 
+               enddate = #{enddate, jdbcType=VARCHAR}, 
+               endtime = #{endtime, jdbcType=VARCHAR}
+		where serverid = #{serverid, jdbcType=VARCHAR} and promid = #{promid, jdbcType=INTEGER}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.server.ServerPromotion">
+		update server_promotion
+		<set>
+		    <if test="startdate != null">
+				startdate = #{startdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="starttime != null">
+				starttime = #{starttime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="enddate != null">
+				enddate = #{enddate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="endtime != null">
+				endtime = #{endtime, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where serverid = #{serverid, jdbcType=VARCHAR} and promid = #{promid, jdbcType=INTEGER}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update server_promotion
+		<set>
+		    <if test="field.startdate != null and field.startdate != ''">
+				startdate = #{field.startdate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.starttime != null and field.starttime != ''">
+				starttime = #{field.starttime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.enddate != null and field.enddate != ''">
+				enddate = #{field.enddate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.endtime != null and field.endtime != ''">
+				endtime = #{field.endtime, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+
+	<sql id="column_list">
+        ${tab}serverid, ${tab}promid, ${tab}startdate, ${tab}starttime, ${tab}enddate, ${tab}endtime
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="serverid != null and serverid != ''">
+				and serverid = #{serverid, jdbcType=VARCHAR}
+			</if>
+			<if test="promid != null">
+				and promid = #{promid, jdbcType=INTEGER}
+			</if>
+			<if test="startdate != null and startdate != ''">
+				and startdate = #{startdate, jdbcType=VARCHAR}
+			</if>
+			<if test="starttime != null and starttime != ''">
+				and starttime = #{starttime, jdbcType=VARCHAR}
+			</if>
+			<if test="enddate != null and enddate != ''">
+				and enddate = #{enddate, jdbcType=VARCHAR}
+			</if>
+			<if test="endtime != null and endtime != ''">
+				and endtime = #{endtime, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.serverid != null and condition.serverid != ''">
+				and serverid = #{condition.serverid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.promid != null">
+				and promid = #{condition.promid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.startdate != null and condition.startdate != ''">
+				and startdate = #{condition.startdate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.starttime != null and condition.starttime != ''">
+				and starttime = #{condition.starttime, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.enddate != null and condition.enddate != ''">
+				and enddate = #{condition.enddate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.endtime != null and condition.endtime != ''">
+				and endtime = #{condition.endtime, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

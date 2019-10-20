@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameSuitEquipDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameSuitEquip">
+        <id column="suitid" jdbcType="VARCHAR" property="suitid" />
+        <id column="equipid" jdbcType="VARCHAR" property="equipid" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameSuitEquip">
+        insert into game_suit_equip (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{suitid, jdbcType=VARCHAR}, #{equipid, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into game_suit_equip (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.suitid, jdbcType=VARCHAR}, #{item.equipid, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameSuitEquip" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_suit_equip 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameSuitEquip">
+        delete from game_suit_equip 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameSuitEquip">
+        select count(1) from game_suit_equip <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_suit_equip
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_suit_equip
+         where suitid = #{param1} and equipid = #{param2}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_suit_equip
+         where suitid = #{param1} and equipid = #{param2}
+    </delete>
+  
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_suit_equip
+		<set>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+
+	<sql id="column_list">
+        ${tab}suitid, ${tab}equipid
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="suitid != null and suitid != ''">
+				and suitid = #{suitid, jdbcType=VARCHAR}
+			</if>
+			<if test="equipid != null and equipid != ''">
+				and equipid = #{equipid, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.suitid != null and condition.suitid != ''">
+				and suitid = #{condition.suitid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.equipid != null and condition.equipid != ''">
+				and equipid = #{condition.equipid, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

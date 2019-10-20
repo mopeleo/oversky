@@ -1,0 +1,54 @@
+package org.oversky.dreamland.entity.game;
+
+import org.oversky.base.entity.BaseEntity;
+
+public class GameSceneMenu extends BaseEntity{
+
+	private static final long serialVersionUID = 1L;
+
+	private Integer sceneid;    //
+	private String menuid;    //
+
+	public Integer getSceneid() {
+		return this.sceneid;
+	}
+
+	public void setSceneid(Integer sceneid) {
+		this.sceneid = sceneid;
+	}
+
+	public String getMenuid() {
+		return this.menuid;
+	}
+
+	public void setMenuid(String menuid) {
+		this.menuid = menuid;
+	}
+
+	public String buildEntityKey(){
+		StringBuilder build = new StringBuilder("GameSceneMenu");
+		return build.append("#sceneid:").append(this.sceneid).append("#menuid:").append(this.menuid).toString();
+	}
+
+    public static String buildEntityKey(Integer sceneid, String menuid){
+        StringBuilder build = new StringBuilder("GameSceneMenu");
+        return build.append("#sceneid:").append(sceneid).append("#menuid:").append(menuid).toString();
+    }
+    
+    public void copyPrimaryKey(GameSceneMenu entity){
+		this.sceneid = entity.getSceneid();
+		this.menuid = entity.getMenuid();
+    }
+
+	@Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+		sb.append(", sceneid=").append(sceneid);
+		sb.append(", menuid=").append(menuid);
+        sb.append("]");
+        return sb.toString();
+	}
+}
