@@ -13,3 +13,14 @@ mvn install:install-file "-DgroupId=com.ibm.db2.jcc" "-DartifactId=db2jcc4" "-Dv
 mvn archetype:generate -DgroupId=org.oversky -DartifactId=base-util -DinteractiveMode=false
 
 
+服务端口规划：
+
+web ： 8088  dev
+nginx：8888  prod
+
+eureka ： 5000
+gateway：5001
+
+gurms ：6000
+gurms1 ：6001
+gurms2：6002

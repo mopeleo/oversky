@@ -28,14 +28,14 @@
         </dependency>
         
     	<dependency>
-			<groupId>org.oversky.gurms</groupId>
-			<artifactId>gurms-server-api</artifactId>
+			<groupId>org.oversky</groupId>
+			<artifactId>base-common</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
     	<dependency>
 			<groupId>org.oversky.gurms</groupId>
-			<artifactId>gurms-common</artifactId>
+			<artifactId>gurms-server-api</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 

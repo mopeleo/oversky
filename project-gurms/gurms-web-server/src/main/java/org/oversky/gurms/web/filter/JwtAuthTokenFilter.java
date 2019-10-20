@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.oversky.gurms.common.jwt.JwtTokenUtil;
+import org.oversky.common.jwt.JwtTokenUtil;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.dto.response.SysMenuRes;
 import org.oversky.gurms.system.dto.response.UserLoginRes;

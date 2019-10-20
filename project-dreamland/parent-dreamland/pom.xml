@@ -28,7 +28,6 @@
     </parent>
     
     <modules>
-    	<module>../dreamland-common</module>
     	<module>../dreamland-orm</module>
     	<module>../dreamland-server-api</module>
     	<module>../dreamland-server-app</module>

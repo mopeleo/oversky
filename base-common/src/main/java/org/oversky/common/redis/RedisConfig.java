@@ -1,4 +1,4 @@
-package org.oversky.gurms.common.redis;
+package org.oversky.common.redis;
 
 import java.time.Duration;
 

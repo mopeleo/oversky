@@ -1,4 +1,4 @@
-package org.oversky.gurms.common.jwt;
+package org.oversky.common.jwt;
 
 import java.io.InputStream;
 import java.security.KeyFactory;

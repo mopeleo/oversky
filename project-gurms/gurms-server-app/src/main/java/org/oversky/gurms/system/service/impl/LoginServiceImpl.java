@@ -3,7 +3,7 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.oversky.gurms.common.jwt.JwtTokenUtil;
+import org.oversky.common.jwt.JwtTokenUtil;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.constant.ParamConsts;

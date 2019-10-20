@@ -1,6 +1,6 @@
-package org.oversky.gurms.common.redis;
+package org.oversky.common.redis;
 
-import org.oversky.gurms.common.spring.SpringBeanUtils;
+import org.oversky.common.spring.SpringBeanUtils;
 import org.oversky.util.json.JacksonUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 

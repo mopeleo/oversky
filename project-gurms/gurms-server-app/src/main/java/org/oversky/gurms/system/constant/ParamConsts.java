@@ -1,6 +1,6 @@
 package org.oversky.gurms.system.constant;
 
-import org.oversky.gurms.common.spring.SpringBeanUtils;
+import org.oversky.common.spring.SpringBeanUtils;
 import org.oversky.gurms.system.service.SysParamService;
 
 public final class ParamConsts {

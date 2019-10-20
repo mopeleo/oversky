@@ -1,9 +1,9 @@
 package org.oversky.gurms.test;
 
-//使用assertThat()方法时要引入junit4的jar包
-import static org.junit.Assert.*;
 //使用is()方法首先需要引入hamcrest-library的jar包
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+//使用assertThat()方法时要引入junit4的jar包
+import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.List;

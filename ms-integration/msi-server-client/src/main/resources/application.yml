@@ -3,7 +3,7 @@ spring:
     name: client-server
 
 server:
-  port: 5001
+  port: 5002
 
 eureka:
   client:

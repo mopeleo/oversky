@@ -84,7 +84,7 @@ module.exports = {
         proxy: {
             // 设置代理
             '/gurms/': {
-                target: 'http://localhost:8080/', //真实请求的目标地址
+                target: 'http://localhost:6000/', //真实请求的目标地址
                 changeOrigin: true,          //是否跨域
                 pathRewrite: {
                     '^/gurms': ''           //如果接口本身没有/gurms需要通过pathRewrite来重写了地址

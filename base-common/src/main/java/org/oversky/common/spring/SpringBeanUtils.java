@@ -1,4 +1,4 @@
-package org.oversky.gurms.common.spring;
+package org.oversky.common.spring;
 
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.ApplicationContext;

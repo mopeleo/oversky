@@ -31,5 +31,18 @@ INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, a
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1241', '菜单设置', 'sysmenu/set', '1240', 2, 1, 1, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1300', '复核设置', '', '1000', 0, 1, 0, null);
 INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2000', '应用', '', null, 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2100', '客户', '', '2000', 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2110', '客户管理', '', '2100', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2120', '账号管理', '', '2100', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2121', '账号冻结', '', '2120', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2122', '账号解冻', '', '2120', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2200', '游戏中心', '', '2000', 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2210', '游戏管理', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2220', '场景维护', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2230', '角色维护', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2240', '装备维护', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2300', '运营', '', '2000', 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2400', '复核', '', '2000', 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2500', '查询', '', '2000', 0, 1, 0, null);
 
 commit;

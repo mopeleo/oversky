@@ -31,7 +31,6 @@
     </parent>
       
     <modules>
-    	<module>../gurms-common</module>
     	<module>../gurms-orm</module>
     	<module>../gurms-server-api</module>
     	<module>../gurms-server-app</module>
