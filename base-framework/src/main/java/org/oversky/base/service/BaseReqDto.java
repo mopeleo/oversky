@@ -26,7 +26,9 @@ public abstract class BaseReqDto implements Serializable{
 	//操作员ID或usersession的userid
 	private Long operator;
 	//渠道类型
-	private String channel;
+	private String channelType;
+	//渠道流水号
+	private String channelSno;
 	//客户端IP
 	private String clientIp;
 	
@@ -72,11 +74,17 @@ public abstract class BaseReqDto implements Serializable{
 	public void setOperator(Long operator) {
 		this.operator = operator;
 	}
-	public String getChannel() {
-		return channel;
+	public String getChannelType() {
+		return channelType;
 	}
-	public void setChannel(String channel) {
-		this.channel = channel;
+	public void setChannelType(String channelType) {
+		this.channelType = channelType;
+	}
+	public String getChannelSno() {
+		return channelSno;
+	}
+	public void setChannelSno(String channelSno) {
+		this.channelSno = channelSno;
 	}
 	public String getClientIp() {
 		return clientIp;

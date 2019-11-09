@@ -7,20 +7,20 @@
         <id column="equipid" jdbcType="VARCHAR" property="equipid" />
         <result column="peid" jdbcType="DECIMAL" property="peid" />
         <result column="actorid" jdbcType="VARCHAR" property="actorid" />
-        <result column="level" jdbcType="INTEGER" property="level" />
+        <result column="equiplevel" jdbcType="INTEGER" property="equiplevel" />
         <result column="proficiency" jdbcType="INTEGER" property="proficiency" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerPlayerEquip">
         insert into server_player_equip (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{peid, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{equipid, jdbcType=VARCHAR}, #{actorid, jdbcType=VARCHAR}, #{level, jdbcType=INTEGER}, #{proficiency, jdbcType=INTEGER})
+        values (#{peid, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{equipid, jdbcType=VARCHAR}, #{actorid, jdbcType=VARCHAR}, #{equiplevel, jdbcType=INTEGER}, #{proficiency, jdbcType=INTEGER})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into server_player_equip (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.peid, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.equipid, jdbcType=VARCHAR}, #{item.actorid, jdbcType=VARCHAR}, #{item.level, jdbcType=INTEGER}, #{item.proficiency, jdbcType=INTEGER})
+		(#{item.peid, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.equipid, jdbcType=VARCHAR}, #{item.actorid, jdbcType=VARCHAR}, #{item.equiplevel, jdbcType=INTEGER}, #{item.proficiency, jdbcType=INTEGER})
 		</foreach>
 	</insert>
 	
@@ -61,7 +61,7 @@
         update server_player_equip set 
                peid = #{peid, jdbcType=DECIMAL}, 
                actorid = #{actorid, jdbcType=VARCHAR}, 
-               level = #{level, jdbcType=INTEGER}, 
+               equiplevel = #{equiplevel, jdbcType=INTEGER}, 
                proficiency = #{proficiency, jdbcType=INTEGER}
 		where serverid = #{serverid, jdbcType=VARCHAR} and custno = #{custno, jdbcType=DECIMAL} and equipid = #{equipid, jdbcType=VARCHAR}
     </update>
@@ -75,8 +75,8 @@
 		    <if test="actorid != null">
 				actorid = #{actorid, jdbcType=VARCHAR},
 		    </if>
-		    <if test="level != null">
-				level = #{level, jdbcType=INTEGER},
+		    <if test="equiplevel != null">
+				equiplevel = #{equiplevel, jdbcType=INTEGER},
 		    </if>
 		    <if test="proficiency != null">
 				proficiency = #{proficiency, jdbcType=INTEGER},
@@ -94,8 +94,8 @@
 		    <if test="field.actorid != null and field.actorid != ''">
 				actorid = #{field.actorid, jdbcType=VARCHAR},
 		    </if>
-		    <if test="field.level != null">
-				level = #{field.level, jdbcType=INTEGER},
+		    <if test="field.equiplevel != null">
+				equiplevel = #{field.equiplevel, jdbcType=INTEGER},
 		    </if>
 		    <if test="field.proficiency != null">
 				proficiency = #{field.proficiency, jdbcType=INTEGER},
@@ -106,7 +106,7 @@
 
 
 	<sql id="column_list">
-        ${tab}peid, ${tab}serverid, ${tab}custno, ${tab}equipid, ${tab}actorid, ${tab}level, ${tab}proficiency
+        ${tab}peid, ${tab}serverid, ${tab}custno, ${tab}equipid, ${tab}actorid, ${tab}equiplevel, ${tab}proficiency
 	</sql>
 	
 	<sql id="where_all_list">
@@ -126,8 +126,8 @@
 			<if test="actorid != null and actorid != ''">
 				and actorid = #{actorid, jdbcType=VARCHAR}
 			</if>
-			<if test="level != null">
-				and level = #{level, jdbcType=INTEGER}
+			<if test="equiplevel != null">
+				and equiplevel = #{equiplevel, jdbcType=INTEGER}
 			</if>
 			<if test="proficiency != null">
 				and proficiency = #{proficiency, jdbcType=INTEGER}
@@ -152,8 +152,8 @@
 			<if test="condition.actorid != null and condition.actorid != ''">
 				and actorid = #{condition.actorid, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.level != null">
-				and level = #{condition.level, jdbcType=INTEGER}
+			<if test="condition.equiplevel != null">
+				and equiplevel = #{condition.equiplevel, jdbcType=INTEGER}
 			</if>
 			<if test="condition.proficiency != null">
 				and proficiency = #{condition.proficiency, jdbcType=INTEGER}

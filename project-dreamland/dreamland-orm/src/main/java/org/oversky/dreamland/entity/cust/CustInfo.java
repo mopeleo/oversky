@@ -8,14 +8,15 @@ public class CustInfo extends BaseEntity{
 
 	private Long custno;    //客户号，自动生成
 	private String unioncode;    //
-	private String nickname;    //用户昵称
+	private String custname;    //客户名称
+	private String custtype;    //客户类型，0，机构；1，个人
 	private String loginid;    //登录名
 	private String loginpasswd;    //登录密码
 	private String salt;    //密码盐，随机生成
 	private String passwdvaliddate;    //密码失效日期
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
-	private String level;    //客户级别
+	private String custlevel;    //客户级别
 	private String idtype;    //证件类型
 	private String idcode;    //证件号码
 	private String idname;    //证件姓名
@@ -42,12 +43,20 @@ public class CustInfo extends BaseEntity{
 		this.unioncode = unioncode;
 	}
 
-	public String getNickname() {
-		return this.nickname;
+	public String getCustname() {
+		return this.custname;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setCustname(String custname) {
+		this.custname = custname;
+	}
+
+	public String getCusttype() {
+		return this.custtype;
+	}
+
+	public void setCusttype(String custtype) {
+		this.custtype = custtype;
 	}
 
 	public String getLoginid() {
@@ -98,12 +107,12 @@ public class CustInfo extends BaseEntity{
 		this.email = email;
 	}
 
-	public String getLevel() {
-		return this.level;
+	public String getCustlevel() {
+		return this.custlevel;
 	}
 
-	public void setLevel(String level) {
-		this.level = level;
+	public void setCustlevel(String custlevel) {
+		this.custlevel = custlevel;
 	}
 
 	public String getIdtype() {
@@ -200,14 +209,15 @@ public class CustInfo extends BaseEntity{
         sb.append("Hash = ").append(hashCode());
 		sb.append(", custno=").append(custno);
 		sb.append(", unioncode=").append(unioncode);
-		sb.append(", nickname=").append(nickname);
+		sb.append(", custname=").append(custname);
+		sb.append(", custtype=").append(custtype);
 		sb.append(", loginid=").append(loginid);
 		sb.append(", loginpasswd=").append(loginpasswd);
 		sb.append(", salt=").append(salt);
 		sb.append(", passwdvaliddate=").append(passwdvaliddate);
 		sb.append(", mobileno=").append(mobileno);
 		sb.append(", email=").append(email);
-		sb.append(", level=").append(level);
+		sb.append(", custlevel=").append(custlevel);
 		sb.append(", idtype=").append(idtype);
 		sb.append(", idcode=").append(idcode);
 		sb.append(", idname=").append(idname);

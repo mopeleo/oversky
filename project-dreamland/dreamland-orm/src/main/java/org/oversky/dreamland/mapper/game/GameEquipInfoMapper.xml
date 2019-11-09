@@ -6,21 +6,21 @@
         <result column="equipname" jdbcType="VARCHAR" property="equipname" />
         <result column="icon" jdbcType="VARCHAR" property="icon" />
         <result column="position" jdbcType="VARCHAR" property="position" />
-        <result column="rank" jdbcType="VARCHAR" property="rank" />
+        <result column="grade" jdbcType="VARCHAR" property="grade" />
         <result column="profession" jdbcType="VARCHAR" property="profession" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
         insert into game_equip_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{equipid, jdbcType=VARCHAR}, #{equipname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{position, jdbcType=VARCHAR}, #{rank, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{remark, jdbcType=VARCHAR})
+        values (#{equipid, jdbcType=VARCHAR}, #{equipname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{position, jdbcType=VARCHAR}, #{grade, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{remark, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into game_equip_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.equipid, jdbcType=VARCHAR}, #{item.equipname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.position, jdbcType=VARCHAR}, #{item.rank, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.remark, jdbcType=VARCHAR})
+		(#{item.equipid, jdbcType=VARCHAR}, #{item.equipname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.position, jdbcType=VARCHAR}, #{item.grade, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.remark, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -62,7 +62,7 @@
                equipname = #{equipname, jdbcType=VARCHAR}, 
                icon = #{icon, jdbcType=VARCHAR}, 
                position = #{position, jdbcType=VARCHAR}, 
-               rank = #{rank, jdbcType=VARCHAR}, 
+               grade = #{grade, jdbcType=VARCHAR}, 
                profession = #{profession, jdbcType=VARCHAR}, 
                remark = #{remark, jdbcType=VARCHAR}
 		where equipid = #{equipid, jdbcType=VARCHAR}
@@ -80,8 +80,8 @@
 		    <if test="position != null">
 				position = #{position, jdbcType=VARCHAR},
 		    </if>
-		    <if test="rank != null">
-				rank = #{rank, jdbcType=VARCHAR},
+		    <if test="grade != null">
+				grade = #{grade, jdbcType=VARCHAR},
 		    </if>
 		    <if test="profession != null">
 				profession = #{profession, jdbcType=VARCHAR},
@@ -105,8 +105,8 @@
 		    <if test="field.position != null and field.position != ''">
 				position = #{field.position, jdbcType=VARCHAR},
 		    </if>
-		    <if test="field.rank != null and field.rank != ''">
-				rank = #{field.rank, jdbcType=VARCHAR},
+		    <if test="field.grade != null and field.grade != ''">
+				grade = #{field.grade, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.profession != null and field.profession != ''">
 				profession = #{field.profession, jdbcType=VARCHAR},
@@ -151,13 +151,13 @@
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="rank = case" suffix="end,">
+	        <trim prefix="grade = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.rank != null">
-	                    when equipid = #{item.equipid} then #{item.rank, jdbcType=VARCHAR}
+	                <if test="item.grade != null">
+	                    when equipid = #{item.equipid} then #{item.grade, jdbcType=VARCHAR}
 	                </if>
-	                <if test="item.rank == null">
-	                    when equipid = #{item.equipid} then rank
+	                <if test="item.grade == null">
+	                    when equipid = #{item.equipid} then grade
 	                </if>
 	            </foreach>
 	        </trim>
@@ -197,7 +197,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}equipid, ${tab}equipname, ${tab}icon, ${tab}position, ${tab}rank, ${tab}profession, ${tab}remark
+        ${tab}equipid, ${tab}equipname, ${tab}icon, ${tab}position, ${tab}grade, ${tab}profession, ${tab}remark
 	</sql>
 	
 	<sql id="where_all_list">
@@ -214,8 +214,8 @@
 			<if test="position != null and position != ''">
 				and position = #{position, jdbcType=VARCHAR}
 			</if>
-			<if test="rank != null and rank != ''">
-				and rank = #{rank, jdbcType=VARCHAR}
+			<if test="grade != null and grade != ''">
+				and grade = #{grade, jdbcType=VARCHAR}
 			</if>
 			<if test="profession != null and profession != ''">
 				and profession = #{profession, jdbcType=VARCHAR}
@@ -240,8 +240,8 @@
 			<if test="condition.position != null and condition.position != ''">
 				and position = #{condition.position, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.rank != null and condition.rank != ''">
-				and rank = #{condition.rank, jdbcType=VARCHAR}
+			<if test="condition.grade != null and condition.grade != ''">
+				and grade = #{condition.grade, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.profession != null and condition.profession != ''">
 				and profession = #{condition.profession, jdbcType=VARCHAR}

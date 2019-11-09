@@ -117,7 +117,7 @@ public class LoginServiceImpl implements LoginService{
 		log.setLogindate(DateUtils.getNowDate());
 		log.setLogintime(DateUtils.getNowTime());
 		log.setLoginpasswd(user.getPasswd());
-		log.setLogintype(user.getChannel());
+		log.setLogintype(user.getChannelType());
 		log.setUnioncode(user.getUnioncode());
 		log.setLoginip(user.getClientIp());
 		log.setUserid(user.getUserid());

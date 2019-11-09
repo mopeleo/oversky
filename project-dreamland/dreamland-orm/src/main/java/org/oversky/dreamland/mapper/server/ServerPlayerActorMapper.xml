@@ -6,8 +6,8 @@
         <id column="custno" jdbcType="DECIMAL" property="custno" />
         <id column="actorid" jdbcType="VARCHAR" property="actorid" />
         <result column="paid" jdbcType="DECIMAL" property="paid" />
-        <result column="rank" jdbcType="INTEGER" property="rank" />
-        <result column="level" jdbcType="INTEGER" property="level" />
+        <result column="grade" jdbcType="INTEGER" property="grade" />
+        <result column="actorlevel" jdbcType="INTEGER" property="actorlevel" />
         <result column="ratiostr" jdbcType="DOUBLE" property="ratiostr" />
         <result column="ratioint" jdbcType="DOUBLE" property="ratioint" />
         <result column="ratiohp" jdbcType="DOUBLE" property="ratiohp" />
@@ -18,14 +18,14 @@
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerPlayerActor">
         insert into server_player_actor (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{paid, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{actorid, jdbcType=VARCHAR}, #{rank, jdbcType=INTEGER}, #{level, jdbcType=INTEGER}, #{ratiostr, jdbcType=DOUBLE}, #{ratioint, jdbcType=DOUBLE}, #{ratiohp, jdbcType=DOUBLE}, #{ratiomp, jdbcType=DOUBLE}, #{ratioagl, jdbcType=DOUBLE}, #{ratioluck, jdbcType=DOUBLE})
+        values (#{paid, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{actorid, jdbcType=VARCHAR}, #{grade, jdbcType=INTEGER}, #{actorlevel, jdbcType=INTEGER}, #{ratiostr, jdbcType=DOUBLE}, #{ratioint, jdbcType=DOUBLE}, #{ratiohp, jdbcType=DOUBLE}, #{ratiomp, jdbcType=DOUBLE}, #{ratioagl, jdbcType=DOUBLE}, #{ratioluck, jdbcType=DOUBLE})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into server_player_actor (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.paid, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.actorid, jdbcType=VARCHAR}, #{item.rank, jdbcType=INTEGER}, #{item.level, jdbcType=INTEGER}, #{item.ratiostr, jdbcType=DOUBLE}, #{item.ratioint, jdbcType=DOUBLE}, #{item.ratiohp, jdbcType=DOUBLE}, #{item.ratiomp, jdbcType=DOUBLE}, #{item.ratioagl, jdbcType=DOUBLE}, #{item.ratioluck, jdbcType=DOUBLE})
+		(#{item.paid, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.actorid, jdbcType=VARCHAR}, #{item.grade, jdbcType=INTEGER}, #{item.actorlevel, jdbcType=INTEGER}, #{item.ratiostr, jdbcType=DOUBLE}, #{item.ratioint, jdbcType=DOUBLE}, #{item.ratiohp, jdbcType=DOUBLE}, #{item.ratiomp, jdbcType=DOUBLE}, #{item.ratioagl, jdbcType=DOUBLE}, #{item.ratioluck, jdbcType=DOUBLE})
 		</foreach>
 	</insert>
 	
@@ -65,8 +65,8 @@
     <update id="updateById" parameterType="org.oversky.dreamland.entity.server.ServerPlayerActor">
         update server_player_actor set 
                paid = #{paid, jdbcType=DECIMAL}, 
-               rank = #{rank, jdbcType=INTEGER}, 
-               level = #{level, jdbcType=INTEGER}, 
+               grade = #{grade, jdbcType=INTEGER}, 
+               actorlevel = #{actorlevel, jdbcType=INTEGER}, 
                ratiostr = #{ratiostr, jdbcType=DOUBLE}, 
                ratioint = #{ratioint, jdbcType=DOUBLE}, 
                ratiohp = #{ratiohp, jdbcType=DOUBLE}, 
@@ -82,11 +82,11 @@
 		    <if test="paid != null">
 				paid = #{paid, jdbcType=DECIMAL},
 		    </if>
-		    <if test="rank != null">
-				rank = #{rank, jdbcType=INTEGER},
+		    <if test="grade != null">
+				grade = #{grade, jdbcType=INTEGER},
 		    </if>
-		    <if test="level != null">
-				level = #{level, jdbcType=INTEGER},
+		    <if test="actorlevel != null">
+				actorlevel = #{actorlevel, jdbcType=INTEGER},
 		    </if>
 		    <if test="ratiostr != null">
 				ratiostr = #{ratiostr, jdbcType=DOUBLE},
@@ -116,11 +116,11 @@
 		    <if test="field.paid != null">
 				paid = #{field.paid, jdbcType=DECIMAL},
 		    </if>
-		    <if test="field.rank != null">
-				rank = #{field.rank, jdbcType=INTEGER},
+		    <if test="field.grade != null">
+				grade = #{field.grade, jdbcType=INTEGER},
 		    </if>
-		    <if test="field.level != null">
-				level = #{field.level, jdbcType=INTEGER},
+		    <if test="field.actorlevel != null">
+				actorlevel = #{field.actorlevel, jdbcType=INTEGER},
 		    </if>
 		    <if test="field.ratiostr != null">
 				ratiostr = #{field.ratiostr, jdbcType=DOUBLE},
@@ -146,7 +146,7 @@
 
 
 	<sql id="column_list">
-        ${tab}paid, ${tab}serverid, ${tab}custno, ${tab}actorid, ${tab}rank, ${tab}level, ${tab}ratiostr, ${tab}ratioint, ${tab}ratiohp, ${tab}ratiomp, ${tab}ratioagl, ${tab}ratioluck
+        ${tab}paid, ${tab}serverid, ${tab}custno, ${tab}actorid, ${tab}grade, ${tab}actorlevel, ${tab}ratiostr, ${tab}ratioint, ${tab}ratiohp, ${tab}ratiomp, ${tab}ratioagl, ${tab}ratioluck
 	</sql>
 	
 	<sql id="where_all_list">
@@ -163,11 +163,11 @@
 			<if test="actorid != null and actorid != ''">
 				and actorid = #{actorid, jdbcType=VARCHAR}
 			</if>
-			<if test="rank != null">
-				and rank = #{rank, jdbcType=INTEGER}
+			<if test="grade != null">
+				and grade = #{grade, jdbcType=INTEGER}
 			</if>
-			<if test="level != null">
-				and level = #{level, jdbcType=INTEGER}
+			<if test="actorlevel != null">
+				and actorlevel = #{actorlevel, jdbcType=INTEGER}
 			</if>
 			<if test="ratiostr != null">
 				and ratiostr = #{ratiostr, jdbcType=DOUBLE}
@@ -204,11 +204,11 @@
 			<if test="condition.actorid != null and condition.actorid != ''">
 				and actorid = #{condition.actorid, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.rank != null">
-				and rank = #{condition.rank, jdbcType=INTEGER}
+			<if test="condition.grade != null">
+				and grade = #{condition.grade, jdbcType=INTEGER}
 			</if>
-			<if test="condition.level != null">
-				and level = #{condition.level, jdbcType=INTEGER}
+			<if test="condition.actorlevel != null">
+				and actorlevel = #{condition.actorlevel, jdbcType=INTEGER}
 			</if>
 			<if test="condition.ratiostr != null">
 				and ratiostr = #{condition.ratiostr, jdbcType=DOUBLE}

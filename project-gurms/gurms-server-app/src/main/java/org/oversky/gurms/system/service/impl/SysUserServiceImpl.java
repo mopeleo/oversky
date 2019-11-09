@@ -36,7 +36,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 @Service
-@Transactional
 public class SysUserServiceImpl implements SysUserService{
 	
 	private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);

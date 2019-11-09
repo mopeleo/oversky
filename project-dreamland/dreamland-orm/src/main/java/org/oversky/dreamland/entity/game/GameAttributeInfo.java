@@ -9,11 +9,11 @@ public class GameAttributeInfo extends BaseEntity{
 	private Long attrid;    //属性ID
 	private String attrtype;    //属性类型（0-基本属性，1-附加属性，2-套装属性）
 	private Integer attrfield;    //属性附加字段（0-力量，1-智力，2-hp,3-mp,4-敏捷，5-幸运，6-物攻，7-魔攻，8-物防，9-法防，10-攻速，11-闪避，12-暴击，13-技能等级）
-	private String unlock;    //解锁条件，套装属性用
-	private String act;    //附加动作（0-减少，1-增加）
-	private String valtype;    //附加值类型（0-固定值，1-比例）
-	private Double valmin;    //附加值下限
-	private Double valmax;    //附加值上限
+	private String unlockflag;    //解锁条件，套装属性用
+	private String extralact;    //附加动作（0-减少，1-增加）
+	private String extraltype;    //附加值类型（0-固定值，1-比例）
+	private Double extralmin;    //附加值下限
+	private Double extralmax;    //附加值上限
 	private Double initval;    //初始值，升级增加，适用基本属性
 	private Double upval;    //升级每级增加值
 	private String position;    //部位（1-武器，2-头饰，3-衣服，4-裤子，5-腰带，6-鞋子，7-项链，8-戒指）
@@ -42,44 +42,44 @@ public class GameAttributeInfo extends BaseEntity{
 		this.attrfield = attrfield;
 	}
 
-	public String getUnlock() {
-		return this.unlock;
+	public String getUnlockflag() {
+		return this.unlockflag;
 	}
 
-	public void setUnlock(String unlock) {
-		this.unlock = unlock;
+	public void setUnlockflag(String unlockflag) {
+		this.unlockflag = unlockflag;
 	}
 
-	public String getAct() {
-		return this.act;
+	public String getExtralact() {
+		return this.extralact;
 	}
 
-	public void setAct(String act) {
-		this.act = act;
+	public void setExtralact(String extralact) {
+		this.extralact = extralact;
 	}
 
-	public String getValtype() {
-		return this.valtype;
+	public String getExtraltype() {
+		return this.extraltype;
 	}
 
-	public void setValtype(String valtype) {
-		this.valtype = valtype;
+	public void setExtraltype(String extraltype) {
+		this.extraltype = extraltype;
 	}
 
-	public Double getValmin() {
-		return this.valmin;
+	public Double getExtralmin() {
+		return this.extralmin;
 	}
 
-	public void setValmin(Double valmin) {
-		this.valmin = valmin;
+	public void setExtralmin(Double extralmin) {
+		this.extralmin = extralmin;
 	}
 
-	public Double getValmax() {
-		return this.valmax;
+	public Double getExtralmax() {
+		return this.extralmax;
 	}
 
-	public void setValmax(Double valmax) {
-		this.valmax = valmax;
+	public void setExtralmax(Double extralmax) {
+		this.extralmax = extralmax;
 	}
 
 	public Double getInitval() {
@@ -129,11 +129,11 @@ public class GameAttributeInfo extends BaseEntity{
 		sb.append(", attrid=").append(attrid);
 		sb.append(", attrtype=").append(attrtype);
 		sb.append(", attrfield=").append(attrfield);
-		sb.append(", unlock=").append(unlock);
-		sb.append(", act=").append(act);
-		sb.append(", valtype=").append(valtype);
-		sb.append(", valmin=").append(valmin);
-		sb.append(", valmax=").append(valmax);
+		sb.append(", unlockflag=").append(unlockflag);
+		sb.append(", extralact=").append(extralact);
+		sb.append(", extraltype=").append(extraltype);
+		sb.append(", extralmin=").append(extralmin);
+		sb.append(", extralmax=").append(extralmax);
 		sb.append(", initval=").append(initval);
 		sb.append(", upval=").append(upval);
 		sb.append(", position=").append(position);

@@ -6,7 +6,7 @@
         <result column="serverid" jdbcType="VARCHAR" property="serverid" />
         <result column="custno" jdbcType="DECIMAL" property="custno" />
         <result column="content" jdbcType="VARCHAR" property="content" />
-        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="msgtype" jdbcType="VARCHAR" property="msgtype" />
         <result column="receiver" jdbcType="DECIMAL" property="receiver" />
         <result column="senddate" jdbcType="VARCHAR" property="senddate" />
         <result column="sendtime" jdbcType="VARCHAR" property="sendtime" />
@@ -14,14 +14,14 @@
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerMsgSend">
         insert into server_msg_send (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{msgid, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{content, jdbcType=VARCHAR}, #{type, jdbcType=VARCHAR}, #{receiver, jdbcType=DECIMAL}, #{senddate, jdbcType=VARCHAR}, #{sendtime, jdbcType=VARCHAR})
+        values (#{msgid, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{content, jdbcType=VARCHAR}, #{msgtype, jdbcType=VARCHAR}, #{receiver, jdbcType=DECIMAL}, #{senddate, jdbcType=VARCHAR}, #{sendtime, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into server_msg_send (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.msgid, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.content, jdbcType=VARCHAR}, #{item.type, jdbcType=VARCHAR}, #{item.receiver, jdbcType=DECIMAL}, #{item.senddate, jdbcType=VARCHAR}, #{item.sendtime, jdbcType=VARCHAR})
+		(#{item.msgid, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.content, jdbcType=VARCHAR}, #{item.msgtype, jdbcType=VARCHAR}, #{item.receiver, jdbcType=DECIMAL}, #{item.senddate, jdbcType=VARCHAR}, #{item.sendtime, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -63,7 +63,7 @@
                serverid = #{serverid, jdbcType=VARCHAR}, 
                custno = #{custno, jdbcType=DECIMAL}, 
                content = #{content, jdbcType=VARCHAR}, 
-               type = #{type, jdbcType=VARCHAR}, 
+               msgtype = #{msgtype, jdbcType=VARCHAR}, 
                receiver = #{receiver, jdbcType=DECIMAL}, 
                senddate = #{senddate, jdbcType=VARCHAR}, 
                sendtime = #{sendtime, jdbcType=VARCHAR}
@@ -82,8 +82,8 @@
 		    <if test="content != null">
 				content = #{content, jdbcType=VARCHAR},
 		    </if>
-		    <if test="type != null">
-				type = #{type, jdbcType=VARCHAR},
+		    <if test="msgtype != null">
+				msgtype = #{msgtype, jdbcType=VARCHAR},
 		    </if>
 		    <if test="receiver != null">
 				receiver = #{receiver, jdbcType=DECIMAL},
@@ -110,8 +110,8 @@
 		    <if test="field.content != null and field.content != ''">
 				content = #{field.content, jdbcType=VARCHAR},
 		    </if>
-		    <if test="field.type != null and field.type != ''">
-				type = #{field.type, jdbcType=VARCHAR},
+		    <if test="field.msgtype != null and field.msgtype != ''">
+				msgtype = #{field.msgtype, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.receiver != null">
 				receiver = #{field.receiver, jdbcType=DECIMAL},
@@ -159,13 +159,13 @@
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="type = case" suffix="end,">
+	        <trim prefix="msgtype = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.type != null">
-	                    when msgid = #{item.msgid} then #{item.type, jdbcType=VARCHAR}
+	                <if test="item.msgtype != null">
+	                    when msgid = #{item.msgid} then #{item.msgtype, jdbcType=VARCHAR}
 	                </if>
-	                <if test="item.type == null">
-	                    when msgid = #{item.msgid} then type
+	                <if test="item.msgtype == null">
+	                    when msgid = #{item.msgid} then msgtype
 	                </if>
 	            </foreach>
 	        </trim>
@@ -215,7 +215,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}msgid, ${tab}serverid, ${tab}custno, ${tab}content, ${tab}type, ${tab}receiver, ${tab}senddate, ${tab}sendtime
+        ${tab}msgid, ${tab}serverid, ${tab}custno, ${tab}content, ${tab}msgtype, ${tab}receiver, ${tab}senddate, ${tab}sendtime
 	</sql>
 	
 	<sql id="where_all_list">
@@ -232,8 +232,8 @@
 			<if test="content != null and content != ''">
 				and content = #{content, jdbcType=VARCHAR}
 			</if>
-			<if test="type != null and type != ''">
-				and type = #{type, jdbcType=VARCHAR}
+			<if test="msgtype != null and msgtype != ''">
+				and msgtype = #{msgtype, jdbcType=VARCHAR}
 			</if>
 			<if test="receiver != null">
 				and receiver = #{receiver, jdbcType=DECIMAL}
@@ -261,8 +261,8 @@
 			<if test="condition.content != null and condition.content != ''">
 				and content = #{condition.content, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.type != null and condition.type != ''">
-				and type = #{condition.type, jdbcType=VARCHAR}
+			<if test="condition.msgtype != null and condition.msgtype != ''">
+				and msgtype = #{condition.msgtype, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.receiver != null">
 				and receiver = #{condition.receiver, jdbcType=DECIMAL}

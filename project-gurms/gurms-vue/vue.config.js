@@ -89,6 +89,13 @@ module.exports = {
                 pathRewrite: {
                     '^/gurms': ''           //如果接口本身没有/gurms需要通过pathRewrite来重写了地址
                 }
+            },
+            '/dreamland/': {
+                target: 'http://localhost:6001/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/dreamland': ''
+                }
             }
         },
         before: (app) => {}

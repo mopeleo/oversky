@@ -42,8 +42,8 @@ instance.interceptors.request.use(
                     config.data.unioncode = localUser.unioncode;
                 }
             }
-            if(!config.data.channel){
-                config.data.channel = PUBDEFINE.CHANNEL_TYPE;
+            if(!config.data.channelType){
+                config.data.channelType = PUBDEFINE.CHANNEL_TYPE;
             }
         }
         if(config.method == 'get'){
@@ -56,20 +56,20 @@ instance.interceptors.request.use(
                         config.params.unioncode = localUser.unioncode;
                     }
                 }
-                if(!config.params.channel){
-                    config.params.channel = PUBDEFINE.CHANNEL_TYPE;
+                if(!config.params.channelType){
+                    config.params.channelType = PUBDEFINE.CHANNEL_TYPE;
                 }
             }else{
                 if(localUser){
                     config.params = {
                         operator : localUser.userid,
                         unioncode: localUser.unioncode,
-                        channel : PUBDEFINE.CHANNEL_TYPE,
+                        channelType : PUBDEFINE.CHANNEL_TYPE,
                         ...config.params
                     }
                 }else{
                     config.params = {
-                        channel : PUBDEFINE.CHANNEL_TYPE,
+                        channelType : PUBDEFINE.CHANNEL_TYPE,
                         ...config.params
                     }
                 }

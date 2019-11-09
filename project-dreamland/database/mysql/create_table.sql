@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/10/20 22:03:59                          */
+/* Created on:     2019/11/9 21:52:06                           */
 /*==============================================================*/
 
 
@@ -132,7 +132,8 @@ create table cust_info
 (
    custno               bigint not null default 0 comment '客户号，自动生成',
    unioncode            varchar(8) not null default '0000',
-   nickname             varchar(32) comment '用户昵称',
+   custname             varchar(32) not null comment '客户名称',
+   custtype             char(1) not null comment '客户类型，0，机构；1，个人',
    loginid              varchar(32) not null comment '登录名',
    loginpasswd          char(32) not null comment '登录密码',
    salt                 varchar(32) not null comment '密码盐，随机生成',
@@ -140,7 +141,7 @@ create table cust_info
    mobileno             varchar(16) not null comment '手机号码',
    email                varchar(64) not null comment '电子邮件',
    custlevel            char(1) not null default '0' comment '客户级别',
-   idtype               char(1) default '0' comment '证件类型',
+   idtype               varchar(2) comment '证件类型',
    idcode               varchar(32) comment '证件号码',
    idname               varchar(32) comment '证件姓名',
    lastlogindate        varchar(8) comment '上次登录日期',
@@ -317,9 +318,9 @@ create table game_info
 (
    gameid               bigint not null,
    unioncode            varchar(8) not null default '0000',
+   gamecode             varchar(32) not null comment '游戏代码',
    gamename             varchar(32) not null comment '游戏名称',
    fullname             varchar(64) comment '游戏全称',
-   gamecode             varchar(32) comment '游戏代码',
    primary key (gameid)
 );
 

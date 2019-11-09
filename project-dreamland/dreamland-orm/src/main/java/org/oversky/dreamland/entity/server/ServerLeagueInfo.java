@@ -10,7 +10,7 @@ public class ServerLeagueInfo extends BaseEntity{
 	private String serverid;    //
 	private String leaguename;    //联盟名称
 	private Integer maxleaguer;    //最大成员数
-	private Integer level;    //联盟等级
+	private Integer leaguelevel;    //联盟等级
 	private Long creator;    //盟主
 	private String createdate;    //
 	private String createtime;    //
@@ -48,12 +48,12 @@ public class ServerLeagueInfo extends BaseEntity{
 		this.maxleaguer = maxleaguer;
 	}
 
-	public Integer getLevel() {
-		return this.level;
+	public Integer getLeaguelevel() {
+		return this.leaguelevel;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
+	public void setLeaguelevel(Integer leaguelevel) {
+		this.leaguelevel = leaguelevel;
 	}
 
 	public Long getCreator() {
@@ -112,7 +112,7 @@ public class ServerLeagueInfo extends BaseEntity{
 		sb.append(", serverid=").append(serverid);
 		sb.append(", leaguename=").append(leaguename);
 		sb.append(", maxleaguer=").append(maxleaguer);
-		sb.append(", level=").append(level);
+		sb.append(", leaguelevel=").append(leaguelevel);
 		sb.append(", creator=").append(creator);
 		sb.append(", createdate=").append(createdate);
 		sb.append(", createtime=").append(createtime);

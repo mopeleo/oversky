@@ -4,21 +4,21 @@
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameInfo">
         <id column="gameid" jdbcType="DECIMAL" property="gameid" />
         <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="gamecode" jdbcType="VARCHAR" property="gamecode" />
         <result column="gamename" jdbcType="VARCHAR" property="gamename" />
         <result column="fullname" jdbcType="VARCHAR" property="fullname" />
-        <result column="gamecode" jdbcType="VARCHAR" property="gamecode" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameInfo">
         insert into game_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{gameid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{gamename, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR}, #{gamecode, jdbcType=VARCHAR})
+        values (#{gameid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{gamecode, jdbcType=VARCHAR}, #{gamename, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into game_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.gameid, jdbcType=DECIMAL}, #{item.unioncode, jdbcType=VARCHAR}, #{item.gamename, jdbcType=VARCHAR}, #{item.fullname, jdbcType=VARCHAR}, #{item.gamecode, jdbcType=VARCHAR})
+		(#{item.gameid, jdbcType=DECIMAL}, #{item.unioncode, jdbcType=VARCHAR}, #{item.gamecode, jdbcType=VARCHAR}, #{item.gamename, jdbcType=VARCHAR}, #{item.fullname, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -58,9 +58,9 @@
     <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameInfo">
         update game_info set 
                unioncode = #{unioncode, jdbcType=VARCHAR}, 
+               gamecode = #{gamecode, jdbcType=VARCHAR}, 
                gamename = #{gamename, jdbcType=VARCHAR}, 
-               fullname = #{fullname, jdbcType=VARCHAR}, 
-               gamecode = #{gamecode, jdbcType=VARCHAR}
+               fullname = #{fullname, jdbcType=VARCHAR}
 		where gameid = #{gameid, jdbcType=DECIMAL}
     </update>
 
@@ -70,14 +70,14 @@
 		    <if test="unioncode != null">
 				unioncode = #{unioncode, jdbcType=VARCHAR},
 		    </if>
+		    <if test="gamecode != null">
+				gamecode = #{gamecode, jdbcType=VARCHAR},
+		    </if>
 		    <if test="gamename != null">
 				gamename = #{gamename, jdbcType=VARCHAR},
 		    </if>
 		    <if test="fullname != null">
 				fullname = #{fullname, jdbcType=VARCHAR},
-		    </if>
-		    <if test="gamecode != null">
-				gamecode = #{gamecode, jdbcType=VARCHAR},
 		    </if>
 		</set>
 		where gameid = #{gameid, jdbcType=DECIMAL}
@@ -89,14 +89,14 @@
 		    <if test="field.unioncode != null and field.unioncode != ''">
 				unioncode = #{field.unioncode, jdbcType=VARCHAR},
 		    </if>
+		    <if test="field.gamecode != null and field.gamecode != ''">
+				gamecode = #{field.gamecode, jdbcType=VARCHAR},
+		    </if>
 		    <if test="field.gamename != null and field.gamename != ''">
 				gamename = #{field.gamename, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.fullname != null and field.fullname != ''">
 				fullname = #{field.fullname, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.gamecode != null and field.gamecode != ''">
-				gamecode = #{field.gamecode, jdbcType=VARCHAR},
 		    </if>
 		</set>
         <include refid="where_all_list_criteria" />
@@ -112,6 +112,16 @@
 	                </if>
 	                <if test="item.unioncode == null">
 	                    when gameid = #{item.gameid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="gamecode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.gamecode != null">
+	                    when gameid = #{item.gameid} then #{item.gamecode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.gamecode == null">
+	                    when gameid = #{item.gameid} then gamecode
 	                </if>
 	            </foreach>
 	        </trim>
@@ -135,16 +145,6 @@
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="gamecode = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.gamecode != null">
-	                    when gameid = #{item.gameid} then #{item.gamecode, jdbcType=VARCHAR}
-	                </if>
-	                <if test="item.gamecode == null">
-	                    when gameid = #{item.gameid} then gamecode
-	                </if>
-	            </foreach>
-	        </trim>
 	    </trim>
 	    where gameid in
 	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -161,7 +161,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}gameid, ${tab}unioncode, ${tab}gamename, ${tab}fullname, ${tab}gamecode
+        ${tab}gameid, ${tab}unioncode, ${tab}gamecode, ${tab}gamename, ${tab}fullname
 	</sql>
 	
 	<sql id="where_all_list">
@@ -172,14 +172,14 @@
 			<if test="unioncode != null and unioncode != ''">
 				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
+			<if test="gamecode != null and gamecode != ''">
+				and gamecode = #{gamecode, jdbcType=VARCHAR}
+			</if>
 			<if test="gamename != null and gamename != ''">
 				and gamename = #{gamename, jdbcType=VARCHAR}
 			</if>
 			<if test="fullname != null and fullname != ''">
 				and fullname = #{fullname, jdbcType=VARCHAR}
-			</if>
-			<if test="gamecode != null and gamecode != ''">
-				and gamecode = #{gamecode, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>
@@ -192,14 +192,14 @@
 			<if test="condition.unioncode != null and condition.unioncode != ''">
 				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
 			</if>
+			<if test="condition.gamecode != null and condition.gamecode != ''">
+				and gamecode = #{condition.gamecode, jdbcType=VARCHAR}
+			</if>
 			<if test="condition.gamename != null and condition.gamename != ''">
 				and gamename = #{condition.gamename, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.fullname != null and condition.fullname != ''">
 				and fullname = #{condition.fullname, jdbcType=VARCHAR}
-			</if>
-			<if test="condition.gamecode != null and condition.gamecode != ''">
-				and gamecode = #{condition.gamecode, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

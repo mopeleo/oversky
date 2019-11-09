@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.ext.dao.PageListQueryDao">
+
+	<!-- ========================================================================================= -->
+	<sql id="custinfo_column_list">
+        <include refid="org.oversky.dreamland.dao.cust.CustInfoDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findCusts" parameterType="org.oversky.dreamland.entity.cust.CustInfo" resultMap="org.oversky.dreamland.dao.cust.CustInfoDao.BaseResultMap">
+        select <include refid="custinfo_column_list"/>
+          from cust_info a
+		<where>
+			<if test="unioncode != null and unioncode != ''">
+				and a.unioncode = #{unioncode}
+			</if>
+			<if test="status != null and status != ''">
+				and a.status = #{status}
+			</if>
+			<if test="custname != null and custname != ''">
+				<bind name="_custname" value="'%' + custname + '%'"/>
+				and a.custname like #{_custname}
+			</if>
+			<if test="mobileno != null and mobileno != ''">
+				and a.mobileno like CONCAT('%',#{mobileno},'%')
+			</if>
+		</where>
+    </select>
+  
+  
+</mapper>

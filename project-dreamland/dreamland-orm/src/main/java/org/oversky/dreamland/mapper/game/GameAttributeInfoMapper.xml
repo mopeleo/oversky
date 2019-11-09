@@ -5,11 +5,11 @@
         <id column="attrid" jdbcType="DECIMAL" property="attrid" />
         <result column="attrtype" jdbcType="VARCHAR" property="attrtype" />
         <result column="attrfield" jdbcType="INTEGER" property="attrfield" />
-        <result column="unlock" jdbcType="VARCHAR" property="unlock" />
-        <result column="act" jdbcType="VARCHAR" property="act" />
-        <result column="valtype" jdbcType="VARCHAR" property="valtype" />
-        <result column="valmin" jdbcType="DOUBLE" property="valmin" />
-        <result column="valmax" jdbcType="DOUBLE" property="valmax" />
+        <result column="unlockflag" jdbcType="VARCHAR" property="unlockflag" />
+        <result column="extralact" jdbcType="VARCHAR" property="extralact" />
+        <result column="extraltype" jdbcType="VARCHAR" property="extraltype" />
+        <result column="extralmin" jdbcType="DOUBLE" property="extralmin" />
+        <result column="extralmax" jdbcType="DOUBLE" property="extralmax" />
         <result column="initval" jdbcType="DOUBLE" property="initval" />
         <result column="upval" jdbcType="DOUBLE" property="upval" />
         <result column="position" jdbcType="VARCHAR" property="position" />
@@ -17,14 +17,14 @@
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo">
         insert into game_attribute_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{attrid, jdbcType=DECIMAL}, #{attrtype, jdbcType=VARCHAR}, #{attrfield, jdbcType=INTEGER}, #{unlock, jdbcType=VARCHAR}, #{act, jdbcType=VARCHAR}, #{valtype, jdbcType=VARCHAR}, #{valmin, jdbcType=DOUBLE}, #{valmax, jdbcType=DOUBLE}, #{initval, jdbcType=DOUBLE}, #{upval, jdbcType=DOUBLE}, #{position, jdbcType=VARCHAR})
+        values (#{attrid, jdbcType=DECIMAL}, #{attrtype, jdbcType=VARCHAR}, #{attrfield, jdbcType=INTEGER}, #{unlockflag, jdbcType=VARCHAR}, #{extralact, jdbcType=VARCHAR}, #{extraltype, jdbcType=VARCHAR}, #{extralmin, jdbcType=DOUBLE}, #{extralmax, jdbcType=DOUBLE}, #{initval, jdbcType=DOUBLE}, #{upval, jdbcType=DOUBLE}, #{position, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into game_attribute_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.attrid, jdbcType=DECIMAL}, #{item.attrtype, jdbcType=VARCHAR}, #{item.attrfield, jdbcType=INTEGER}, #{item.unlock, jdbcType=VARCHAR}, #{item.act, jdbcType=VARCHAR}, #{item.valtype, jdbcType=VARCHAR}, #{item.valmin, jdbcType=DOUBLE}, #{item.valmax, jdbcType=DOUBLE}, #{item.initval, jdbcType=DOUBLE}, #{item.upval, jdbcType=DOUBLE}, #{item.position, jdbcType=VARCHAR})
+		(#{item.attrid, jdbcType=DECIMAL}, #{item.attrtype, jdbcType=VARCHAR}, #{item.attrfield, jdbcType=INTEGER}, #{item.unlockflag, jdbcType=VARCHAR}, #{item.extralact, jdbcType=VARCHAR}, #{item.extraltype, jdbcType=VARCHAR}, #{item.extralmin, jdbcType=DOUBLE}, #{item.extralmax, jdbcType=DOUBLE}, #{item.initval, jdbcType=DOUBLE}, #{item.upval, jdbcType=DOUBLE}, #{item.position, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -65,11 +65,11 @@
         update game_attribute_info set 
                attrtype = #{attrtype, jdbcType=VARCHAR}, 
                attrfield = #{attrfield, jdbcType=INTEGER}, 
-               unlock = #{unlock, jdbcType=VARCHAR}, 
-               act = #{act, jdbcType=VARCHAR}, 
-               valtype = #{valtype, jdbcType=VARCHAR}, 
-               valmin = #{valmin, jdbcType=DOUBLE}, 
-               valmax = #{valmax, jdbcType=DOUBLE}, 
+               unlockflag = #{unlockflag, jdbcType=VARCHAR}, 
+               extralact = #{extralact, jdbcType=VARCHAR}, 
+               extraltype = #{extraltype, jdbcType=VARCHAR}, 
+               extralmin = #{extralmin, jdbcType=DOUBLE}, 
+               extralmax = #{extralmax, jdbcType=DOUBLE}, 
                initval = #{initval, jdbcType=DOUBLE}, 
                upval = #{upval, jdbcType=DOUBLE}, 
                position = #{position, jdbcType=VARCHAR}
@@ -85,20 +85,20 @@
 		    <if test="attrfield != null">
 				attrfield = #{attrfield, jdbcType=INTEGER},
 		    </if>
-		    <if test="unlock != null">
-				unlock = #{unlock, jdbcType=VARCHAR},
+		    <if test="unlockflag != null">
+				unlockflag = #{unlockflag, jdbcType=VARCHAR},
 		    </if>
-		    <if test="act != null">
-				act = #{act, jdbcType=VARCHAR},
+		    <if test="extralact != null">
+				extralact = #{extralact, jdbcType=VARCHAR},
 		    </if>
-		    <if test="valtype != null">
-				valtype = #{valtype, jdbcType=VARCHAR},
+		    <if test="extraltype != null">
+				extraltype = #{extraltype, jdbcType=VARCHAR},
 		    </if>
-		    <if test="valmin != null">
-				valmin = #{valmin, jdbcType=DOUBLE},
+		    <if test="extralmin != null">
+				extralmin = #{extralmin, jdbcType=DOUBLE},
 		    </if>
-		    <if test="valmax != null">
-				valmax = #{valmax, jdbcType=DOUBLE},
+		    <if test="extralmax != null">
+				extralmax = #{extralmax, jdbcType=DOUBLE},
 		    </if>
 		    <if test="initval != null">
 				initval = #{initval, jdbcType=DOUBLE},
@@ -122,20 +122,20 @@
 		    <if test="field.attrfield != null">
 				attrfield = #{field.attrfield, jdbcType=INTEGER},
 		    </if>
-		    <if test="field.unlock != null and field.unlock != ''">
-				unlock = #{field.unlock, jdbcType=VARCHAR},
+		    <if test="field.unlockflag != null and field.unlockflag != ''">
+				unlockflag = #{field.unlockflag, jdbcType=VARCHAR},
 		    </if>
-		    <if test="field.act != null and field.act != ''">
-				act = #{field.act, jdbcType=VARCHAR},
+		    <if test="field.extralact != null and field.extralact != ''">
+				extralact = #{field.extralact, jdbcType=VARCHAR},
 		    </if>
-		    <if test="field.valtype != null and field.valtype != ''">
-				valtype = #{field.valtype, jdbcType=VARCHAR},
+		    <if test="field.extraltype != null and field.extraltype != ''">
+				extraltype = #{field.extraltype, jdbcType=VARCHAR},
 		    </if>
-		    <if test="field.valmin != null">
-				valmin = #{field.valmin, jdbcType=DOUBLE},
+		    <if test="field.extralmin != null">
+				extralmin = #{field.extralmin, jdbcType=DOUBLE},
 		    </if>
-		    <if test="field.valmax != null">
-				valmax = #{field.valmax, jdbcType=DOUBLE},
+		    <if test="field.extralmax != null">
+				extralmax = #{field.extralmax, jdbcType=DOUBLE},
 		    </if>
 		    <if test="field.initval != null">
 				initval = #{field.initval, jdbcType=DOUBLE},
@@ -173,53 +173,53 @@
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="unlock = case" suffix="end,">
+	        <trim prefix="unlockflag = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.unlock != null">
-	                    when attrid = #{item.attrid} then #{item.unlock, jdbcType=VARCHAR}
+	                <if test="item.unlockflag != null">
+	                    when attrid = #{item.attrid} then #{item.unlockflag, jdbcType=VARCHAR}
 	                </if>
-	                <if test="item.unlock == null">
-	                    when attrid = #{item.attrid} then unlock
+	                <if test="item.unlockflag == null">
+	                    when attrid = #{item.attrid} then unlockflag
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="act = case" suffix="end,">
+	        <trim prefix="extralact = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.act != null">
-	                    when attrid = #{item.attrid} then #{item.act, jdbcType=VARCHAR}
+	                <if test="item.extralact != null">
+	                    when attrid = #{item.attrid} then #{item.extralact, jdbcType=VARCHAR}
 	                </if>
-	                <if test="item.act == null">
-	                    when attrid = #{item.attrid} then act
+	                <if test="item.extralact == null">
+	                    when attrid = #{item.attrid} then extralact
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="valtype = case" suffix="end,">
+	        <trim prefix="extraltype = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.valtype != null">
-	                    when attrid = #{item.attrid} then #{item.valtype, jdbcType=VARCHAR}
+	                <if test="item.extraltype != null">
+	                    when attrid = #{item.attrid} then #{item.extraltype, jdbcType=VARCHAR}
 	                </if>
-	                <if test="item.valtype == null">
-	                    when attrid = #{item.attrid} then valtype
+	                <if test="item.extraltype == null">
+	                    when attrid = #{item.attrid} then extraltype
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="valmin = case" suffix="end,">
+	        <trim prefix="extralmin = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.valmin != null">
-	                    when attrid = #{item.attrid} then #{item.valmin, jdbcType=DOUBLE}
+	                <if test="item.extralmin != null">
+	                    when attrid = #{item.attrid} then #{item.extralmin, jdbcType=DOUBLE}
 	                </if>
-	                <if test="item.valmin == null">
-	                    when attrid = #{item.attrid} then valmin
+	                <if test="item.extralmin == null">
+	                    when attrid = #{item.attrid} then extralmin
 	                </if>
 	            </foreach>
 	        </trim>
-	        <trim prefix="valmax = case" suffix="end,">
+	        <trim prefix="extralmax = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
-	                <if test="item.valmax != null">
-	                    when attrid = #{item.attrid} then #{item.valmax, jdbcType=DOUBLE}
+	                <if test="item.extralmax != null">
+	                    when attrid = #{item.attrid} then #{item.extralmax, jdbcType=DOUBLE}
 	                </if>
-	                <if test="item.valmax == null">
-	                    when attrid = #{item.attrid} then valmax
+	                <if test="item.extralmax == null">
+	                    when attrid = #{item.attrid} then extralmax
 	                </if>
 	            </foreach>
 	        </trim>
@@ -269,7 +269,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}attrid, ${tab}attrtype, ${tab}attrfield, ${tab}unlock, ${tab}act, ${tab}valtype, ${tab}valmin, ${tab}valmax, ${tab}initval, ${tab}upval, ${tab}position
+        ${tab}attrid, ${tab}attrtype, ${tab}attrfield, ${tab}unlockflag, ${tab}extralact, ${tab}extraltype, ${tab}extralmin, ${tab}extralmax, ${tab}initval, ${tab}upval, ${tab}position
 	</sql>
 	
 	<sql id="where_all_list">
@@ -283,20 +283,20 @@
 			<if test="attrfield != null">
 				and attrfield = #{attrfield, jdbcType=INTEGER}
 			</if>
-			<if test="unlock != null and unlock != ''">
-				and unlock = #{unlock, jdbcType=VARCHAR}
+			<if test="unlockflag != null and unlockflag != ''">
+				and unlockflag = #{unlockflag, jdbcType=VARCHAR}
 			</if>
-			<if test="act != null and act != ''">
-				and act = #{act, jdbcType=VARCHAR}
+			<if test="extralact != null and extralact != ''">
+				and extralact = #{extralact, jdbcType=VARCHAR}
 			</if>
-			<if test="valtype != null and valtype != ''">
-				and valtype = #{valtype, jdbcType=VARCHAR}
+			<if test="extraltype != null and extraltype != ''">
+				and extraltype = #{extraltype, jdbcType=VARCHAR}
 			</if>
-			<if test="valmin != null">
-				and valmin = #{valmin, jdbcType=DOUBLE}
+			<if test="extralmin != null">
+				and extralmin = #{extralmin, jdbcType=DOUBLE}
 			</if>
-			<if test="valmax != null">
-				and valmax = #{valmax, jdbcType=DOUBLE}
+			<if test="extralmax != null">
+				and extralmax = #{extralmax, jdbcType=DOUBLE}
 			</if>
 			<if test="initval != null">
 				and initval = #{initval, jdbcType=DOUBLE}
@@ -321,20 +321,20 @@
 			<if test="condition.attrfield != null">
 				and attrfield = #{condition.attrfield, jdbcType=INTEGER}
 			</if>
-			<if test="condition.unlock != null and condition.unlock != ''">
-				and unlock = #{condition.unlock, jdbcType=VARCHAR}
+			<if test="condition.unlockflag != null and condition.unlockflag != ''">
+				and unlockflag = #{condition.unlockflag, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.act != null and condition.act != ''">
-				and act = #{condition.act, jdbcType=VARCHAR}
+			<if test="condition.extralact != null and condition.extralact != ''">
+				and extralact = #{condition.extralact, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.valtype != null and condition.valtype != ''">
-				and valtype = #{condition.valtype, jdbcType=VARCHAR}
+			<if test="condition.extraltype != null and condition.extraltype != ''">
+				and extraltype = #{condition.extraltype, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.valmin != null">
-				and valmin = #{condition.valmin, jdbcType=DOUBLE}
+			<if test="condition.extralmin != null">
+				and extralmin = #{condition.extralmin, jdbcType=DOUBLE}
 			</if>
-			<if test="condition.valmax != null">
-				and valmax = #{condition.valmax, jdbcType=DOUBLE}
+			<if test="condition.extralmax != null">
+				and extralmax = #{condition.extralmax, jdbcType=DOUBLE}
 			</if>
 			<if test="condition.initval != null">
 				and initval = #{condition.initval, jdbcType=DOUBLE}

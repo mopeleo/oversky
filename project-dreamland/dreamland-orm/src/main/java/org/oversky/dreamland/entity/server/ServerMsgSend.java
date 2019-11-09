@@ -10,7 +10,7 @@ public class ServerMsgSend extends BaseEntity{
 	private String serverid;    //
 	private Long custno;    //作者
 	private String content;    //消息内容
-	private String type;    //类型，0-所有人可见，1，公会可见，2，指定人可见
+	private String msgtype;    //类型，0-所有人可见，1，公会可见，2，指定人可见
 	private Long receiver;    //
 	private String senddate;    //发送日期
 	private String sendtime;    //发送时间
@@ -47,12 +47,12 @@ public class ServerMsgSend extends BaseEntity{
 		this.content = content;
 	}
 
-	public String getType() {
-		return this.type;
+	public String getMsgtype() {
+		return this.msgtype;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setMsgtype(String msgtype) {
+		this.msgtype = msgtype;
 	}
 
 	public Long getReceiver() {
@@ -103,7 +103,7 @@ public class ServerMsgSend extends BaseEntity{
 		sb.append(", serverid=").append(serverid);
 		sb.append(", custno=").append(custno);
 		sb.append(", content=").append(content);
-		sb.append(", type=").append(type);
+		sb.append(", msgtype=").append(msgtype);
 		sb.append(", receiver=").append(receiver);
 		sb.append(", senddate=").append(senddate);
 		sb.append(", sendtime=").append(sendtime);
