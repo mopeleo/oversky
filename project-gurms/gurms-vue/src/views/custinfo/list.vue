@@ -39,7 +39,7 @@
                 <el-table-column prop="mobileno" width="120" label="手机号码"></el-table-column>
                 <el-table-column prop="status" width="100" label="客户状态" :formatter="formatUserStatus"></el-table-column>
                 <el-table-column prop="regdate" width="120" label="注册日期"></el-table-column>
-                <el-table-column prop="lastlogindate" width="120" label="登录日期" sortable></el-table-column>
+                <el-table-column prop="lastlogindate" width="120" label="登录日期"></el-table-column>
                 <el-table-column prop="lastlogintime" width="100" label="登录时间"></el-table-column>
                 <el-table-column prop="email" label="电子邮件" show-overflow-tooltip></el-table-column>
                 <el-table-column fixed="right" width="180" label="操作">

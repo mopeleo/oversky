@@ -8,7 +8,7 @@ public class ServerPlayerActorSkillRes extends BaseResDto {
 
 	private Long paid;    //player actor id
 	private String skillid;    //
-	private Integer level;    //
+	private Integer skilllevel;    //
 
 	public Long getPaid() {
 		return this.paid;
@@ -26,12 +26,12 @@ public class ServerPlayerActorSkillRes extends BaseResDto {
 		this.skillid = skillid;
 	}
 
-	public Integer getLevel() {
-		return this.level;
+	public Integer getSkilllevel() {
+		return this.skilllevel;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
+	public void setSkilllevel(Integer skilllevel) {
+		this.skilllevel = skilllevel;
 	}
 
 
@@ -43,7 +43,7 @@ public class ServerPlayerActorSkillRes extends BaseResDto {
         sb.append("Hash = ").append(hashCode());
 		sb.append(", paid=").append(paid);
 		sb.append(", skillid=").append(skillid);
-		sb.append(", level=").append(level);
+		sb.append(", skilllevel=").append(skilllevel);
         sb.append("]");
         return sb.toString();
 	}

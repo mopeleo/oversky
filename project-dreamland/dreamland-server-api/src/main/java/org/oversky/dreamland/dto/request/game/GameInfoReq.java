@@ -8,9 +8,9 @@ public class GameInfoReq extends BaseReqDto {
 
 	private Long gameid;    //
 	private String unioncode;    //
+	private String gamecode;    //游戏代码
 	private String gamename;    //游戏名称
 	private String fullname;    //游戏全称
-	private String gamecode;    //游戏代码
 
 	public Long getGameid() {
 		return this.gameid;
@@ -26,6 +26,14 @@ public class GameInfoReq extends BaseReqDto {
 
 	public void setUnioncode(String unioncode) {
 		this.unioncode = unioncode;
+	}
+
+	public String getGamecode() {
+		return this.gamecode;
+	}
+
+	public void setGamecode(String gamecode) {
+		this.gamecode = gamecode;
 	}
 
 	public String getGamename() {
@@ -44,14 +52,6 @@ public class GameInfoReq extends BaseReqDto {
 		this.fullname = fullname;
 	}
 
-	public String getGamecode() {
-		return this.gamecode;
-	}
-
-	public void setGamecode(String gamecode) {
-		this.gamecode = gamecode;
-	}
-
 
     @Override
     public String toString() {
@@ -61,9 +61,9 @@ public class GameInfoReq extends BaseReqDto {
         sb.append("Hash = ").append(hashCode());
 		sb.append(", gameid=").append(gameid);
 		sb.append(", unioncode=").append(unioncode);
+		sb.append(", gamecode=").append(gamecode);
 		sb.append(", gamename=").append(gamename);
 		sb.append(", fullname=").append(fullname);
-		sb.append(", gamecode=").append(gamecode);
         sb.append("]");
         return sb.toString();
 	}

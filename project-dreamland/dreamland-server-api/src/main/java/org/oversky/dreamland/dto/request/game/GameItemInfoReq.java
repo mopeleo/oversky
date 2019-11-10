@@ -9,8 +9,8 @@ public class GameItemInfoReq extends BaseReqDto {
 	private String itemid;    //道具ID
 	private String itemname;    //道具名称
 	private String icon;    //图标
-	private String type;    //道具类型（0-加经验，1-加血，2-加mp，3-剧情道具）
-	private String rank;    //等级（0-白色，1-蓝色，2-金色，3-暗金）
+	private String itemtype;    //道具类型（0-加经验，1-加血，2-加mp，3-剧情道具）
+	private String grade;    //等级（0-白色，1-蓝色，2-金色，3-暗金）
 	private String remark;    //描述
 
 	public String getItemid() {
@@ -37,20 +37,20 @@ public class GameItemInfoReq extends BaseReqDto {
 		this.icon = icon;
 	}
 
-	public String getType() {
-		return this.type;
+	public String getItemtype() {
+		return this.itemtype;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setItemtype(String itemtype) {
+		this.itemtype = itemtype;
 	}
 
-	public String getRank() {
-		return this.rank;
+	public String getGrade() {
+		return this.grade;
 	}
 
-	public void setRank(String rank) {
-		this.rank = rank;
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 	public String getRemark() {
@@ -71,8 +71,8 @@ public class GameItemInfoReq extends BaseReqDto {
 		sb.append(", itemid=").append(itemid);
 		sb.append(", itemname=").append(itemname);
 		sb.append(", icon=").append(icon);
-		sb.append(", type=").append(type);
-		sb.append(", rank=").append(rank);
+		sb.append(", itemtype=").append(itemtype);
+		sb.append(", grade=").append(grade);
 		sb.append(", remark=").append(remark);
         sb.append("]");
         return sb.toString();

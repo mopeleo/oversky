@@ -10,7 +10,7 @@ public class GameEquipInfoRes extends BaseResDto {
 	private String equipname;    //装备名称
 	private String icon;    //图标
 	private String position;    //部位（1-武器，2-头饰，3-衣服，4-裤子，5-腰带，6-鞋子，7-项链，8-戒指）
-	private String rank;    //等级（0-白色，1-蓝色，2-金色，3-暗金，4-绿色套装）
+	private String grade;    //等级（0-白色，1-蓝色，2-金色，3-暗金，4-绿色套装）
 	private String profession;    //适用职业，多个职业用逗号分隔
 	private String remark;    //描述
 
@@ -46,12 +46,12 @@ public class GameEquipInfoRes extends BaseResDto {
 		this.position = position;
 	}
 
-	public String getRank() {
-		return this.rank;
+	public String getGrade() {
+		return this.grade;
 	}
 
-	public void setRank(String rank) {
-		this.rank = rank;
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 	public String getProfession() {
@@ -81,7 +81,7 @@ public class GameEquipInfoRes extends BaseResDto {
 		sb.append(", equipname=").append(equipname);
 		sb.append(", icon=").append(icon);
 		sb.append(", position=").append(position);
-		sb.append(", rank=").append(rank);
+		sb.append(", grade=").append(grade);
 		sb.append(", profession=").append(profession);
 		sb.append(", remark=").append(remark);
         sb.append("]");

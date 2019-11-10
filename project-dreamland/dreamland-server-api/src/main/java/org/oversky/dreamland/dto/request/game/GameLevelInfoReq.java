@@ -12,7 +12,7 @@ public class GameLevelInfoReq extends BaseReqDto {
 	private String icon;    //等级图标
 	private Integer minpoint;    //经验下限（包含）
 	private Integer maxpoint;    //等级上限（不包含）
-	private String type;    //0，会员等级，1角色等级，2工会等级，3装备等级，4技能等级
+	private String leveltype;    //0，会员等级，1角色等级，2工会等级，3装备等级，4技能等级
 	private String remark;    //
 
 	public Integer getLevelid() {
@@ -63,12 +63,12 @@ public class GameLevelInfoReq extends BaseReqDto {
 		this.maxpoint = maxpoint;
 	}
 
-	public String getType() {
-		return this.type;
+	public String getLeveltype() {
+		return this.leveltype;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setLeveltype(String leveltype) {
+		this.leveltype = leveltype;
 	}
 
 	public String getRemark() {
@@ -92,7 +92,7 @@ public class GameLevelInfoReq extends BaseReqDto {
 		sb.append(", icon=").append(icon);
 		sb.append(", minpoint=").append(minpoint);
 		sb.append(", maxpoint=").append(maxpoint);
-		sb.append(", type=").append(type);
+		sb.append(", leveltype=").append(leveltype);
 		sb.append(", remark=").append(remark);
         sb.append("]");
         return sb.toString();

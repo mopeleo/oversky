@@ -10,8 +10,8 @@ public class ServerPlayerActorReq extends BaseReqDto {
 	private String serverid;    //
 	private Long custno;    //
 	private String actorid;    //角色ID
-	private Integer rank;    //星级
-	private Integer level;    //等级
+	private Integer grade;    //星级
+	private Integer actorlevel;    //等级
 	private Double ratiostr;    //默认力量成长率
 	private Double ratioint;    //默认智力成长率
 	private Double ratiohp;    //默认HP成长率
@@ -51,20 +51,20 @@ public class ServerPlayerActorReq extends BaseReqDto {
 		this.actorid = actorid;
 	}
 
-	public Integer getRank() {
-		return this.rank;
+	public Integer getGrade() {
+		return this.grade;
 	}
 
-	public void setRank(Integer rank) {
-		this.rank = rank;
+	public void setGrade(Integer grade) {
+		this.grade = grade;
 	}
 
-	public Integer getLevel() {
-		return this.level;
+	public Integer getActorlevel() {
+		return this.actorlevel;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
+	public void setActorlevel(Integer actorlevel) {
+		this.actorlevel = actorlevel;
 	}
 
 	public Double getRatiostr() {
@@ -126,8 +126,8 @@ public class ServerPlayerActorReq extends BaseReqDto {
 		sb.append(", serverid=").append(serverid);
 		sb.append(", custno=").append(custno);
 		sb.append(", actorid=").append(actorid);
-		sb.append(", rank=").append(rank);
-		sb.append(", level=").append(level);
+		sb.append(", grade=").append(grade);
+		sb.append(", actorlevel=").append(actorlevel);
 		sb.append(", ratiostr=").append(ratiostr);
 		sb.append(", ratioint=").append(ratioint);
 		sb.append(", ratiohp=").append(ratiohp);

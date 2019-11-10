@@ -11,7 +11,7 @@ public class ServerPlayerEquipReq extends BaseReqDto {
 	private Long custno;    //
 	private String equipid;    //
 	private String actorid;    //若actorid为空，则放在背包，不为空，则装备在角色身上
-	private Integer level;    //武器等级
+	private Integer equiplevel;    //武器等级
 	private Integer proficiency;    //武器熟练度
 
 	public Long getPeid() {
@@ -54,12 +54,12 @@ public class ServerPlayerEquipReq extends BaseReqDto {
 		this.actorid = actorid;
 	}
 
-	public Integer getLevel() {
-		return this.level;
+	public Integer getEquiplevel() {
+		return this.equiplevel;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
+	public void setEquiplevel(Integer equiplevel) {
+		this.equiplevel = equiplevel;
 	}
 
 	public Integer getProficiency() {
@@ -82,7 +82,7 @@ public class ServerPlayerEquipReq extends BaseReqDto {
 		sb.append(", custno=").append(custno);
 		sb.append(", equipid=").append(equipid);
 		sb.append(", actorid=").append(actorid);
-		sb.append(", level=").append(level);
+		sb.append(", equiplevel=").append(equiplevel);
 		sb.append(", proficiency=").append(proficiency);
         sb.append("]");
         return sb.toString();
