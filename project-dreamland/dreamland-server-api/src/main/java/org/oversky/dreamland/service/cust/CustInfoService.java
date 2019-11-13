@@ -8,6 +8,10 @@ public interface CustInfoService {
 
 	CustInfoRes login(CustInfoReq req);
 	
+	CustInfoRes insert(CustInfoReq userReq);
+	
+	CustInfoRes update(CustInfoReq userReq);
+	
 	CustInfoRes custDetail(Long custno);
 	
 	BaseResListDto<CustInfoRes> pageCustInfo(CustInfoReq custReq);

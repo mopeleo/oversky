@@ -26,6 +26,7 @@
                 <el-col :span="5">
                     <el-form-item>
                         <el-button type="primary" icon="el-icon-search" @click="loadData">查询</el-button>
+                        <el-button type="primary" v-permission="$permission.system.user.add" icon="el-icon-plus" @click="handleAdd">新增</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -43,7 +44,7 @@
                 <el-table-column prop="lastlogintime" width="100" label="登录时间"></el-table-column>
                 <el-table-column prop="email" label="电子邮件" show-overflow-tooltip></el-table-column>
                 <el-table-column fixed="right" width="180" label="操作">
-                    <template slot-scope="scope" v-if="scope.row.userid !== $store.state.pub.user.userid">
+                    <template slot-scope="scope" v-if="scope.row.custno !== $store.state.pub.user.custno">
                     <el-row :gutter="5">
                     <el-col :span="10">
                         <el-button type="danger" size="mini"
@@ -108,8 +109,8 @@
                     </el-row>
                     <el-row :gutter="20">
                         <el-col :span="10">
-                            <el-form-item label="所属机构" prop="orgid">
-                                <el-input v-model="custinfo.idname"></el-input>
+                            <el-form-item label="客户类型" prop="custtype">
+                                <el-input v-model="custinfo.custtype"></el-input>
                            </el-form-item>
                         </el-col>
                         <el-col :span="10">
@@ -240,14 +241,13 @@ export default{
             editType: this.$pubdefine.EDIT_TYPE_INSERT,   // insert/update
             //临时业务数据
             custinfo: {
-                userid:'',
+                custno:'',
                 unioncode:'',
                 custname:'',
                 loginid:'',
                 mobileno:'',
                 email:'',
-                orgid:'',
-                orgname:'',
+                custtype:'',
                 idname:'',
                 idtype:'',
                 idcode:'',
@@ -265,7 +265,7 @@ export default{
         }
     },
     mounted(){
-        tools.loadDict('2000,2001,2004', this.dictCache);
+        tools.loadComDict('2000,2001,2004,2005,2007', this.dictCache);
         this.loadData();
     },
     methods:{
@@ -288,7 +288,7 @@ export default{
         },
         //点击行响应
         handleClick: function(row, column, event){
-            console.log(row.userid + column + event);
+            console.log(row.custno + column + event);
         },
         //每页显示数据量变更
         handleSizeChange:function(val){
@@ -349,9 +349,34 @@ export default{
             });
         },
 
+        handleAdd() {
+            this.userDetailDrawer = true;
+            this.editType = this.$pubdefine.EDIT_TYPE_INSERT;
+            this.custinfo = {
+                custno:'',
+                unioncode:'',
+                username:'',
+                loginid:'',
+                mobileno:'',
+                email:'',
+                custtype:'',
+                idname:'',
+                idtype:'',
+                idcode:'',
+                sex:'',
+                birthday:'',
+                postcode:'',
+                address:'',
+                phone:'',
+                ethnicity:'',
+                province:'',
+                city:'',
+                education:'',
+                profession:''
+            }
+        },
         handleDetail(index, row) {
-            // this.$router.push({name: 'custinfo/detail', params: {userid: row.userid, edit: false}});
-            this.$api.Game.custInfoDetail(row.userid).then(res =>{
+            this.$api.Game.custInfoDetail(row.custno).then(res =>{
                 this.userDetailDrawer = true;
                 this.custinfo = res;
                 this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
@@ -360,8 +385,7 @@ export default{
             });
         },
         handleEdit(index, row) {
-            // this.$router.push({name: 'custinfo/detail', params: {userid: row.userid, edit: true}});
-            this.$api.Game.userDetail(row.userid).then(res =>{
+            this.$api.Game.custInfoDetail(row.custno).then(res =>{
                 this.userDetailDrawer = true;
                 this.custinfo = res;
                 this.editType = this.$pubdefine.EDIT_TYPE_UPDATE;
@@ -374,9 +398,9 @@ export default{
                 if(valid){
                     var callAPI = null;
                     if(this.editType === this.$pubdefine.EDIT_TYPE_UPDATE){
-                        callAPI = this.$api.Game.userUpdate(this.custinfo);
+                        callAPI = this.$api.Game.custInfoUpdate(this.custinfo);
                     }else if(this.editType === this.$pubdefine.EDIT_TYPE_INSERT){
-                        callAPI = this.$api.Game.userAdd(this.custinfo);
+                        callAPI = this.$api.Game.custInfoAdd(this.custinfo);
                     }
                     callAPI.then((res)=>{
                         tools.succTip(res.returnmsg);

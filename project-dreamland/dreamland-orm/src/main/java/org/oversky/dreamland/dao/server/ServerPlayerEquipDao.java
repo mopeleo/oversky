@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface ServerPlayerEquipDao{
 
 	
-    ServerPlayerEquip getById(String serverid, Long custno, String equipid);
+    ServerPlayerEquip getById(Long peid);
 
-    int deleteById(String serverid, Long custno, String equipid);
+    int deleteById(Long peid);
 
     int updateById(ServerPlayerEquip entity);
 	
@@ -31,6 +31,12 @@ public interface ServerPlayerEquipDao{
 	
     List<ServerPlayerEquip> selectAll();
     
+	
+	int updateBatch(List<ServerPlayerEquip> entityList);
+	
+	
+	int deleteBatch(Long[] ids);
+	
 	
 	int insertBatch(List<ServerPlayerEquip> entityList);
 	

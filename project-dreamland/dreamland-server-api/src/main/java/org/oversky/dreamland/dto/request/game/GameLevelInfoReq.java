@@ -83,18 +83,15 @@ public class GameLevelInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", levelid=").append(levelid);
-		sb.append(", levelname=").append(levelname);
-		sb.append(", nextlevel=").append(nextlevel);
-		sb.append(", icon=").append(icon);
-		sb.append(", minpoint=").append(minpoint);
-		sb.append(", maxpoint=").append(maxpoint);
-		sb.append(", leveltype=").append(leveltype);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("levelid=").append(levelid).append(", ");
+		sb.append("levelname=").append(levelname).append(", ");
+		sb.append("nextlevel=").append(nextlevel).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("minpoint=").append(minpoint).append(", ");
+		sb.append("maxpoint=").append(maxpoint).append(", ");
+		sb.append("leveltype=").append(leveltype).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

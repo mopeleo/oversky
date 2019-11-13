@@ -4,7 +4,7 @@ public interface UniqueCheckDao {
 
 	int existLoginId(String loginId);
 	
-	int existUserMobile(String mobileNo);
+	int existMobileNo(String mobileNo);
 	
-	int existUserMobileUpdate(Long custno, String mobileNo);
+	int uptExistMobileNo(Long custno, String mobileNo);
 }

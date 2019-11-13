@@ -92,19 +92,16 @@ public class ServerLeagueInfoRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", leagueid=").append(leagueid);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", leaguename=").append(leaguename);
-		sb.append(", maxleaguer=").append(maxleaguer);
-		sb.append(", leaguelevel=").append(leaguelevel);
-		sb.append(", creator=").append(creator);
-		sb.append(", createdate=").append(createdate);
-		sb.append(", createtime=").append(createtime);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("leagueid=").append(leagueid).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("leaguename=").append(leaguename).append(", ");
+		sb.append("maxleaguer=").append(maxleaguer).append(", ");
+		sb.append("leaguelevel=").append(leaguelevel).append(", ");
+		sb.append("creator=").append(creator).append(", ");
+		sb.append("createdate=").append(createdate).append(", ");
+		sb.append("createtime=").append(createtime).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

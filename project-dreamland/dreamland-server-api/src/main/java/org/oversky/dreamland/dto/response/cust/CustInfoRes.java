@@ -27,6 +27,18 @@ public class CustInfoRes extends BaseResDto {
 	private String regdate;    //注册日期
 	private String canceldate;    //注销日期
 
+	private String sex;    //性别（0-女，1-男）
+	private String birthday;    //生日
+	private String address;    //联系地址
+	private String postcode;    //邮政编码
+	private String phone;    //备用电话
+	private String nationality;    //国籍
+	private String province;    //所在省份
+	private String city;    //所在城市
+	private String education;    //教育程度
+	private String ethnicity;    //民族
+	private String profession;    //职业
+
 	public Long getCustno() {
 		return this.custno;
 	}
@@ -187,34 +199,118 @@ public class CustInfoRes extends BaseResDto {
 		this.canceldate = canceldate;
 	}
 
+    public String getSex() {
+		return sex;
+	}
 
-    @Override
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getEthnicity() {
+		return ethnicity;
+	}
+
+	public void setEthnicity(String ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", custno=").append(custno);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", custname=").append(custname);
-		sb.append(", custtype=").append(custtype);
-		sb.append(", loginid=").append(loginid);
-		sb.append(", loginpasswd=").append(loginpasswd);
-		sb.append(", salt=").append(salt);
-		sb.append(", passwdvaliddate=").append(passwdvaliddate);
-		sb.append(", mobileno=").append(mobileno);
-		sb.append(", email=").append(email);
-		sb.append(", custlevel=").append(custlevel);
-		sb.append(", idtype=").append(idtype);
-		sb.append(", idcode=").append(idcode);
-		sb.append(", idname=").append(idname);
-		sb.append(", lastlogindate=").append(lastlogindate);
-		sb.append(", lastlogintime=").append(lastlogintime);
-		sb.append(", status=").append(status);
-		sb.append(", loginerror=").append(loginerror);
-		sb.append(", regdate=").append(regdate);
-		sb.append(", canceldate=").append(canceldate);
-        sb.append("]");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("custname=").append(custname).append(", ");
+		sb.append("custtype=").append(custtype).append(", ");
+		sb.append("loginid=").append(loginid).append(", ");
+		sb.append("loginpasswd=").append(loginpasswd).append(", ");
+		sb.append("salt=").append(salt).append(", ");
+		sb.append("passwdvaliddate=").append(passwdvaliddate).append(", ");
+		sb.append("mobileno=").append(mobileno).append(", ");
+		sb.append("email=").append(email).append(", ");
+		sb.append("custlevel=").append(custlevel).append(", ");
+		sb.append("idtype=").append(idtype).append(", ");
+		sb.append("idcode=").append(idcode).append(", ");
+		sb.append("idname=").append(idname).append(", ");
+		sb.append("lastlogindate=").append(lastlogindate).append(", ");
+		sb.append("lastlogintime=").append(lastlogintime).append(", ");
+		sb.append("status=").append(status).append(", ");
+		sb.append("loginerror=").append(loginerror).append(", ");
+		sb.append("regdate=").append(regdate).append(", ");
+		sb.append("canceldate=").append(canceldate).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

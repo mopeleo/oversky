@@ -20,6 +20,16 @@ public class CustInfoController {
 		return custService.custDetail(custno);
 	}
 
+	@RequestMapping("/add")
+	public CustInfoRes add(@RequestBody CustInfoReq userReq) {
+		return custService.insert(userReq);
+	}
+
+	@RequestMapping("/update")
+	public CustInfoRes update(@RequestBody CustInfoReq userReq) {
+		return custService.update(userReq);
+	}
+
 	@RequestMapping("/list")
 	public BaseResListDto<CustInfoRes> list(@RequestBody CustInfoReq userReq) {
 		return custService.pageCustInfo(userReq);

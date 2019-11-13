@@ -7,7 +7,7 @@ public class ServerPromotion extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private String serverid;    //
-	private Integer promid;    //
+	private Long promid;    //
 	private String startdate;    //
 	private String starttime;    //
 	private String enddate;    //
@@ -21,11 +21,11 @@ public class ServerPromotion extends BaseEntity{
 		this.serverid = serverid;
 	}
 
-	public Integer getPromid() {
+	public Long getPromid() {
 		return this.promid;
 	}
 
-	public void setPromid(Integer promid) {
+	public void setPromid(Long promid) {
 		this.promid = promid;
 	}
 
@@ -66,7 +66,7 @@ public class ServerPromotion extends BaseEntity{
 		return build.append("#serverid:").append(this.serverid).append("#promid:").append(this.promid).toString();
 	}
 
-    public static String buildEntityKey(String serverid, Integer promid){
+    public static String buildEntityKey(String serverid, Long promid){
         StringBuilder build = new StringBuilder("ServerPromotion");
         return build.append("#serverid:").append(serverid).append("#promid:").append(promid).toString();
     }
@@ -79,16 +79,13 @@ public class ServerPromotion extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", serverid=").append(serverid);
-		sb.append(", promid=").append(promid);
-		sb.append(", startdate=").append(startdate);
-		sb.append(", starttime=").append(starttime);
-		sb.append(", enddate=").append(enddate);
-		sb.append(", endtime=").append(endtime);
-        sb.append("]");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("promid=").append(promid).append(", ");
+		sb.append("startdate=").append(startdate).append(", ");
+		sb.append("starttime=").append(starttime).append(", ");
+		sb.append("enddate=").append(enddate).append(", ");
+		sb.append("endtime=").append(endtime).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

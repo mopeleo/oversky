@@ -60,14 +60,14 @@ public class SysRoleServiceImpl implements SysRoleService {
 		role.setRolename(roleReq.getRolename());
 		if(roleDao.count(role) > 0) {
 			res.failure("角色名称["+roleReq.getRolename()+"]已存在");
-			log.info("新增角色失败 : {}", res.getReturnmsg());
+			log.warn("新增角色失败 : {}", res.getReturnmsg());
 			return res;
 		}
 
 		BeanCopyUtils.copy(roleReq, role);
 		if(roleDao.insert(role) != 1) {
 			res.failure("插入数据库失败");
-			log.info("新增角色失败 : {}", res.getReturnmsg());
+			log.warn("新增角色失败 : {}", res.getReturnmsg());
 			return res;
 		}
 		
@@ -120,6 +120,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 		SysRoleRes res = new SysRoleRes();
 		if(role == null) {
 			res.failure("角色不存在");
+			log.warn(res.getReturnmsg());
+			return res;
 		}else {
 			BeanCopyUtils.copy(role, res);
 			String menuList = getElementUIMenuList(roleid);
@@ -185,6 +187,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 				rolemenuList.add(roleMenu);
 			}
 			if(roleMenuDao.insertBatch(rolemenuList) != rolemenuList.size()) {
+				log.error("更新角色[{}]权限映射关系失败", roleId);
 				throw new BaseServiceException("更新角色[" + roleId + "]权限映射关系失败");
 			}
 		}

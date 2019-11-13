@@ -8,39 +8,21 @@ import axios from '@/utils/axios';
 const baseURL = '/dreamland';
 
 export default {
-    // post提交
-    login (params) {
-        // return axios.post(`${baseURL}/login`, qs.stringify(params));
-        return axios.post(`${baseURL}/login`, params);
-    },
-    logout (userid) {
-        return axios.get(`${baseURL}/logout/${userid}`);
-    },
 
     //========================================================
     // 查询字典，多个字典
-    getDictMap(dictkeys, unioncode){
-        if(unioncode){
-            return axios.get(`${baseURL}/sysdict/getmap`, {
-                params: {dictcode: dictkeys, unioncode: unioncode}
-            });
-        }else{
-            return axios.get(`${baseURL}/sysdict/getmap`, {
-                params: {dictcode: dictkeys}
-            });
-        }
+    getDictMap(dictkeys){
+        return axios.get(`${baseURL}/comdict/getmap`, {
+            params: {dictcode: dictkeys}
+        });
     },
     // 查询字典，单个字典
-    getDictList(dictcode, unioncode){
-        return axios.get(`${baseURL}/sysdict/getlist/${dictcode}/${unioncode}`);
+    getDictList(dictcode){
+        return axios.get(`${baseURL}/comdict/getlist/${dictcode}`);
     },
     // 查询特殊字典
     getDictType (params) {
-        return axios.post(`${baseURL}/sysdict/gettype`, params);
-    },
-    // 字典分页显示
-    dictPage (params) {
-        return axios.post(`${baseURL}/sysdict/list`, params);
+        return axios.post(`${baseURL}/comdict/gettype`, params);
     },
 
     //========================================================
@@ -69,28 +51,19 @@ export default {
 
 
     //========================================================
-    // 序列号分页显示
-    snoList (params) {
-        return axios.post(`${baseURL}/syssno/list`, params);
-    },
-    // 序列号编辑
-    snoUpdate (params) {
-        return axios.post(`${baseURL}/syssno/update`, params);
-    },
-    // 序列号详情
-    snoDetail (unioncode, noid) {
-        return axios.get(`${baseURL}/syssno/detail`, {
-            params: {unioncode: unioncode,noid: noid}
-        });
-    },
-
-
-    //========================================================
     // 客户列表
     custInfoList (params) {
         return axios.post(`${baseURL}/custinfo/list`, params);
     },
-    // 用户详情
+    // 客户新增
+    custInfoAdd (params) {
+        return axios.post(`${baseURL}/custinfo/add`, params);
+    },
+    // 客户编辑
+    custInfoUpdate (params) {
+        return axios.post(`${baseURL}/custinfo/update`, params);
+    },
+    // 客户详情
     custInfoDetail (custno) {
         return axios.get(`${baseURL}/custinfo/detail`, {
             params: {custno: custno}

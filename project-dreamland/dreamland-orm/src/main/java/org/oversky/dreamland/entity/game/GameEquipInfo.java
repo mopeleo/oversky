@@ -6,7 +6,7 @@ public class GameEquipInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String equipid;    //装备ID
+	private Long equipid;    //装备ID[identity]
 	private String equipname;    //装备名称
 	private String icon;    //图标
 	private String position;    //部位（1-武器，2-头饰，3-衣服，4-裤子，5-腰带，6-鞋子，7-项链，8-戒指）
@@ -14,11 +14,11 @@ public class GameEquipInfo extends BaseEntity{
 	private String profession;    //适用职业，多个职业用逗号分隔
 	private String remark;    //描述
 
-	public String getEquipid() {
+	public Long getEquipid() {
 		return this.equipid;
 	}
 
-	public void setEquipid(String equipid) {
+	public void setEquipid(Long equipid) {
 		this.equipid = equipid;
 	}
 
@@ -75,7 +75,7 @@ public class GameEquipInfo extends BaseEntity{
 		return build.append("#equipid:").append(this.equipid).toString();
 	}
 
-    public static String buildEntityKey(String equipid){
+    public static String buildEntityKey(Long equipid){
         StringBuilder build = new StringBuilder("GameEquipInfo");
         return build.append("#equipid:").append(equipid).toString();
     }
@@ -87,17 +87,14 @@ public class GameEquipInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", equipid=").append(equipid);
-		sb.append(", equipname=").append(equipname);
-		sb.append(", icon=").append(icon);
-		sb.append(", position=").append(position);
-		sb.append(", grade=").append(grade);
-		sb.append(", profession=").append(profession);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("equipid=").append(equipid).append(", ");
+		sb.append("equipname=").append(equipname).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("position=").append(position).append(", ");
+		sb.append("grade=").append(grade).append(", ");
+		sb.append("profession=").append(profession).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

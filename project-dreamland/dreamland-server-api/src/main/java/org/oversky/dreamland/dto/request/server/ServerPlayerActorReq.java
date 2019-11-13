@@ -119,22 +119,19 @@ public class ServerPlayerActorReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", paid=").append(paid);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", custno=").append(custno);
-		sb.append(", actorid=").append(actorid);
-		sb.append(", grade=").append(grade);
-		sb.append(", actorlevel=").append(actorlevel);
-		sb.append(", ratiostr=").append(ratiostr);
-		sb.append(", ratioint=").append(ratioint);
-		sb.append(", ratiohp=").append(ratiohp);
-		sb.append(", ratiomp=").append(ratiomp);
-		sb.append(", ratioagl=").append(ratioagl);
-		sb.append(", ratioluck=").append(ratioluck);
-        sb.append("]");
+		sb.append("paid=").append(paid).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("actorid=").append(actorid).append(", ");
+		sb.append("grade=").append(grade).append(", ");
+		sb.append("actorlevel=").append(actorlevel).append(", ");
+		sb.append("ratiostr=").append(ratiostr).append(", ");
+		sb.append("ratioint=").append(ratioint).append(", ");
+		sb.append("ratiohp=").append(ratiohp).append(", ");
+		sb.append("ratiomp=").append(ratiomp).append(", ");
+		sb.append("ratioagl=").append(ratioagl).append(", ");
+		sb.append("ratioluck=").append(ratioluck).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

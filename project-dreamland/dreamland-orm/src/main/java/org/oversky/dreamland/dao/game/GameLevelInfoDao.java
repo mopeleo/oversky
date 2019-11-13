@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface GameLevelInfoDao{
 
 	
-    GameLevelInfo getById(Integer levelid);
+    GameLevelInfo getById(Long levelid);
 
-    int deleteById(Integer levelid);
+    int deleteById(Long levelid);
 
     int updateById(GameLevelInfo entity);
 	
@@ -35,7 +35,7 @@ public interface GameLevelInfoDao{
 	int updateBatch(List<GameLevelInfo> entityList);
 	
 	
-	int deleteBatch(Integer[] ids);
+	int deleteBatch(Long[] ids);
 	
 	
 	int insertBatch(List<GameLevelInfo> entityList);

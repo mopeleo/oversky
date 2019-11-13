@@ -8,16 +8,16 @@
         <result column="payno" jdbcType="VARCHAR" property="payno" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct">
-        insert into cust_pay_acct (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{acctno, jdbcType=DECIMAL}, #{custno, jdbcType=DECIMAL}, #{paytype, jdbcType=VARCHAR}, #{payno, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustPayAcct" useGeneratedKeys="true" keyProperty="acctno">
+        insert into cust_pay_acct (custno, paytype, payno)
+        values (#{custno, jdbcType=DECIMAL}, #{paytype, jdbcType=VARCHAR}, #{payno, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into cust_pay_acct (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="acctno">
+		insert into cust_pay_acct (custno, paytype, payno)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.acctno, jdbcType=DECIMAL}, #{item.custno, jdbcType=DECIMAL}, #{item.paytype, jdbcType=VARCHAR}, #{item.payno, jdbcType=VARCHAR})
+        (#{item.custno, jdbcType=DECIMAL}, #{item.paytype, jdbcType=VARCHAR}, #{item.payno, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	

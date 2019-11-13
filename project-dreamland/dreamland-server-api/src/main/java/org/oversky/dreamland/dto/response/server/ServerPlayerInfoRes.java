@@ -83,18 +83,15 @@ public class ServerPlayerInfoRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", serverid=").append(serverid);
-		sb.append(", custno=").append(custno);
-		sb.append(", nickname=").append(nickname);
-		sb.append(", logindate=").append(logindate);
-		sb.append(", logintime=").append(logintime);
-		sb.append(", playerlevel=").append(playerlevel);
-		sb.append(", viplevel=").append(viplevel);
-		sb.append(", crystal=").append(crystal);
-        sb.append("]");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("nickname=").append(nickname).append(", ");
+		sb.append("logindate=").append(logindate).append(", ");
+		sb.append("logintime=").append(logintime).append(", ");
+		sb.append("playerlevel=").append(playerlevel).append(", ");
+		sb.append("viplevel=").append(viplevel).append(", ");
+		sb.append("crystal=").append(crystal).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

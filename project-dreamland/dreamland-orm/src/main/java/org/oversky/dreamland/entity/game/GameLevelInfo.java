@@ -6,7 +6,7 @@ public class GameLevelInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer levelid;    //等级ID
+	private Long levelid;    //等级ID[identity]
 	private String levelname;    //等级名称
 	private Integer nextlevel;    //下一等级
 	private String icon;    //等级图标
@@ -15,11 +15,11 @@ public class GameLevelInfo extends BaseEntity{
 	private String leveltype;    //0，会员等级，1角色等级，2工会等级，3装备等级，4技能等级
 	private String remark;    //
 
-	public Integer getLevelid() {
+	public Long getLevelid() {
 		return this.levelid;
 	}
 
-	public void setLevelid(Integer levelid) {
+	public void setLevelid(Long levelid) {
 		this.levelid = levelid;
 	}
 
@@ -84,7 +84,7 @@ public class GameLevelInfo extends BaseEntity{
 		return build.append("#levelid:").append(this.levelid).toString();
 	}
 
-    public static String buildEntityKey(Integer levelid){
+    public static String buildEntityKey(Long levelid){
         StringBuilder build = new StringBuilder("GameLevelInfo");
         return build.append("#levelid:").append(levelid).toString();
     }
@@ -96,18 +96,15 @@ public class GameLevelInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", levelid=").append(levelid);
-		sb.append(", levelname=").append(levelname);
-		sb.append(", nextlevel=").append(nextlevel);
-		sb.append(", icon=").append(icon);
-		sb.append(", minpoint=").append(minpoint);
-		sb.append(", maxpoint=").append(maxpoint);
-		sb.append(", leveltype=").append(leveltype);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("levelid=").append(levelid).append(", ");
+		sb.append("levelname=").append(levelname).append(", ");
+		sb.append("nextlevel=").append(nextlevel).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("minpoint=").append(minpoint).append(", ");
+		sb.append("maxpoint=").append(maxpoint).append(", ");
+		sb.append("leveltype=").append(leveltype).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

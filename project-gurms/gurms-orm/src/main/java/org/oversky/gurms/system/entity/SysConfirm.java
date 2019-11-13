@@ -61,14 +61,11 @@ public class SysConfirm extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", confirmid=").append(confirmid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", tablename=").append(tablename);
-		sb.append(", checklevel=").append(checklevel);
-        sb.append("]");
+		sb.append("confirmid=").append(confirmid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("tablename=").append(tablename).append(", ");
+		sb.append("checklevel=").append(checklevel).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

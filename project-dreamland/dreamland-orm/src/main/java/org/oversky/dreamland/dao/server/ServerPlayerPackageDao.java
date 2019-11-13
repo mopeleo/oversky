@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface ServerPlayerPackageDao{
 
 	
-    ServerPlayerPackage getById(String serverid, Long custno, String itemid);
+    ServerPlayerPackage getById(String serverid, Long custno, Long itemid);
 
-    int deleteById(String serverid, Long custno, String itemid);
+    int deleteById(String serverid, Long custno, Long itemid);
 
     int updateById(ServerPlayerPackage entity);
 	

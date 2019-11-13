@@ -39,6 +39,8 @@ public class SysSnoServiceImpl implements SysSnoService {
 		SysSnoRes res = new SysSnoRes();
 		if(sno == null) {
 			res.failure("序列不存在");
+			log.warn(res.getReturnmsg());
+			return res;
 		}else {
 			BeanCopyUtils.copy(sno, res);
 		}

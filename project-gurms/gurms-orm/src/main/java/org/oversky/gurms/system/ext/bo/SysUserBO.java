@@ -19,6 +19,7 @@ public class SysUserBO implements Serializable{
 	private SysOrg sysorg;
 	private List<SysMenu> menus;
 	private List<SysRole> roles;
+	
 	public Long getUserid() {
 		return userid;
 	}
@@ -61,4 +62,14 @@ public class SysUserBO implements Serializable{
 	public void setRoles(List<SysRole> roles) {
 		this.roles = roles;
 	}	
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+		sb.append("userid=").append(userid);
+		sb.append(", unioncode=").append(unioncode);
+		sb.append(", username=").append(username);
+		sb.append(", loginid=").append(loginid);
+		sb.append(", sysorg=").append(sysorg == null ? "null" : sysorg.toString());
+        return sb.toString();
+	}
 }

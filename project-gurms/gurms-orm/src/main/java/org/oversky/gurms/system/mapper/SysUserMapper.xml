@@ -9,29 +9,32 @@
         <result column="loginpasswd" jdbcType="VARCHAR" property="loginpasswd" />
         <result column="salt" jdbcType="VARCHAR" property="salt" />
         <result column="passwdvaliddate" jdbcType="VARCHAR" property="passwdvaliddate" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="orgid" jdbcType="DECIMAL" property="orgid" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
         <result column="mobileno" jdbcType="VARCHAR" property="mobileno" />
         <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="orgid" jdbcType="DECIMAL" property="orgid" />
         <result column="idtype" jdbcType="VARCHAR" property="idtype" />
         <result column="idcode" jdbcType="VARCHAR" property="idcode" />
         <result column="idname" jdbcType="VARCHAR" property="idname" />
+        <result column="postcode" jdbcType="VARCHAR" property="postcode" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="logindate" jdbcType="VARCHAR" property="logindate" />
         <result column="logintime" jdbcType="VARCHAR" property="logintime" />
-        <result column="status" jdbcType="VARCHAR" property="status" />
         <result column="loginerror" jdbcType="INTEGER" property="loginerror" />
         <result column="opendate" jdbcType="VARCHAR" property="opendate" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysUser" useGeneratedKeys="true" keyProperty="userid">
-        insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate)
-        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{orgid, jdbcType=DECIMAL}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{loginerror, jdbcType=INTEGER}, #{opendate, jdbcType=VARCHAR})
+        insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, status, orgid, sex, mobileno, email, idtype, idcode, idname, postcode, address, logindate, logintime, loginerror, opendate)
+        values (#{unioncode, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{orgid, jdbcType=DECIMAL}, #{sex, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginerror, jdbcType=INTEGER}, #{opendate, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="userid">
-		insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, orgid, idtype, idcode, idname, logindate, logintime, status, loginerror, opendate)
+		insert into sys_user (unioncode, username, loginid, loginpasswd, salt, passwdvaliddate, status, orgid, sex, mobileno, email, idtype, idcode, idname, postcode, address, logindate, logintime, loginerror, opendate)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.orgid, jdbcType=DECIMAL}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.loginerror, jdbcType=INTEGER}, #{item.opendate, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.username, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.orgid, jdbcType=DECIMAL}, #{item.sex, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.postcode, jdbcType=VARCHAR}, #{item.address, jdbcType=VARCHAR}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.loginerror, jdbcType=INTEGER}, #{item.opendate, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -76,15 +79,18 @@
                loginpasswd = #{loginpasswd, jdbcType=VARCHAR}, 
                salt = #{salt, jdbcType=VARCHAR}, 
                passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}, 
+               status = #{status, jdbcType=VARCHAR}, 
+               orgid = #{orgid, jdbcType=DECIMAL}, 
+               sex = #{sex, jdbcType=VARCHAR}, 
                mobileno = #{mobileno, jdbcType=VARCHAR}, 
                email = #{email, jdbcType=VARCHAR}, 
-               orgid = #{orgid, jdbcType=DECIMAL}, 
                idtype = #{idtype, jdbcType=VARCHAR}, 
                idcode = #{idcode, jdbcType=VARCHAR}, 
                idname = #{idname, jdbcType=VARCHAR}, 
+               postcode = #{postcode, jdbcType=VARCHAR}, 
+               address = #{address, jdbcType=VARCHAR}, 
                logindate = #{logindate, jdbcType=VARCHAR}, 
                logintime = #{logintime, jdbcType=VARCHAR}, 
-               status = #{status, jdbcType=VARCHAR}, 
                loginerror = #{loginerror, jdbcType=INTEGER}, 
                opendate = #{opendate, jdbcType=VARCHAR}
 		where userid = #{userid, jdbcType=DECIMAL}
@@ -111,14 +117,20 @@
 		    <if test="passwdvaliddate != null">
 				passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR},
 		    </if>
+		    <if test="status != null">
+				status = #{status, jdbcType=VARCHAR},
+		    </if>
+		    <if test="orgid != null">
+				orgid = #{orgid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="sex != null">
+				sex = #{sex, jdbcType=VARCHAR},
+		    </if>
 		    <if test="mobileno != null">
 				mobileno = #{mobileno, jdbcType=VARCHAR},
 		    </if>
 		    <if test="email != null">
 				email = #{email, jdbcType=VARCHAR},
-		    </if>
-		    <if test="orgid != null">
-				orgid = #{orgid, jdbcType=DECIMAL},
 		    </if>
 		    <if test="idtype != null">
 				idtype = #{idtype, jdbcType=VARCHAR},
@@ -129,14 +141,17 @@
 		    <if test="idname != null">
 				idname = #{idname, jdbcType=VARCHAR},
 		    </if>
+		    <if test="postcode != null">
+				postcode = #{postcode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="address != null">
+				address = #{address, jdbcType=VARCHAR},
+		    </if>
 		    <if test="logindate != null">
 				logindate = #{logindate, jdbcType=VARCHAR},
 		    </if>
 		    <if test="logintime != null">
 				logintime = #{logintime, jdbcType=VARCHAR},
-		    </if>
-		    <if test="status != null">
-				status = #{status, jdbcType=VARCHAR},
 		    </if>
 		    <if test="loginerror != null">
 				loginerror = #{loginerror, jdbcType=INTEGER},
@@ -169,14 +184,20 @@
 		    <if test="field.passwdvaliddate != null and field.passwdvaliddate != ''">
 				passwdvaliddate = #{field.passwdvaliddate, jdbcType=VARCHAR},
 		    </if>
+		    <if test="field.status != null and field.status != ''">
+				status = #{field.status, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.orgid != null">
+				orgid = #{field.orgid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.sex != null and field.sex != ''">
+				sex = #{field.sex, jdbcType=VARCHAR},
+		    </if>
 		    <if test="field.mobileno != null and field.mobileno != ''">
 				mobileno = #{field.mobileno, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.email != null and field.email != ''">
 				email = #{field.email, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.orgid != null">
-				orgid = #{field.orgid, jdbcType=DECIMAL},
 		    </if>
 		    <if test="field.idtype != null and field.idtype != ''">
 				idtype = #{field.idtype, jdbcType=VARCHAR},
@@ -187,14 +208,17 @@
 		    <if test="field.idname != null and field.idname != ''">
 				idname = #{field.idname, jdbcType=VARCHAR},
 		    </if>
+		    <if test="field.postcode != null and field.postcode != ''">
+				postcode = #{field.postcode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.address != null and field.address != ''">
+				address = #{field.address, jdbcType=VARCHAR},
+		    </if>
 		    <if test="field.logindate != null and field.logindate != ''">
 				logindate = #{field.logindate, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.logintime != null and field.logintime != ''">
 				logintime = #{field.logintime, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.status != null and field.status != ''">
-				status = #{field.status, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.loginerror != null">
 				loginerror = #{field.loginerror, jdbcType=INTEGER},
@@ -269,6 +293,36 @@
 	                </if>
 	            </foreach>
 	        </trim>
+	        <trim prefix="status = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.status != null">
+	                    when userid = #{item.userid} then #{item.status, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.status == null">
+	                    when userid = #{item.userid} then status
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="orgid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.orgid != null">
+	                    when userid = #{item.userid} then #{item.orgid, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.orgid == null">
+	                    when userid = #{item.userid} then orgid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="sex = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.sex != null">
+	                    when userid = #{item.userid} then #{item.sex, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.sex == null">
+	                    when userid = #{item.userid} then sex
+	                </if>
+	            </foreach>
+	        </trim>
 	        <trim prefix="mobileno = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.mobileno != null">
@@ -286,16 +340,6 @@
 	                </if>
 	                <if test="item.email == null">
 	                    when userid = #{item.userid} then email
-	                </if>
-	            </foreach>
-	        </trim>
-	        <trim prefix="orgid = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.orgid != null">
-	                    when userid = #{item.userid} then #{item.orgid, jdbcType=DECIMAL}
-	                </if>
-	                <if test="item.orgid == null">
-	                    when userid = #{item.userid} then orgid
 	                </if>
 	            </foreach>
 	        </trim>
@@ -329,6 +373,26 @@
 	                </if>
 	            </foreach>
 	        </trim>
+	        <trim prefix="postcode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.postcode != null">
+	                    when userid = #{item.userid} then #{item.postcode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.postcode == null">
+	                    when userid = #{item.userid} then postcode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="address = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.address != null">
+	                    when userid = #{item.userid} then #{item.address, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.address == null">
+	                    when userid = #{item.userid} then address
+	                </if>
+	            </foreach>
+	        </trim>
 	        <trim prefix="logindate = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.logindate != null">
@@ -346,16 +410,6 @@
 	                </if>
 	                <if test="item.logintime == null">
 	                    when userid = #{item.userid} then logintime
-	                </if>
-	            </foreach>
-	        </trim>
-	        <trim prefix="status = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.status != null">
-	                    when userid = #{item.userid} then #{item.status, jdbcType=VARCHAR}
-	                </if>
-	                <if test="item.status == null">
-	                    when userid = #{item.userid} then status
 	                </if>
 	            </foreach>
 	        </trim>
@@ -395,7 +449,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}userid, ${tab}unioncode, ${tab}username, ${tab}loginid, ${tab}loginpasswd, ${tab}salt, ${tab}passwdvaliddate, ${tab}mobileno, ${tab}email, ${tab}orgid, ${tab}idtype, ${tab}idcode, ${tab}idname, ${tab}logindate, ${tab}logintime, ${tab}status, ${tab}loginerror, ${tab}opendate
+        ${tab}userid, ${tab}unioncode, ${tab}username, ${tab}loginid, ${tab}loginpasswd, ${tab}salt, ${tab}passwdvaliddate, ${tab}status, ${tab}orgid, ${tab}sex, ${tab}mobileno, ${tab}email, ${tab}idtype, ${tab}idcode, ${tab}idname, ${tab}postcode, ${tab}address, ${tab}logindate, ${tab}logintime, ${tab}loginerror, ${tab}opendate
 	</sql>
 	
 	<sql id="where_all_list">
@@ -421,14 +475,20 @@
 			<if test="passwdvaliddate != null and passwdvaliddate != ''">
 				and passwdvaliddate = #{passwdvaliddate, jdbcType=VARCHAR}
 			</if>
+			<if test="status != null and status != ''">
+				and status = #{status, jdbcType=VARCHAR}
+			</if>
+			<if test="orgid != null">
+				and orgid = #{orgid, jdbcType=DECIMAL}
+			</if>
+			<if test="sex != null and sex != ''">
+				and sex = #{sex, jdbcType=VARCHAR}
+			</if>
 			<if test="mobileno != null and mobileno != ''">
 				and mobileno = #{mobileno, jdbcType=VARCHAR}
 			</if>
 			<if test="email != null and email != ''">
 				and email = #{email, jdbcType=VARCHAR}
-			</if>
-			<if test="orgid != null">
-				and orgid = #{orgid, jdbcType=DECIMAL}
 			</if>
 			<if test="idtype != null and idtype != ''">
 				and idtype = #{idtype, jdbcType=VARCHAR}
@@ -439,14 +499,17 @@
 			<if test="idname != null and idname != ''">
 				and idname = #{idname, jdbcType=VARCHAR}
 			</if>
+			<if test="postcode != null and postcode != ''">
+				and postcode = #{postcode, jdbcType=VARCHAR}
+			</if>
+			<if test="address != null and address != ''">
+				and address = #{address, jdbcType=VARCHAR}
+			</if>
 			<if test="logindate != null and logindate != ''">
 				and logindate = #{logindate, jdbcType=VARCHAR}
 			</if>
 			<if test="logintime != null and logintime != ''">
 				and logintime = #{logintime, jdbcType=VARCHAR}
-			</if>
-			<if test="status != null and status != ''">
-				and status = #{status, jdbcType=VARCHAR}
 			</if>
 			<if test="loginerror != null">
 				and loginerror = #{loginerror, jdbcType=INTEGER}
@@ -480,14 +543,20 @@
 			<if test="condition.passwdvaliddate != null and condition.passwdvaliddate != ''">
 				and passwdvaliddate = #{condition.passwdvaliddate, jdbcType=VARCHAR}
 			</if>
+			<if test="condition.status != null and condition.status != ''">
+				and status = #{condition.status, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.orgid != null">
+				and orgid = #{condition.orgid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.sex != null and condition.sex != ''">
+				and sex = #{condition.sex, jdbcType=VARCHAR}
+			</if>
 			<if test="condition.mobileno != null and condition.mobileno != ''">
 				and mobileno = #{condition.mobileno, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.email != null and condition.email != ''">
 				and email = #{condition.email, jdbcType=VARCHAR}
-			</if>
-			<if test="condition.orgid != null">
-				and orgid = #{condition.orgid, jdbcType=DECIMAL}
 			</if>
 			<if test="condition.idtype != null and condition.idtype != ''">
 				and idtype = #{condition.idtype, jdbcType=VARCHAR}
@@ -498,14 +567,17 @@
 			<if test="condition.idname != null and condition.idname != ''">
 				and idname = #{condition.idname, jdbcType=VARCHAR}
 			</if>
+			<if test="condition.postcode != null and condition.postcode != ''">
+				and postcode = #{condition.postcode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.address != null and condition.address != ''">
+				and address = #{condition.address, jdbcType=VARCHAR}
+			</if>
 			<if test="condition.logindate != null and condition.logindate != ''">
 				and logindate = #{condition.logindate, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.logintime != null and condition.logintime != ''">
 				and logintime = #{condition.logintime, jdbcType=VARCHAR}
-			</if>
-			<if test="condition.status != null and condition.status != ''">
-				and status = #{condition.status, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.loginerror != null">
 				and loginerror = #{condition.loginerror, jdbcType=INTEGER}

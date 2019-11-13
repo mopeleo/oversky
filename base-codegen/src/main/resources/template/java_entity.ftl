@@ -45,13 +45,10 @@ public class ${table.code} extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
 <#list table.columns as column>
-		sb.append(", ${column.code}=").append(${column.code});
+		sb.append("${column.code}=").append(${column.code}).append(", ");
 </#list>
-        sb.append("]");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

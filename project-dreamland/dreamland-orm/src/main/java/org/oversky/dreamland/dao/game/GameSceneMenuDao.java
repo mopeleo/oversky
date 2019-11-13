@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface GameSceneMenuDao{
 
 	
-    GameSceneMenu getById(Integer sceneid, String menuid);
+    GameSceneMenu getById(Long sceneid, Long menuid);
 
-    int deleteById(Integer sceneid, String menuid);
+    int deleteById(Long sceneid, Long menuid);
 
     int count(GameSceneMenu where);
     

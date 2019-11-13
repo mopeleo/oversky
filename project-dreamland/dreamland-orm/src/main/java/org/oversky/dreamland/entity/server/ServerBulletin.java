@@ -6,7 +6,7 @@ public class ServerBulletin extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;    //
+	private Long id;    //[identity]
 	private String serverid;    //服务器ID
 	private String title;    //公告标题
 	private String content;    //公告内容
@@ -87,17 +87,14 @@ public class ServerBulletin extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", id=").append(id);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", title=").append(title);
-		sb.append(", content=").append(content);
-		sb.append(", startdate=").append(startdate);
-		sb.append(", enddate=").append(enddate);
-		sb.append(", issuer=").append(issuer);
-        sb.append("]");
+		sb.append("id=").append(id).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("title=").append(title).append(", ");
+		sb.append("content=").append(content).append(", ");
+		sb.append("startdate=").append(startdate).append(", ");
+		sb.append("enddate=").append(enddate).append(", ");
+		sb.append("issuer=").append(issuer).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

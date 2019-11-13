@@ -114,20 +114,17 @@ public class SysUserLogin extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", logid=").append(logid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", userid=").append(userid);
-		sb.append(", logindate=").append(logindate);
-		sb.append(", logintime=").append(logintime);
-		sb.append(", loginpasswd=").append(loginpasswd);
-		sb.append(", loginip=").append(loginip);
-		sb.append(", logintype=").append(logintype);
-		sb.append(", loginresult=").append(loginresult);
-		sb.append(", summary=").append(summary);
-        sb.append("]");
+		sb.append("logid=").append(logid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("userid=").append(userid).append(", ");
+		sb.append("logindate=").append(logindate).append(", ");
+		sb.append("logintime=").append(logintime).append(", ");
+		sb.append("loginpasswd=").append(loginpasswd).append(", ");
+		sb.append("loginip=").append(loginip).append(", ");
+		sb.append("logintype=").append(logintype).append(", ");
+		sb.append("loginresult=").append(loginresult).append(", ");
+		sb.append("summary=").append(summary).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

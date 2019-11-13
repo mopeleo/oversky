@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface ServerPlayerActorSkillDao{
 
 	
-    ServerPlayerActorSkill getById(Long paid, String skillid);
+    ServerPlayerActorSkill getById(Long paid, Long skillid);
 
-    int deleteById(Long paid, String skillid);
+    int deleteById(Long paid, Long skillid);
 
     int updateById(ServerPlayerActorSkill entity);
 	

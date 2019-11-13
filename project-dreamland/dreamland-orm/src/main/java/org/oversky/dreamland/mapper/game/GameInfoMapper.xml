@@ -9,16 +9,16 @@
         <result column="fullname" jdbcType="VARCHAR" property="fullname" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameInfo">
-        insert into game_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{gameid, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{gamecode, jdbcType=VARCHAR}, #{gamename, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameInfo" useGeneratedKeys="true" keyProperty="gameid">
+        insert into game_info (unioncode, gamecode, gamename, fullname)
+        values (#{unioncode, jdbcType=VARCHAR}, #{gamecode, jdbcType=VARCHAR}, #{gamename, jdbcType=VARCHAR}, #{fullname, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into game_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="gameid">
+		insert into game_info (unioncode, gamecode, gamename, fullname)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.gameid, jdbcType=DECIMAL}, #{item.unioncode, jdbcType=VARCHAR}, #{item.gamecode, jdbcType=VARCHAR}, #{item.gamename, jdbcType=VARCHAR}, #{item.fullname, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.gamecode, jdbcType=VARCHAR}, #{item.gamename, jdbcType=VARCHAR}, #{item.fullname, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	

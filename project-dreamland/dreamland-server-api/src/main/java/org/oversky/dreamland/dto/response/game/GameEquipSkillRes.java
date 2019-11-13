@@ -47,14 +47,11 @@ public class GameEquipSkillRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", equipid=").append(equipid);
-		sb.append(", skillid=").append(skillid);
-		sb.append(", proficiency=").append(proficiency);
-		sb.append(", sno=").append(sno);
-        sb.append("]");
+		sb.append("equipid=").append(equipid).append(", ");
+		sb.append("skillid=").append(skillid).append(", ");
+		sb.append("proficiency=").append(proficiency).append(", ");
+		sb.append("sno=").append(sno).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

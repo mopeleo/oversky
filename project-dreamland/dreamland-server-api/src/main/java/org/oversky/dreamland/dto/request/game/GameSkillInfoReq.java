@@ -173,28 +173,25 @@ public class GameSkillInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", skillid=").append(skillid);
-		sb.append(", skillname=").append(skillname);
-		sb.append(", icon=").append(icon);
-		sb.append(", skilltype=").append(skilltype);
-		sb.append(", skillflag=").append(skillflag);
-		sb.append(", skillfrom=").append(skillfrom);
-		sb.append(", initlevel=").append(initlevel);
-		sb.append(", maxlevel=").append(maxlevel);
-		sb.append(", remark=").append(remark);
-		sb.append(", prop=").append(prop);
-		sb.append(", target=").append(target);
-		sb.append(", direct=").append(direct);
-		sb.append(", mode=").append(mode);
-		sb.append(", valtype=").append(valtype);
-		sb.append(", initvalue=").append(initvalue);
-		sb.append(", upvalue=").append(upvalue);
-		sb.append(", princetype=").append(princetype);
-		sb.append(", prince=").append(prince);
-        sb.append("]");
+		sb.append("skillid=").append(skillid).append(", ");
+		sb.append("skillname=").append(skillname).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("skilltype=").append(skilltype).append(", ");
+		sb.append("skillflag=").append(skillflag).append(", ");
+		sb.append("skillfrom=").append(skillfrom).append(", ");
+		sb.append("initlevel=").append(initlevel).append(", ");
+		sb.append("maxlevel=").append(maxlevel).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+		sb.append("prop=").append(prop).append(", ");
+		sb.append("target=").append(target).append(", ");
+		sb.append("direct=").append(direct).append(", ");
+		sb.append("mode=").append(mode).append(", ");
+		sb.append("valtype=").append(valtype).append(", ");
+		sb.append("initvalue=").append(initvalue).append(", ");
+		sb.append("upvalue=").append(upvalue).append(", ");
+		sb.append("princetype=").append(princetype).append(", ");
+		sb.append("prince=").append(prince).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

@@ -11,16 +11,16 @@
         <result column="issuer" jdbcType="VARCHAR" property="issuer" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerBulletin">
-        insert into server_bulletin (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{id, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{issuer, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerBulletin" useGeneratedKeys="true" keyProperty="id">
+        insert into server_bulletin (serverid, title, content, startdate, enddate, issuer)
+        values (#{serverid, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{issuer, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into server_bulletin (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		insert into server_bulletin (serverid, title, content, startdate, enddate, issuer)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.id, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.title, jdbcType=VARCHAR}, #{item.content, jdbcType=VARCHAR}, #{item.startdate, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.issuer, jdbcType=VARCHAR})
+        (#{item.serverid, jdbcType=VARCHAR}, #{item.title, jdbcType=VARCHAR}, #{item.content, jdbcType=VARCHAR}, #{item.startdate, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.issuer, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	

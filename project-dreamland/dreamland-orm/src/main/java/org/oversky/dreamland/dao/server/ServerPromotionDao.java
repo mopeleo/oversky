@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface ServerPromotionDao{
 
 	
-    ServerPromotion getById(String serverid, Integer promid);
+    ServerPromotion getById(String serverid, Long promid);
 
-    int deleteById(String serverid, Integer promid);
+    int deleteById(String serverid, Long promid);
 
     int updateById(ServerPromotion entity);
 	

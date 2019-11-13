@@ -56,15 +56,12 @@ public class GameInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", gameid=").append(gameid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", gamecode=").append(gamecode);
-		sb.append(", gamename=").append(gamename);
-		sb.append(", fullname=").append(fullname);
-        sb.append("]");
+		sb.append("gameid=").append(gameid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("gamecode=").append(gamecode).append(", ");
+		sb.append("gamename=").append(gamename).append(", ");
+		sb.append("fullname=").append(fullname).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

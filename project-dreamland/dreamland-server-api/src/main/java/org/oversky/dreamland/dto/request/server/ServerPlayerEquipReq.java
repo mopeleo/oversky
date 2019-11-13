@@ -74,17 +74,14 @@ public class ServerPlayerEquipReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", peid=").append(peid);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", custno=").append(custno);
-		sb.append(", equipid=").append(equipid);
-		sb.append(", actorid=").append(actorid);
-		sb.append(", equiplevel=").append(equiplevel);
-		sb.append(", proficiency=").append(proficiency);
-        sb.append("]");
+		sb.append("peid=").append(peid).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("equipid=").append(equipid).append(", ");
+		sb.append("actorid=").append(actorid).append(", ");
+		sb.append("equiplevel=").append(equiplevel).append(", ");
+		sb.append("proficiency=").append(proficiency).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

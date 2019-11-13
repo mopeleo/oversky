@@ -43,12 +43,9 @@ public class SysUserRole extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", userid=").append(userid);
-		sb.append(", roleid=").append(roleid);
-        sb.append("]");
+		sb.append("userid=").append(userid).append(", ");
+		sb.append("roleid=").append(roleid).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

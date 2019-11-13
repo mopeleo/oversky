@@ -56,15 +56,12 @@ public class GameSuitInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", suitid=").append(suitid);
-		sb.append(", suitname=").append(suitname);
-		sb.append(", profession=").append(profession);
-		sb.append(", unlocklevel=").append(unlocklevel);
-		sb.append(", summary=").append(summary);
-        sb.append("]");
+		sb.append("suitid=").append(suitid).append(", ");
+		sb.append("suitname=").append(suitname).append(", ");
+		sb.append("profession=").append(profession).append(", ");
+		sb.append("unlocklevel=").append(unlocklevel).append(", ");
+		sb.append("summary=").append(summary).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

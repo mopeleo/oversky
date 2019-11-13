@@ -110,21 +110,18 @@ public class GameAttributeInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", attrid=").append(attrid);
-		sb.append(", attrtype=").append(attrtype);
-		sb.append(", attrfield=").append(attrfield);
-		sb.append(", unlockflag=").append(unlockflag);
-		sb.append(", extralact=").append(extralact);
-		sb.append(", extraltype=").append(extraltype);
-		sb.append(", extralmin=").append(extralmin);
-		sb.append(", extralmax=").append(extralmax);
-		sb.append(", initval=").append(initval);
-		sb.append(", upval=").append(upval);
-		sb.append(", position=").append(position);
-        sb.append("]");
+		sb.append("attrid=").append(attrid).append(", ");
+		sb.append("attrtype=").append(attrtype).append(", ");
+		sb.append("attrfield=").append(attrfield).append(", ");
+		sb.append("unlockflag=").append(unlockflag).append(", ");
+		sb.append("extralact=").append(extralact).append(", ");
+		sb.append("extraltype=").append(extraltype).append(", ");
+		sb.append("extralmin=").append(extralmin).append(", ");
+		sb.append("extralmax=").append(extralmax).append(", ");
+		sb.append("initval=").append(initval).append(", ");
+		sb.append("upval=").append(upval).append(", ");
+		sb.append("position=").append(position).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

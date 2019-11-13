@@ -6,15 +6,15 @@ public class GamePromotionInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer promid;    //
+	private Long promid;    //
 	private String promname;    //
 	private String remark;    //
 
-	public Integer getPromid() {
+	public Long getPromid() {
 		return this.promid;
 	}
 
-	public void setPromid(Integer promid) {
+	public void setPromid(Long promid) {
 		this.promid = promid;
 	}
 
@@ -39,7 +39,7 @@ public class GamePromotionInfo extends BaseEntity{
 		return build.append("#promid:").append(this.promid).toString();
 	}
 
-    public static String buildEntityKey(Integer promid){
+    public static String buildEntityKey(Long promid){
         StringBuilder build = new StringBuilder("GamePromotionInfo");
         return build.append("#promid:").append(promid).toString();
     }
@@ -51,13 +51,10 @@ public class GamePromotionInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", promid=").append(promid);
-		sb.append(", promname=").append(promname);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("promid=").append(promid).append(", ");
+		sb.append("promname=").append(promname).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

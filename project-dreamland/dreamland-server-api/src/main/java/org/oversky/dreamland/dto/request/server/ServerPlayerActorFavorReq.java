@@ -56,15 +56,12 @@ public class ServerPlayerActorFavorReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", serverid=").append(serverid);
-		sb.append(", custno=").append(custno);
-		sb.append(", maleid=").append(maleid);
-		sb.append(", femaleid=").append(femaleid);
-		sb.append(", degree=").append(degree);
-        sb.append("]");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("maleid=").append(maleid).append(", ");
+		sb.append("femaleid=").append(femaleid).append(", ");
+		sb.append("degree=").append(degree).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

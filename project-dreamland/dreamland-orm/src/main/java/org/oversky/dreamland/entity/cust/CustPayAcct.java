@@ -6,7 +6,7 @@ public class CustPayAcct extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long acctno;    //账户编号
+	private Long acctno;    //账户编号[identity]
 	private Long custno;    //
 	private String paytype;    //支付方式，0，银行卡，1微信，2，支付宝
 	private String payno;    //支付账号
@@ -60,14 +60,11 @@ public class CustPayAcct extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", acctno=").append(acctno);
-		sb.append(", custno=").append(custno);
-		sb.append(", paytype=").append(paytype);
-		sb.append(", payno=").append(payno);
-        sb.append("]");
+		sb.append("acctno=").append(acctno).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("paytype=").append(paytype).append(", ");
+		sb.append("payno=").append(payno).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

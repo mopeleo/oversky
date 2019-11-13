@@ -225,9 +225,12 @@
                         </el-col>
                     </el-row>
 
-                    <el-divider><i class="el-icon-mobile-phone"></i></el-divider>
-
                     <el-row :gutter="20">
+                        <el-col :span="10">
+                            <el-form-item label="邮政编码" prop="postcode">
+                                <el-input v-model="sysuser.postcode"></el-input>
+                            </el-form-item>
+                        </el-col>
                         <el-col :span="10">
                             <el-form-item label="性别" prop="sex">
                                 <el-select v-model="sysuser.sex" value-key="itemcode" placeholder="请选择">
@@ -239,57 +242,11 @@
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="10">
-                            <el-form-item label="生日" prop="birthday">
-                                <el-date-picker v-model="sysuser.birthday" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
-                            </el-form-item>
-                        </el-col>
                     </el-row>
                     <el-row :gutter="20">
-                        <el-col :span="10">
-                            <el-form-item label="邮政编码" prop="postcode">
-                                <el-input v-model="sysuser.postcode"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10">
+                        <el-col :span="20">
                             <el-form-item label="联系地址" prop="address">
-                                <el-input v-model="sysuser.address"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="20">
-                        <el-col :span="10">
-                            <el-form-item label="固定电话" prop="phone">
-                                <el-input v-model="sysuser.phone"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10">
-                            <el-form-item label="民族" prop="ethnicity">
-                                <el-input v-model="sysuser.ethnicity"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="20">
-                        <el-col :span="10">
-                            <el-form-item label="所在省份" prop="province">
-                                <el-input v-model="sysuser.province"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10">
-                            <el-form-item label="所在城市" prop="city">
-                                <el-input v-model="sysuser.city"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="20">
-                        <el-col :span="10">
-                            <el-form-item label="教育程度" prop="education">
-                                <el-input v-model="sysuser.education"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10">
-                            <el-form-item label="职业" prop="profession">
-                                <el-input v-model="sysuser.profession"></el-input>
+                                <el-input type="textarea" v-model="sysuser.address"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -344,15 +301,8 @@ export default{
                 idtype:'',
                 idcode:'',
                 sex:'',
-                birthday:'',
                 postcode:'',
-                address:'',
-                phone:'',
-                ethnicity:'',
-                province:'',
-                city:'',
-                education:'',
-                profession:''
+                address:''
             },
             allRoles:[],    //所有角色
             selectRoles:[], //已选角色
@@ -554,15 +504,8 @@ export default{
                 idtype:'',
                 idcode:'',
                 sex:'',
-                birthday:'',
                 postcode:'',
-                address:'',
-                phone:'',
-                ethnicity:'',
-                province:'',
-                city:'',
-                education:'',
-                profession:''
+                address:''
             }
         },
 

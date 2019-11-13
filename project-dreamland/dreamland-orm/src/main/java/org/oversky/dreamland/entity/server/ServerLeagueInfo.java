@@ -6,7 +6,7 @@ public class ServerLeagueInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String leagueid;    //
+	private Long leagueid;    //[identity]
 	private String serverid;    //
 	private String leaguename;    //联盟名称
 	private Integer maxleaguer;    //最大成员数
@@ -16,11 +16,11 @@ public class ServerLeagueInfo extends BaseEntity{
 	private String createtime;    //
 	private String remark;    //
 
-	public String getLeagueid() {
+	public Long getLeagueid() {
 		return this.leagueid;
 	}
 
-	public void setLeagueid(String leagueid) {
+	public void setLeagueid(Long leagueid) {
 		this.leagueid = leagueid;
 	}
 
@@ -93,7 +93,7 @@ public class ServerLeagueInfo extends BaseEntity{
 		return build.append("#leagueid:").append(this.leagueid).toString();
 	}
 
-    public static String buildEntityKey(String leagueid){
+    public static String buildEntityKey(Long leagueid){
         StringBuilder build = new StringBuilder("ServerLeagueInfo");
         return build.append("#leagueid:").append(leagueid).toString();
     }
@@ -105,19 +105,16 @@ public class ServerLeagueInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", leagueid=").append(leagueid);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", leaguename=").append(leaguename);
-		sb.append(", maxleaguer=").append(maxleaguer);
-		sb.append(", leaguelevel=").append(leaguelevel);
-		sb.append(", creator=").append(creator);
-		sb.append(", createdate=").append(createdate);
-		sb.append(", createtime=").append(createtime);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("leagueid=").append(leagueid).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("leaguename=").append(leaguename).append(", ");
+		sb.append("maxleaguer=").append(maxleaguer).append(", ");
+		sb.append("leaguelevel=").append(leaguelevel).append(", ");
+		sb.append("creator=").append(creator).append(", ");
+		sb.append("createdate=").append(createdate).append(", ");
+		sb.append("createtime=").append(createtime).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

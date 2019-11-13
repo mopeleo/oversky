@@ -56,15 +56,12 @@ public class GameActorSkillReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", actorid=").append(actorid);
-		sb.append(", skillid=").append(skillid);
-		sb.append(", unlocklevel=").append(unlocklevel);
-		sb.append(", extendflag=").append(extendflag);
-		sb.append(", sno=").append(sno);
-        sb.append("]");
+		sb.append("actorid=").append(actorid).append(", ");
+		sb.append("skillid=").append(skillid).append(", ");
+		sb.append("unlocklevel=").append(unlocklevel).append(", ");
+		sb.append("extendflag=").append(extendflag).append(", ");
+		sb.append("sno=").append(sno).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

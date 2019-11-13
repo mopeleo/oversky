@@ -47,14 +47,11 @@ public class GameMeunInfoRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", menuid=").append(menuid);
-		sb.append(", menuname=").append(menuname);
-		sb.append(", icon=").append(icon);
-		sb.append(", url=").append(url);
-        sb.append("]");
+		sb.append("menuid=").append(menuid).append(", ");
+		sb.append("menuname=").append(menuname).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("url=").append(url).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

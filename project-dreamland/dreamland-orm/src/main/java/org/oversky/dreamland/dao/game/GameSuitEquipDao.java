@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface GameSuitEquipDao{
 
 	
-    GameSuitEquip getById(String suitid, String equipid);
+    GameSuitEquip getById(Long suitid, Long equipid);
 
-    int deleteById(String suitid, String equipid);
+    int deleteById(Long suitid, Long equipid);
 
     int count(GameSuitEquip where);
     

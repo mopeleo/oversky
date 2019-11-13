@@ -55,4 +55,10 @@ public abstract class BaseEntity implements Serializable{
 		return this;
 	}	
 	
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+		sb.append("orderByClause=").append(orderByClause);
+        return sb.toString();
+	}
 }

@@ -47,14 +47,11 @@ public class CustPayAcctRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", acctno=").append(acctno);
-		sb.append(", custno=").append(custno);
-		sb.append(", paytype=").append(paytype);
-		sb.append(", payno=").append(payno);
-        sb.append("]");
+		sb.append("acctno=").append(acctno).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("paytype=").append(paytype).append(", ");
+		sb.append("payno=").append(payno).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

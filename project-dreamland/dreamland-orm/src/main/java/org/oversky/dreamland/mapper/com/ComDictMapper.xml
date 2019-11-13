@@ -2,23 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.oversky.dreamland.dao.com.ComDictDao">
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.com.ComDict">
-        <id column="unioncode" jdbcType="VARCHAR" property="unioncode" />
         <id column="dictcode" jdbcType="INTEGER" property="dictcode" />
         <id column="itemcode" jdbcType="VARCHAR" property="itemcode" />
-        <result column="dictname" jdbcType="VARCHAR" property="dictname" />
-        <result column="itemvalue" jdbcType="VARCHAR" property="itemvalue" />
+        <result column="itemname" jdbcType="VARCHAR" property="itemname" />
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.com.ComDict">
         insert into com_dict (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{unioncode, jdbcType=VARCHAR}, #{dictcode, jdbcType=INTEGER}, #{dictname, jdbcType=VARCHAR}, #{itemcode, jdbcType=VARCHAR}, #{itemvalue, jdbcType=VARCHAR})
+        values (#{dictcode, jdbcType=INTEGER}, #{itemcode, jdbcType=VARCHAR}, #{itemname, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into com_dict (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.unioncode, jdbcType=VARCHAR}, #{item.dictcode, jdbcType=INTEGER}, #{item.dictname, jdbcType=VARCHAR}, #{item.itemcode, jdbcType=VARCHAR}, #{item.itemvalue, jdbcType=VARCHAR})
+		(#{item.dictcode, jdbcType=INTEGER}, #{item.itemcode, jdbcType=VARCHAR}, #{item.itemname, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -47,42 +45,35 @@
     <select id="getById" resultMap="BaseResultMap">
         select <include refid="column_list"><property name="tab" value=""/></include>
           from com_dict
-         where unioncode = #{param1} and dictcode = #{param2} and itemcode = #{param3}
+         where dictcode = #{param1} and itemcode = #{param2}
     </select>
 
     <delete id="deleteById">
         delete from com_dict
-         where unioncode = #{param1} and dictcode = #{param2} and itemcode = #{param3}
+         where dictcode = #{param1} and itemcode = #{param2}
     </delete>
   
     <update id="updateById" parameterType="org.oversky.dreamland.entity.com.ComDict">
         update com_dict set 
-               dictname = #{dictname, jdbcType=VARCHAR}, 
-               itemvalue = #{itemvalue, jdbcType=VARCHAR}
-		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
+               itemname = #{itemname, jdbcType=VARCHAR}
+		where dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.com.ComDict">
 		update com_dict
 		<set>
-		    <if test="dictname != null">
-				dictname = #{dictname, jdbcType=VARCHAR},
-		    </if>
-		    <if test="itemvalue != null">
-				itemvalue = #{itemvalue, jdbcType=VARCHAR},
+		    <if test="itemname != null">
+				itemname = #{itemname, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where unioncode = #{unioncode, jdbcType=VARCHAR} and dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
+		where dictcode = #{dictcode, jdbcType=INTEGER} and itemcode = #{itemcode, jdbcType=VARCHAR}
 	</update>
 
 	<update id="dynamicUpdateWhere" parameterType="map">
 		update com_dict
 		<set>
-		    <if test="field.dictname != null and field.dictname != ''">
-				dictname = #{field.dictname, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.itemvalue != null and field.itemvalue != ''">
-				itemvalue = #{field.itemvalue, jdbcType=VARCHAR},
+		    <if test="field.itemname != null and field.itemname != ''">
+				itemname = #{field.itemname, jdbcType=VARCHAR},
 		    </if>
 		</set>
         <include refid="where_all_list_criteria" />
@@ -90,45 +81,33 @@
 
 
 	<sql id="column_list">
-        ${tab}unioncode, ${tab}dictcode, ${tab}dictname, ${tab}itemcode, ${tab}itemvalue
+        ${tab}dictcode, ${tab}itemcode, ${tab}itemname
 	</sql>
 	
 	<sql id="where_all_list">
 		<where>
-			<if test="unioncode != null and unioncode != ''">
-				and unioncode = #{unioncode, jdbcType=VARCHAR}
-			</if>
 			<if test="dictcode != null">
 				and dictcode = #{dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="dictname != null and dictname != ''">
-				and dictname = #{dictname, jdbcType=VARCHAR}
 			</if>
 			<if test="itemcode != null and itemcode != ''">
 				and itemcode = #{itemcode, jdbcType=VARCHAR}
 			</if>
-			<if test="itemvalue != null and itemvalue != ''">
-				and itemvalue = #{itemvalue, jdbcType=VARCHAR}
+			<if test="itemname != null and itemname != ''">
+				and itemname = #{itemname, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>
 
 	<sql id="where_all_list_criteria">
 		<where>
-			<if test="condition.unioncode != null and condition.unioncode != ''">
-				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
-			</if>
 			<if test="condition.dictcode != null">
 				and dictcode = #{condition.dictcode, jdbcType=INTEGER}
-			</if>
-			<if test="condition.dictname != null and condition.dictname != ''">
-				and dictname = #{condition.dictname, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.itemcode != null and condition.itemcode != ''">
 				and itemcode = #{condition.itemcode, jdbcType=VARCHAR}
 			</if>
-			<if test="condition.itemvalue != null and condition.itemvalue != ''">
-				and itemvalue = #{condition.itemvalue, jdbcType=VARCHAR}
+			<if test="condition.itemname != null and condition.itemname != ''">
+				and itemname = #{condition.itemname, jdbcType=VARCHAR}
 			</if>
 		</where>
 	</sql>

@@ -15,16 +15,16 @@
         <result column="position" jdbcType="VARCHAR" property="position" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo">
-        insert into game_attribute_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{attrid, jdbcType=DECIMAL}, #{attrtype, jdbcType=VARCHAR}, #{attrfield, jdbcType=INTEGER}, #{unlockflag, jdbcType=VARCHAR}, #{extralact, jdbcType=VARCHAR}, #{extraltype, jdbcType=VARCHAR}, #{extralmin, jdbcType=DOUBLE}, #{extralmax, jdbcType=DOUBLE}, #{initval, jdbcType=DOUBLE}, #{upval, jdbcType=DOUBLE}, #{position, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameAttributeInfo" useGeneratedKeys="true" keyProperty="attrid">
+        insert into game_attribute_info (attrtype, attrfield, unlockflag, extralact, extraltype, extralmin, extralmax, initval, upval, position)
+        values (#{attrtype, jdbcType=VARCHAR}, #{attrfield, jdbcType=INTEGER}, #{unlockflag, jdbcType=VARCHAR}, #{extralact, jdbcType=VARCHAR}, #{extraltype, jdbcType=VARCHAR}, #{extralmin, jdbcType=DOUBLE}, #{extralmax, jdbcType=DOUBLE}, #{initval, jdbcType=DOUBLE}, #{upval, jdbcType=DOUBLE}, #{position, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into game_attribute_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="attrid">
+		insert into game_attribute_info (attrtype, attrfield, unlockflag, extralact, extraltype, extralmin, extralmax, initval, upval, position)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.attrid, jdbcType=DECIMAL}, #{item.attrtype, jdbcType=VARCHAR}, #{item.attrfield, jdbcType=INTEGER}, #{item.unlockflag, jdbcType=VARCHAR}, #{item.extralact, jdbcType=VARCHAR}, #{item.extraltype, jdbcType=VARCHAR}, #{item.extralmin, jdbcType=DOUBLE}, #{item.extralmax, jdbcType=DOUBLE}, #{item.initval, jdbcType=DOUBLE}, #{item.upval, jdbcType=DOUBLE}, #{item.position, jdbcType=VARCHAR})
+        (#{item.attrtype, jdbcType=VARCHAR}, #{item.attrfield, jdbcType=INTEGER}, #{item.unlockflag, jdbcType=VARCHAR}, #{item.extralact, jdbcType=VARCHAR}, #{item.extraltype, jdbcType=VARCHAR}, #{item.extralmin, jdbcType=DOUBLE}, #{item.extralmax, jdbcType=DOUBLE}, #{item.initval, jdbcType=DOUBLE}, #{item.upval, jdbcType=DOUBLE}, #{item.position, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	

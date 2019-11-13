@@ -141,23 +141,20 @@ public class SysOrg extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", orgid=").append(orgid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", shortname=").append(shortname);
-		sb.append(", fullname=").append(fullname);
-		sb.append(", linkman=").append(linkman);
-		sb.append(", linktel=").append(linktel);
-		sb.append(", faxno=").append(faxno);
-		sb.append(", address=").append(address);
-		sb.append(", postcode=").append(postcode);
-		sb.append(", email=").append(email);
-		sb.append(", parentorg=").append(parentorg);
-		sb.append(", orgtype=").append(orgtype);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("orgid=").append(orgid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("shortname=").append(shortname).append(", ");
+		sb.append("fullname=").append(fullname).append(", ");
+		sb.append("linkman=").append(linkman).append(", ");
+		sb.append("linktel=").append(linktel).append(", ");
+		sb.append("faxno=").append(faxno).append(", ");
+		sb.append("address=").append(address).append(", ");
+		sb.append("postcode=").append(postcode).append(", ");
+		sb.append("email=").append(email).append(", ");
+		sb.append("parentorg=").append(parentorg).append(", ");
+		sb.append("orgtype=").append(orgtype).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

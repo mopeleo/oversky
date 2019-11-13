@@ -2,22 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.oversky.dreamland.dao.game.GameMeunInfoDao">
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameMeunInfo">
-        <id column="menuid" jdbcType="VARCHAR" property="menuid" />
+        <id column="menuid" jdbcType="DECIMAL" property="menuid" />
         <result column="menuname" jdbcType="VARCHAR" property="menuname" />
         <result column="icon" jdbcType="VARCHAR" property="icon" />
         <result column="url" jdbcType="VARCHAR" property="url" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameMeunInfo">
-        insert into game_meun_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{menuid, jdbcType=VARCHAR}, #{menuname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{url, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameMeunInfo" useGeneratedKeys="true" keyProperty="menuid">
+        insert into game_meun_info (menuname, icon, url)
+        values (#{menuname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{url, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into game_meun_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="menuid">
+		insert into game_meun_info (menuname, icon, url)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.menuid, jdbcType=VARCHAR}, #{item.menuname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.url, jdbcType=VARCHAR})
+        (#{item.menuname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.url, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -59,7 +59,7 @@
                menuname = #{menuname, jdbcType=VARCHAR}, 
                icon = #{icon, jdbcType=VARCHAR}, 
                url = #{url, jdbcType=VARCHAR}
-		where menuid = #{menuid, jdbcType=VARCHAR}
+		where menuid = #{menuid, jdbcType=DECIMAL}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameMeunInfo">
@@ -75,7 +75,7 @@
 				url = #{url, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where menuid = #{menuid, jdbcType=VARCHAR}
+		where menuid = #{menuid, jdbcType=DECIMAL}
 	</update>
 
 	<update id="dynamicUpdateWhere" parameterType="map">
@@ -148,8 +148,8 @@
 	
 	<sql id="where_all_list">
 		<where>
-			<if test="menuid != null and menuid != ''">
-				and menuid = #{menuid, jdbcType=VARCHAR}
+			<if test="menuid != null">
+				and menuid = #{menuid, jdbcType=DECIMAL}
 			</if>
 			<if test="menuname != null and menuname != ''">
 				and menuname = #{menuname, jdbcType=VARCHAR}
@@ -165,8 +165,8 @@
 
 	<sql id="where_all_list_criteria">
 		<where>
-			<if test="condition.menuid != null and condition.menuid != ''">
-				and menuid = #{condition.menuid, jdbcType=VARCHAR}
+			<if test="condition.menuid != null">
+				and menuid = #{condition.menuid, jdbcType=DECIMAL}
 			</if>
 			<if test="condition.menuname != null and condition.menuname != ''">
 				and menuname = #{condition.menuname, jdbcType=VARCHAR}

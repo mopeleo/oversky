@@ -24,16 +24,16 @@
         <result column="canceldate" jdbcType="VARCHAR" property="canceldate" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustInfo">
-        insert into cust_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{custno, jdbcType=DECIMAL}, #{unioncode, jdbcType=VARCHAR}, #{custname, jdbcType=VARCHAR}, #{custtype, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{custlevel, jdbcType=VARCHAR}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{lastlogindate, jdbcType=VARCHAR}, #{lastlogintime, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{loginerror, jdbcType=INTEGER}, #{regdate, jdbcType=VARCHAR}, #{canceldate, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustInfo" useGeneratedKeys="true" keyProperty="custno">
+        insert into cust_info (unioncode, custname, custtype, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, custlevel, idtype, idcode, idname, lastlogindate, lastlogintime, status, loginerror, regdate, canceldate)
+        values (#{unioncode, jdbcType=VARCHAR}, #{custname, jdbcType=VARCHAR}, #{custtype, jdbcType=VARCHAR}, #{loginid, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{passwdvaliddate, jdbcType=VARCHAR}, #{mobileno, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{custlevel, jdbcType=VARCHAR}, #{idtype, jdbcType=VARCHAR}, #{idcode, jdbcType=VARCHAR}, #{idname, jdbcType=VARCHAR}, #{lastlogindate, jdbcType=VARCHAR}, #{lastlogintime, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{loginerror, jdbcType=INTEGER}, #{regdate, jdbcType=VARCHAR}, #{canceldate, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into cust_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="custno">
+		insert into cust_info (unioncode, custname, custtype, loginid, loginpasswd, salt, passwdvaliddate, mobileno, email, custlevel, idtype, idcode, idname, lastlogindate, lastlogintime, status, loginerror, regdate, canceldate)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.custno, jdbcType=DECIMAL}, #{item.unioncode, jdbcType=VARCHAR}, #{item.custname, jdbcType=VARCHAR}, #{item.custtype, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.custlevel, jdbcType=VARCHAR}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.lastlogindate, jdbcType=VARCHAR}, #{item.lastlogintime, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.loginerror, jdbcType=INTEGER}, #{item.regdate, jdbcType=VARCHAR}, #{item.canceldate, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.custname, jdbcType=VARCHAR}, #{item.custtype, jdbcType=VARCHAR}, #{item.loginid, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.salt, jdbcType=VARCHAR}, #{item.passwdvaliddate, jdbcType=VARCHAR}, #{item.mobileno, jdbcType=VARCHAR}, #{item.email, jdbcType=VARCHAR}, #{item.custlevel, jdbcType=VARCHAR}, #{item.idtype, jdbcType=VARCHAR}, #{item.idcode, jdbcType=VARCHAR}, #{item.idname, jdbcType=VARCHAR}, #{item.lastlogindate, jdbcType=VARCHAR}, #{item.lastlogintime, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.loginerror, jdbcType=INTEGER}, #{item.regdate, jdbcType=VARCHAR}, #{item.canceldate, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	

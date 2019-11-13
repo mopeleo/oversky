@@ -74,17 +74,14 @@ public class GameEquipInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", equipid=").append(equipid);
-		sb.append(", equipname=").append(equipname);
-		sb.append(", icon=").append(icon);
-		sb.append(", position=").append(position);
-		sb.append(", grade=").append(grade);
-		sb.append(", profession=").append(profession);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("equipid=").append(equipid).append(", ");
+		sb.append("equipname=").append(equipname).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("position=").append(position).append(", ");
+		sb.append("grade=").append(grade).append(", ");
+		sb.append("profession=").append(profession).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

@@ -6,17 +6,17 @@ public class GameSuitInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String suitid;    //套装ID
+	private Long suitid;    //套装ID[identity]
 	private String suitname;    //套装名称
 	private String profession;    //适用职业，多个职业用逗号分隔
 	private Integer unlocklevel;    //解锁等级
 	private String summary;    //描述
 
-	public String getSuitid() {
+	public Long getSuitid() {
 		return this.suitid;
 	}
 
-	public void setSuitid(String suitid) {
+	public void setSuitid(Long suitid) {
 		this.suitid = suitid;
 	}
 
@@ -57,7 +57,7 @@ public class GameSuitInfo extends BaseEntity{
 		return build.append("#suitid:").append(this.suitid).toString();
 	}
 
-    public static String buildEntityKey(String suitid){
+    public static String buildEntityKey(Long suitid){
         StringBuilder build = new StringBuilder("GameSuitInfo");
         return build.append("#suitid:").append(suitid).toString();
     }
@@ -69,15 +69,12 @@ public class GameSuitInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", suitid=").append(suitid);
-		sb.append(", suitname=").append(suitname);
-		sb.append(", profession=").append(profession);
-		sb.append(", unlocklevel=").append(unlocklevel);
-		sb.append(", summary=").append(summary);
-        sb.append("]");
+		sb.append("suitid=").append(suitid).append(", ");
+		sb.append("suitname=").append(suitname).append(", ");
+		sb.append("profession=").append(profession).append(", ");
+		sb.append("unlocklevel=").append(unlocklevel).append(", ");
+		sb.append("summary=").append(summary).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

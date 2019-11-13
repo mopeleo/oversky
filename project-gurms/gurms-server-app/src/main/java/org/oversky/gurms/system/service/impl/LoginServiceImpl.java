@@ -51,12 +51,12 @@ public class LoginServiceImpl implements LoginService{
 		UserLoginRes res = new UserLoginRes();
 		if(StringUtils.isEmpty(loginReq.getLoginid())) {
 			res.failure("用户名不能为空");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		if(StringUtils.isEmpty(loginReq.getPasswd())) {
 			res.failure("密码不能为空");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -65,7 +65,7 @@ public class LoginServiceImpl implements LoginService{
 		List<SysUser> userList = sysUserDao.selectWhere(where);
 		if(userList == null || userList.size() != 1) {
 			res.failure("用户名["+loginReq.getLoginid()+"]不存在");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		SysUser user = userList.get(0);
@@ -79,7 +79,7 @@ public class LoginServiceImpl implements LoginService{
 		loginReq.setPasswd(md5Passwd);//为了记录正确的登录密码
 		if(!passwdRight) {
 			res.failure("用户名或密码错误");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			
 			this.writeLoginLog(loginReq, res);
 			return res;
@@ -87,7 +87,7 @@ public class LoginServiceImpl implements LoginService{
 		
 		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户状态异常:" + user.getStatus());
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			
 			this.writeLoginLog(loginReq, res);
 			return res;

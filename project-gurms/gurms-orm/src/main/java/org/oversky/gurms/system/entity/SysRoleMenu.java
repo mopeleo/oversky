@@ -43,12 +43,9 @@ public class SysRoleMenu extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", roleid=").append(roleid);
-		sb.append(", menuid=").append(menuid);
-        sb.append("]");
+		sb.append("roleid=").append(roleid).append(", ");
+		sb.append("menuid=").append(menuid).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

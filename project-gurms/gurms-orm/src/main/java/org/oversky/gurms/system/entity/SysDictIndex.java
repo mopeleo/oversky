@@ -70,15 +70,12 @@ public class SysDictIndex extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", dictcode=").append(dictcode);
-		sb.append(", dictname=").append(dictname);
-		sb.append(", dictgroup=").append(dictgroup);
-		sb.append(", editflag=").append(editflag);
-        sb.append("]");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("dictcode=").append(dictcode).append(", ");
+		sb.append("dictname=").append(dictname).append(", ");
+		sb.append("dictgroup=").append(dictgroup).append(", ");
+		sb.append("editflag=").append(editflag).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

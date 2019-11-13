@@ -83,18 +83,15 @@ public class ServerInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", serverid=").append(serverid);
-		sb.append(", servername=").append(servername);
-		sb.append(", opendate=").append(opendate);
-		sb.append(", opentime=").append(opentime);
-		sb.append(", maxplayer=").append(maxplayer);
-		sb.append(", regplayer=").append(regplayer);
-		sb.append(", onlineplayer=").append(onlineplayer);
-		sb.append(", status=").append(status);
-        sb.append("]");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("servername=").append(servername).append(", ");
+		sb.append("opendate=").append(opendate).append(", ");
+		sb.append("opentime=").append(opentime).append(", ");
+		sb.append("maxplayer=").append(maxplayer).append(", ");
+		sb.append("regplayer=").append(regplayer).append(", ");
+		sb.append("onlineplayer=").append(onlineplayer).append(", ");
+		sb.append("status=").append(status).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

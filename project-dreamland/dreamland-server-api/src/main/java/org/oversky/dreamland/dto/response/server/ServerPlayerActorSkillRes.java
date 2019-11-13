@@ -38,13 +38,10 @@ public class ServerPlayerActorSkillRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", paid=").append(paid);
-		sb.append(", skillid=").append(skillid);
-		sb.append(", skilllevel=").append(skilllevel);
-        sb.append("]");
+		sb.append("paid=").append(paid).append(", ");
+		sb.append("skillid=").append(skillid).append(", ");
+		sb.append("skilllevel=").append(skilllevel).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

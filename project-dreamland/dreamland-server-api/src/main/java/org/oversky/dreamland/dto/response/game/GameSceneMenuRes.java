@@ -29,12 +29,9 @@ public class GameSceneMenuRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", sceneid=").append(sceneid);
-		sb.append(", menuid=").append(menuid);
-        sb.append("]");
+		sb.append("sceneid=").append(sceneid).append(", ");
+		sb.append("menuid=").append(menuid).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

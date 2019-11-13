@@ -6,11 +6,11 @@
         select count(1) from cust_info where loginid = #{param1}
     </select>
   
-    <select id="existUserMobile" resultType="int">
+    <select id="existMobileNo" resultType="int">
         select count(1) from cust_info where mobileno = #{param1}
     </select>
   
-    <select id="existUserMobileUpdate" resultType="int">
+    <select id="uptExistMobileNo" resultType="int">
         select count(1) from cust_info where mobileno = #{param2} and custno != #{param1}
     </select>
   

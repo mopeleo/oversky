@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.oversky.dreamland.dao.game.GameSceneInfoDao">
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameSceneInfo">
-        <id column="sceneid" jdbcType="INTEGER" property="sceneid" />
+        <id column="sceneid" jdbcType="DECIMAL" property="sceneid" />
         <result column="scenename" jdbcType="VARCHAR" property="scenename" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameSceneInfo">
-        insert into game_scene_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{sceneid, jdbcType=INTEGER}, #{scenename, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameSceneInfo" useGeneratedKeys="true" keyProperty="sceneid">
+        insert into game_scene_info (scenename)
+        values (#{scenename, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into game_scene_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="sceneid">
+		insert into game_scene_info (scenename)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.sceneid, jdbcType=INTEGER}, #{item.scenename, jdbcType=VARCHAR})
+        (#{item.scenename, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -55,7 +55,7 @@
     <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameSceneInfo">
         update game_scene_info set 
                scenename = #{scenename, jdbcType=VARCHAR}
-		where sceneid = #{sceneid, jdbcType=INTEGER}
+		where sceneid = #{sceneid, jdbcType=DECIMAL}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameSceneInfo">
@@ -65,7 +65,7 @@
 				scenename = #{scenename, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where sceneid = #{sceneid, jdbcType=INTEGER}
+		where sceneid = #{sceneid, jdbcType=DECIMAL}
 	</update>
 
 	<update id="dynamicUpdateWhere" parameterType="map">
@@ -113,7 +113,7 @@
 	<sql id="where_all_list">
 		<where>
 			<if test="sceneid != null">
-				and sceneid = #{sceneid, jdbcType=INTEGER}
+				and sceneid = #{sceneid, jdbcType=DECIMAL}
 			</if>
 			<if test="scenename != null and scenename != ''">
 				and scenename = #{scenename, jdbcType=VARCHAR}
@@ -124,7 +124,7 @@
 	<sql id="where_all_list_criteria">
 		<where>
 			<if test="condition.sceneid != null">
-				and sceneid = #{condition.sceneid, jdbcType=INTEGER}
+				and sceneid = #{condition.sceneid, jdbcType=DECIMAL}
 			</if>
 			<if test="condition.scenename != null and condition.scenename != ''">
 				and scenename = #{condition.scenename, jdbcType=VARCHAR}

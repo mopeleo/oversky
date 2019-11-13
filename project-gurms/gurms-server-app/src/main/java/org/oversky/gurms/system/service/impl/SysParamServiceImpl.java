@@ -43,9 +43,7 @@ public class SysParamServiceImpl implements SysParamService {
 		}
 		
 		String sysMode = param.getParamvalue();
-		if(!ParamConsts.PARAM1000_SYS_MODE_SINGLE.equals(sysMode) 
-				&& !ParamConsts.PARAM1000_SYS_MODE_MULTI.equals(sysMode)) {
-			
+		if(!ParamConsts.PARAM1000_SYS_MODE_SINGLE.equals(sysMode) && !ParamConsts.PARAM1000_SYS_MODE_MULTI.equals(sysMode)) {			
 			log.error("系统模式参数值配置错误，paramValue = {}", sysMode);
 			throw new BaseServiceException("系统模式参数值配置错误");
 		}
@@ -62,6 +60,7 @@ public class SysParamServiceImpl implements SysParamService {
 		}
 
 		if(param == null) {
+			log.error("系统参数不存在，paramId = {}", paramId);
 			throw new BaseServiceException("错误的系统参数 : " + paramId);
 		}			
 		return BeanCopyUtils.convert(param, SysParamRes.class);
@@ -91,6 +90,7 @@ public class SysParamServiceImpl implements SysParamService {
 		List<SysParamInfo> paramInfoList = pageQueryDao.findParams(unioncode);
 		if(CollectionUtils.isEmpty(paramInfoList)) {
 			res.failure("参数不存在");
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 
@@ -99,7 +99,7 @@ public class SysParamServiceImpl implements SysParamService {
 		int num = paramDao.deleteWhere(where);
 		
 		if(num != paramInfoList.size()) {
-			log.info("重置unioncode = {}参数 : 数量不一致" , unioncode);
+			log.error("重置unioncode = {}参数 : 数量不一致" , unioncode);
 			throw new BaseServiceException("参数重置错误:数量不一致");
 		}
 		
@@ -124,6 +124,7 @@ public class SysParamServiceImpl implements SysParamService {
 		List<SysParamInfo> paramInfoList = pageQueryDao.findParams(unioncode);
 		if(CollectionUtils.isEmpty(paramInfoList)) {
 			res.failure("参数不存在");
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -132,7 +133,7 @@ public class SysParamServiceImpl implements SysParamService {
 		where.orderBy("paramid");
 		List<SysParam> paramList = paramDao.selectWhere(where);
 		if(paramList.size() != paramInfoList.size()) {
-			log.info("重置unioncode = {}参数 : 数量不一致" , unioncode);
+			log.error("重置unioncode = {}参数 : 数量不一致" , unioncode);
 			throw new BaseServiceException("参数重置错误:数量不一致");
 		}
 		
@@ -152,7 +153,7 @@ public class SysParamServiceImpl implements SysParamService {
 		log.info("修改unioncode = {}全部参数" , paramReq.getUnioncode());
 		SysParamRes res = new SysParamRes();
 		if(StringUtils.isEmpty(paramReq.getParamlist())) {
-			log.info("修改的参数列表不能为空");
+			log.error("修改的参数列表不能为空");
 			throw new BaseServiceException("修改的参数列表不能为空");
 		}
 		
@@ -162,7 +163,7 @@ public class SysParamServiceImpl implements SysParamService {
 		
 		String[] pairs = paramReq.getParamlist().split(";");
 		if(pairs.length != num) {
-			log.info("修改unioncode = {}参数 : 数量不一致" , paramReq.getUnioncode());
+			log.error("修改unioncode = {}参数 : 数量不一致" , paramReq.getUnioncode());
 			throw new BaseServiceException("参数重置错误:数量不一致");
 		}
 		

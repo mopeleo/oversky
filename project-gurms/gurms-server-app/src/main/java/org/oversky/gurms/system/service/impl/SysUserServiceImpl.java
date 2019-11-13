@@ -11,13 +11,11 @@ import org.oversky.gurms.system.constant.DictConsts;
 import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysOrgDao;
 import org.oversky.gurms.system.dao.SysUserDao;
-import org.oversky.gurms.system.dao.SysUserInfoDao;
 import org.oversky.gurms.system.dao.SysUserRoleDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
 import org.oversky.gurms.system.dto.response.SysUserRes;
 import org.oversky.gurms.system.entity.SysOrg;
 import org.oversky.gurms.system.entity.SysUser;
-import org.oversky.gurms.system.entity.SysUserInfo;
 import org.oversky.gurms.system.entity.SysUserRole;
 import org.oversky.gurms.system.ext.dao.PageListQueryDao;
 import org.oversky.gurms.system.ext.dao.UniqueCheckDao;
@@ -47,9 +45,6 @@ public class SysUserServiceImpl implements SysUserService{
 	private SysUserDao sysUserDao;
 	
 	@Autowired
-	private SysUserInfoDao userInfoDao;
-
-	@Autowired
 	private SysUserRoleDao userRoleDao;
 	
 	@Autowired
@@ -59,7 +54,6 @@ public class SysUserServiceImpl implements SysUserService{
 	private UniqueCheckDao uniqueCheckDao;
 	
 	@Override
-	@Transactional
 	@GSAValid(type=SysUserReq.class)
 	public SysUserRes insert(SysUserReq userReq) {
 		log.info("开始新增用户......");
@@ -70,13 +64,13 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		if(uniqueCheckDao.existLoginId(userReq.getLoginid()) > 0) {
 			res.failure("登录名[" + userReq.getLoginid() + "]已存在！");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		if(uniqueCheckDao.existUserMobile(userReq.getMobileno()) > 0) {
 			res.failure("手机号码[" + userReq.getMobileno() + "]已存在！");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -92,13 +86,8 @@ public class SysUserServiceImpl implements SysUserService{
 			md5Password = EncryptUtils.md5Encode(initPw);
 		}
 		user.setLoginpasswd(BizFunc.encryptPassword(md5Password, user.getSalt()));
-		if(sysUserDao.insert(user) != 1) {
-			res.failure("新增失败");
-		}
+		sysUserDao.insert(user);
 		
-		SysUserInfo userInfo = BeanCopyUtils.convert(userReq, SysUserInfo.class);
-		userInfo.setUserid(user.getUserid());
-		userInfoDao.insert(userInfo);
 		log.info("新增用户结束 : {}", res.getReturnmsg());
 		return res;
 	}
@@ -111,19 +100,20 @@ public class SysUserServiceImpl implements SysUserService{
 		//是超级用户
 		if(BizFunc.isRootUser(userReq.getUserid())) {
 			res.failure("超级用户不能删除");
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		SysUser user = sysUserDao.getById(userReq.getUserid());
 		if(user == null) {
 			res.failure("用户[" + userReq.getUserid() + "]不存在");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能删除");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -132,7 +122,6 @@ public class SysUserServiceImpl implements SysUserService{
 		userRoleDao.deleteWhere(where);
 
 		sysUserDao.deleteById(userReq.getUserid());			
-		userInfoDao.deleteById(userReq.getUserid());
 
 		res.success("删除用户成功");
 		log.info("删除用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
@@ -140,7 +129,6 @@ public class SysUserServiceImpl implements SysUserService{
 	}
 
 	@Override
-	@Transactional
 	@GSAValid(type=SysUserReq.class)
 	public SysUserRes update(SysUserReq userReq) {
 		log.info("开始修改用户[userid={}]信息......", userReq.getUserid());
@@ -151,12 +139,13 @@ public class SysUserServiceImpl implements SysUserService{
 		//是超级用户
 		if(BizFunc.isRootUser(userReq.getUserid())) {
 			res.failure("超级用户不能修改");
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		if(uniqueCheckDao.existUserMobileUpdate(userReq.getUserid(), userReq.getMobileno()) > 0) {
 			res.failure("手机号码[" + userReq.getMobileno() + "]已存在！");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -174,14 +163,14 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUser user = sysUserDao.getById(userReq.getUserid());
 		if(user == null) {
 			res.failure("用户[" + userReq.getUserid() + "]不存在");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())
 				&& !DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能重置密码");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -209,26 +198,26 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUser user = sysUserDao.getById(userReq.getUserid());
 		if(user == null) {
 			res.failure("用户[" + userReq.getUserid() + "]不存在");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		if(userReq.getLoginpasswd().equals(userReq.getNewpasswd())) {
 			res.failure("用户新密码不能与原密码相同");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		String oldPassword = BizFunc.encryptPassword(userReq.getLoginpasswd(), user.getSalt());
 		if(!oldPassword.equals(user.getLoginpasswd())) {
 			res.failure("用户原密码错误，修改密码失败");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 
 		if(DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]被冻结，不能修改密码");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -256,13 +245,13 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUser user = sysUserDao.getById(userReq.getUserid());
 		if(user == null) {
 			res.failure("用户[" + userReq.getUserid() + "]不存在");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能冻结");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -283,13 +272,13 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUser user = sysUserDao.getById(userReq.getUserid());
 		if(user == null) {
 			res.failure("用户[" + userReq.getUserid() + "]不存在");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
 		if(!DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]不为冻结状态，不能冻结");
-			log.info(res.getReturnmsg());
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -309,6 +298,8 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUserRes res = new SysUserRes();
 		if(user == null) {
 			res.failure("用户[" + userid + "]不存在");
+			log.warn(res.getReturnmsg());
+			return res;
 		}else {
 			BeanCopyUtils.copy(user, res);
 		}
@@ -323,13 +314,11 @@ public class SysUserServiceImpl implements SysUserService{
 		SysUserRes res = new SysUserRes();
 		if(user == null) {
 			res.failure("用户[" + userid + "]不存在");
-		}else {
-			BeanCopyUtils.copy(user, res);
-			SysUserInfo userInfo = userInfoDao.getById(userid);
-			if(userInfo != null) {
-				BeanCopyUtils.copy(userInfo, res);
-			}
+			log.warn(res.getReturnmsg());
+			return res;
 		}
+		
+		BeanCopyUtils.copy(user, res);
 		log.info("查询用户[userid={}]详细信息结束: {}", userid, res.getReturnmsg());
 		return res;
 	}
@@ -342,6 +331,7 @@ public class SysUserServiceImpl implements SysUserService{
 		//是超级用户
 		if(BizFunc.isRootUser(userReq.getUserid())) {
 			res.failure("超级用户不能授权");
+			log.warn(res.getReturnmsg());
 			return res;
 		}
 		
@@ -360,6 +350,7 @@ public class SysUserServiceImpl implements SysUserService{
 				userRoles.add(sur);
 			}
 			if(userRoleDao.insertBatch(userRoles) != roles.length) {
+				log.error("用户[{}]授权失败", userReq.getUserid());
 				throw new BaseServiceException("用户[" + userReq.getUserid() + "]授权失败");
 			}
 		}
@@ -391,17 +382,20 @@ public class SysUserServiceImpl implements SysUserService{
 	private boolean check(SysUserReq userReq, SysUserRes res) {
 		if(StringUtils.isEmpty(userReq.getLoginid())) {
 			res.failure("登录名不能为空");
+			log.warn(res.getReturnmsg());
 			return false;
 		}
 		
 		if(userReq.getOrgid() == null) {
 			res.failure("所属机构不能为空");
+			log.warn(res.getReturnmsg());
 			return false;
 		}
 		
 		SysOrg org = sysOrgDao.getById(userReq.getOrgid());
 		if(org == null) {
 			res.failure("所属机构不存在");
+			log.warn(res.getReturnmsg());
 			return false;			
 		}
 		userReq.setUnioncode(org.getUnioncode());

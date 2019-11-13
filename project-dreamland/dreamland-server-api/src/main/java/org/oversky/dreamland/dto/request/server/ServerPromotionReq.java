@@ -65,16 +65,13 @@ public class ServerPromotionReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", serverid=").append(serverid);
-		sb.append(", promid=").append(promid);
-		sb.append(", startdate=").append(startdate);
-		sb.append(", starttime=").append(starttime);
-		sb.append(", enddate=").append(enddate);
-		sb.append(", endtime=").append(endtime);
-        sb.append("]");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("promid=").append(promid).append(", ");
+		sb.append("startdate=").append(startdate).append(", ");
+		sb.append("starttime=").append(starttime).append(", ");
+		sb.append("enddate=").append(enddate).append(", ");
+		sb.append("endtime=").append(endtime).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

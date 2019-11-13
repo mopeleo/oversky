@@ -40,7 +40,7 @@ public class CacheSysParamRunner implements ApplicationRunner {
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		logger.debug("gurms.config.redis-enable : [{}]", config.isRedisEnable());
+		logger.info("gurms.config.redis-enable : [{}]", config.isRedisEnable());
 
 		List<SysParam> paramList = paramDao.selectAll();
 		if(paramList == null || paramList.size() == 0) {
@@ -57,6 +57,8 @@ public class CacheSysParamRunner implements ApplicationRunner {
 		}
 
 		menuService.getFullMenuTree();
+		
+		logger.info("参数初始化启动加载完毕");
 	}
 
 }

@@ -38,13 +38,10 @@ public class ServerPlayerEquipAttributeRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", peid=").append(peid);
-		sb.append(", attrid=").append(attrid);
-		sb.append(", attrval=").append(attrval);
-        sb.append("]");
+		sb.append("peid=").append(peid).append(", ");
+		sb.append("attrid=").append(attrid).append(", ");
+		sb.append("attrval=").append(attrval).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

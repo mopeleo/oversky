@@ -151,24 +151,21 @@ public class SysSno extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", noid=").append(noid);
-		sb.append(", noname=").append(noname);
-		sb.append(", initvalue=").append(initvalue);
-		sb.append(", nextvalue=").append(nextvalue);
-		sb.append(", fixedflag=").append(fixedflag);
-		sb.append(", fixedlength=").append(fixedlength);
-		sb.append(", fillchar=").append(fillchar);
-		sb.append(", notype=").append(notype);
-		sb.append(", cycletype=").append(cycletype);
-		sb.append(", cycledate=").append(cycledate);
-		sb.append(", endvalue=").append(endvalue);
-		sb.append(", prefix=").append(prefix);
-		sb.append(", suffix=").append(suffix);
-        sb.append("]");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("noid=").append(noid).append(", ");
+		sb.append("noname=").append(noname).append(", ");
+		sb.append("initvalue=").append(initvalue).append(", ");
+		sb.append("nextvalue=").append(nextvalue).append(", ");
+		sb.append("fixedflag=").append(fixedflag).append(", ");
+		sb.append("fixedlength=").append(fixedlength).append(", ");
+		sb.append("fillchar=").append(fillchar).append(", ");
+		sb.append("notype=").append(notype).append(", ");
+		sb.append("cycletype=").append(cycletype).append(", ");
+		sb.append("cycledate=").append(cycledate).append(", ");
+		sb.append("endvalue=").append(endvalue).append(", ");
+		sb.append("prefix=").append(prefix).append(", ");
+		sb.append("suffix=").append(suffix).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

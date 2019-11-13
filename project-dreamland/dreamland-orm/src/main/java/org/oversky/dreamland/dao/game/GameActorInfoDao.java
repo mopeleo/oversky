@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface GameActorInfoDao{
 
 	
-    GameActorInfo getById(String actorid);
+    GameActorInfo getById(Long actorid);
 
-    int deleteById(String actorid);
+    int deleteById(Long actorid);
 
     int updateById(GameActorInfo entity);
 	
@@ -35,7 +35,7 @@ public interface GameActorInfoDao{
 	int updateBatch(List<GameActorInfo> entityList);
 	
 	
-	int deleteBatch(String[] ids);
+	int deleteBatch(Long[] ids);
 	
 	
 	int insertBatch(List<GameActorInfo> entityList);

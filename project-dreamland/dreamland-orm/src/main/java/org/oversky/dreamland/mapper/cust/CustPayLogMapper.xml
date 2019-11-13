@@ -16,16 +16,16 @@
         <result column="summary" jdbcType="VARCHAR" property="summary" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustPayLog">
-        insert into cust_pay_log (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{logid, jdbcType=DECIMAL}, #{custno, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{direction, jdbcType=VARCHAR}, #{amt, jdbcType=DOUBLE}, #{inacct, jdbcType=VARCHAR}, #{outacct, jdbcType=VARCHAR}, #{busitype, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{paydate, jdbcType=VARCHAR}, #{paytime, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustPayLog" useGeneratedKeys="true" keyProperty="logid">
+        insert into cust_pay_log (custno, serverid, direction, amt, inacct, outacct, busitype, status, paydate, paytime, summary)
+        values (#{custno, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{direction, jdbcType=VARCHAR}, #{amt, jdbcType=DOUBLE}, #{inacct, jdbcType=VARCHAR}, #{outacct, jdbcType=VARCHAR}, #{busitype, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{paydate, jdbcType=VARCHAR}, #{paytime, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into cust_pay_log (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
+		insert into cust_pay_log (custno, serverid, direction, amt, inacct, outacct, busitype, status, paydate, paytime, summary)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.logid, jdbcType=DECIMAL}, #{item.custno, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.direction, jdbcType=VARCHAR}, #{item.amt, jdbcType=DOUBLE}, #{item.inacct, jdbcType=VARCHAR}, #{item.outacct, jdbcType=VARCHAR}, #{item.busitype, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.paydate, jdbcType=VARCHAR}, #{item.paytime, jdbcType=VARCHAR}, #{item.summary, jdbcType=VARCHAR})
+        (#{item.custno, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.direction, jdbcType=VARCHAR}, #{item.amt, jdbcType=DOUBLE}, #{item.inacct, jdbcType=VARCHAR}, #{item.outacct, jdbcType=VARCHAR}, #{item.busitype, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.paydate, jdbcType=VARCHAR}, #{item.paytime, jdbcType=VARCHAR}, #{item.summary, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	

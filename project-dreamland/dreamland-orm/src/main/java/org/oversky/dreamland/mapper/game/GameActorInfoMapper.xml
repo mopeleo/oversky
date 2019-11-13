@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.oversky.dreamland.dao.game.GameActorInfoDao">
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameActorInfo">
-        <id column="actorid" jdbcType="VARCHAR" property="actorid" />
+        <id column="actorid" jdbcType="DECIMAL" property="actorid" />
         <result column="actorname" jdbcType="VARCHAR" property="actorname" />
         <result column="sex" jdbcType="INTEGER" property="sex" />
         <result column="race" jdbcType="VARCHAR" property="race" />
@@ -27,16 +27,16 @@
         <result column="mother" jdbcType="VARCHAR" property="mother" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameActorInfo">
-        insert into game_actor_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{actorid, jdbcType=VARCHAR}, #{actorname, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER}, #{race, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{actorscene, jdbcType=INTEGER}, #{str, jdbcType=INTEGER}, #{intelligence, jdbcType=INTEGER}, #{hp, jdbcType=INTEGER}, #{mp, jdbcType=INTEGER}, #{agl, jdbcType=INTEGER}, #{luck, jdbcType=INTEGER}, #{initrank, jdbcType=INTEGER}, #{maxrank, jdbcType=INTEGER}, #{ratiotype, jdbcType=VARCHAR}, #{ratiostr, jdbcType=DOUBLE}, #{ratioint, jdbcType=DOUBLE}, #{ratiohp, jdbcType=DOUBLE}, #{ratiomp, jdbcType=DOUBLE}, #{ratioagl, jdbcType=DOUBLE}, #{ratioluck, jdbcType=DOUBLE}, #{father, jdbcType=VARCHAR}, #{mother, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameActorInfo" useGeneratedKeys="true" keyProperty="actorid">
+        insert into game_actor_info (actorname, sex, race, profession, actorscene, str, intelligence, hp, mp, agl, luck, initrank, maxrank, ratiotype, ratiostr, ratioint, ratiohp, ratiomp, ratioagl, ratioluck, father, mother)
+        values (#{actorname, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER}, #{race, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{actorscene, jdbcType=INTEGER}, #{str, jdbcType=INTEGER}, #{intelligence, jdbcType=INTEGER}, #{hp, jdbcType=INTEGER}, #{mp, jdbcType=INTEGER}, #{agl, jdbcType=INTEGER}, #{luck, jdbcType=INTEGER}, #{initrank, jdbcType=INTEGER}, #{maxrank, jdbcType=INTEGER}, #{ratiotype, jdbcType=VARCHAR}, #{ratiostr, jdbcType=DOUBLE}, #{ratioint, jdbcType=DOUBLE}, #{ratiohp, jdbcType=DOUBLE}, #{ratiomp, jdbcType=DOUBLE}, #{ratioagl, jdbcType=DOUBLE}, #{ratioluck, jdbcType=DOUBLE}, #{father, jdbcType=VARCHAR}, #{mother, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into game_actor_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="actorid">
+		insert into game_actor_info (actorname, sex, race, profession, actorscene, str, intelligence, hp, mp, agl, luck, initrank, maxrank, ratiotype, ratiostr, ratioint, ratiohp, ratiomp, ratioagl, ratioluck, father, mother)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.actorid, jdbcType=VARCHAR}, #{item.actorname, jdbcType=VARCHAR}, #{item.sex, jdbcType=INTEGER}, #{item.race, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.actorscene, jdbcType=INTEGER}, #{item.str, jdbcType=INTEGER}, #{item.intelligence, jdbcType=INTEGER}, #{item.hp, jdbcType=INTEGER}, #{item.mp, jdbcType=INTEGER}, #{item.agl, jdbcType=INTEGER}, #{item.luck, jdbcType=INTEGER}, #{item.initrank, jdbcType=INTEGER}, #{item.maxrank, jdbcType=INTEGER}, #{item.ratiotype, jdbcType=VARCHAR}, #{item.ratiostr, jdbcType=DOUBLE}, #{item.ratioint, jdbcType=DOUBLE}, #{item.ratiohp, jdbcType=DOUBLE}, #{item.ratiomp, jdbcType=DOUBLE}, #{item.ratioagl, jdbcType=DOUBLE}, #{item.ratioluck, jdbcType=DOUBLE}, #{item.father, jdbcType=VARCHAR}, #{item.mother, jdbcType=VARCHAR})
+        (#{item.actorname, jdbcType=VARCHAR}, #{item.sex, jdbcType=INTEGER}, #{item.race, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.actorscene, jdbcType=INTEGER}, #{item.str, jdbcType=INTEGER}, #{item.intelligence, jdbcType=INTEGER}, #{item.hp, jdbcType=INTEGER}, #{item.mp, jdbcType=INTEGER}, #{item.agl, jdbcType=INTEGER}, #{item.luck, jdbcType=INTEGER}, #{item.initrank, jdbcType=INTEGER}, #{item.maxrank, jdbcType=INTEGER}, #{item.ratiotype, jdbcType=VARCHAR}, #{item.ratiostr, jdbcType=DOUBLE}, #{item.ratioint, jdbcType=DOUBLE}, #{item.ratiohp, jdbcType=DOUBLE}, #{item.ratiomp, jdbcType=DOUBLE}, #{item.ratioagl, jdbcType=DOUBLE}, #{item.ratioluck, jdbcType=DOUBLE}, #{item.father, jdbcType=VARCHAR}, #{item.mother, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -97,7 +97,7 @@
                ratioluck = #{ratioluck, jdbcType=DOUBLE}, 
                father = #{father, jdbcType=VARCHAR}, 
                mother = #{mother, jdbcType=VARCHAR}
-		where actorid = #{actorid, jdbcType=VARCHAR}
+		where actorid = #{actorid, jdbcType=DECIMAL}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameActorInfo">
@@ -170,7 +170,7 @@
 				mother = #{mother, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where actorid = #{actorid, jdbcType=VARCHAR}
+		where actorid = #{actorid, jdbcType=DECIMAL}
 	</update>
 
 	<update id="dynamicUpdateWhere" parameterType="map">
@@ -490,8 +490,8 @@
 	
 	<sql id="where_all_list">
 		<where>
-			<if test="actorid != null and actorid != ''">
-				and actorid = #{actorid, jdbcType=VARCHAR}
+			<if test="actorid != null">
+				and actorid = #{actorid, jdbcType=DECIMAL}
 			</if>
 			<if test="actorname != null and actorname != ''">
 				and actorname = #{actorname, jdbcType=VARCHAR}
@@ -564,8 +564,8 @@
 
 	<sql id="where_all_list_criteria">
 		<where>
-			<if test="condition.actorid != null and condition.actorid != ''">
-				and actorid = #{condition.actorid, jdbcType=VARCHAR}
+			<if test="condition.actorid != null">
+				and actorid = #{condition.actorid, jdbcType=DECIMAL}
 			</if>
 			<if test="condition.actorname != null and condition.actorname != ''">
 				and actorname = #{condition.actorname, jdbcType=VARCHAR}

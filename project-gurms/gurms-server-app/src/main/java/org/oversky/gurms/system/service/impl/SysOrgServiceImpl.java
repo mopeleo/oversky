@@ -48,14 +48,14 @@ public class SysOrgServiceImpl implements SysOrgService {
 		org.setParentorg(orgReq.getParentorg());
 		if(orgDao.count(org) > 0) {
 			res.failure("同级机构中机构名称["+orgReq.getShortname()+"]已存在");
-			log.info("新增机构失败 : {}", res.getReturnmsg());
+			log.warn("新增机构失败 : {}", res.getReturnmsg());
 			return res;
 		}
 
 		BeanCopyUtils.copy(orgReq, org);
 		if(orgDao.insert(org) != 1) {
 			res.failure("插入数据库失败");
-			log.info("新增机构失败 : {}", res.getReturnmsg());
+			log.warn("新增机构失败 : {}", res.getReturnmsg());
 			return res;
 		}
 		
@@ -71,21 +71,21 @@ public class SysOrgServiceImpl implements SysOrgService {
 		SysOrgRes res = new SysOrgRes();
 		if(ParamConsts.isRootOrg(orgReq.getOrgid())) {
 			res.failure("系统根机构不允许删除");
-			log.info("删除机构失败:{}", res.getReturnmsg());
+			log.warn("删除机构失败:{}", res.getReturnmsg());
 			return res;
 		}
 		
 		SysOrg org = orgDao.getById(orgReq.getOrgid());
 		if(org == null) {
 			res.failure("机构[orgid={" + orgReq.getOrgid() + "}]不存在");
-			log.info("删除机构失败:{}", res.getReturnmsg());
+			log.warn("删除机构失败:{}", res.getReturnmsg());
 			return res;
 		}
 
 		SysUser operator = userDao.getById(orgReq.getOperator());
 		if(operator.getOrgid() == orgReq.getOrgid()) {
 			res.failure("不允许删除自己所在机构");
-			log.info("删除机构失败:{}", res.getReturnmsg());
+			log.warn("删除机构失败:{}", res.getReturnmsg());
 			return res;
 		}
 		
@@ -102,7 +102,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 		if(hasUser) {
 			if(ParamConsts.PARAM1006_CANT_DEL.equals(param1006)) {
 				res.failure("当前机构存在用户，不允许删除");
-				log.info("删除机构失败:{}", res.getReturnmsg());
+				log.warn("删除机构失败:{}", res.getReturnmsg());
 				return res;
 			}
 		}
@@ -128,7 +128,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 				int userNum = userOrgDao.countChildOrgUser(children);
 				if(ParamConsts.PARAM1006_CANT_DEL.equals(param1006) && userNum > 0) {
 					res.failure("子机构存在用户，不允许删除");
-					log.info("删除机构失败:{}", res.getReturnmsg());
+					log.warn("删除机构失败:{}", res.getReturnmsg());
 					return res;
 				}
 				
@@ -140,7 +140,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 				userOrgDao.deleteByOrgIds(children);
 			}else {
 				res.failure("当前机构存在子机构，不允许删除");
-				log.info("删除机构失败:{}", res.getReturnmsg());
+				log.warn("删除机构失败:{}", res.getReturnmsg());
 				return res;
 			}
 		}else {
@@ -162,13 +162,13 @@ public class SysOrgServiceImpl implements SysOrgService {
 		SysOrgRes res = new SysOrgRes();
 		if(ParamConsts.isRootOrg(orgReq.getOrgid())) {
 			res.failure("系统根机构不允许修改");
-			log.info("修改机构失败:{}", res.getReturnmsg());
+			log.warn("修改机构失败:{}", res.getReturnmsg());
 			return res;
 		}
 		//orgname 同一父机构下机构名唯一性检查，机构名允许修改
 		if(uniqueDao.existOrgNameUpdate(orgReq.getOrgid(), orgReq.getShortname(), orgReq.getParentorg()) > 0) {
 			res.failure("同级机构中机构名称["+orgReq.getShortname()+"]已存在");
-			log.info("修改机构失败 : {}", res.getReturnmsg());
+			log.warn("修改机构失败 : {}", res.getReturnmsg());
 			return res;
 		}
 		
@@ -176,7 +176,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 		for(SysOrg child : children) {
 			if(child.getOrgid() == orgReq.getParentorg()) {
 				res.failure("上级机构不能修改为自己的子机构");
-				log.info("修改机构失败 : {}", res.getReturnmsg());
+				log.warn("修改机构失败 : {}", res.getReturnmsg());
 				return res;
 			}
 		}
@@ -196,6 +196,8 @@ public class SysOrgServiceImpl implements SysOrgService {
 		SysOrgRes res = new SysOrgRes();
 		if(org == null) {
 			res.failure("机构不存在");
+			log.warn(res.getReturnmsg());
+			return res;
 		}else {
 			BeanCopyUtils.copy(org, res);
 		}

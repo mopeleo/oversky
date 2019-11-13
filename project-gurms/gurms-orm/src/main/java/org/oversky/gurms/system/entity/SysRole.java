@@ -105,19 +105,16 @@ public class SysRole extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", roleid=").append(roleid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", rolename=").append(rolename);
-		sb.append(", status=").append(status);
-		sb.append(", roletype=").append(roletype);
-		sb.append(", startdate=").append(startdate);
-		sb.append(", enddate=").append(enddate);
-		sb.append(", belong=").append(belong);
-		sb.append(", creator=").append(creator);
-        sb.append("]");
+		sb.append("roleid=").append(roleid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("rolename=").append(rolename).append(", ");
+		sb.append("status=").append(status).append(", ");
+		sb.append("roletype=").append(roletype).append(", ");
+		sb.append("startdate=").append(startdate).append(", ");
+		sb.append("enddate=").append(enddate).append(", ");
+		sb.append("belong=").append(belong).append(", ");
+		sb.append("creator=").append(creator).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

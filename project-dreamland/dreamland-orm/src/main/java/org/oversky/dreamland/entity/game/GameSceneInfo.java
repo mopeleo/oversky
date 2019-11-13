@@ -6,14 +6,14 @@ public class GameSceneInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer sceneid;    //场景ID
+	private Long sceneid;    //场景ID[identity]
 	private String scenename;    //场景名称
 
-	public Integer getSceneid() {
+	public Long getSceneid() {
 		return this.sceneid;
 	}
 
-	public void setSceneid(Integer sceneid) {
+	public void setSceneid(Long sceneid) {
 		this.sceneid = sceneid;
 	}
 
@@ -30,7 +30,7 @@ public class GameSceneInfo extends BaseEntity{
 		return build.append("#sceneid:").append(this.sceneid).toString();
 	}
 
-    public static String buildEntityKey(Integer sceneid){
+    public static String buildEntityKey(Long sceneid){
         StringBuilder build = new StringBuilder("GameSceneInfo");
         return build.append("#sceneid:").append(sceneid).toString();
     }
@@ -42,12 +42,9 @@ public class GameSceneInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", sceneid=").append(sceneid);
-		sb.append(", scenename=").append(scenename);
-        sb.append("]");
+		sb.append("sceneid=").append(sceneid).append(", ");
+		sb.append("scenename=").append(scenename).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

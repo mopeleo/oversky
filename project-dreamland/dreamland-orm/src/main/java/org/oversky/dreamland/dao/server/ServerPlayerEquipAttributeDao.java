@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface ServerPlayerEquipAttributeDao{
 
 	
-    ServerPlayerEquipAttribute getById(Long peid, String attrid);
+    ServerPlayerEquipAttribute getById(Long peid, Long attrid);
 
-    int deleteById(Long peid, String attrid);
+    int deleteById(Long peid, Long attrid);
 
     int updateById(ServerPlayerEquipAttribute entity);
 	

@@ -29,12 +29,9 @@ public class GameSuitEquipRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", suitid=").append(suitid);
-		sb.append(", equipid=").append(equipid);
-        sb.append("]");
+		sb.append("suitid=").append(suitid).append(", ");
+		sb.append("equipid=").append(equipid).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

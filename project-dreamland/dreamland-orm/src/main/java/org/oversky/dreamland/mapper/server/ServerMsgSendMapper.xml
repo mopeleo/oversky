@@ -12,16 +12,16 @@
         <result column="sendtime" jdbcType="VARCHAR" property="sendtime" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerMsgSend">
-        insert into server_msg_send (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{msgid, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{content, jdbcType=VARCHAR}, #{msgtype, jdbcType=VARCHAR}, #{receiver, jdbcType=DECIMAL}, #{senddate, jdbcType=VARCHAR}, #{sendtime, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerMsgSend" useGeneratedKeys="true" keyProperty="msgid">
+        insert into server_msg_send (serverid, custno, content, msgtype, receiver, senddate, sendtime)
+        values (#{serverid, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{content, jdbcType=VARCHAR}, #{msgtype, jdbcType=VARCHAR}, #{receiver, jdbcType=DECIMAL}, #{senddate, jdbcType=VARCHAR}, #{sendtime, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into server_msg_send (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="msgid">
+		insert into server_msg_send (serverid, custno, content, msgtype, receiver, senddate, sendtime)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.msgid, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.content, jdbcType=VARCHAR}, #{item.msgtype, jdbcType=VARCHAR}, #{item.receiver, jdbcType=DECIMAL}, #{item.senddate, jdbcType=VARCHAR}, #{item.sendtime, jdbcType=VARCHAR})
+        (#{item.serverid, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.content, jdbcType=VARCHAR}, #{item.msgtype, jdbcType=VARCHAR}, #{item.receiver, jdbcType=DECIMAL}, #{item.senddate, jdbcType=VARCHAR}, #{item.sendtime, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	

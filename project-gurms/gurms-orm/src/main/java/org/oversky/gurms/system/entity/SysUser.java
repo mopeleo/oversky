@@ -13,15 +13,18 @@ public class SysUser extends BaseEntity{
 	private String loginpasswd;    //登录密码
 	private String salt;    //密码盐
 	private String passwdvaliddate;    //密码失效日期
+	private String status;    //用户状态，1，正常；2，锁定；3，冻结
+	private Long orgid;    //所属机构
+	private String sex;    //性别，0-女；1-男
 	private String mobileno;    //手机号码
 	private String email;    //电子邮件
-	private Long orgid;    //所属机构
 	private String idtype;    //证件类型
 	private String idcode;    //证件号码
 	private String idname;    //证件姓名
+	private String postcode;    //邮政编码
+	private String address;    //联系地址
 	private String logindate;    //上次登录日期
 	private String logintime;    //上次登录时间
-	private String status;    //用户状态，1，正常；2，锁定；3，冻结
 	private Integer loginerror;    //连续登录失败次数
 	private String opendate;    //创建日期
 
@@ -81,6 +84,30 @@ public class SysUser extends BaseEntity{
 		this.passwdvaliddate = passwdvaliddate;
 	}
 
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Long getOrgid() {
+		return this.orgid;
+	}
+
+	public void setOrgid(Long orgid) {
+		this.orgid = orgid;
+	}
+
+	public String getSex() {
+		return this.sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 	public String getMobileno() {
 		return this.mobileno;
 	}
@@ -95,14 +122,6 @@ public class SysUser extends BaseEntity{
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Long getOrgid() {
-		return this.orgid;
-	}
-
-	public void setOrgid(Long orgid) {
-		this.orgid = orgid;
 	}
 
 	public String getIdtype() {
@@ -129,6 +148,22 @@ public class SysUser extends BaseEntity{
 		this.idname = idname;
 	}
 
+	public String getPostcode() {
+		return this.postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public String getLogindate() {
 		return this.logindate;
 	}
@@ -143,14 +178,6 @@ public class SysUser extends BaseEntity{
 
 	public void setLogintime(String logintime) {
 		this.logintime = logintime;
-	}
-
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public Integer getLoginerror() {
@@ -186,28 +213,28 @@ public class SysUser extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", userid=").append(userid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", username=").append(username);
-		sb.append(", loginid=").append(loginid);
-		sb.append(", loginpasswd=").append(loginpasswd);
-		sb.append(", salt=").append(salt);
-		sb.append(", passwdvaliddate=").append(passwdvaliddate);
-		sb.append(", mobileno=").append(mobileno);
-		sb.append(", email=").append(email);
-		sb.append(", orgid=").append(orgid);
-		sb.append(", idtype=").append(idtype);
-		sb.append(", idcode=").append(idcode);
-		sb.append(", idname=").append(idname);
-		sb.append(", logindate=").append(logindate);
-		sb.append(", logintime=").append(logintime);
-		sb.append(", status=").append(status);
-		sb.append(", loginerror=").append(loginerror);
-		sb.append(", opendate=").append(opendate);
-        sb.append("]");
+		sb.append("userid=").append(userid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("username=").append(username).append(", ");
+		sb.append("loginid=").append(loginid).append(", ");
+		sb.append("loginpasswd=").append(loginpasswd).append(", ");
+		sb.append("salt=").append(salt).append(", ");
+		sb.append("passwdvaliddate=").append(passwdvaliddate).append(", ");
+		sb.append("status=").append(status).append(", ");
+		sb.append("orgid=").append(orgid).append(", ");
+		sb.append("sex=").append(sex).append(", ");
+		sb.append("mobileno=").append(mobileno).append(", ");
+		sb.append("email=").append(email).append(", ");
+		sb.append("idtype=").append(idtype).append(", ");
+		sb.append("idcode=").append(idcode).append(", ");
+		sb.append("idname=").append(idname).append(", ");
+		sb.append("postcode=").append(postcode).append(", ");
+		sb.append("address=").append(address).append(", ");
+		sb.append("logindate=").append(logindate).append(", ");
+		sb.append("logintime=").append(logintime).append(", ");
+		sb.append("loginerror=").append(loginerror).append(", ");
+		sb.append("opendate=").append(opendate).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

@@ -21,4 +21,11 @@ public class BaseResMapDto<K, V> extends BaseResDto{
 	public V get(K key) {
 		return results.get(key);
 	}
+	
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+        return sb.toString();
+	}
 }

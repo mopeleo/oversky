@@ -51,15 +51,9 @@ public class BaseResListDto<T> extends BaseResDto{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", returncode=").append(getReturncode());
-		sb.append(", returnmsg=").append(getReturnmsg());
-		sb.append(", success=").append(isSuccess());
+		sb.append(super.toString());
 		sb.append(", enablePage=").append(enablePage);
 		sb.append(", Page=").append(page == null ? "null" : page.toString());
-        sb.append("]");
         return sb.toString();
 	}
 }

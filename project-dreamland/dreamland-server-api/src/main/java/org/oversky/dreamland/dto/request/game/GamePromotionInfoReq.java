@@ -38,13 +38,10 @@ public class GamePromotionInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", promid=").append(promid);
-		sb.append(", promname=").append(promname);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("promid=").append(promid).append(", ");
+		sb.append("promname=").append(promname).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

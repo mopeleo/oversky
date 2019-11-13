@@ -92,19 +92,16 @@ public class ComParamInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", paramid=").append(paramid);
-		sb.append(", paramname=").append(paramname);
-		sb.append(", paramgroup=").append(paramgroup);
-		sb.append(", edittype=").append(edittype);
-		sb.append(", initvalue=").append(initvalue);
-		sb.append(", valuelength=").append(valuelength);
-		sb.append(", texttitle=").append(texttitle);
-		sb.append(", texttail=").append(texttail);
-		sb.append(", valuelist=").append(valuelist);
-        sb.append("]");
+		sb.append("paramid=").append(paramid).append(", ");
+		sb.append("paramname=").append(paramname).append(", ");
+		sb.append("paramgroup=").append(paramgroup).append(", ");
+		sb.append("edittype=").append(edittype).append(", ");
+		sb.append("initvalue=").append(initvalue).append(", ");
+		sb.append("valuelength=").append(valuelength).append(", ");
+		sb.append("texttitle=").append(texttitle).append(", ");
+		sb.append("texttail=").append(texttail).append(", ");
+		sb.append("valuelist=").append(valuelist).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

@@ -6,7 +6,7 @@ public class CustInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long custno;    //客户号，自动生成
+	private Long custno;    //客户号，自动生成[identity]
 	private String unioncode;    //
 	private String custname;    //客户名称
 	private String custtype;    //客户类型，0，机构；1，个人
@@ -204,30 +204,27 @@ public class CustInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", custno=").append(custno);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", custname=").append(custname);
-		sb.append(", custtype=").append(custtype);
-		sb.append(", loginid=").append(loginid);
-		sb.append(", loginpasswd=").append(loginpasswd);
-		sb.append(", salt=").append(salt);
-		sb.append(", passwdvaliddate=").append(passwdvaliddate);
-		sb.append(", mobileno=").append(mobileno);
-		sb.append(", email=").append(email);
-		sb.append(", custlevel=").append(custlevel);
-		sb.append(", idtype=").append(idtype);
-		sb.append(", idcode=").append(idcode);
-		sb.append(", idname=").append(idname);
-		sb.append(", lastlogindate=").append(lastlogindate);
-		sb.append(", lastlogintime=").append(lastlogintime);
-		sb.append(", status=").append(status);
-		sb.append(", loginerror=").append(loginerror);
-		sb.append(", regdate=").append(regdate);
-		sb.append(", canceldate=").append(canceldate);
-        sb.append("]");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("custname=").append(custname).append(", ");
+		sb.append("custtype=").append(custtype).append(", ");
+		sb.append("loginid=").append(loginid).append(", ");
+		sb.append("loginpasswd=").append(loginpasswd).append(", ");
+		sb.append("salt=").append(salt).append(", ");
+		sb.append("passwdvaliddate=").append(passwdvaliddate).append(", ");
+		sb.append("mobileno=").append(mobileno).append(", ");
+		sb.append("email=").append(email).append(", ");
+		sb.append("custlevel=").append(custlevel).append(", ");
+		sb.append("idtype=").append(idtype).append(", ");
+		sb.append("idcode=").append(idcode).append(", ");
+		sb.append("idname=").append(idname).append(", ");
+		sb.append("lastlogindate=").append(lastlogindate).append(", ");
+		sb.append("lastlogintime=").append(lastlogintime).append(", ");
+		sb.append("status=").append(status).append(", ");
+		sb.append("loginerror=").append(loginerror).append(", ");
+		sb.append("regdate=").append(regdate).append(", ");
+		sb.append("canceldate=").append(canceldate).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

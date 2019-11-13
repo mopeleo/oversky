@@ -218,33 +218,30 @@ public class GameActorInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", actorid=").append(actorid);
-		sb.append(", actorname=").append(actorname);
-		sb.append(", sex=").append(sex);
-		sb.append(", race=").append(race);
-		sb.append(", profession=").append(profession);
-		sb.append(", actorscene=").append(actorscene);
-		sb.append(", str=").append(str);
-		sb.append(", intelligence=").append(intelligence);
-		sb.append(", hp=").append(hp);
-		sb.append(", mp=").append(mp);
-		sb.append(", agl=").append(agl);
-		sb.append(", luck=").append(luck);
-		sb.append(", initrank=").append(initrank);
-		sb.append(", maxrank=").append(maxrank);
-		sb.append(", ratiotype=").append(ratiotype);
-		sb.append(", ratiostr=").append(ratiostr);
-		sb.append(", ratioint=").append(ratioint);
-		sb.append(", ratiohp=").append(ratiohp);
-		sb.append(", ratiomp=").append(ratiomp);
-		sb.append(", ratioagl=").append(ratioagl);
-		sb.append(", ratioluck=").append(ratioluck);
-		sb.append(", father=").append(father);
-		sb.append(", mother=").append(mother);
-        sb.append("]");
+		sb.append("actorid=").append(actorid).append(", ");
+		sb.append("actorname=").append(actorname).append(", ");
+		sb.append("sex=").append(sex).append(", ");
+		sb.append("race=").append(race).append(", ");
+		sb.append("profession=").append(profession).append(", ");
+		sb.append("actorscene=").append(actorscene).append(", ");
+		sb.append("str=").append(str).append(", ");
+		sb.append("intelligence=").append(intelligence).append(", ");
+		sb.append("hp=").append(hp).append(", ");
+		sb.append("mp=").append(mp).append(", ");
+		sb.append("agl=").append(agl).append(", ");
+		sb.append("luck=").append(luck).append(", ");
+		sb.append("initrank=").append(initrank).append(", ");
+		sb.append("maxrank=").append(maxrank).append(", ");
+		sb.append("ratiotype=").append(ratiotype).append(", ");
+		sb.append("ratiostr=").append(ratiostr).append(", ");
+		sb.append("ratioint=").append(ratioint).append(", ");
+		sb.append("ratiohp=").append(ratiohp).append(", ");
+		sb.append("ratiomp=").append(ratiomp).append(", ");
+		sb.append("ratioagl=").append(ratioagl).append(", ");
+		sb.append("ratioluck=").append(ratioluck).append(", ");
+		sb.append("father=").append(father).append(", ");
+		sb.append("mother=").append(mother).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

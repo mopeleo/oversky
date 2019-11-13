@@ -6,11 +6,11 @@ public class ServerPlayerEquip extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long peid;    //自动生产的流水ID
+	private Long peid;    //自动生产的流水ID[identity]
 	private String serverid;    //
 	private Long custno;    //
-	private String equipid;    //
-	private String actorid;    //若actorid为空，则放在背包，不为空，则装备在角色身上
+	private Long equipid;    //
+	private Long actorid;    //若actorid为空，则放在背包，不为空，则装备在角色身上
 	private Integer equiplevel;    //武器等级
 	private Integer proficiency;    //武器熟练度
 
@@ -38,19 +38,19 @@ public class ServerPlayerEquip extends BaseEntity{
 		this.custno = custno;
 	}
 
-	public String getEquipid() {
+	public Long getEquipid() {
 		return this.equipid;
 	}
 
-	public void setEquipid(String equipid) {
+	public void setEquipid(Long equipid) {
 		this.equipid = equipid;
 	}
 
-	public String getActorid() {
+	public Long getActorid() {
 		return this.actorid;
 	}
 
-	public void setActorid(String actorid) {
+	public void setActorid(Long actorid) {
 		this.actorid = actorid;
 	}
 
@@ -72,34 +72,29 @@ public class ServerPlayerEquip extends BaseEntity{
 
 	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("ServerPlayerEquip");
-		return build.append("#serverid:").append(this.serverid).append("#custno:").append(this.custno).append("#equipid:").append(this.equipid).toString();
+		return build.append("#peid:").append(this.peid).toString();
 	}
 
-    public static String buildEntityKey(String serverid, Long custno, String equipid){
+    public static String buildEntityKey(Long peid){
         StringBuilder build = new StringBuilder("ServerPlayerEquip");
-        return build.append("#serverid:").append(serverid).append("#custno:").append(custno).append("#equipid:").append(equipid).toString();
+        return build.append("#peid:").append(peid).toString();
     }
     
     public void copyPrimaryKey(ServerPlayerEquip entity){
-		this.serverid = entity.getServerid();
-		this.custno = entity.getCustno();
-		this.equipid = entity.getEquipid();
+		this.peid = entity.getPeid();
     }
 
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", peid=").append(peid);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", custno=").append(custno);
-		sb.append(", equipid=").append(equipid);
-		sb.append(", actorid=").append(actorid);
-		sb.append(", equiplevel=").append(equiplevel);
-		sb.append(", proficiency=").append(proficiency);
-        sb.append("]");
+		sb.append("peid=").append(peid).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("equipid=").append(equipid).append(", ");
+		sb.append("actorid=").append(actorid).append(", ");
+		sb.append("equiplevel=").append(equiplevel).append(", ");
+		sb.append("proficiency=").append(proficiency).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

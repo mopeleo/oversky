@@ -52,13 +52,10 @@ public class ComParam extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", paramid=").append(paramid);
-		sb.append(", paramvalue=").append(paramvalue);
-        sb.append("]");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("paramid=").append(paramid).append(", ");
+		sb.append("paramvalue=").append(paramvalue).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

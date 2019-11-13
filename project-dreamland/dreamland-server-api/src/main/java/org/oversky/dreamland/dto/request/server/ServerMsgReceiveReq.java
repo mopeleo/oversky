@@ -47,14 +47,11 @@ public class ServerMsgReceiveReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", msgid=").append(msgid);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", custno=").append(custno);
-		sb.append(", isread=").append(isread);
-        sb.append("]");
+		sb.append("msgid=").append(msgid).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("isread=").append(isread).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

@@ -3,7 +3,7 @@
 <mapper namespace="org.oversky.dreamland.dao.server.ServerPromotionDao">
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.server.ServerPromotion">
         <id column="serverid" jdbcType="VARCHAR" property="serverid" />
-        <id column="promid" jdbcType="INTEGER" property="promid" />
+        <id column="promid" jdbcType="DECIMAL" property="promid" />
         <result column="startdate" jdbcType="VARCHAR" property="startdate" />
         <result column="starttime" jdbcType="VARCHAR" property="starttime" />
         <result column="enddate" jdbcType="VARCHAR" property="enddate" />
@@ -12,14 +12,14 @@
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.server.ServerPromotion">
         insert into server_promotion (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{serverid, jdbcType=VARCHAR}, #{promid, jdbcType=INTEGER}, #{startdate, jdbcType=VARCHAR}, #{starttime, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{endtime, jdbcType=VARCHAR})
+        values (#{serverid, jdbcType=VARCHAR}, #{promid, jdbcType=DECIMAL}, #{startdate, jdbcType=VARCHAR}, #{starttime, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{endtime, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into server_promotion (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.serverid, jdbcType=VARCHAR}, #{item.promid, jdbcType=INTEGER}, #{item.startdate, jdbcType=VARCHAR}, #{item.starttime, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.endtime, jdbcType=VARCHAR})
+		(#{item.serverid, jdbcType=VARCHAR}, #{item.promid, jdbcType=DECIMAL}, #{item.startdate, jdbcType=VARCHAR}, #{item.starttime, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.endtime, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -62,7 +62,7 @@
                starttime = #{starttime, jdbcType=VARCHAR}, 
                enddate = #{enddate, jdbcType=VARCHAR}, 
                endtime = #{endtime, jdbcType=VARCHAR}
-		where serverid = #{serverid, jdbcType=VARCHAR} and promid = #{promid, jdbcType=INTEGER}
+		where serverid = #{serverid, jdbcType=VARCHAR} and promid = #{promid, jdbcType=DECIMAL}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.server.ServerPromotion">
@@ -81,7 +81,7 @@
 				endtime = #{endtime, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where serverid = #{serverid, jdbcType=VARCHAR} and promid = #{promid, jdbcType=INTEGER}
+		where serverid = #{serverid, jdbcType=VARCHAR} and promid = #{promid, jdbcType=DECIMAL}
 	</update>
 
 	<update id="dynamicUpdateWhere" parameterType="map">
@@ -114,7 +114,7 @@
 				and serverid = #{serverid, jdbcType=VARCHAR}
 			</if>
 			<if test="promid != null">
-				and promid = #{promid, jdbcType=INTEGER}
+				and promid = #{promid, jdbcType=DECIMAL}
 			</if>
 			<if test="startdate != null and startdate != ''">
 				and startdate = #{startdate, jdbcType=VARCHAR}
@@ -137,7 +137,7 @@
 				and serverid = #{condition.serverid, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.promid != null">
-				and promid = #{condition.promid, jdbcType=INTEGER}
+				and promid = #{condition.promid, jdbcType=DECIMAL}
 			</if>
 			<if test="condition.startdate != null and condition.startdate != ''">
 				and startdate = #{condition.startdate, jdbcType=VARCHAR}

@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface GameMeunInfoDao{
 
 	
-    GameMeunInfo getById(String menuid);
+    GameMeunInfo getById(Long menuid);
 
-    int deleteById(String menuid);
+    int deleteById(Long menuid);
 
     int updateById(GameMeunInfo entity);
 	
@@ -35,7 +35,7 @@ public interface GameMeunInfoDao{
 	int updateBatch(List<GameMeunInfo> entityList);
 	
 	
-	int deleteBatch(String[] ids);
+	int deleteBatch(Long[] ids);
 	
 	
 	int insertBatch(List<GameMeunInfo> entityList);

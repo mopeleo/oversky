@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface ServerLeagueInfoDao{
 
 	
-    ServerLeagueInfo getById(String leagueid);
+    ServerLeagueInfo getById(Long leagueid);
 
-    int deleteById(String leagueid);
+    int deleteById(Long leagueid);
 
     int updateById(ServerLeagueInfo entity);
 	
@@ -35,7 +35,7 @@ public interface ServerLeagueInfoDao{
 	int updateBatch(List<ServerLeagueInfo> entityList);
 	
 	
-	int deleteBatch(String[] ids);
+	int deleteBatch(Long[] ids);
 	
 	
 	int insertBatch(List<ServerLeagueInfo> entityList);

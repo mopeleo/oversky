@@ -96,18 +96,15 @@ public class SysMenu extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", menuid=").append(menuid);
-		sb.append(", menuname=").append(menuname);
-		sb.append(", menuurl=").append(menuurl);
-		sb.append(", parentmenu=").append(parentmenu);
-		sb.append(", menutype=").append(menutype);
-		sb.append(", accesstype=").append(accesstype);
-		sb.append(", status=").append(status);
-		sb.append(", menucss=").append(menucss);
-        sb.append("]");
+		sb.append("menuid=").append(menuid).append(", ");
+		sb.append("menuname=").append(menuname).append(", ");
+		sb.append("menuurl=").append(menuurl).append(", ");
+		sb.append("parentmenu=").append(parentmenu).append(", ");
+		sb.append("menutype=").append(menutype).append(", ");
+		sb.append("accesstype=").append(accesstype).append(", ");
+		sb.append("status=").append(status).append(", ");
+		sb.append("menucss=").append(menucss).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

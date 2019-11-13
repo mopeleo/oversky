@@ -92,5 +92,20 @@ public abstract class BaseReqDto implements Serializable{
 	public void setClientIp(String clientIp) {
 		this.clientIp = clientIp;
 	}
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+		sb.append("pageNum=").append(pageNum);
+		sb.append(", pageSize=").append(pageSize);
+		sb.append(", orderBy=").append(orderBy);
+		sb.append(", orderType=").append(orderType);
+		sb.append(", resourceId=").append(resourceId);
+		sb.append(", operator=").append(operator);
+		sb.append(", channelType=").append(channelType);
+		sb.append(", channelSno=").append(channelSno);
+		sb.append(", clientIp=").append(clientIp);
+        return sb.toString();
+	}
 }
 

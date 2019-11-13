@@ -56,15 +56,12 @@ public class ServerPlayerPackageRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", serverid=").append(serverid);
-		sb.append(", custno=").append(custno);
-		sb.append(", itemtype=").append(itemtype);
-		sb.append(", itemid=").append(itemid);
-		sb.append(", itemnum=").append(itemnum);
-        sb.append("]");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("itemtype=").append(itemtype).append(", ");
+		sb.append("itemid=").append(itemid).append(", ");
+		sb.append("itemnum=").append(itemnum).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

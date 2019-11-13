@@ -144,10 +144,7 @@ public class BasePage implements Serializable{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", index=").append(index);
+		sb.append("index=").append(index);
 		sb.append(", size=").append(size);
 		sb.append(", pageSize=").append(pageSize);
 		sb.append(", pageTotal=").append(pageTotal);
@@ -158,7 +155,6 @@ public class BasePage implements Serializable{
 		sb.append(", lastPage=").append(lastPage);
 		sb.append(", hasPrePage=").append(hasPrePage);
 		sb.append(", hasNextPage=").append(hasNextPage);
-        sb.append("]");
         return sb.toString();
 	}
 }

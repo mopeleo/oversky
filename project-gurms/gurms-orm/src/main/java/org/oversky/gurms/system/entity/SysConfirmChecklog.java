@@ -105,19 +105,16 @@ public class SysConfirmChecklog extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", logid=").append(logid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", datalog=").append(datalog);
-		sb.append(", checker=").append(checker);
-		sb.append(", checklevel=").append(checklevel);
-		sb.append(", checkdate=").append(checkdate);
-		sb.append(", checktime=").append(checktime);
-		sb.append(", status=").append(status);
-		sb.append(", summary=").append(summary);
-        sb.append("]");
+		sb.append("logid=").append(logid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("datalog=").append(datalog).append(", ");
+		sb.append("checker=").append(checker).append(", ");
+		sb.append("checklevel=").append(checklevel).append(", ");
+		sb.append("checkdate=").append(checkdate).append(", ");
+		sb.append("checktime=").append(checktime).append(", ");
+		sb.append("status=").append(status).append(", ");
+		sb.append("summary=").append(summary).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

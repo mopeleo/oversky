@@ -135,6 +135,18 @@ export function loadDict(keys, pageDict) {
 
 }
 
+export function loadComDict(keys, pageDict) {
+    api.Game.getDictMap(keys).then((res) => {
+        let results = res.results;
+        for (var p in results) {
+            pageDict[p] = results[p];
+        }
+    }).catch((err) => {
+        this.errTip(err);
+    });
+
+}
+
 export function getUnioncode() {
     let unioncode = '';
     let sessionUser = localStorage.getItem(PUBDEFINE.KEY_USER);

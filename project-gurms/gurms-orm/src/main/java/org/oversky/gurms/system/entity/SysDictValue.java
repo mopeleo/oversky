@@ -62,14 +62,11 @@ public class SysDictValue extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", dictcode=").append(dictcode);
-		sb.append(", itemcode=").append(itemcode);
-		sb.append(", itemname=").append(itemname);
-        sb.append("]");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("dictcode=").append(dictcode).append(", ");
+		sb.append("itemcode=").append(itemcode).append(", ");
+		sb.append("itemname=").append(itemname).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

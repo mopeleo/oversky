@@ -74,17 +74,14 @@ public class ServerBulletinRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", id=").append(id);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", title=").append(title);
-		sb.append(", content=").append(content);
-		sb.append(", startdate=").append(startdate);
-		sb.append(", enddate=").append(enddate);
-		sb.append(", issuer=").append(issuer);
-        sb.append("]");
+		sb.append("id=").append(id).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("title=").append(title).append(", ");
+		sb.append("content=").append(content).append(", ");
+		sb.append("startdate=").append(startdate).append(", ");
+		sb.append("enddate=").append(enddate).append(", ");
+		sb.append("issuer=").append(issuer).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

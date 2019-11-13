@@ -37,6 +37,8 @@ public class SysMenuServiceImpl implements SysMenuService {
 		SysMenu menu = menuDao.getById(menuId);
 		if(menu == null) {
 			res.failure("menuId不存在:" + menuId);
+			log.warn(res.getReturnmsg());
+			return res;
 		}else {
 			BeanCopyUtils.copy(menu, res);
 			res.setTree(tree);

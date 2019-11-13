@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.oversky.dreamland.dao.game.GameEquipInfoDao">
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameEquipInfo">
-        <id column="equipid" jdbcType="VARCHAR" property="equipid" />
+        <id column="equipid" jdbcType="DECIMAL" property="equipid" />
         <result column="equipname" jdbcType="VARCHAR" property="equipname" />
         <result column="icon" jdbcType="VARCHAR" property="icon" />
         <result column="position" jdbcType="VARCHAR" property="position" />
@@ -11,16 +11,16 @@
         <result column="remark" jdbcType="VARCHAR" property="remark" />
     </resultMap>
 
-    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
-        insert into game_equip_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{equipid, jdbcType=VARCHAR}, #{equipname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{position, jdbcType=VARCHAR}, #{grade, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{remark, jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo" useGeneratedKeys="true" keyProperty="equipid">
+        insert into game_equip_info (equipname, icon, position, grade, profession, remark)
+        values (#{equipname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{position, jdbcType=VARCHAR}, #{grade, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{remark, jdbcType=VARCHAR})
     </insert>
   
-	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
-		insert into game_equip_info (<include refid="column_list"><property name="tab" value=""/></include>) 
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="equipid">
+		insert into game_equip_info (equipname, icon, position, grade, profession, remark)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.equipid, jdbcType=VARCHAR}, #{item.equipname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.position, jdbcType=VARCHAR}, #{item.grade, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.remark, jdbcType=VARCHAR})
+        (#{item.equipname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.position, jdbcType=VARCHAR}, #{item.grade, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.remark, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -65,7 +65,7 @@
                grade = #{grade, jdbcType=VARCHAR}, 
                profession = #{profession, jdbcType=VARCHAR}, 
                remark = #{remark, jdbcType=VARCHAR}
-		where equipid = #{equipid, jdbcType=VARCHAR}
+		where equipid = #{equipid, jdbcType=DECIMAL}
     </update>
 
 	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameEquipInfo">
@@ -90,7 +90,7 @@
 				remark = #{remark, jdbcType=VARCHAR},
 		    </if>
 		</set>
-		where equipid = #{equipid, jdbcType=VARCHAR}
+		where equipid = #{equipid, jdbcType=DECIMAL}
 	</update>
 
 	<update id="dynamicUpdateWhere" parameterType="map">
@@ -202,8 +202,8 @@
 	
 	<sql id="where_all_list">
 		<where>
-			<if test="equipid != null and equipid != ''">
-				and equipid = #{equipid, jdbcType=VARCHAR}
+			<if test="equipid != null">
+				and equipid = #{equipid, jdbcType=DECIMAL}
 			</if>
 			<if test="equipname != null and equipname != ''">
 				and equipname = #{equipname, jdbcType=VARCHAR}
@@ -228,8 +228,8 @@
 
 	<sql id="where_all_list_criteria">
 		<where>
-			<if test="condition.equipid != null and condition.equipid != ''">
-				and equipid = #{condition.equipid, jdbcType=VARCHAR}
+			<if test="condition.equipid != null">
+				and equipid = #{condition.equipid, jdbcType=DECIMAL}
 			</if>
 			<if test="condition.equipname != null and condition.equipname != ''">
 				and equipname = #{condition.equipname, jdbcType=VARCHAR}

@@ -6,19 +6,9 @@ public class ComDictReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //
 	private Integer dictcode;    //字典代码
-	private String dictname;    //字典名称
 	private String itemcode;    //选项代码
-	private String itemvalue;    //选项值
-
-	public String getUnioncode() {
-		return this.unioncode;
-	}
-
-	public void setUnioncode(String unioncode) {
-		this.unioncode = unioncode;
-	}
+	private String itemname;    //选项值
 
 	public Integer getDictcode() {
 		return this.dictcode;
@@ -26,14 +16,6 @@ public class ComDictReq extends BaseReqDto {
 
 	public void setDictcode(Integer dictcode) {
 		this.dictcode = dictcode;
-	}
-
-	public String getDictname() {
-		return this.dictname;
-	}
-
-	public void setDictname(String dictname) {
-		this.dictname = dictname;
 	}
 
 	public String getItemcode() {
@@ -44,27 +26,22 @@ public class ComDictReq extends BaseReqDto {
 		this.itemcode = itemcode;
 	}
 
-	public String getItemvalue() {
-		return this.itemvalue;
+	public String getItemname() {
+		return this.itemname;
 	}
 
-	public void setItemvalue(String itemvalue) {
-		this.itemvalue = itemvalue;
+	public void setItemname(String itemname) {
+		this.itemname = itemname;
 	}
 
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", dictcode=").append(dictcode);
-		sb.append(", dictname=").append(dictname);
-		sb.append(", itemcode=").append(itemcode);
-		sb.append(", itemvalue=").append(itemvalue);
-        sb.append("]");
+		sb.append("dictcode=").append(dictcode).append(", ");
+		sb.append("itemcode=").append(itemcode).append(", ");
+		sb.append("itemname=").append(itemname).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

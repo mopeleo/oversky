@@ -29,12 +29,9 @@ public class GameSceneInfoReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", sceneid=").append(sceneid);
-		sb.append(", scenename=").append(scenename);
-        sb.append("]");
+		sb.append("sceneid=").append(sceneid).append(", ");
+		sb.append("scenename=").append(scenename).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

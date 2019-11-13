@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface GamePromotionInfoDao{
 
 	
-    GamePromotionInfo getById(Integer promid);
+    GamePromotionInfo getById(Long promid);
 
-    int deleteById(Integer promid);
+    int deleteById(Long promid);
 
     int updateById(GamePromotionInfo entity);
 	
@@ -35,7 +35,7 @@ public interface GamePromotionInfoDao{
 	int updateBatch(List<GamePromotionInfo> entityList);
 	
 	
-	int deleteBatch(Integer[] ids);
+	int deleteBatch(Long[] ids);
 	
 	
 	int insertBatch(List<GamePromotionInfo> entityList);

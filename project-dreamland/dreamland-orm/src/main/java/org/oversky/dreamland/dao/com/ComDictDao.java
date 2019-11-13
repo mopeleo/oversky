@@ -12,14 +12,14 @@ import org.springframework.cache.annotation.Caching;
 @CacheConfig(cacheNames = "ComDict")
 public interface ComDictDao{
 
-	@Cacheable(key = "T(org.oversky.dreamland.entity.com.ComDict).buildEntityKey(#p0,#p1,#p2)", unless = "#result == null")
-    ComDict getById(String unioncode, Integer dictcode, String itemcode);
+	@Cacheable(key = "T(org.oversky.dreamland.entity.com.ComDict).buildEntityKey(#p0,#p1)", unless = "#result == null")
+    ComDict getById(Integer dictcode, String itemcode);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),
-		@CacheEvict(key = "T(org.oversky.dreamland.entity.com.ComDict).buildEntityKey(#p0,#p1,#p2)", condition = "#result == 1")
+		@CacheEvict(key = "T(org.oversky.dreamland.entity.com.ComDict).buildEntityKey(#p0,#p1)", condition = "#result == 1")
 	})
-    int deleteById(String unioncode, Integer dictcode, String itemcode);
+    int deleteById(Integer dictcode, String itemcode);
 
 	@Caching(evict={
 		@CacheEvict(key = "'selectAll'", condition = "#result == 1"),

@@ -7,7 +7,7 @@ public class ServerPlayerEquipAttribute extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private Long peid;    //玩家装备ID
-	private String attrid;    //属性ID
+	private Long attrid;    //属性ID
 	private Double attrval;    //属性值
 
 	public Long getPeid() {
@@ -18,11 +18,11 @@ public class ServerPlayerEquipAttribute extends BaseEntity{
 		this.peid = peid;
 	}
 
-	public String getAttrid() {
+	public Long getAttrid() {
 		return this.attrid;
 	}
 
-	public void setAttrid(String attrid) {
+	public void setAttrid(Long attrid) {
 		this.attrid = attrid;
 	}
 
@@ -39,7 +39,7 @@ public class ServerPlayerEquipAttribute extends BaseEntity{
 		return build.append("#peid:").append(this.peid).append("#attrid:").append(this.attrid).toString();
 	}
 
-    public static String buildEntityKey(Long peid, String attrid){
+    public static String buildEntityKey(Long peid, Long attrid){
         StringBuilder build = new StringBuilder("ServerPlayerEquipAttribute");
         return build.append("#peid:").append(peid).append("#attrid:").append(attrid).toString();
     }
@@ -52,13 +52,10 @@ public class ServerPlayerEquipAttribute extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", peid=").append(peid);
-		sb.append(", attrid=").append(attrid);
-		sb.append(", attrval=").append(attrval);
-        sb.append("]");
+		sb.append("peid=").append(peid).append(", ");
+		sb.append("attrid=").append(attrid).append(", ");
+		sb.append("attrval=").append(attrval).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

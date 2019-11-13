@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface GameSceneInfoDao{
 
 	
-    GameSceneInfo getById(Integer sceneid);
+    GameSceneInfo getById(Long sceneid);
 
-    int deleteById(Integer sceneid);
+    int deleteById(Long sceneid);
 
     int updateById(GameSceneInfo entity);
 	
@@ -35,7 +35,7 @@ public interface GameSceneInfoDao{
 	int updateBatch(List<GameSceneInfo> entityList);
 	
 	
-	int deleteBatch(Integer[] ids);
+	int deleteBatch(Long[] ids);
 	
 	
 	int insertBatch(List<GameSceneInfo> entityList);

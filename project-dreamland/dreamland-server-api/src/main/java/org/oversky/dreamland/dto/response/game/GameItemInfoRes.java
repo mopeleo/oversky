@@ -65,16 +65,13 @@ public class GameItemInfoRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", itemid=").append(itemid);
-		sb.append(", itemname=").append(itemname);
-		sb.append(", icon=").append(icon);
-		sb.append(", itemtype=").append(itemtype);
-		sb.append(", grade=").append(grade);
-		sb.append(", remark=").append(remark);
-        sb.append("]");
+		sb.append("itemid=").append(itemid).append(", ");
+		sb.append("itemname=").append(itemname).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("itemtype=").append(itemtype).append(", ");
+		sb.append("grade=").append(grade).append(", ");
+		sb.append("remark=").append(remark).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

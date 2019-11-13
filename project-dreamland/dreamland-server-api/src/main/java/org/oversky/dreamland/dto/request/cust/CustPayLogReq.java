@@ -119,22 +119,19 @@ public class CustPayLogReq extends BaseReqDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", logid=").append(logid);
-		sb.append(", custno=").append(custno);
-		sb.append(", serverid=").append(serverid);
-		sb.append(", direction=").append(direction);
-		sb.append(", amt=").append(amt);
-		sb.append(", inacct=").append(inacct);
-		sb.append(", outacct=").append(outacct);
-		sb.append(", busitype=").append(busitype);
-		sb.append(", status=").append(status);
-		sb.append(", paydate=").append(paydate);
-		sb.append(", paytime=").append(paytime);
-		sb.append(", summary=").append(summary);
-        sb.append("]");
+		sb.append("logid=").append(logid).append(", ");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("serverid=").append(serverid).append(", ");
+		sb.append("direction=").append(direction).append(", ");
+		sb.append("amt=").append(amt).append(", ");
+		sb.append("inacct=").append(inacct).append(", ");
+		sb.append("outacct=").append(outacct).append(", ");
+		sb.append("busitype=").append(busitype).append(", ");
+		sb.append("status=").append(status).append(", ");
+		sb.append("paydate=").append(paydate).append(", ");
+		sb.append("paytime=").append(paytime).append(", ");
+		sb.append("summary=").append(summary).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

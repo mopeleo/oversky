@@ -6,19 +6,9 @@ public class ComDict extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String unioncode;    //
 	private Integer dictcode;    //字典代码
-	private String dictname;    //字典名称
 	private String itemcode;    //选项代码
-	private String itemvalue;    //选项值
-
-	public String getUnioncode() {
-		return this.unioncode;
-	}
-
-	public void setUnioncode(String unioncode) {
-		this.unioncode = unioncode;
-	}
+	private String itemname;    //选项值
 
 	public Integer getDictcode() {
 		return this.dictcode;
@@ -26,14 +16,6 @@ public class ComDict extends BaseEntity{
 
 	public void setDictcode(Integer dictcode) {
 		this.dictcode = dictcode;
-	}
-
-	public String getDictname() {
-		return this.dictname;
-	}
-
-	public void setDictname(String dictname) {
-		this.dictname = dictname;
 	}
 
 	public String getItemcode() {
@@ -44,26 +26,25 @@ public class ComDict extends BaseEntity{
 		this.itemcode = itemcode;
 	}
 
-	public String getItemvalue() {
-		return this.itemvalue;
+	public String getItemname() {
+		return this.itemname;
 	}
 
-	public void setItemvalue(String itemvalue) {
-		this.itemvalue = itemvalue;
+	public void setItemname(String itemname) {
+		this.itemname = itemname;
 	}
 
 	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("ComDict");
-		return build.append("#unioncode:").append(this.unioncode).append("#dictcode:").append(this.dictcode).append("#itemcode:").append(this.itemcode).toString();
+		return build.append("#dictcode:").append(this.dictcode).append("#itemcode:").append(this.itemcode).toString();
 	}
 
-    public static String buildEntityKey(String unioncode, Integer dictcode, String itemcode){
+    public static String buildEntityKey(Integer dictcode, String itemcode){
         StringBuilder build = new StringBuilder("ComDict");
-        return build.append("#unioncode:").append(unioncode).append("#dictcode:").append(dictcode).append("#itemcode:").append(itemcode).toString();
+        return build.append("#dictcode:").append(dictcode).append("#itemcode:").append(itemcode).toString();
     }
     
     public void copyPrimaryKey(ComDict entity){
-		this.unioncode = entity.getUnioncode();
 		this.dictcode = entity.getDictcode();
 		this.itemcode = entity.getItemcode();
     }
@@ -71,15 +52,10 @@ public class ComDict extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", dictcode=").append(dictcode);
-		sb.append(", dictname=").append(dictname);
-		sb.append(", itemcode=").append(itemcode);
-		sb.append(", itemvalue=").append(itemvalue);
-        sb.append("]");
+		sb.append("dictcode=").append(dictcode).append(", ");
+		sb.append("itemcode=").append(itemcode).append(", ");
+		sb.append("itemname=").append(itemname).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

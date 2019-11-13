@@ -6,16 +6,16 @@ public class GameMeunInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String menuid;    //
+	private Long menuid;    //[identity]
 	private String menuname;    //
 	private String icon;    //
 	private String url;    //
 
-	public String getMenuid() {
+	public Long getMenuid() {
 		return this.menuid;
 	}
 
-	public void setMenuid(String menuid) {
+	public void setMenuid(Long menuid) {
 		this.menuid = menuid;
 	}
 
@@ -48,7 +48,7 @@ public class GameMeunInfo extends BaseEntity{
 		return build.append("#menuid:").append(this.menuid).toString();
 	}
 
-    public static String buildEntityKey(String menuid){
+    public static String buildEntityKey(Long menuid){
         StringBuilder build = new StringBuilder("GameMeunInfo");
         return build.append("#menuid:").append(menuid).toString();
     }
@@ -60,14 +60,11 @@ public class GameMeunInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", menuid=").append(menuid);
-		sb.append(", menuname=").append(menuname);
-		sb.append(", icon=").append(icon);
-		sb.append(", url=").append(url);
-        sb.append("]");
+		sb.append("menuid=").append(menuid).append(", ");
+		sb.append("menuname=").append(menuname).append(", ");
+		sb.append("icon=").append(icon).append(", ");
+		sb.append("url=").append(url).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

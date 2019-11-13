@@ -123,21 +123,18 @@ public class SysUserActlog extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", logid=").append(logid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", userid=").append(userid);
-		sb.append(", menuid=").append(menuid);
-		sb.append(", requrl=").append(requrl);
-		sb.append(", reqmethod=").append(reqmethod);
-		sb.append(", reqdata=").append(reqdata);
-		sb.append(", actdate=").append(actdate);
-		sb.append(", acttime=").append(acttime);
-		sb.append(", accesstype=").append(accesstype);
-		sb.append(", ipaddress=").append(ipaddress);
-        sb.append("]");
+		sb.append("logid=").append(logid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("userid=").append(userid).append(", ");
+		sb.append("menuid=").append(menuid).append(", ");
+		sb.append("requrl=").append(requrl).append(", ");
+		sb.append("reqmethod=").append(reqmethod).append(", ");
+		sb.append("reqdata=").append(reqdata).append(", ");
+		sb.append("actdate=").append(actdate).append(", ");
+		sb.append("acttime=").append(acttime).append(", ");
+		sb.append("accesstype=").append(accesstype).append(", ");
+		sb.append("ipaddress=").append(ipaddress).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

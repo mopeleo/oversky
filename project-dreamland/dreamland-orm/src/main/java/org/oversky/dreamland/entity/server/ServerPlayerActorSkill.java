@@ -6,8 +6,8 @@ public class ServerPlayerActorSkill extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long paid;    //player actor id
-	private String skillid;    //
+	private Long paid;    //[identity]
+	private Long skillid;    //
 	private Integer skilllevel;    //
 
 	public Long getPaid() {
@@ -18,11 +18,11 @@ public class ServerPlayerActorSkill extends BaseEntity{
 		this.paid = paid;
 	}
 
-	public String getSkillid() {
+	public Long getSkillid() {
 		return this.skillid;
 	}
 
-	public void setSkillid(String skillid) {
+	public void setSkillid(Long skillid) {
 		this.skillid = skillid;
 	}
 
@@ -39,7 +39,7 @@ public class ServerPlayerActorSkill extends BaseEntity{
 		return build.append("#paid:").append(this.paid).append("#skillid:").append(this.skillid).toString();
 	}
 
-    public static String buildEntityKey(Long paid, String skillid){
+    public static String buildEntityKey(Long paid, Long skillid){
         StringBuilder build = new StringBuilder("ServerPlayerActorSkill");
         return build.append("#paid:").append(paid).append("#skillid:").append(skillid).toString();
     }
@@ -52,13 +52,10 @@ public class ServerPlayerActorSkill extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", paid=").append(paid);
-		sb.append(", skillid=").append(skillid);
-		sb.append(", skilllevel=").append(skilllevel);
-        sb.append("]");
+		sb.append("paid=").append(paid).append(", ");
+		sb.append("skillid=").append(skillid).append(", ");
+		sb.append("skilllevel=").append(skilllevel).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

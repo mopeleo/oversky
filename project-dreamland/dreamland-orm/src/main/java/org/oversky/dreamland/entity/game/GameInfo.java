@@ -6,7 +6,7 @@ public class GameInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long gameid;    //
+	private Long gameid;    //[identity]
 	private String unioncode;    //
 	private String gamecode;    //游戏代码
 	private String gamename;    //游戏名称
@@ -69,15 +69,12 @@ public class GameInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", gameid=").append(gameid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", gamecode=").append(gamecode);
-		sb.append(", gamename=").append(gamename);
-		sb.append(", fullname=").append(fullname);
-        sb.append("]");
+		sb.append("gameid=").append(gameid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("gamecode=").append(gamecode).append(", ");
+		sb.append("gamename=").append(gamename).append(", ");
+		sb.append("fullname=").append(fullname).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

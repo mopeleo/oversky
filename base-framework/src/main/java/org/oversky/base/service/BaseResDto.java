@@ -69,13 +69,9 @@ public class BaseResDto implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", returncode=").append(returncode);
+		sb.append("returncode=").append(returncode);
 		sb.append(", returnmsg=").append(returnmsg);
 		sb.append(", success=").append(success);
-        sb.append("]");
         return sb.toString();
 	}
 }

@@ -141,23 +141,20 @@ public class SysConfirmDatalog extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", logid=").append(logid);
-		sb.append(", unioncode=").append(unioncode);
-		sb.append(", confirmid=").append(confirmid);
-		sb.append(", edittype=").append(edittype);
-		sb.append(", dataid=").append(dataid);
-		sb.append(", fulldata=").append(fulldata);
-		sb.append(", extdata=").append(extdata);
-		sb.append(", editer=").append(editer);
-		sb.append(", editdate=").append(editdate);
-		sb.append(", edittime=").append(edittime);
-		sb.append(", currentstatus=").append(currentstatus);
-		sb.append(", currentlevel=").append(currentlevel);
-		sb.append(", endflag=").append(endflag);
-        sb.append("]");
+		sb.append("logid=").append(logid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
+		sb.append("confirmid=").append(confirmid).append(", ");
+		sb.append("edittype=").append(edittype).append(", ");
+		sb.append("dataid=").append(dataid).append(", ");
+		sb.append("fulldata=").append(fulldata).append(", ");
+		sb.append("extdata=").append(extdata).append(", ");
+		sb.append("editer=").append(editer).append(", ");
+		sb.append("editdate=").append(editdate).append(", ");
+		sb.append("edittime=").append(edittime).append(", ");
+		sb.append("currentstatus=").append(currentstatus).append(", ");
+		sb.append("currentlevel=").append(currentlevel).append(", ");
+		sb.append("endflag=").append(endflag).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

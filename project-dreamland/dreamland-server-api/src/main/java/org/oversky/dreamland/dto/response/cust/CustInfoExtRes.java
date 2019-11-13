@@ -119,22 +119,19 @@ public class CustInfoExtRes extends BaseResDto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", custno=").append(custno);
-		sb.append(", sex=").append(sex);
-		sb.append(", birthday=").append(birthday);
-		sb.append(", address=").append(address);
-		sb.append(", postcode=").append(postcode);
-		sb.append(", phone=").append(phone);
-		sb.append(", nationality=").append(nationality);
-		sb.append(", province=").append(province);
-		sb.append(", city=").append(city);
-		sb.append(", education=").append(education);
-		sb.append(", ethnicity=").append(ethnicity);
-		sb.append(", profession=").append(profession);
-        sb.append("]");
+		sb.append("custno=").append(custno).append(", ");
+		sb.append("sex=").append(sex).append(", ");
+		sb.append("birthday=").append(birthday).append(", ");
+		sb.append("address=").append(address).append(", ");
+		sb.append("postcode=").append(postcode).append(", ");
+		sb.append("phone=").append(phone).append(", ");
+		sb.append("nationality=").append(nationality).append(", ");
+		sb.append("province=").append(province).append(", ");
+		sb.append("city=").append(city).append(", ");
+		sb.append("education=").append(education).append(", ");
+		sb.append("ethnicity=").append(ethnicity).append(", ");
+		sb.append("profession=").append(profession).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

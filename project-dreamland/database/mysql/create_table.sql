@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/9 21:52:06                           */
+/* Created on:     2019/11/13 19:05:15                          */
 /*==============================================================*/
 
 
@@ -83,12 +83,10 @@ drop table if exists server_promotion;
 /*==============================================================*/
 create table com_dict
 (
-   unioncode            varchar(8) not null default '0000',
    dictcode             numeric(8,0) not null default 0 comment '字典代码',
-   dictname             varchar(8) not null comment '字典名称',
    itemcode             varchar(8) not null comment '选项代码',
-   itemvalue            varchar(64) not null comment '选项值',
-   primary key (dictcode, itemcode, unioncode)
+   itemname             varchar(64) not null comment '选项值',
+   primary key (dictcode, itemcode)
 );
 
 alter table com_dict comment '[cache]';
@@ -130,7 +128,7 @@ alter table com_param_info comment '[cache]';
 /*==============================================================*/
 create table cust_info
 (
-   custno               bigint not null default 0 comment '客户号，自动生成',
+   custno               bigint not null auto_increment comment '客户号，自动生成[identity]',
    unioncode            varchar(8) not null default '0000',
    custname             varchar(32) not null comment '客户名称',
    custtype             char(1) not null comment '客户类型，0，机构；1，个人',
@@ -180,7 +178,7 @@ alter table cust_info_ext comment ' 客户信息扩展表';
 /*==============================================================*/
 create table cust_pay_acct
 (
-   acctno               bigint not null default 0 comment '账户编号',
+   acctno               bigint not null auto_increment comment '账户编号[identity]',
    custno               bigint not null default 0,
    paytype              char(1) not null default '0' comment '支付方式，0，银行卡，1微信，2，支付宝',
    payno                varchar(32) not null comment '支付账号',
@@ -194,7 +192,7 @@ alter table cust_pay_acct comment '客户支付账户';
 /*==============================================================*/
 create table cust_pay_log
 (
-   logid                bigint not null default 0,
+   logid                bigint not null auto_increment comment '[identity]',
    custno               bigint not null default 0,
    serverid             char(8) not null,
    direction            char(1) not null default '0' comment '方向，0 支付，1，退款',
@@ -216,7 +214,7 @@ alter table cust_pay_log comment '客户支付流水';
 /*==============================================================*/
 create table game_actor_info
 (
-   actorid              varchar(16) not null comment '角色ID',
+   actorid              bigint not null auto_increment comment '角色ID[identity]',
    actorname            varchar(32) not null comment '角色名称',
    sex                  numeric(8,0) not null default 0 comment '性别',
    race                 char(1) not null default '0' comment '种族1-人类，2-兽人，3-精灵，4-影，5-机械，6-恶魔',
@@ -249,8 +247,8 @@ alter table game_actor_info comment '角色基本信息表';
 /*==============================================================*/
 create table game_actor_skill
 (
-   actorid              varchar(16) not null comment '角色ID',
-   skillid              varchar(16) not null comment '技能ID',
+   actorid              bigint not null comment '角色ID',
+   skillid              bigint not null comment '技能ID',
    unlocklevel          numeric(4,0) not null default 0 comment '解锁等级',
    extendflag           char(1) not null default '0' comment '是否可继承(0-否，1-是）',
    sno                  numeric(4,0) not null default 0 comment '排序号，从上到下，从小到大，小在上',
@@ -264,7 +262,7 @@ alter table game_actor_skill comment '角色技能表';
 /*==============================================================*/
 create table game_attribute_info
 (
-   attrid               bigint not null default 0 comment '属性ID',
+   attrid               bigint not null auto_increment comment '属性ID[identity]',
    attrtype             char(1) not null default '0' comment '属性类型（0-基本属性，1-附加属性，2-套装属性）',
    attrfield            numeric(4,0) not null default 0 comment '属性附加字段（0-力量，1-智力，2-hp,3-mp,4-敏捷，5-幸运，6-物攻，7-魔攻，8-物防，9-法防，10-攻速，11-闪避，12-暴击，13-技能等级）',
    unlockflag           char(1) not null default '0' comment '解锁条件，套装属性用',
@@ -285,7 +283,7 @@ alter table game_attribute_info comment '附加属性信息';
 /*==============================================================*/
 create table game_equip_info
 (
-   equipid              varchar(16) not null comment '装备ID',
+   equipid              bigint not null auto_increment comment '装备ID[identity]',
    equipname            varchar(32) not null comment '装备名称',
    icon                 varchar(32) not null comment '图标',
    position             char(1) not null default '0' comment '部位（1-武器，2-头饰，3-衣服，4-裤子，5-腰带，6-鞋子，7-项链，8-戒指）',
@@ -302,8 +300,8 @@ alter table game_equip_info comment '装备信息表';
 /*==============================================================*/
 create table game_equip_skill
 (
-   equipid              varchar(16) not null,
-   skillid              varchar(16) not null,
+   equipid              bigint not null,
+   skillid              bigint not null,
    proficiency          numeric(4,0) not null default 0 comment '解锁熟练度',
    sno                  numeric(4,0) not null default 0 comment '排序号，从上到下，从小到大，小在上',
    primary key (equipid, skillid)
@@ -316,7 +314,7 @@ alter table game_equip_skill comment '装备技能表';
 /*==============================================================*/
 create table game_info
 (
-   gameid               bigint not null,
+   gameid               bigint not null auto_increment comment '[identity]',
    unioncode            varchar(8) not null default '0000',
    gamecode             varchar(32) not null comment '游戏代码',
    gamename             varchar(32) not null comment '游戏名称',
@@ -331,7 +329,7 @@ alter table game_info comment '游戏信息表';
 /*==============================================================*/
 create table game_item_info
 (
-   itemid               varchar(16) not null comment '道具ID',
+   itemid               bigint not null auto_increment comment '道具ID[identity]',
    itemname             varchar(32) not null comment '道具名称',
    icon                 varchar(32) not null comment '图标',
    itemtype             char(1) not null default '0' comment '道具类型（0-加经验，1-加血，2-加mp，3-剧情道具）',
@@ -345,7 +343,7 @@ create table game_item_info
 /*==============================================================*/
 create table game_level_info
 (
-   levelid              numeric(8,0) not null default 0 comment '等级ID',
+   levelid              bigint not null auto_increment comment '等级ID[identity]',
    levelname            varchar(32) not null comment '等级名称',
    nextlevel            numeric(8,0) not null default 0 comment '下一等级',
    icon                 varchar(32) not null comment '等级图标',
@@ -361,7 +359,7 @@ create table game_level_info
 /*==============================================================*/
 create table game_meun_info
 (
-   menuid               varchar(8) not null,
+   menuid               bigint not null auto_increment comment '[identity]',
    menuname             varchar(32) not null,
    icon                 varchar(32) not null,
    url                  varchar(32) not null,
@@ -375,7 +373,7 @@ alter table game_meun_info comment '功能点菜单表';
 /*==============================================================*/
 create table game_promotion_info
 (
-   promid               numeric(8,0) not null default 0,
+   promid               bigint not null auto_increment,
    promname             varchar(32) not null,
    remark               varchar(256),
    primary key (promid)
@@ -388,7 +386,7 @@ alter table game_promotion_info comment '促销活动';
 /*==============================================================*/
 create table game_scene_info
 (
-   sceneid              numeric(8,0) not null default 0 comment '场景ID',
+   sceneid              bigint not null auto_increment comment '场景ID[identity]',
    scenename            varchar(32) not null comment '场景名称',
    primary key (sceneid)
 );
@@ -398,8 +396,8 @@ create table game_scene_info
 /*==============================================================*/
 create table game_scene_menu
 (
-   sceneid              numeric(8,0) not null default 0,
-   menuid               varchar(8) not null,
+   sceneid              bigint not null,
+   menuid               bigint not null,
    primary key (sceneid, menuid)
 );
 
@@ -408,7 +406,7 @@ create table game_scene_menu
 /*==============================================================*/
 create table game_skill_info
 (
-   skillid              varchar(16) not null comment '技能ID',
+   skillid              bigint not null auto_increment comment '技能ID[identity]',
    skillname            varchar(32) not null comment '技能名称',
    icon                 varchar(32) not null comment '技能图标',
    skilltype            char(1) not null default '0' comment '技能类型（0-角色，1-装备）',
@@ -436,8 +434,8 @@ alter table game_skill_info comment '技能信息表';
 /*==============================================================*/
 create table game_suit_equip
 (
-   suitid               varchar(16) not null,
-   equipid              varchar(16) not null,
+   suitid               bigint not null,
+   equipid              bigint not null,
    primary key (suitid, equipid)
 );
 
@@ -448,7 +446,7 @@ alter table game_suit_equip comment '套装装备关联表';
 /*==============================================================*/
 create table game_suit_info
 (
-   suitid               varchar(16) not null comment '套装ID',
+   suitid               bigint not null auto_increment comment '套装ID[identity]',
    suitname             varchar(32) not null comment '套装名称',
    profession           varchar(32) not null comment '适用职业，多个职业用逗号分隔',
    unlocklevel          numeric(4,0) not null default 0 comment '解锁等级',
@@ -463,7 +461,7 @@ alter table game_suit_info comment '套装信息表';
 /*==============================================================*/
 create table server_bulletin
 (
-   id                   bigint not null default 0,
+   id                   bigint not null auto_increment comment '[identity]',
    serverid             char(8) not null comment '服务器ID',
    title                varchar(32) not null comment '公告标题',
    content              varchar(1024) not null comment '公告内容',
@@ -496,7 +494,7 @@ create table server_info
 /*==============================================================*/
 create table server_league_info
 (
-   leagueid             varchar(32) not null,
+   leagueid             bigint not null auto_increment comment '[identity]',
    serverid             char(8) not null,
    leaguename           varchar(32) not null comment '联盟名称',
    maxleaguer           numeric(8,0) not null default 0 comment '最大成员数',
@@ -515,7 +513,7 @@ alter table server_league_info comment '联盟';
 /*==============================================================*/
 create table server_msg_receive
 (
-   msgid                bigint not null default 0 comment '消息ID',
+   msgid                bigint not null auto_increment comment '消息ID[identity]',
    serverid             char(8) not null,
    custno               bigint not null default 0 comment '客户号',
    isread               char(1) not null default '0' comment '已读标志',
@@ -529,7 +527,7 @@ alter table server_msg_receive comment '收到消息表';
 /*==============================================================*/
 create table server_msg_send
 (
-   msgid                bigint not null default 0 comment '消息ID',
+   msgid                bigint not null auto_increment comment '消息ID[identity]',
    serverid             char(8) not null,
    custno               bigint not null default 0 comment '作者',
    content              varchar(1024) not null comment '消息内容',
@@ -560,7 +558,7 @@ alter table server_param comment '服务器系统参数表';
 /*==============================================================*/
 create table server_player_actor
 (
-   paid                 bigint not null default 0 comment '自动生成，客户角色ID',
+   paid                 bigint not null auto_increment comment '自动生成，客户角色ID[identity]',
    serverid             char(8) not null,
    custno               bigint not null default 0,
    actorid              varchar(16) not null comment '角色ID',
@@ -595,8 +593,8 @@ alter table server_player_actor_favor comment '角色间好感度';
 /*==============================================================*/
 create table server_player_actor_skill
 (
-   paid                 bigint not null default 0 comment 'player actor id',
-   skillid              varchar(16) not null,
+   paid                 bigint not null default 0 comment '[identity]',
+   skillid              bigint not null,
    skilllevel           numeric(4,0) not null default 0,
    primary key (paid, skillid)
 );
@@ -606,14 +604,14 @@ create table server_player_actor_skill
 /*==============================================================*/
 create table server_player_equip
 (
-   peid                 bigint not null default 0 comment '自动生产的流水ID',
+   peid                 bigint not null default 0 comment '自动生产的流水ID[identity]',
    serverid             char(8) not null,
    custno               bigint not null default 0,
-   equipid              varchar(16) not null,
-   actorid              varchar(16) comment '若actorid为空，则放在背包，不为空，则装备在角色身上',
+   equipid              bigint not null,
+   actorid              bigint not null comment '若actorid为空，则放在背包，不为空，则装备在角色身上',
    equiplevel           numeric(4,0) not null default 0 comment '武器等级',
    proficiency          numeric(4,0) not null default 0 comment '武器熟练度',
-   primary key (serverid, custno, equipid)
+   primary key (peid)
 );
 
 alter table server_player_equip comment '服务器玩家装备表';
@@ -624,7 +622,7 @@ alter table server_player_equip comment '服务器玩家装备表';
 create table server_player_equip_attribute
 (
    peid                 bigint not null default 0 comment '玩家装备ID',
-   attrid               varchar(16) not null comment '属性ID',
+   attrid               bigint not null comment '属性ID',
    attrval              decimal(16,2) default 0.00 comment '属性值',
    primary key (peid, attrid)
 );
@@ -667,7 +665,7 @@ create table server_player_package
    serverid             char(8) not null,
    custno               bigint not null default 0,
    itemtype             char(1) not null default '0' comment '物品类型，0-道具，1-装备，2-技能',
-   itemid               varchar(16) not null comment '物品ID',
+   itemid               bigint not null comment '物品ID',
    itemnum              numeric(4,0) not null default 0 comment '物品数量',
    primary key (serverid, custno, itemid)
 );
@@ -680,7 +678,7 @@ alter table server_player_package comment '玩家包裹';
 create table server_promotion
 (
    serverid             char(8) not null,
-   promid               numeric(8,0) not null default 0,
+   promid               bigint not null,
    startdate            varchar(8) not null,
    starttime            varchar(6) not null,
    enddate              varchar(8) not null,

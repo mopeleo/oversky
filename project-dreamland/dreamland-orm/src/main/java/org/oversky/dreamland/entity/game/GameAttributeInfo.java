@@ -6,7 +6,7 @@ public class GameAttributeInfo extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private Long attrid;    //属性ID
+	private Long attrid;    //属性ID[identity]
 	private String attrtype;    //属性类型（0-基本属性，1-附加属性，2-套装属性）
 	private Integer attrfield;    //属性附加字段（0-力量，1-智力，2-hp,3-mp,4-敏捷，5-幸运，6-物攻，7-魔攻，8-物防，9-法防，10-攻速，11-闪避，12-暴击，13-技能等级）
 	private String unlockflag;    //解锁条件，套装属性用
@@ -123,21 +123,18 @@ public class GameAttributeInfo extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", attrid=").append(attrid);
-		sb.append(", attrtype=").append(attrtype);
-		sb.append(", attrfield=").append(attrfield);
-		sb.append(", unlockflag=").append(unlockflag);
-		sb.append(", extralact=").append(extralact);
-		sb.append(", extraltype=").append(extraltype);
-		sb.append(", extralmin=").append(extralmin);
-		sb.append(", extralmax=").append(extralmax);
-		sb.append(", initval=").append(initval);
-		sb.append(", upval=").append(upval);
-		sb.append(", position=").append(position);
-        sb.append("]");
+		sb.append("attrid=").append(attrid).append(", ");
+		sb.append("attrtype=").append(attrtype).append(", ");
+		sb.append("attrfield=").append(attrfield).append(", ");
+		sb.append("unlockflag=").append(unlockflag).append(", ");
+		sb.append("extralact=").append(extralact).append(", ");
+		sb.append("extraltype=").append(extraltype).append(", ");
+		sb.append("extralmin=").append(extralmin).append(", ");
+		sb.append("extralmax=").append(extralmax).append(", ");
+		sb.append("initval=").append(initval).append(", ");
+		sb.append("upval=").append(upval).append(", ");
+		sb.append("position=").append(position).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }

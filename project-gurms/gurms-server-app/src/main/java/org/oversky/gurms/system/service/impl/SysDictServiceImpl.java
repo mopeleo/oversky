@@ -128,7 +128,7 @@ public class SysDictServiceImpl implements SysDictService {
 				}
 				break;
 			default:
-				log.info("错误的字典类型 : type = {}", type);
+				log.warn("错误的字典类型 : type = {}", type);
 				break;
 		}
 		

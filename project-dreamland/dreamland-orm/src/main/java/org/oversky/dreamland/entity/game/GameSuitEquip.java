@@ -6,22 +6,22 @@ public class GameSuitEquip extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
-	private String suitid;    //
-	private String equipid;    //
+	private Long suitid;    //
+	private Long equipid;    //
 
-	public String getSuitid() {
+	public Long getSuitid() {
 		return this.suitid;
 	}
 
-	public void setSuitid(String suitid) {
+	public void setSuitid(Long suitid) {
 		this.suitid = suitid;
 	}
 
-	public String getEquipid() {
+	public Long getEquipid() {
 		return this.equipid;
 	}
 
-	public void setEquipid(String equipid) {
+	public void setEquipid(Long equipid) {
 		this.equipid = equipid;
 	}
 
@@ -30,7 +30,7 @@ public class GameSuitEquip extends BaseEntity{
 		return build.append("#suitid:").append(this.suitid).append("#equipid:").append(this.equipid).toString();
 	}
 
-    public static String buildEntityKey(String suitid, String equipid){
+    public static String buildEntityKey(Long suitid, Long equipid){
         StringBuilder build = new StringBuilder("GameSuitEquip");
         return build.append("#suitid:").append(suitid).append("#equipid:").append(equipid).toString();
     }
@@ -43,12 +43,9 @@ public class GameSuitEquip extends BaseEntity{
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", suitid=").append(suitid);
-		sb.append(", equipid=").append(equipid);
-        sb.append("]");
+		sb.append("suitid=").append(suitid).append(", ");
+		sb.append("equipid=").append(equipid).append(", ");
+        sb.append(super.toString());
         return sb.toString();
 	}
 }
