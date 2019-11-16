@@ -70,32 +70,32 @@ export default {
             });
         },
         handleReset() {
-            var unioncode = tools.getUnioncode();
-            this.$api.Gurms.paramReset(unioncode).then(res =>{
-                tools.succTip(res.returnmsg);
-                this.loadData();
-            }).catch((err)=>{
-                tools.errTip(err);
-            });
-        },
-        onSubmit() {
-            // paramList =  key1:value1;key2:value2
             tools.confirmTip("是否确定恢复出厂设置?", ()=>{
-                var paramList = '';
                 var unioncode = tools.getUnioncode();
-                for(var i = 0; i< this.tableData.length; i++){
-                    var param = this.tableData[i];
-                    paramList += param.paramid + ':' + param.value + ';';
-                }
-                if(paramList.length > 1){
-                    paramList = paramList.substring(0, paramList.length-1);
-                }
-                // alert(paramList);
-                this.$api.Gurms.paramUpdate(unioncode, paramList).then(res =>{
+                this.$api.Gurms.paramReset(unioncode).then(res =>{
                     tools.succTip(res.returnmsg);
+                    this.loadData();
                 }).catch((err)=>{
                     tools.errTip(err);
                 });
+            })
+        },
+        onSubmit() {
+            // paramList =  key1:value1;key2:value2
+            var paramList = '';
+            var unioncode = tools.getUnioncode();
+            for(var i = 0; i< this.tableData.length; i++){
+                var param = this.tableData[i];
+                paramList += param.paramid + ':' + param.value + ';';
+            }
+            if(paramList.length > 1){
+                paramList = paramList.substring(0, paramList.length-1);
+            }
+            // alert(paramList);
+            this.$api.Gurms.paramUpdate(unioncode, paramList).then(res =>{
+                tools.succTip(res.returnmsg);
+            }).catch((err)=>{
+                tools.errTip(err);
             });
         },
         onCancel(){

@@ -89,7 +89,7 @@ instance.interceptors.response.use(
     res => {
         if(res.status === 200){
             // tools.errTip(JSON.stringify(res));
-            if(res.data && (res.data === true || res.data.success === true)){
+            if(res.data && (res.data === true || res.data.returncode === PUBDEFINE.RETURN_CODE_SUCCESS)){
                 return Promise.resolve(res.data);
             }else{
                 return Promise.reject(res.data.returnmsg);

@@ -105,7 +105,7 @@ export default {
                         }
                     }
                     callAPI.then((res)=>{
-                        if(res.success === true){
+                        if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                             this.$router.back(-1);
                         }
                     }).catch((err)=>{

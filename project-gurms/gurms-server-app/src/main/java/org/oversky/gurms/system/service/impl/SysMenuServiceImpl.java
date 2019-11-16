@@ -46,6 +46,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 		if(tree) {
 			this.getSubMenus(res);
 		}
+		res.success();
 		return res;
 	}
 
@@ -55,11 +56,12 @@ public class SysMenuServiceImpl implements SysMenuService {
 		log.info("开始查询整个菜单树信息...");
 		SysMenuRes root = new SysMenuRes();
 		getSubMenus(root);
+		root.success();
 		return root;
 	}
 	
 	@Override
-	@Cacheable(key = "'getMenuByUrl-' + #p0")
+	@Cacheable(key = "'getMenuByUrl_' + #p0")
 	public SysMenuRes getMenuByUrl(String url) {
 		log.info("根据url={}查找菜单...", url);
 		SysMenu menu = new SysMenu();
@@ -71,6 +73,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 			menu = menus.get(0);
 			res = new SysMenuRes();
 			BeanCopyUtils.copy(menu, res);
+			res.success();
 		}
 		return res;
 	}
@@ -84,6 +87,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 		List<SysMenu> userMenus = userRightDao.getUserMenus(userId);
 		this.createMenuTree(root, userMenus);
+		root.success();
 		return root;
 	}
 
@@ -96,6 +100,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 		List<SysMenu> userMenus = userRightDao.getRoleMenus(roleId);
 		this.createMenuTree(root, userMenus);
+		root.success();
 		return root;
 	}
 	

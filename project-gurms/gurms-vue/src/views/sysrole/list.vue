@@ -305,7 +305,7 @@ export default{
                     }
                     callAPI.then((res)=>{
                         tools.succTip(res.returnmsg);
-                        if(res.success === true){
+                        if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                             this.dialogFormVisible = false;
                             this.$options.methods.loadData.bind(this)();
                         }

@@ -27,7 +27,6 @@ public class GlobalExceptionHandler {
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
 		restfulResult.setReturnmsg(e.getMessage());
-		restfulResult.setSuccess(false);
 		return ResponseEntity.status(e.getHttpStatus()).body(restfulResult);
 	}
 
@@ -37,7 +36,6 @@ public class GlobalExceptionHandler {
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
 		restfulResult.setReturnmsg(e.getMessage());
-		restfulResult.setSuccess(false);
 		return ResponseEntity.status(HttpStatus.OK).body(restfulResult);
 	}
 
@@ -47,7 +45,6 @@ public class GlobalExceptionHandler {
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
 		restfulResult.setReturnmsg(e.getMessage());
-		restfulResult.setSuccess(false);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(restfulResult);
 	}
 
@@ -57,7 +54,6 @@ public class GlobalExceptionHandler {
 		BaseResDto restfulResult = new BaseResDto();
 		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
 		restfulResult.setReturnmsg("用户token已过期，请重新登录");
-		restfulResult.setSuccess(false);
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(restfulResult);
 	}
 
@@ -71,7 +67,6 @@ public class GlobalExceptionHandler {
 			msg = "服务器发生未知错误异常";
 		}
 		restfulResult.setReturnmsg(msg);
-		restfulResult.setSuccess(false);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(restfulResult);
 	}
 

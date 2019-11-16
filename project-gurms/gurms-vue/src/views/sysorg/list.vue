@@ -244,7 +244,7 @@ export default {
             tools.confirmTip(confirm_msg, () => {
                 this.$api.Gurms.orgDelete(data).then((res) => {
                     tools.succTip(res.returnmsg);
-                    if (res.success === true) {
+                    if (res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS) {
                         this.loadOrgTree();
                         this.initOrgInfo();
                     }
@@ -273,7 +273,7 @@ export default {
                     let that = this;
                     callAPI.then((res) => {
                         tools.succTip(res.returnmsg);
-                        if (res.success === true) {
+                        if (res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS) {
                             that.loadOrgTree();
                             that.initOrgInfo();
                         }

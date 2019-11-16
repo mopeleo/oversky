@@ -88,6 +88,7 @@ public class SysUserServiceImpl implements SysUserService{
 		user.setLoginpasswd(BizFunc.encryptPassword(md5Password, user.getSalt()));
 		sysUserDao.insert(user);
 		
+		res.success("新增用户成功");
 		log.info("新增用户结束 : {}", res.getReturnmsg());
 		return res;
 	}
@@ -151,6 +152,7 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
 		sysUserDao.dynamicUpdateById(user);
+		res.success("修改用户成功");
 		log.info("修改用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
 		return res;
 	}
@@ -302,6 +304,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}else {
 			BeanCopyUtils.copy(user, res);
+			res.success();
 		}
 		log.info("查询用户[userid={}]结束: {}", userid, res.getReturnmsg());
 		return res;
@@ -319,6 +322,7 @@ public class SysUserServiceImpl implements SysUserService{
 		}
 		
 		BeanCopyUtils.copy(user, res);
+		res.success();
 		log.info("查询用户[userid={}]详细信息结束: {}", userid, res.getReturnmsg());
 		return res;
 	}
@@ -340,7 +344,7 @@ public class SysUserServiceImpl implements SysUserService{
 		where.setUserid(userReq.getUserid());
 		userRoleDao.deleteWhere(where);
 		//插入新的role
-		if(userReq.getRoleList() != null) {
+		if(StringUtils.isNotEmpty(userReq.getRoleList())) {
 			String[] roles = userReq.getRoleList().split(",");
 			List<SysUserRole> userRoles = new ArrayList<SysUserRole>();
 			for(String roleid : roles) {
@@ -354,6 +358,7 @@ public class SysUserServiceImpl implements SysUserService{
 				throw new BaseServiceException("用户[" + userReq.getUserid() + "]授权失败");
 			}
 		}
+		res.success("用户授权成功");
 		log.info("授权用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
 		return res;
 	}

@@ -9,8 +9,13 @@ public class BaseResListDto<T> extends BaseResDto{
 	private List<T> results;
 	
 	//分页相关
-	private boolean enablePage = false;
+	private boolean enablePage;
 	private BasePage page;
+	
+	public BaseResListDto () {
+		super();
+		super.success();
+	}
 	
 	public List<T> getResults() {
 		return results;

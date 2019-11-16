@@ -5,6 +5,9 @@ package org.oversky.base.service;
  * 继承自RuntimeException,会触发Spring的事务管理引起事务回退.
  */
 public class BaseServiceException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
 	public BaseServiceException() {
 		super();
 	}

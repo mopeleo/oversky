@@ -88,6 +88,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 		CustInfoExt custExt = BeanCopyUtils.convert(custReq, CustInfoExt.class);
 		custExt.setCustno(cust.getCustno());
 		custInfoExtDao.insert(custExt);
+		res.success("新增用户成功");
 		log.info("新增用户结束 : {}", res.getReturnmsg());
 		return res;
 	}
@@ -114,6 +115,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 		custExt.setCustno(cust.getCustno());
 		custInfoExtDao.dynamicUpdateById(custExt);
 
+		res.success("修改成功");
 		log.info("修改用户[custno={}]结束: {}", custReq.getCustno(), res.getReturnmsg());
 		return res;
 	}
@@ -133,6 +135,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 		BeanCopyUtils.copy(custInfo, res);
 		if(custExt != null) {
 			BeanCopyUtils.copy(custExt, res);
+			res.success();
 		}
 		log.info("查询客户信息[custno={}]结束: {}", custno, res.getReturnmsg());
 		return res;

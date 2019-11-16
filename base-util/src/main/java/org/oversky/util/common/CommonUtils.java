@@ -58,5 +58,9 @@ public class CommonUtils {
 		}
 		return false;
 	}
+	
+	public static boolean isTrue(Boolean flag) {
+		return flag == null ? false : flag;
+	}
 
 }

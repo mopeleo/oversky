@@ -126,16 +126,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 			BeanCopyUtils.copy(role, res);
 			String menuList = getElementUIMenuList(roleid);
 			res.setMenulist(menuList);
+			res.success();
 		}
 		log.info("查询角色[roleid={}]结束: {}", roleid, res.getReturnmsg());
-		return res;
-	}
-
-	@Override
-	public SysRoleRes freshUser(SysRoleReq roleReq) {
-		log.info("开始更新角色[roleid={}]的用户...", roleReq.getRoleid());
-		SysRoleRes res = new SysRoleRes();
-		log.info("更新角色[roleid={}]的用户结束: {}", roleReq.getRoleid(), res.getReturnmsg());
 		return res;
 	}
 
@@ -164,6 +157,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 		log.info("开始分页查询角色信息...");
 		Page<SysRole> page = PageHelper.startPage(roleReq.getPageNum(), roleReq.getPageSize());
 		SysRole where = BeanCopyUtils.convert(roleReq, SysRole.class);
+		if(StringUtils.isEmpty(where.getCreator())) {
+			where.setCreator(roleReq.getOperator());
+		}
 		List<SysRole> roleList = pageQueryDao.findRoles(where);
 		List<SysRoleRes> roleResList = BeanCopyUtils.convertList(roleList, SysRoleRes.class);
 		

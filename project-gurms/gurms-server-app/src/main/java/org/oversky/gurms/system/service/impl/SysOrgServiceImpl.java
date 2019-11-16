@@ -200,6 +200,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 			return res;
 		}else {
 			BeanCopyUtils.copy(org, res);
+			res.success();
 		}
 		log.info("查询机构[orgid={}]结束: {}", orgid, res.getReturnmsg());
 		return res;
@@ -211,6 +212,7 @@ public class SysOrgServiceImpl implements SysOrgService {
 		SysOrg org = orgDao.getById(user.getOrgid());
 		SysOrgRes res = BeanCopyUtils.convert(org, SysOrgRes.class);
 		this.createOrgTree(res);
+		res.success();
 		return res;
 	}
 	

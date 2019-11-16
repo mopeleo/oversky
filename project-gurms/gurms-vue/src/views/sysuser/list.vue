@@ -456,7 +456,7 @@ export default{
         freezeUser(userInfo){
             this.$api.Gurms.userFreeze(userInfo).then(res =>{
                 tools.succTip(res.returnmsg);
-                if(res.success === true){
+                if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                     userInfo.status ='3';
                 }
             }).catch((err)=>{
@@ -466,7 +466,7 @@ export default{
         unfreezeUser(userInfo){
             this.$api.Gurms.userUnfreeze(userInfo).then(res =>{
                 tools.succTip(res.returnmsg);
-                if(res.success === true){
+                if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                     userInfo.status ='1';
                 }
             }).catch((err)=>{
@@ -479,7 +479,7 @@ export default{
             }
             this.$api.Gurms.userGrantRoles(this.sysuser).then(res =>{
                 tools.succTip(res.returnmsg);
-                if(res.success === true){
+                if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                     this.dialogGrantRole = false;
                     this.selectRoles = [];
                 }
@@ -555,7 +555,7 @@ export default{
                     }
                     callAPI.then((res)=>{
                         tools.succTip(res.returnmsg);
-                        if(res.success === true){
+                        if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                             // this.dialogFormVisible = true;
                             this.userDetailDrawer = false;
                             this.$options.methods.loadData.bind(this)();

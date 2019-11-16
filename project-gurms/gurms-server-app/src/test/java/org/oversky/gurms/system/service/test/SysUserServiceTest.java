@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.oversky.base.constant.PubDefine;
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.gurms.system.dao.SysUserDao;
 import org.oversky.gurms.system.dto.request.SysUserReq;
@@ -46,7 +47,8 @@ public class SysUserServiceTest {
 		userDto.setStatus("1");
 		userDto.setUnioncode("0000");
 		userDto.setUsername("test");
-		boolean flag = sysUserService.insert(userDto).isSuccess();
+		SysUserRes res = sysUserService.insert(userDto);
+		boolean flag = PubDefine.RETCODE_SUCCESS.equals(res.getReturncode());
 		Assert.assertEquals(true, flag);
 	}
 	

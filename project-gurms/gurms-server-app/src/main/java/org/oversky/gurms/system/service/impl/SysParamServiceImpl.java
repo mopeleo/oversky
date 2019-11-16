@@ -62,8 +62,14 @@ public class SysParamServiceImpl implements SysParamService {
 		if(param == null) {
 			log.error("系统参数不存在，paramId = {}", paramId);
 			throw new BaseServiceException("错误的系统参数 : " + paramId);
-		}			
-		return BeanCopyUtils.convert(param, SysParamRes.class);
+		}
+		
+		SysParamRes res = new SysParamRes();
+		BeanCopyUtils.copy(param, res);
+		res.success();
+		
+		log.info("查询单个参数 : unioncode = {}, paramId = {}成功" , unioncode, paramId);
+		return res;
 	}
 
 	@Override
@@ -114,6 +120,7 @@ public class SysParamServiceImpl implements SysParamService {
 		}
 		paramDao.insertBatch(paramList);
 		
+		res.success("恢复出厂设置成功");
 		log.info("重置unioncode = {}参数 : [{}] 条" , unioncode, num);
 		return res;
 	}
@@ -180,6 +187,7 @@ public class SysParamServiceImpl implements SysParamService {
 		
 		paramDao.insertBatch(sysParamList);
 		log.info("修改unioncode = {}全部参数成功" , paramReq.getUnioncode());
+		res.success("修改参数成功");
 		return res;		
 	}
 }

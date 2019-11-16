@@ -99,14 +99,14 @@ public class SysMenuRes extends BaseResDto {
 		this.status = status;
 	}
 
-	public String getMenuIdList() {
+	public String createMenuIdList() {
 		StringBuffer sb = new StringBuffer();
 		if(this.getMenuid() != null && !this.getMenuid().equals("")) {
 			sb.append(this.getMenuid()).append(",");
 		}
 		if(this.getSubMenus() != null && !this.getSubMenus().isEmpty()) {
 			for(SysMenuRes menu : this.getSubMenus()) {
-				sb.append(menu.getMenuIdList()).append(",");
+				sb.append(menu.createMenuIdList()).append(",");
 			}
 		}
 		String list = sb.toString();
@@ -119,16 +119,13 @@ public class SysMenuRes extends BaseResDto {
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", menuid=").append(menuid);
+		sb.append("menuid=").append(menuid);
 		sb.append(", menuname=").append(menuname);
 		sb.append(", menuurl=").append(menuurl);
 		sb.append(", parentmenu=").append(parentmenu);
 		sb.append(", status=").append(status);
 		sb.append(", menutype=").append(menutype);
-        sb.append("]");
+        sb.append("," + super.toString());
         return sb.toString();
 	}
 }

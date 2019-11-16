@@ -43,6 +43,7 @@ public class SysSnoServiceImpl implements SysSnoService {
 			return res;
 		}else {
 			BeanCopyUtils.copy(sno, res);
+			res.success();
 		}
 		log.info("查询序列[unioncode={}, snoid={}]结束: {}", unioncode, snoid, res.getReturnmsg());
 		return res;

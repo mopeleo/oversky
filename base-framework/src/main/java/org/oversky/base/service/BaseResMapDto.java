@@ -9,6 +9,11 @@ public class BaseResMapDto<K, V> extends BaseResDto{
 	
 	private Map<K, V> results = new HashMap<>();
 	
+	public BaseResMapDto() {
+		super();
+		super.success();
+	}
+	
 	public Map<K, V> getResults() {
 		return results;
 	}
@@ -22,10 +27,4 @@ public class BaseResMapDto<K, V> extends BaseResDto{
 		return results.get(key);
 	}
 	
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-        return sb.toString();
-	}
 }

@@ -3,6 +3,7 @@ package org.oversky.gurms.system.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.oversky.base.constant.PubDefine;
 import org.oversky.common.jwt.JwtTokenUtil;
 import org.oversky.gurms.system.component.BizFunc;
 import org.oversky.gurms.system.constant.DictConsts;
@@ -122,7 +123,7 @@ public class LoginServiceImpl implements LoginService{
 		log.setLoginip(user.getClientIp());
 		log.setUserid(user.getUserid());
 		log.setSummary(res.getReturnmsg());
-		if(res.isSuccess()) {
+		if(PubDefine.RETCODE_SUCCESS.equals(res.getReturncode())) {
 			log.setLoginresult(DictConsts.DICT1017_SUCCESS);
 		}else {
 			log.setLoginresult(DictConsts.DICT1017_FAILURE);
@@ -152,12 +153,10 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public String getJWToken(UserLoginRes userInfo) {
 		UserLoginRes payload = new UserLoginRes();
-		payload.clear();
-		payload.setSuccess(true);
 		payload.setUnioncode(userInfo.getUnioncode());
 		payload.setUserid(userInfo.getUserid());
 		if(userInfo.getMenuTree() != null) {
-			payload.setToken(userInfo.getMenuTree().getMenuIdList());
+			payload.setToken(userInfo.getMenuTree().createMenuIdList());
 		}		
 		String payloadString = JacksonUtils.bean2JsonIgnoreNull(payload);
 
