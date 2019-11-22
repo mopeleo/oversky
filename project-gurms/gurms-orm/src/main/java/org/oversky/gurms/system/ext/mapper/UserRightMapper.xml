@@ -82,12 +82,4 @@
 		 where a.roleid = b.roleid and b.userid = #{m_userid} 
     </select>
   
-
-    <select id="getUserCanGrantRoles" resultMap="org.oversky.gurms.system.dao.SysRoleDao.BaseResultMap">
-		select distinct <include refid="org.oversky.gurms.system.dao.SysRoleDao.column_list"><property name="tab" value="a."/></include>
-		  from sys_role a
-		 where a.unioncode=#{unioncode} and a.status='1' and ( a.creator = #{userid} or a.roletype='0' 
-		 	or exists(select 1 from sys_user_role b where a.roleid=b.roleid and b.userid=#{userid}) )
-    </select>
-  
 </mapper>

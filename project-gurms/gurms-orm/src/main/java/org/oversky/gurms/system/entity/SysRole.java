@@ -10,7 +10,6 @@ public class SysRole extends BaseEntity{
 	private String unioncode;    //
 	private String rolename;    //角色名称
 	private String status;    //角色状态，0-无效，1-有效
-	private String roletype;    //角色类型，0-公共，1-私有
 	private String startdate;    //角色生效日期
 	private String enddate;    //角色失效日期
 	private String belong;    //归属（预留，机构，角色组等）
@@ -46,14 +45,6 @@ public class SysRole extends BaseEntity{
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getRoletype() {
-		return this.roletype;
-	}
-
-	public void setRoletype(String roletype) {
-		this.roletype = roletype;
 	}
 
 	public String getStartdate() {
@@ -109,7 +100,6 @@ public class SysRole extends BaseEntity{
 		sb.append("unioncode=").append(unioncode).append(", ");
 		sb.append("rolename=").append(rolename).append(", ");
 		sb.append("status=").append(status).append(", ");
-		sb.append("roletype=").append(roletype).append(", ");
 		sb.append("startdate=").append(startdate).append(", ");
 		sb.append("enddate=").append(enddate).append(", ");
 		sb.append("belong=").append(belong).append(", ");

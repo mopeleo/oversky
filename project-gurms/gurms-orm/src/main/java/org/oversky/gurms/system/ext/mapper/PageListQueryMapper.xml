@@ -39,15 +39,12 @@
 			<if test="unioncode != null and unioncode != ''">
 				and a.unioncode = #{unioncode}
 			</if>
-			<if test="status != null and status != ''">
+			<if test="status != null">
 				and a.status = #{status}
 			</if>
 			<if test="rolename != null and rolename != ''">
 				<bind name="_rolename" value="'%' + rolename + '%'"/>
 				and a.rolename like #{_rolename}
-			</if>
-			<if test="true">
-				and a.roletype = '0' or (a.roletype='1' and a.creator = #{creator})
 			</if>
 		</where>
     </select>

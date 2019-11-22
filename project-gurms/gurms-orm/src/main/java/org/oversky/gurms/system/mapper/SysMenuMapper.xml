@@ -3,6 +3,7 @@
 <mapper namespace="org.oversky.gurms.system.dao.SysMenuDao">
     <resultMap id="BaseResultMap" type="org.oversky.gurms.system.entity.SysMenu">
         <id column="menuid" jdbcType="VARCHAR" property="menuid" />
+        <result column="sysid" jdbcType="INTEGER" property="sysid" />
         <result column="menuname" jdbcType="VARCHAR" property="menuname" />
         <result column="menuurl" jdbcType="VARCHAR" property="menuurl" />
         <result column="parentmenu" jdbcType="VARCHAR" property="parentmenu" />
@@ -14,14 +15,14 @@
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysMenu">
         insert into sys_menu (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{menuid, jdbcType=VARCHAR}, #{menuname, jdbcType=VARCHAR}, #{menuurl, jdbcType=VARCHAR}, #{parentmenu, jdbcType=VARCHAR}, #{menutype, jdbcType=VARCHAR}, #{accesstype, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{menucss, jdbcType=VARCHAR})
+        values (#{menuid, jdbcType=VARCHAR}, #{sysid, jdbcType=INTEGER}, #{menuname, jdbcType=VARCHAR}, #{menuurl, jdbcType=VARCHAR}, #{parentmenu, jdbcType=VARCHAR}, #{menutype, jdbcType=VARCHAR}, #{accesstype, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{menucss, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into sys_menu (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.menuid, jdbcType=VARCHAR}, #{item.menuname, jdbcType=VARCHAR}, #{item.menuurl, jdbcType=VARCHAR}, #{item.parentmenu, jdbcType=VARCHAR}, #{item.menutype, jdbcType=VARCHAR}, #{item.accesstype, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.menucss, jdbcType=VARCHAR})
+		(#{item.menuid, jdbcType=VARCHAR}, #{item.sysid, jdbcType=INTEGER}, #{item.menuname, jdbcType=VARCHAR}, #{item.menuurl, jdbcType=VARCHAR}, #{item.parentmenu, jdbcType=VARCHAR}, #{item.menutype, jdbcType=VARCHAR}, #{item.accesstype, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.menucss, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -60,6 +61,7 @@
   
     <update id="updateById" parameterType="org.oversky.gurms.system.entity.SysMenu">
         update sys_menu set 
+               sysid = #{sysid, jdbcType=INTEGER}, 
                menuname = #{menuname, jdbcType=VARCHAR}, 
                menuurl = #{menuurl, jdbcType=VARCHAR}, 
                parentmenu = #{parentmenu, jdbcType=VARCHAR}, 
@@ -73,6 +75,9 @@
 	<update id="dynamicUpdateById" parameterType="org.oversky.gurms.system.entity.SysMenu">
 		update sys_menu
 		<set>
+		    <if test="sysid != null">
+				sysid = #{sysid, jdbcType=INTEGER},
+		    </if>
 		    <if test="menuname != null">
 				menuname = #{menuname, jdbcType=VARCHAR},
 		    </if>
@@ -101,6 +106,9 @@
 	<update id="dynamicUpdateWhere" parameterType="map">
 		update sys_menu
 		<set>
+		    <if test="field.sysid != null">
+				sysid = #{field.sysid, jdbcType=INTEGER},
+		    </if>
 		    <if test="field.menuname != null and field.menuname != ''">
 				menuname = #{field.menuname, jdbcType=VARCHAR},
 		    </if>
@@ -129,6 +137,16 @@
 	<update id="updateBatch" parameterType="java.util.List">
 	    update sys_menu
 	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="sysid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.sysid != null">
+	                    when menuid = #{item.menuid} then #{item.sysid, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.sysid == null">
+	                    when menuid = #{item.menuid} then sysid
+	                </if>
+	            </foreach>
+	        </trim>
 	        <trim prefix="menuname = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.menuname != null">
@@ -215,13 +233,16 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}menuid, ${tab}menuname, ${tab}menuurl, ${tab}parentmenu, ${tab}menutype, ${tab}accesstype, ${tab}status, ${tab}menucss
+        ${tab}menuid, ${tab}sysid, ${tab}menuname, ${tab}menuurl, ${tab}parentmenu, ${tab}menutype, ${tab}accesstype, ${tab}status, ${tab}menucss
 	</sql>
 	
 	<sql id="where_all_list">
 		<where>
 			<if test="menuid != null and menuid != ''">
 				and menuid = #{menuid, jdbcType=VARCHAR}
+			</if>
+			<if test="sysid != null">
+				and sysid = #{sysid, jdbcType=INTEGER}
 			</if>
 			<if test="menuname != null and menuname != ''">
 				and menuname = #{menuname, jdbcType=VARCHAR}
@@ -251,6 +272,9 @@
 		<where>
 			<if test="condition.menuid != null and condition.menuid != ''">
 				and menuid = #{condition.menuid, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.sysid != null">
+				and sysid = #{condition.sysid, jdbcType=INTEGER}
 			</if>
 			<if test="condition.menuname != null and condition.menuname != ''">
 				and menuname = #{condition.menuname, jdbcType=VARCHAR}

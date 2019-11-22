@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseServiceException;
+import org.oversky.gurms.system.constant.ParamConsts;
 import org.oversky.gurms.system.dao.SysRoleDao;
 import org.oversky.gurms.system.dao.SysRoleMenuDao;
 import org.oversky.gurms.system.dao.SysUserRoleDao;
@@ -133,8 +134,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
-	public BaseResListDto<SysRoleRes> getCanGrantRoles(Long userid, String unioncode) {
-		List<SysRole> roles = userRightDao.getUserCanGrantRoles(userid, unioncode);
+	public BaseResListDto<SysRoleRes> getCanGrantRoles(String unioncode) {
+		SysRole where = new SysRole();
+		where.setUnioncode(unioncode);
+		List<SysRole> roles = roleDao.selectWhere(where);
 		List<SysRoleRes> roleResList = BeanCopyUtils.convertList(roles, SysRoleRes.class);
 		BaseResListDto<SysRoleRes> resList = new BaseResListDto<SysRoleRes>();
 		resList.setResults(roleResList);
@@ -155,15 +158,21 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Override
 	public BaseResListDto<SysRoleRes> pageSysRole(SysRoleReq roleReq) {
 		log.info("开始分页查询角色信息...");
+		BaseResListDto<SysRoleRes> resList = new BaseResListDto<SysRoleRes>();
+		if(StringUtils.isEmpty(roleReq.getUnioncode())) {
+			resList.failure("unioncode不能为空");
+			log.warn("分页查询角色失败 : {}", resList.getReturnmsg());
+		}
+		
+		if(ParamConsts.isRootUnioncode(roleReq.getUnioncode())) {
+			roleReq.setUnioncode(null);
+		}
+
 		Page<SysRole> page = PageHelper.startPage(roleReq.getPageNum(), roleReq.getPageSize());
 		SysRole where = BeanCopyUtils.convert(roleReq, SysRole.class);
-		if(StringUtils.isEmpty(where.getCreator())) {
-			where.setCreator(roleReq.getOperator());
-		}
 		List<SysRole> roleList = pageQueryDao.findRoles(where);
 		List<SysRoleRes> roleResList = BeanCopyUtils.convertList(roleList, SysRoleRes.class);
 		
-		BaseResListDto<SysRoleRes> resList = new BaseResListDto<SysRoleRes>();
 		resList.setResults(roleResList);
 		resList.success("查询成功");
 		resList.initPage(page.getPageNum(), page.getPageSize(), (int)page.getTotal());

@@ -27,14 +27,11 @@
             </el-row>
 
             <el-table border stripe :data="tableData.results" :highlight-current-row="true" style="width:100%"
-                @selection-change="handleSelectionChange"
                 @row-click="handleClick">
-
-                <el-table-column type="selection"></el-table-column>
-                <el-table-column prop="roleid" label="角色ID" sortable></el-table-column>
+                <el-table-column type="index" width="50"></el-table-column>
+                <el-table-column prop="unioncode" label="unioncode"></el-table-column>
                 <el-table-column prop="rolename" label="角色名称" sortable></el-table-column>
                 <el-table-column prop="status" label="角色状态" :formatter="formatRoleStatus"></el-table-column>
-                <el-table-column prop="roletype" label="角色类型" :formatter="formatRoleType"></el-table-column>
                 <el-table-column prop="startdate" label="生效日期" sortable></el-table-column>
                 <el-table-column prop="enddate" label="失效日期" sortable></el-table-column>
                 <el-table-column prop="creator" label="创建人"></el-table-column>
@@ -80,14 +77,12 @@
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="10">
-                        <el-form-item label="角色类型" prop="roletype">
-                            <el-select v-model="sysrole.roletype" value-key="itemcode" placeholder="请选择">
-                                <el-option v-for="item in dictCache['2006']"
-                                    :key="item.itemcode"
-                                    :label="item.itemcode + ' - ' + item.itemname"
-                                    :value="item.itemcode">
-                                </el-option>
-                            </el-select>
+                        <el-form-item label="权限列表">
+                            <el-tree show-checkbox ref="menus"
+                                :data="this.$store.state.pub.user.menuTree.subMenus"
+                                node-key="menuid"
+                                :props="{children: 'subMenus',label: 'menuname'}">
+                            </el-tree>
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">
@@ -98,15 +93,6 @@
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                        <el-form-item label="权限列表">
-                            <el-tree show-checkbox ref="menus"
-                                :data="this.$store.state.pub.user.menuTree.subMenus"
-                                node-key="menuid"
-                                :props="{children: 'subMenus',label: 'menuname'}">
-                            </el-tree>
-                        </el-form-item>
                 </el-row>
                 <el-row type="flex" justify="end">
                     <el-button type="primary" @click="onSubmit('detailForm')">保存</el-button>
@@ -144,18 +130,12 @@ export default{
             rules: {
                 rolename: [
                     {required:true, message:'角色名称不能为空', trigger:'blur'}
-                ],
-                startdate: {
-                    required:true, message:'有效期开始日期不能为空',trigger:'blur'
-                },
-                enddate: {
-                    required:true, message:'有效期结束日期不能为空',trigger:'blur'
-                }
+                ]
             }
         }
     },
     mounted(){
-        this.loadDict('1003,2006');
+        this.loadDict('1003');
         this.loadData();
     },
     methods:{
@@ -177,17 +157,7 @@ export default{
             let dict = this.dictCache['1003'];
             let val = row.status;
             for(var i = 0; i < dict.length; i++){
-                if(dict[i].itemcode === val){
-                    return val + " - " + dict[i].itemname;
-                }
-            }
-            return val;
-        },
-        formatRoleType:function(row){
-            let dict = this.dictCache['2006'];
-            let val = row.roletype;
-            for(var i = 0; i < dict.length; i++){
-                if(dict[i].itemcode === val){
+                if(dict[i].itemcode == val){
                     return val + " - " + dict[i].itemname;
                 }
             }
@@ -229,7 +199,6 @@ export default{
                 roleid:'',
                 rolename:'',
                 status:'',
-                roletype:'',
                 startdate:'',
                 enddate:'',
                 menulist:'',

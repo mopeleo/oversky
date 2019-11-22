@@ -15,7 +15,7 @@ public interface SysRoleService extends BaseService{
 	
 	SysRoleRes getById(Long roleid);
 	
-	BaseResListDto<SysRoleRes> getCanGrantRoles(Long userid, String unioncode);
+	BaseResListDto<SysRoleRes> getCanGrantRoles(String unioncode);
 	
 	BaseResListDto<SysRoleRes> userRoles(Long userid);
 	

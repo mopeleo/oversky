@@ -151,9 +151,9 @@ export default {
         return axios.get(`${baseURL}/sysrole/delete/${roleid}`);
     },
     // 可授权的角色
-    canGrantRoles (userid, unioncode) {
+    canGrantRoles (unioncode) {
         return axios.get(`${baseURL}/sysrole/cangrantroles`, {
-            params: {userid: userid, unioncode: unioncode}
+            params: {unioncode: unioncode}
         });
     },
     // 已授权的角色

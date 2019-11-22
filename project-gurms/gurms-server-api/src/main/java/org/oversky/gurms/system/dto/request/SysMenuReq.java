@@ -7,6 +7,7 @@ public class SysMenuReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private String menuid;    //菜单ID
+	private Integer sysid;
 	private String menuname;    //菜单名称
 	private String menuurl;    //菜单地址
 	private String parentmenu;    //上级菜单
@@ -79,14 +80,19 @@ public class SysMenuReq extends BaseReqDto {
 		this.menucss = menucss;
 	}
 
+    public Integer getSysid() {
+		return sysid;
+	}
 
-    @Override
+	public void setSysid(Integer sysid) {
+		this.sysid = sysid;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", menuid=").append(menuid);
+		sb.append("menuid=").append(menuid);
+		sb.append(", sysid=").append(sysid);
 		sb.append(", menuname=").append(menuname);
 		sb.append(", menuurl=").append(menuurl);
 		sb.append(", parentmenu=").append(parentmenu);
@@ -94,7 +100,7 @@ public class SysMenuReq extends BaseReqDto {
 		sb.append(", accesstype=").append(accesstype);
 		sb.append(", status=").append(status);
 		sb.append(", menucss=").append(menucss);
-        sb.append("]");
+        sb.append("," + super.toString());
         return sb.toString();
 	}
 }

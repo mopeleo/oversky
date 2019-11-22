@@ -36,9 +36,9 @@
                 <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column prop="username" label="姓名" sortable></el-table-column>
                 <el-table-column prop="loginid" label="登录名" sortable></el-table-column>
+                <el-table-column prop="orgid" label="所属机构" sortable :formatter="formatOrgName"></el-table-column>
                 <el-table-column prop="mobileno" width="120" label="手机号码"></el-table-column>
                 <el-table-column prop="email" label="电子邮件" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="orgid" label="所属机构" sortable :formatter="formatOrgName"></el-table-column>
                 <el-table-column prop="status" width="100" label="用户状态" :formatter="formatUserStatus"></el-table-column>
                 <el-table-column prop="logindate" width="120" label="登录日期" sortable></el-table-column>
                 <el-table-column prop="logintime" width="100" label="登录时间"></el-table-column>
@@ -375,8 +375,8 @@ export default{
             });
         },
         loadCanGrantRoles:function(){
-            let operator = this.$store.getters['pub/userinfo'].userid;
-            this.$api.Gurms.canGrantRoles(operator, this.sysuser.unioncode).then((res)=>{
+            let unioncode = this.$store.getters['pub/userinfo'].unioncode;
+            this.$api.Gurms.canGrantRoles(unioncode).then((res)=>{
                 this.allRoles = [];
                 this.allRoles = res.results;
             }).catch((err)=>{
@@ -476,6 +476,8 @@ export default{
         handGrantRoles(){
             if(this.selectRoles && this.selectRoles.length > 0){
                 this.sysuser.roleList = this.selectRoles.join(',');
+            }else{
+                this.sysuser.roleList = '';
             }
             this.$api.Gurms.userGrantRoles(this.sysuser).then(res =>{
                 tools.succTip(res.returnmsg);

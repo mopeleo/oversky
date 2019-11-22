@@ -10,7 +10,6 @@ public class SysRoleReq extends BaseReqDto {
 	private String unioncode;    //
 	private String rolename;    //角色名称
 	private String status;    //角色状态，0-无效，1-有效
-	private String roletype;    //角色类型，0-公共，1-私有
 	private String startdate;    //角色生效日期
 	private String enddate;    //角色失效日期
 	private Long creator;    //创建人
@@ -42,19 +41,11 @@ public class SysRoleReq extends BaseReqDto {
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getRoletype() {
-		return this.roletype;
-	}
-
-	public void setRoletype(String roletype) {
-		this.roletype = roletype;
 	}
 
 	public String getStartdate() {
@@ -100,18 +91,14 @@ public class SysRoleReq extends BaseReqDto {
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-		sb.append(", roleid=").append(roleid);
+		sb.append("roleid=").append(roleid);
 		sb.append(", unioncode=").append(unioncode);
 		sb.append(", rolename=").append(rolename);
 		sb.append(", status=").append(status);
-		sb.append(", roletype=").append(roletype);
 		sb.append(", startdate=").append(startdate);
 		sb.append(", enddate=").append(enddate);
 		sb.append(", creator=").append(creator);
-        sb.append("]");
+        sb.append(", " + super.toString());
         return sb.toString();
 	}
 }

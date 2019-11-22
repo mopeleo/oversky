@@ -7,6 +7,7 @@ public class SysMenu extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private String menuid;    //菜单ID
+	private Integer sysid;    //系统ID
 	private String menuname;    //菜单名称
 	private String menuurl;    //菜单地址
 	private String parentmenu;    //上级菜单
@@ -21,6 +22,14 @@ public class SysMenu extends BaseEntity{
 
 	public void setMenuid(String menuid) {
 		this.menuid = menuid;
+	}
+
+	public Integer getSysid() {
+		return this.sysid;
+	}
+
+	public void setSysid(Integer sysid) {
+		this.sysid = sysid;
 	}
 
 	public String getMenuname() {
@@ -97,6 +106,7 @@ public class SysMenu extends BaseEntity{
     public String toString() {
         StringBuilder sb = new StringBuilder();
 		sb.append("menuid=").append(menuid).append(", ");
+		sb.append("sysid=").append(sysid).append(", ");
 		sb.append("menuname=").append(menuname).append(", ");
 		sb.append("menuurl=").append(menuurl).append(", ");
 		sb.append("parentmenu=").append(parentmenu).append(", ");

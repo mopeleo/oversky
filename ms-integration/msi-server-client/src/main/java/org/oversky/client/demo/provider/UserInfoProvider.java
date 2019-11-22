@@ -30,7 +30,6 @@ public class UserInfoProvider {
 		req.setRolename(rolename);
 		req.setCreator(2L);
 		req.setEnddate("20190101");
-		req.setRoletype("1");
 		req.setStartdate("20180101");
 		req.setStatus("1");
 		req.setUnioncode("0000");

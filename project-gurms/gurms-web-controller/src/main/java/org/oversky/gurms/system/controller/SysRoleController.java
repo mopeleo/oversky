@@ -37,8 +37,8 @@ public class SysRoleController {
 	}
 
 	@RequestMapping("/cangrantroles")
-	public BaseResListDto<SysRoleRes> canGrantRoles(Long userid, String unioncode) {
-		return roleService.getCanGrantRoles(userid, unioncode);
+	public BaseResListDto<SysRoleRes> canGrantRoles(String unioncode) {
+		return roleService.getCanGrantRoles(unioncode);
 	}
 
 	@RequestMapping("/hasroles")

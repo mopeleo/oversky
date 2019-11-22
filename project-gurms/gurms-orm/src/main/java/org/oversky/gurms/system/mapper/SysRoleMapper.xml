@@ -6,7 +6,6 @@
         <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
         <result column="rolename" jdbcType="VARCHAR" property="rolename" />
         <result column="status" jdbcType="VARCHAR" property="status" />
-        <result column="roletype" jdbcType="VARCHAR" property="roletype" />
         <result column="startdate" jdbcType="VARCHAR" property="startdate" />
         <result column="enddate" jdbcType="VARCHAR" property="enddate" />
         <result column="belong" jdbcType="VARCHAR" property="belong" />
@@ -14,15 +13,15 @@
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.gurms.system.entity.SysRole" useGeneratedKeys="true" keyProperty="roleid">
-        insert into sys_role (unioncode, rolename, status, roletype, startdate, enddate, belong, creator)
-        values (#{unioncode, jdbcType=VARCHAR}, #{rolename, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{roletype, jdbcType=VARCHAR}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{belong, jdbcType=VARCHAR}, #{creator, jdbcType=DECIMAL})
+        insert into sys_role (unioncode, rolename, status, startdate, enddate, belong, creator)
+        values (#{unioncode, jdbcType=VARCHAR}, #{rolename, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{startdate, jdbcType=VARCHAR}, #{enddate, jdbcType=VARCHAR}, #{belong, jdbcType=VARCHAR}, #{creator, jdbcType=DECIMAL})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="roleid">
-		insert into sys_role (unioncode, rolename, status, roletype, startdate, enddate, belong, creator)
+		insert into sys_role (unioncode, rolename, status, startdate, enddate, belong, creator)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.unioncode, jdbcType=VARCHAR}, #{item.rolename, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.roletype, jdbcType=VARCHAR}, #{item.startdate, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.belong, jdbcType=VARCHAR}, #{item.creator, jdbcType=DECIMAL})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.rolename, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.startdate, jdbcType=VARCHAR}, #{item.enddate, jdbcType=VARCHAR}, #{item.belong, jdbcType=VARCHAR}, #{item.creator, jdbcType=DECIMAL})
 		</foreach>
 	</insert>
 	
@@ -64,7 +63,6 @@
                unioncode = #{unioncode, jdbcType=VARCHAR}, 
                rolename = #{rolename, jdbcType=VARCHAR}, 
                status = #{status, jdbcType=VARCHAR}, 
-               roletype = #{roletype, jdbcType=VARCHAR}, 
                startdate = #{startdate, jdbcType=VARCHAR}, 
                enddate = #{enddate, jdbcType=VARCHAR}, 
                belong = #{belong, jdbcType=VARCHAR}, 
@@ -83,9 +81,6 @@
 		    </if>
 		    <if test="status != null">
 				status = #{status, jdbcType=VARCHAR},
-		    </if>
-		    <if test="roletype != null">
-				roletype = #{roletype, jdbcType=VARCHAR},
 		    </if>
 		    <if test="startdate != null">
 				startdate = #{startdate, jdbcType=VARCHAR},
@@ -114,9 +109,6 @@
 		    </if>
 		    <if test="field.status != null and field.status != ''">
 				status = #{field.status, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.roletype != null and field.roletype != ''">
-				roletype = #{field.roletype, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.startdate != null and field.startdate != ''">
 				startdate = #{field.startdate, jdbcType=VARCHAR},
@@ -164,16 +156,6 @@
 	                </if>
 	                <if test="item.status == null">
 	                    when roleid = #{item.roleid} then status
-	                </if>
-	            </foreach>
-	        </trim>
-	        <trim prefix="roletype = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.roletype != null">
-	                    when roleid = #{item.roleid} then #{item.roletype, jdbcType=VARCHAR}
-	                </if>
-	                <if test="item.roletype == null">
-	                    when roleid = #{item.roleid} then roletype
 	                </if>
 	            </foreach>
 	        </trim>
@@ -233,7 +215,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}roleid, ${tab}unioncode, ${tab}rolename, ${tab}status, ${tab}roletype, ${tab}startdate, ${tab}enddate, ${tab}belong, ${tab}creator
+        ${tab}roleid, ${tab}unioncode, ${tab}rolename, ${tab}status, ${tab}startdate, ${tab}enddate, ${tab}belong, ${tab}creator
 	</sql>
 	
 	<sql id="where_all_list">
@@ -249,9 +231,6 @@
 			</if>
 			<if test="status != null and status != ''">
 				and status = #{status, jdbcType=VARCHAR}
-			</if>
-			<if test="roletype != null and roletype != ''">
-				and roletype = #{roletype, jdbcType=VARCHAR}
 			</if>
 			<if test="startdate != null and startdate != ''">
 				and startdate = #{startdate, jdbcType=VARCHAR}
@@ -281,9 +260,6 @@
 			</if>
 			<if test="condition.status != null and condition.status != ''">
 				and status = #{condition.status, jdbcType=VARCHAR}
-			</if>
-			<if test="condition.roletype != null and condition.roletype != ''">
-				and roletype = #{condition.roletype, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.startdate != null and condition.startdate != ''">
 				and startdate = #{condition.startdate, jdbcType=VARCHAR}

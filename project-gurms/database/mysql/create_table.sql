@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/10/10 17:22:43                          */
+/* Created on:     2019/11/22 21:41:34                          */
 /*==============================================================*/
 
 
@@ -30,11 +30,15 @@ drop table if exists sys_role_menu;
 
 drop table if exists sys_sno;
 
+drop index uk_sysuser_idcode on sys_user;
+
+drop index uk_sysuser_email on sys_user;
+
+drop index uk_sysuser_mobile on sys_user;
+
 drop table if exists sys_user;
 
 drop table if exists sys_user_actlog;
-
-drop table if exists sys_user_info;
 
 drop table if exists sys_user_login;
 
@@ -142,6 +146,7 @@ alter table sys_dict_value comment '[cache]';
 create table sys_menu
 (
    menuid               varchar(8) not null comment '菜单ID',
+   sysid                numeric(1,0) not null default 0 comment '系统ID',
    menuname             varchar(16) not null comment '菜单名称',
    menuurl              varchar(32) comment '菜单地址',
    parentmenu           varchar(8) comment '上级菜单',
@@ -216,16 +221,15 @@ create table sys_role
    unioncode            varchar(8) not null default '0000',
    rolename             varchar(32) not null comment '角色名称',
    status               char(1) not null default '0' comment '角色状态，0-无效，1-有效',
-   roletype             char(1) not null default '0' comment '角色类型，0-公共，1-私有',
-   startdate            varchar(8) not null comment '角色生效日期',
-   enddate              varchar(8) not null comment '角色失效日期',
+   startdate            varchar(8) comment '角色生效日期',
+   enddate              varchar(8) comment '角色失效日期',
    belong               varchar(16) comment '归属（预留，机构，角色组等）',
    creator              bigint not null comment '创建人',
    primary key (roleid)
 );
 
 alter table sys_role comment '[cache]
-角色说明，每个人只能看到他所属机构的所有公共角色+自己创建的角色';
+';
 
 /*==============================================================*/
 /* Table: sys_role_menu                                         */
@@ -273,18 +277,46 @@ create table sys_user
    loginpasswd          char(32) not null comment '登录密码',
    salt                 varchar(8) not null comment '密码盐',
    passwdvaliddate      varchar(8) not null comment '密码失效日期',
+   status               char(1) not null default '0' comment '用户状态，1，正常；2，锁定；3，冻结',
+   orgid                bigint not null comment '所属机构',
+   sex                  char(1) not null default '0' comment '性别，0-女；1-男',
    mobileno             varchar(16) not null comment '手机号码',
    email                varchar(64) comment '电子邮件',
-   orgid                bigint not null comment '所属机构',
    idtype               char(1) default '0' comment '证件类型',
    idcode               varchar(32) comment '证件号码',
    idname               varchar(32) comment '证件姓名',
+   postcode             varchar(8) comment '邮政编码',
+   address              varchar(64) comment '联系地址',
    logindate            varchar(8) comment '上次登录日期',
    logintime            varchar(6) comment '上次登录时间',
-   status               char(1) not null default '0' comment '用户状态，1，正常；2，锁定；3，冻结',
    loginerror           numeric(4,0) not null default 0 comment '连续登录失败次数',
    opendate             varchar(8) comment '创建日期',
    primary key (userid)
+);
+
+/*==============================================================*/
+/* Index: uk_sysuser_mobile                                     */
+/*==============================================================*/
+create unique index uk_sysuser_mobile on sys_user
+(
+   mobileno
+);
+
+/*==============================================================*/
+/* Index: uk_sysuser_email                                      */
+/*==============================================================*/
+create unique index uk_sysuser_email on sys_user
+(
+   email
+);
+
+/*==============================================================*/
+/* Index: uk_sysuser_idcode                                     */
+/*==============================================================*/
+create unique index uk_sysuser_idcode on sys_user
+(
+   idtype,
+   idcode
 );
 
 /*==============================================================*/
@@ -307,26 +339,6 @@ create table sys_user_actlog
 );
 
 alter table sys_user_actlog comment '用户行为日志';
-
-/*==============================================================*/
-/* Table: sys_user_info                                         */
-/*==============================================================*/
-create table sys_user_info
-(
-   userid               bigint not null comment '用户ID,内部自动生成',
-   sex                  char(1) not null default '0' comment '性别（0-女，1-男）',
-   birthday             varchar(8) comment '生日',
-   address              varchar(64) comment '联系地址',
-   postcode             varchar(8) comment '邮政编码',
-   phone                varchar(16) comment '备用电话',
-   nationality          varchar(8) comment '国籍',
-   province             varchar(8) comment '所在省份',
-   city                 varchar(8) comment '所在城市',
-   education            char(1) default '0' comment '教育程度',
-   ethnicity            varchar(4) comment '民族',
-   profession           varchar(4) comment '职业',
-   primary key (userid)
-);
 
 /*==============================================================*/
 /* Table: sys_user_login                                        */

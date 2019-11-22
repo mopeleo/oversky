@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* Created on:     2019/10/10 17:23:41                          */
+/* Created on:     2019/11/22 22:43:50                          */
 /*==============================================================*/
 
 
@@ -33,8 +33,6 @@ drop table sys_sno cascade constraints;
 drop table sys_user cascade constraints;
 
 drop table sys_user_actlog cascade constraints;
-
-drop table sys_user_info cascade constraints;
 
 drop table sys_user_login cascade constraints;
 
@@ -273,6 +271,7 @@ comment on column sys_dict_value.itemname is
 create table sys_menu 
 (
    menuid               VARCHAR2(8)          not null,
+   sysid                NUMBER(1)            default 0 not null,
    menuname             VARCHAR2(16)         not null,
    menuurl              VARCHAR2(32),
    parentmenu           VARCHAR2(8),
@@ -288,6 +287,9 @@ comment on table sys_menu is
 
 comment on column sys_menu.menuid is
 '菜单ID';
+
+comment on column sys_menu.sysid is
+'系统ID';
 
 comment on column sys_menu.menuname is
 '菜单名称';
@@ -437,17 +439,15 @@ create table sys_role
    unioncode            VARCHAR2(8)          default '0000' not null,
    rolename             VARCHAR2(32)         not null,
    status               CHAR(1)              default '0' not null,
-   roletype             CHAR(1)              default '0' not null,
-   startdate            VARCHAR2(8)          not null,
-   enddate              VARCHAR2(8)          not null,
+   startdate            VARCHAR2(8),
+   enddate              VARCHAR2(8),
    belong               VARCHAR2(16),
    creator              INTEGER              not null,
    constraint PK_SYS_ROLE primary key (roleid)
 );
 
 comment on table sys_role is
-'[cache]
-角色说明，每个人只能看到他所属机构的所有公共角色+自己创建的角色';
+'[cache]';
 
 comment on column sys_role.roleid is
 '角色ID,内部自动生成[identity]';
@@ -457,9 +457,6 @@ comment on column sys_role.rolename is
 
 comment on column sys_role.status is
 '角色状态，0-无效，1-有效';
-
-comment on column sys_role.roletype is
-'角色类型，0-公共，1-私有';
 
 comment on column sys_role.startdate is
 '角色生效日期';
@@ -559,12 +556,15 @@ create table sys_user
    loginpasswd          CHAR(32)             not null,
    salt                 VARCHAR2(8)          not null,
    passwdvaliddate      VARCHAR2(8)          not null,
+   sex                  CHAR(1)              default '0' not null,
    mobileno             VARCHAR2(16)         not null,
    email                VARCHAR2(64),
    orgid                INTEGER              not null,
    idtype               CHAR(1)              default '0',
    idcode               VARCHAR2(32),
    idname               VARCHAR2(32),
+   postcode             VARCHAR2(8),
+   address              VARCHAR2(64),
    logindate            VARCHAR2(8),
    logintime            VARCHAR2(6),
    status               CHAR(1)              default '0' not null,
@@ -591,6 +591,9 @@ comment on column sys_user.salt is
 comment on column sys_user.passwdvaliddate is
 '密码失效日期';
 
+comment on column sys_user.sex is
+'性别，0-女；1-男';
+
 comment on column sys_user.mobileno is
 '手机号码';
 
@@ -608,6 +611,12 @@ comment on column sys_user.idcode is
 
 comment on column sys_user.idname is
 '证件姓名';
+
+comment on column sys_user.postcode is
+'邮政编码';
+
+comment on column sys_user.address is
+'联系地址';
 
 comment on column sys_user.logindate is
 '上次登录日期';
@@ -672,62 +681,6 @@ comment on column sys_user_actlog.acttime is
 
 comment on column sys_user_actlog.accesstype is
 '登录方式（0-pc，1-手机）';
-
-/*==============================================================*/
-/* Table: sys_user_info                                         */
-/*==============================================================*/
-create table sys_user_info 
-(
-   userid               INTEGER              not null,
-   sex                  CHAR(1)              default '0' not null,
-   birthday             VARCHAR2(8),
-   address              VARCHAR2(64),
-   postcode             VARCHAR2(8),
-   phone                VARCHAR2(16),
-   nationality          VARCHAR2(8),
-   province             VARCHAR2(8),
-   city                 VARCHAR2(8),
-   education            CHAR(1)              default '0',
-   ethnicity            VARCHAR2(4),
-   profession           VARCHAR2(4),
-   constraint PK_SYS_USER_INFO primary key (userid)
-);
-
-comment on column sys_user_info.userid is
-'用户ID,内部自动生成';
-
-comment on column sys_user_info.sex is
-'性别（0-女，1-男）';
-
-comment on column sys_user_info.birthday is
-'生日';
-
-comment on column sys_user_info.address is
-'联系地址';
-
-comment on column sys_user_info.postcode is
-'邮政编码';
-
-comment on column sys_user_info.phone is
-'备用电话';
-
-comment on column sys_user_info.nationality is
-'国籍';
-
-comment on column sys_user_info.province is
-'所在省份';
-
-comment on column sys_user_info.city is
-'所在城市';
-
-comment on column sys_user_info.education is
-'教育程度';
-
-comment on column sys_user_info.ethnicity is
-'民族';
-
-comment on column sys_user_info.profession is
-'职业';
 
 /*==============================================================*/
 /* Table: sys_user_login                                        */
