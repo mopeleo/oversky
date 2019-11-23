@@ -15,7 +15,7 @@ values (1002, '初始/重置密码', '1', '1', '2', '', 16, '', '');
 
 insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1003, '10');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, valuelist, valuelength, texttitle, texttail) 
-values (1003, '密码连续错误', '10', '1', '2', '', 2, '', '次锁定账号');
+values (1003, '密码连续错误', '5', '1', '2', '', 2, '', '次锁定账号');
 
 insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1004, '90');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, valuelist, valuelength, texttitle, texttail) 

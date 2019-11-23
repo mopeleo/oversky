@@ -9,6 +9,7 @@ public class SysMenuRes extends BaseResDto {
 	private static final long serialVersionUID = 1L;
 
 	private String menuid;    //菜单ID
+	private Integer sysid;
 	private String menuname;    //菜单名称
 	private String menuurl;    //菜单地址
 	private String parentmenu;    //上级菜单
@@ -45,6 +46,14 @@ public class SysMenuRes extends BaseResDto {
 
 	public String getMenuname() {
 		return this.menuname;
+	}
+
+	public Integer getSysid() {
+		return sysid;
+	}
+
+	public void setSysid(Integer sysid) {
+		this.sysid = sysid;
 	}
 
 	public void setMenuname(String menuname) {
@@ -120,6 +129,7 @@ public class SysMenuRes extends BaseResDto {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 		sb.append("menuid=").append(menuid);
+		sb.append(", sysid=").append(sysid);
 		sb.append(", menuname=").append(menuname);
 		sb.append(", menuurl=").append(menuurl);
 		sb.append(", parentmenu=").append(parentmenu);

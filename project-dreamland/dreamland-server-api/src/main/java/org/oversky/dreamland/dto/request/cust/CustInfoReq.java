@@ -39,6 +39,8 @@ public class CustInfoReq extends BaseReqDto {
 	private String ethnicity;    //民族
 	private String profession;    //职业
 
+	private String newpasswd;
+	
 	public Long getCustno() {
 		return this.custno;
 	}
@@ -285,6 +287,14 @@ public class CustInfoReq extends BaseReqDto {
 
 	public void setProfession(String profession) {
 		this.profession = profession;
+	}
+
+	public String getNewpasswd() {
+		return newpasswd;
+	}
+
+	public void setNewpasswd(String newpasswd) {
+		this.newpasswd = newpasswd;
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 
 	@Override
 	public CustInfoRes login(CustInfoReq req) {
-		log.info("用户登录，req : {}", req.toString());
+		log.info("客户登录，req : {}", req.toString());
 		CustInfoRes res = new CustInfoRes();
 		res.success("登录成功");
 		return res;
@@ -52,7 +52,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 	@Override
 	@Transactional
 	public CustInfoRes insert(CustInfoReq custReq) {
-		log.info("开始新增用户......");
+		log.info("开始新增客户......");
 		CustInfoRes res = new CustInfoRes();
 		if(!this.check(custReq, res)) {
 			return res;
@@ -88,15 +88,15 @@ public class CustInfoServiceImpl implements CustInfoService {
 		CustInfoExt custExt = BeanCopyUtils.convert(custReq, CustInfoExt.class);
 		custExt.setCustno(cust.getCustno());
 		custInfoExtDao.insert(custExt);
-		res.success("新增用户成功");
-		log.info("新增用户结束 : {}", res.getReturnmsg());
+		res.success("新增客户成功");
+		log.info("新增客户结束 : {}", res.getReturnmsg());
 		return res;
 	}
 
 	@Override
 	@Transactional
 	public CustInfoRes update(CustInfoReq custReq) {
-		log.info("开始修改用户[custno={}]信息......", custReq.getCustno());
+		log.info("开始修改客户[custno={}]信息......", custReq.getCustno());
 		CustInfoRes res = new CustInfoRes();
 		if(!this.check(custReq, res)) {
 			return res;
@@ -116,7 +116,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 		custInfoExtDao.dynamicUpdateById(custExt);
 
 		res.success("修改成功");
-		log.info("修改用户[custno={}]结束: {}", custReq.getCustno(), res.getReturnmsg());
+		log.info("修改客户[custno={}]结束: {}", custReq.getCustno(), res.getReturnmsg());
 		return res;
 	}
 
@@ -138,6 +138,141 @@ public class CustInfoServiceImpl implements CustInfoService {
 			res.success();
 		}
 		log.info("查询客户信息[custno={}]结束: {}", custno, res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public CustInfoRes resetPassword(CustInfoReq custInfoReq) {
+		log.info("开始重置客户[custno={}]密码......", custInfoReq.getCustno());
+		CustInfoRes res = new CustInfoRes();		
+		CustInfo cust = custInfoDao.getById(custInfoReq.getCustno());
+		if(cust == null) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]不存在");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(cust.getStatus())
+				&& !DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(cust.getStatus())) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]状态异常，不能重置密码");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		CustInfo updateUser = new CustInfo();
+		updateUser.setCustno(custInfoReq.getCustno());
+		updateUser.setSalt(BizFunc.createPasswdSalt());
+		String md5Password = EncryptUtils.md5Encode(ParamConsts.getParam(cust.getUnioncode(), ParamConsts.PARAM1002_PASSWD_INIT));
+		updateUser.setLoginpasswd(BizFunc.encryptPassword(md5Password, updateUser.getSalt()));
+		updateUser.setLoginerror(0);
+		updateUser.setPasswdvaliddate(BizFunc.passwordInvalidDate(custInfoReq.getUnioncode()));
+		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(cust.getStatus())) {
+			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		}
+		custInfoDao.dynamicUpdateById(updateUser);
+		res.success("重置密码成功");
+		log.info("重置客户[custno={}]密码结束: {}", custInfoReq.getCustno(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public CustInfoRes updatePassword(CustInfoReq custInfoReq) {
+		log.info("修改客户[custno={}]密码......", custInfoReq.getCustno());
+		CustInfoRes res = new CustInfoRes();
+		
+		CustInfo cust = custInfoDao.getById(custInfoReq.getCustno());
+		if(cust == null) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]不存在");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		if(custInfoReq.getLoginpasswd().equals(custInfoReq.getNewpasswd())) {
+			res.failure("客户新密码不能与原密码相同");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		String oldPassword = BizFunc.encryptPassword(custInfoReq.getLoginpasswd(), cust.getSalt());
+		if(!oldPassword.equals(cust.getLoginpasswd())) {
+			res.failure("客户原密码错误，修改密码失败");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+
+		if(DictConsts.DICT2001_USER_STATUS_FROZEN.equals(cust.getStatus())) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]被冻结，不能修改密码");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		CustInfo updateUser = new CustInfo();
+		updateUser.setCustno(custInfoReq.getCustno());
+		String newPassword = BizFunc.encryptPassword(custInfoReq.getNewpasswd(), cust.getSalt());
+		updateUser.setLoginpasswd(newPassword);
+		updateUser.setLoginerror(0);
+		updateUser.setPasswdvaliddate(BizFunc.passwordInvalidDate(custInfoReq.getUnioncode()));
+		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(cust.getStatus())) {
+			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		}
+		custInfoDao.dynamicUpdateById(updateUser);
+		
+		res.success("修改密码成功");
+		log.info("修改客户[custno={}]密码结束: {}", custInfoReq.getCustno(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public CustInfoRes freeze(CustInfoReq custInfoReq) {
+		log.info("开始冻结客户[custno={}]......", custInfoReq.getCustno());
+		CustInfoRes res = new CustInfoRes();
+		
+		CustInfo cust = custInfoDao.getById(custInfoReq.getCustno());
+		if(cust == null) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]不存在");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(cust.getStatus())) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]状态异常，不能冻结");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		CustInfo updateUser = new CustInfo();
+		updateUser.setCustno(custInfoReq.getCustno());
+		updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_FROZEN);
+		custInfoDao.dynamicUpdateById(updateUser);
+		res.success("冻结客户账号成功");
+		log.info("冻结客户[custno={}]结束: {}", custInfoReq.getCustno(), res.getReturnmsg());
+		return res;
+	}
+
+	@Override
+	public CustInfoRes unfreeze(CustInfoReq custInfoReq) {
+		log.info("开始解冻客户[custno={}]......", custInfoReq.getCustno());
+		CustInfoRes res = new CustInfoRes();
+		
+		CustInfo cust = custInfoDao.getById(custInfoReq.getCustno());
+		if(cust == null) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]不存在");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		if(!DictConsts.DICT2001_USER_STATUS_FROZEN.equals(cust.getStatus())) {
+			res.failure("客户[" + custInfoReq.getCustno() + "]不为冻结状态，不能冻结");
+			log.warn(res.getReturnmsg());
+			return res;
+		}
+		
+		CustInfo updateUser = new CustInfo();
+		updateUser.setCustno(custInfoReq.getCustno());
+		updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		custInfoDao.dynamicUpdateById(updateUser);
+		res.success("解冻客户账号成功");
+		log.info("解冻客户[custno={}]结束: {}", custInfoReq.getCustno(), res.getReturnmsg());
 		return res;
 	}
 	

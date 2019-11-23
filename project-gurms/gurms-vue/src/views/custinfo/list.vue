@@ -36,9 +36,9 @@
                 <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column prop="custname" label="客户名称" sortable></el-table-column>
                 <el-table-column prop="loginid" label="登录名" sortable></el-table-column>
-                <el-table-column prop="custtype" label="客户类型" ></el-table-column>
+                <el-table-column prop="custtype" label="客户类型" :formatter="((row)=>formatTableCol(row.custtype, '2007'))"></el-table-column>
                 <el-table-column prop="mobileno" width="120" label="手机号码"></el-table-column>
-                <el-table-column prop="status" width="100" label="客户状态" :formatter="formatUserStatus"></el-table-column>
+                <el-table-column prop="status" width="100" label="客户状态" :formatter="((row)=>formatTableCol(row.status, '2001'))"></el-table-column>
                 <el-table-column prop="regdate" width="120" label="注册日期"></el-table-column>
                 <el-table-column prop="lastlogindate" width="120" label="登录日期"></el-table-column>
                 <el-table-column prop="lastlogintime" width="100" label="登录时间"></el-table-column>
@@ -48,7 +48,7 @@
                     <el-row :gutter="5">
                     <el-col :span="10">
                         <el-button type="danger" size="mini"
-                            v-permission="$permission.system.user.delete" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+                            v-permission="$permission.system.user.delete" @click="handleDetail(scope.$index, scope.row)">注销</el-button>
                     </el-col>
                     <el-col :span="14">
                         <el-dropdown split-button type="primary" size="mini" @command="handleCommand"
@@ -110,7 +110,13 @@
                     <el-row :gutter="20">
                         <el-col :span="10">
                             <el-form-item label="客户类型" prop="custtype">
-                                <el-input v-model="custinfo.custtype"></el-input>
+                                <el-select v-model="custinfo.custtype" value-key="itemcode" placeholder="请选择" @change="changeCustType">
+                                    <el-option v-for="item in dictCache['2007']"
+                                        :key="item.itemcode"
+                                        :label="item.itemcode + ' - ' + item.itemname"
+                                        :value="item.itemcode">
+                                    </el-option>
+                                </el-select>
                            </el-form-item>
                         </el-col>
                         <el-col :span="10">
@@ -123,7 +129,7 @@
                         <el-col :span="10">
                             <el-form-item label="证件类型" prop="idtype">
                                 <el-select v-model="custinfo.idtype" value-key="itemcode" clearable placeholder="请选择">
-                                    <el-option v-for="item in dictCache['2004']"
+                                    <el-option v-for="item in dictIdType"
                                         :key="item.itemcode"
                                         :label="item.itemcode + ' - ' + item.itemname"
                                         :value="item.itemcode">
@@ -154,7 +160,7 @@
                         </el-col>
                         <el-col :span="10">
                             <el-form-item label="生日" prop="birthday">
-                                <el-date-picker v-model="custinfo.birthday" type="date" placeholder="选择日期" value-format="yyyyMMdd"></el-date-picker>
+                                <el-date-picker v-model="custinfo.birthday" type="date" placeholder="选择日期" value-format="yyyyMMdd" style="width:190px"></el-date-picker>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -230,6 +236,7 @@ export default{
             tableData: {},
             //当前页面字典
             dictCache: {},
+            dictIdType:[],
             //查询条件及分页参数
             custInfoReq: {
                 pageSize: this.$pubdefine.PAGE_SIZE,
@@ -276,15 +283,22 @@ export default{
                 tools.errTip(err);
             });
         },
-        formatUserStatus:function(row){
-            let dict = this.dictCache['2001'];
-            let val = row.status;
+        formatTableCol:function(val, dictcode){
+            let dict = this.dictCache[dictcode];
             for(var i = 0; i < dict.length; i++){
                 if(dict[i].itemcode == val){
                     return val + " - " + dict[i].itemname;
                 }
             }
             return val;
+        },
+        changeCustType:function(){
+            this.custinfo.idtype = '';
+            if(this.custinfo.custtype == '0'){
+                this.dictIdType=this.dictCache['2005'];
+            }else{
+                this.dictIdType=this.dictCache['2004'];
+            }
         },
         //点击行响应
         handleClick: function(row, column, event){
@@ -322,14 +336,14 @@ export default{
             }
         },
         resetPassword(userInfo){
-            this.$api.Game.userResetPassword(userInfo).then(res =>{
+            this.$api.Game.custInfoResetPasswd(userInfo).then(res =>{
                 tools.succTip(res.returnmsg);
             }).catch((err)=>{
                 tools.errTip(err);
             });
         },
         freezeUser(userInfo){
-            this.$api.Game.userFreeze(userInfo).then(res =>{
+            this.$api.Game.custInfoFreeze(userInfo).then(res =>{
                 tools.succTip(res.returnmsg);
                 if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                     userInfo.status ='3';
@@ -339,7 +353,7 @@ export default{
             });
         },
         unfreezeUser(userInfo){
-            this.$api.Game.userUnfreeze(userInfo).then(res =>{
+            this.$api.Game.custInfoUnfreeze(userInfo).then(res =>{
                 tools.succTip(res.returnmsg);
                 if(res.returncode === this.$pubdefine.RETURN_CODE_SUCCESS){
                     userInfo.status ='1';
@@ -380,6 +394,9 @@ export default{
                 this.userDetailDrawer = true;
                 this.custinfo = res;
                 this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
+                var idtype = res.idtype;
+                this.changeCustType();
+                this.custinfo.idtype = idtype;
             }).catch((err)=>{
                 tools.errTip(err);
             });

@@ -35,4 +35,24 @@ public class CustInfoController {
 		return custService.pageCustInfo(userReq);
 	}
 
+	@RequestMapping("/resetpassword")
+	public CustInfoRes resetPassword(@RequestBody CustInfoReq userReq) {
+		return custService.resetPassword(userReq);
+	}
+
+	@RequestMapping("/updatepassword")
+	public CustInfoRes updatePassword(@RequestBody CustInfoReq userReq) {
+		return custService.updatePassword(userReq);
+	}
+
+	@RequestMapping("/freeze")
+	public CustInfoRes freeze(@RequestBody CustInfoReq userReq) {
+		return custService.freeze(userReq);
+	}
+
+	@RequestMapping("/unfreeze")
+	public CustInfoRes unfreeze(@RequestBody CustInfoReq userReq) {
+		return custService.unfreeze(userReq);
+	}
+
 }

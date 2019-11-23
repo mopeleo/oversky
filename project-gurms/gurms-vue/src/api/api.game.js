@@ -70,20 +70,16 @@ export default {
         });
     },
     // 修改密码
-    custInfoUpdatePasswd (params) {
-        return axios.post(`${baseURL}/sysuser/updatepassword`, params);
-    },
-    // 账号列表
-    custAcctList (params) {
-        return axios.post(`${baseURL}/custinfo/list`, params);
+    custInfoResetPasswd (params) {
+        return axios.post(`${baseURL}/custinfo/resetpassword`, params);
     },
     // 用户冻结
-    custAcctFreeze (params) {
-        return axios.post(`${baseURL}/sysuser/freeze`, params);
+    custInfoFreeze (params) {
+        return axios.post(`${baseURL}/custinfo/freeze`, params);
     },
     // 用户解冻
-    custAcctUnfreeze (params) {
-        return axios.post(`${baseURL}/sysuser/unfreeze`, params);
+    custInfoUnfreeze (params) {
+        return axios.post(`${baseURL}/custinfo/unfreeze`, params);
     },
 
     //========================================================

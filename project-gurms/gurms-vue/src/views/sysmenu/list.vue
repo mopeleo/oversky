@@ -67,17 +67,21 @@
                             </el-col>
                         </el-row>
                         <el-row :gutter="20">
-                            <el-col :span="15">
-                                <el-form-item label="菜单URL" prop="menuurl">
-                                    <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="sysmenu.menuurl">
-                                    </el-input>
+                            <el-col :span="10">
+                                <el-form-item label="所属系统" prop="sysid">
+                                    <el-input v-model="sysmenu.sysid"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="10">
+                                <el-form-item label="菜单样式" prop="menucss">
+                                    <el-input v-model="sysmenu.menucss"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
                         <el-row :gutter="20">
                             <el-col :span="15">
-                                <el-form-item label="菜单样式" prop="menucss">
-                                    <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="sysmenu.menucss">
+                                <el-form-item label="菜单URL" prop="menuurl">
+                                    <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="sysmenu.menuurl">
                                     </el-input>
                                 </el-form-item>
                             </el-col>
