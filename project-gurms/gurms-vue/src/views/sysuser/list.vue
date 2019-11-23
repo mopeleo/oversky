@@ -24,6 +24,20 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="5">
+                </el-col>
+            </el-row>
+            <el-row :gutter="10" type="flex">
+                <el-col :span="5">
+                    <el-form-item label="所属机构">
+                        <el-cascader :options="treeData" :show-all-levels="false" v-model="userReq.orgid"
+                            :props="{value:'orgid', children:'subOrgs', label:'shortname', checkStrictly:true, emitPath:false}" style="width:200px"></el-cascader>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="5">
+                </el-col>
+                <el-col :span="5">
+                </el-col>
+                <el-col :span="5">
                     <el-form-item>
                         <el-button type="primary" icon="el-icon-search" @click="loadData">查询</el-button>
                         <el-button type="primary" v-permission="$permission.system.user.add" icon="el-icon-plus" @click="handleAdd">新增</el-button>
@@ -39,6 +53,7 @@
                 <el-table-column prop="orgid" label="所属机构" sortable :formatter="formatOrgName"></el-table-column>
                 <el-table-column prop="mobileno" width="120" label="手机号码"></el-table-column>
                 <el-table-column prop="email" label="电子邮件" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sex" width="60" label="性别" :formatter="formatUserSex"></el-table-column>
                 <el-table-column prop="status" width="100" label="用户状态" :formatter="formatUserStatus"></el-table-column>
                 <el-table-column prop="logindate" width="120" label="登录日期" sortable></el-table-column>
                 <el-table-column prop="logintime" width="100" label="登录时间"></el-table-column>
@@ -349,6 +364,16 @@ export default{
         formatOrgName:function(row){
             let dict = this.dictOrg;
             let val = row.orgid;
+            for(var i = 0; i < dict.length; i++){
+                if(dict[i].itemcode == val){
+                    return val + " - " + dict[i].itemname;
+                }
+            }
+            return val;
+        },
+        formatUserSex:function(row){
+            let dict = this.dictCache['2000'];
+            let val = row.status;
             for(var i = 0; i < dict.length; i++){
                 if(dict[i].itemcode == val){
                     return val + " - " + dict[i].itemname;

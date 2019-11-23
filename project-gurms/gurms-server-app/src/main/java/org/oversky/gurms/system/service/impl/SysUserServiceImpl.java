@@ -21,6 +21,7 @@ import org.oversky.gurms.system.ext.dao.PageListQueryDao;
 import org.oversky.gurms.system.ext.dao.UniqueCheckDao;
 import org.oversky.gurms.system.service.SysUserService;
 import org.oversky.util.bean.BeanCopyUtils;
+import org.oversky.util.common.CommonUtils;
 import org.oversky.util.date.DateUtils;
 import org.oversky.util.encode.EncryptUtils;
 import org.oversky.valid.GSAValid;
@@ -304,6 +305,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}else {
 			BeanCopyUtils.copy(user, res);
+			res.setMobileno(CommonUtils.hideMobileNo(res.getMobileno()));
 			res.success();
 		}
 		log.info("查询用户[userid={}]结束: {}", userid, res.getReturnmsg());
@@ -322,6 +324,7 @@ public class SysUserServiceImpl implements SysUserService{
 		}
 		
 		BeanCopyUtils.copy(user, res);
+		res.setMobileno(CommonUtils.hideMobileNo(res.getMobileno()));
 		res.success();
 		log.info("查询用户[userid={}]详细信息结束: {}", userid, res.getReturnmsg());
 		return res;
@@ -374,6 +377,9 @@ public class SysUserServiceImpl implements SysUserService{
 		}
 		SysUser where = BeanCopyUtils.convert(userReq, SysUser.class);
 		List<SysUser> userList = pageQueryDao.findUsers(where);
+		for(SysUser user : userList) {
+			user.setMobileno(CommonUtils.hideMobileNo(user.getMobileno()));
+		}
 		List<SysUserRes> userResList = BeanCopyUtils.convertList(userList, SysUserRes.class);
 		
 		BaseResListDto<SysUserRes> resList = new BaseResListDto<SysUserRes>();

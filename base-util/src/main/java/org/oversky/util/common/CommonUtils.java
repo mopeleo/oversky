@@ -2,8 +2,6 @@ package org.oversky.util.common;
 
 import java.util.Random;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class CommonUtils {
 	
 	//大写I与小写L区别不出来，导致输入错误，屏蔽掉
@@ -24,7 +22,11 @@ public class CommonUtils {
 	}
 
 	public static boolean isEmpty(String str) {
-		return StringUtils.isBlank(str);
+		return str == null || str.length() == 0;
+	}
+
+	public static boolean isNotEmpty(String str) {
+		return !isEmpty(str);
 	}
 
 	public static boolean existSuffix(String key, String[] suffix){
@@ -59,8 +61,12 @@ public class CommonUtils {
 		return false;
 	}
 	
-	public static boolean isTrue(Boolean flag) {
-		return flag == null ? false : flag;
+	
+	public static String hideMobileNo(String before) {
+		if(isNotEmpty(before) && before.length() == 11) {
+			return before.substring(0,3) + "****" + before.substring(7);
+		}
+		
+		return before;
 	}
-
 }

@@ -17,6 +17,9 @@
 			<if test="status != null and status != ''">
 				and a.status = #{status}
 			</if>
+			<if test="orgid != null">
+				and a.orgid = #{orgid}
+			</if>
 			<if test="username != null and username != ''">
 				<bind name="_username" value="'%' + username + '%'"/>
 				and a.username like #{_username}
