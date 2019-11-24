@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.cust.CustLogLoginDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.cust.CustLogLogin">
+        <id column="logid" jdbcType="DECIMAL" property="logid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="custno" jdbcType="DECIMAL" property="custno" />
+        <result column="logindate" jdbcType="VARCHAR" property="logindate" />
+        <result column="logintime" jdbcType="VARCHAR" property="logintime" />
+        <result column="loginpasswd" jdbcType="VARCHAR" property="loginpasswd" />
+        <result column="loginip" jdbcType="VARCHAR" property="loginip" />
+        <result column="logintype" jdbcType="VARCHAR" property="logintype" />
+        <result column="loginresult" jdbcType="VARCHAR" property="loginresult" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustLogLogin" useGeneratedKeys="true" keyProperty="logid">
+        insert into cust_log_login (unioncode, custno, logindate, logintime, loginpasswd, loginip, logintype, loginresult, summary)
+        values (#{unioncode, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{logindate, jdbcType=VARCHAR}, #{logintime, jdbcType=VARCHAR}, #{loginpasswd, jdbcType=VARCHAR}, #{loginip, jdbcType=VARCHAR}, #{logintype, jdbcType=VARCHAR}, #{loginresult, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
+		insert into cust_log_login (unioncode, custno, logindate, logintime, loginpasswd, loginip, logintype, loginresult, summary)
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.logindate, jdbcType=VARCHAR}, #{item.logintime, jdbcType=VARCHAR}, #{item.loginpasswd, jdbcType=VARCHAR}, #{item.loginip, jdbcType=VARCHAR}, #{item.logintype, jdbcType=VARCHAR}, #{item.loginresult, jdbcType=VARCHAR}, #{item.summary, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.cust.CustLogLogin" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from cust_log_login 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.cust.CustLogLogin">
+        delete from cust_log_login 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.cust.CustLogLogin">
+        select count(1) from cust_log_login <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from cust_log_login
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from cust_log_login
+         where logid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from cust_log_login
+         where logid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.cust.CustLogLogin">
+        update cust_log_login set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
+               custno = #{custno, jdbcType=DECIMAL}, 
+               logindate = #{logindate, jdbcType=VARCHAR}, 
+               logintime = #{logintime, jdbcType=VARCHAR}, 
+               loginpasswd = #{loginpasswd, jdbcType=VARCHAR}, 
+               loginip = #{loginip, jdbcType=VARCHAR}, 
+               logintype = #{logintype, jdbcType=VARCHAR}, 
+               loginresult = #{loginresult, jdbcType=VARCHAR}, 
+               summary = #{summary, jdbcType=VARCHAR}
+		where logid = #{logid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.cust.CustLogLogin">
+		update cust_log_login
+		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="custno != null">
+				custno = #{custno, jdbcType=DECIMAL},
+		    </if>
+		    <if test="logindate != null">
+				logindate = #{logindate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="logintime != null">
+				logintime = #{logintime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="loginpasswd != null">
+				loginpasswd = #{loginpasswd, jdbcType=VARCHAR},
+		    </if>
+		    <if test="loginip != null">
+				loginip = #{loginip, jdbcType=VARCHAR},
+		    </if>
+		    <if test="logintype != null">
+				logintype = #{logintype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="loginresult != null">
+				loginresult = #{loginresult, jdbcType=VARCHAR},
+		    </if>
+		    <if test="summary != null">
+				summary = #{summary, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where logid = #{logid, jdbcType=DECIMAL}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update cust_log_login
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.custno != null">
+				custno = #{field.custno, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.logindate != null and field.logindate != ''">
+				logindate = #{field.logindate, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.logintime != null and field.logintime != ''">
+				logintime = #{field.logintime, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.loginpasswd != null and field.loginpasswd != ''">
+				loginpasswd = #{field.loginpasswd, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.loginip != null and field.loginip != ''">
+				loginip = #{field.loginip, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.logintype != null and field.logintype != ''">
+				logintype = #{field.logintype, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.loginresult != null and field.loginresult != ''">
+				loginresult = #{field.loginresult, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.summary != null and field.summary != ''">
+				summary = #{field.summary, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update cust_log_login
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when logid = #{item.logid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when logid = #{item.logid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="custno = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.custno != null">
+	                    when logid = #{item.logid} then #{item.custno, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.custno == null">
+	                    when logid = #{item.logid} then custno
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="logindate = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.logindate != null">
+	                    when logid = #{item.logid} then #{item.logindate, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.logindate == null">
+	                    when logid = #{item.logid} then logindate
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="logintime = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.logintime != null">
+	                    when logid = #{item.logid} then #{item.logintime, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.logintime == null">
+	                    when logid = #{item.logid} then logintime
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="loginpasswd = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.loginpasswd != null">
+	                    when logid = #{item.logid} then #{item.loginpasswd, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.loginpasswd == null">
+	                    when logid = #{item.logid} then loginpasswd
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="loginip = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.loginip != null">
+	                    when logid = #{item.logid} then #{item.loginip, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.loginip == null">
+	                    when logid = #{item.logid} then loginip
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="logintype = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.logintype != null">
+	                    when logid = #{item.logid} then #{item.logintype, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.logintype == null">
+	                    when logid = #{item.logid} then logintype
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="loginresult = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.loginresult != null">
+	                    when logid = #{item.logid} then #{item.loginresult, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.loginresult == null">
+	                    when logid = #{item.logid} then loginresult
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="summary = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.summary != null">
+	                    when logid = #{item.logid} then #{item.summary, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.summary == null">
+	                    when logid = #{item.logid} then summary
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where logid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.logid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from cust_log_login
+	     where logid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}logid, ${tab}unioncode, ${tab}custno, ${tab}logindate, ${tab}logintime, ${tab}loginpasswd, ${tab}loginip, ${tab}logintype, ${tab}loginresult, ${tab}summary
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="logid != null">
+				and logid = #{logid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="custno != null">
+				and custno = #{custno, jdbcType=DECIMAL}
+			</if>
+			<if test="logindate != null and logindate != ''">
+				and logindate = #{logindate, jdbcType=VARCHAR}
+			</if>
+			<if test="logintime != null and logintime != ''">
+				and logintime = #{logintime, jdbcType=VARCHAR}
+			</if>
+			<if test="loginpasswd != null and loginpasswd != ''">
+				and loginpasswd = #{loginpasswd, jdbcType=VARCHAR}
+			</if>
+			<if test="loginip != null and loginip != ''">
+				and loginip = #{loginip, jdbcType=VARCHAR}
+			</if>
+			<if test="logintype != null and logintype != ''">
+				and logintype = #{logintype, jdbcType=VARCHAR}
+			</if>
+			<if test="loginresult != null and loginresult != ''">
+				and loginresult = #{loginresult, jdbcType=VARCHAR}
+			</if>
+			<if test="summary != null and summary != ''">
+				and summary = #{summary, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.logid != null">
+				and logid = #{condition.logid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.custno != null">
+				and custno = #{condition.custno, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.logindate != null and condition.logindate != ''">
+				and logindate = #{condition.logindate, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.logintime != null and condition.logintime != ''">
+				and logintime = #{condition.logintime, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.loginpasswd != null and condition.loginpasswd != ''">
+				and loginpasswd = #{condition.loginpasswd, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.loginip != null and condition.loginip != ''">
+				and loginip = #{condition.loginip, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.logintype != null and condition.logintype != ''">
+				and logintype = #{condition.logintype, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.loginresult != null and condition.loginresult != ''">
+				and loginresult = #{condition.loginresult, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.summary != null and condition.summary != ''">
+				and summary = #{condition.summary, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

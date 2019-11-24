@@ -32,10 +32,6 @@ insert into com_dict(dictcode, itemcode, itemname) values (1005, '5', '星期五
 insert into com_dict(dictcode, itemcode, itemname) values (1005, '6', '星期六');
 insert into com_dict(dictcode, itemcode, itemname) values (1005, '7', '星期天');
 
--- 1006 字典分组
-insert into com_dict(dictcode, itemcode, itemname) values (1006, '0', '系统级字典');
-insert into com_dict(dictcode, itemcode, itemname) values (1006, '1', '用户相关字典');
-
 -- 1007 参数分组
 insert into com_dict(dictcode, itemcode, itemname) values (1007, '0', '系统级参数');
 insert into com_dict(dictcode, itemcode, itemname) values (1007, '1', '账户类参数');
@@ -68,20 +64,6 @@ insert into com_dict(dictcode, itemcode, itemname) values (1012, '1', '手机APP
 insert into com_dict(dictcode, itemcode, itemname) values (1013, '0', '不可见');
 insert into com_dict(dictcode, itemcode, itemname) values (1013, '1', '只读');
 insert into com_dict(dictcode, itemcode, itemname) values (1013, '2', '读写');
-
--- 1014 长度标志
-insert into com_dict(dictcode, itemcode, itemname) values (1014, '0', '不固定');
-insert into com_dict(dictcode, itemcode, itemname) values (1014, '1', '定长');
-
--- 1015 序列复位周期
-insert into com_dict(dictcode, itemcode, itemname) values (1015, '0', '指定值复位');
-insert into com_dict(dictcode, itemcode, itemname) values (1015, '1', '按天复位');
-insert into com_dict(dictcode, itemcode, itemname) values (1015, '2', '按月复位');
-insert into com_dict(dictcode, itemcode, itemname) values (1015, '3', '按年复位');
-
--- 1016 增减标志
-insert into com_dict(dictcode, itemcode, itemname) values (1016, '1', '递增');
-insert into com_dict(dictcode, itemcode, itemname) values (1016, '2', '递减');
 
 -- 1017 成功失败标志
 insert into com_dict(dictcode, itemcode, itemname) values (1017, '0', '失败');
@@ -134,10 +116,6 @@ insert into com_dict(dictcode, itemcode, itemname) values (2005, '5', '武警');
 insert into com_dict(dictcode, itemcode, itemname) values (2005, '6', '下属机构(具有主管单位批文号)');
 insert into com_dict(dictcode, itemcode, itemname) values (2005, '7', '基金会');
 insert into com_dict(dictcode, itemcode, itemname) values (2005, '8', '其它');
-
--- 2006 公私标志
-insert into com_dict(dictcode, itemcode, itemname) values (2006, '0', '公共');
-insert into com_dict(dictcode, itemcode, itemname) values (2006, '1', '私有');
 
 -- 2007 用户类型
 insert into com_dict(dictcode, itemcode, itemname) values (2007, '0', '机构');

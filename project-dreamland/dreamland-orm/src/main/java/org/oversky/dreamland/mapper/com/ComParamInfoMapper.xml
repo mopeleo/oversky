@@ -4,7 +4,6 @@
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.com.ComParamInfo">
         <id column="paramid" jdbcType="INTEGER" property="paramid" />
         <result column="paramname" jdbcType="VARCHAR" property="paramname" />
-        <result column="paramgroup" jdbcType="VARCHAR" property="paramgroup" />
         <result column="edittype" jdbcType="VARCHAR" property="edittype" />
         <result column="initvalue" jdbcType="VARCHAR" property="initvalue" />
         <result column="valuelength" jdbcType="INTEGER" property="valuelength" />
@@ -15,14 +14,14 @@
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.com.ComParamInfo">
         insert into com_param_info (<include refid="column_list"><property name="tab" value=""/></include>)
-        values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{paramgroup, jdbcType=VARCHAR}, #{edittype, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{valuelist, jdbcType=VARCHAR})
+        values (#{paramid, jdbcType=INTEGER}, #{paramname, jdbcType=VARCHAR}, #{edittype, jdbcType=VARCHAR}, #{initvalue, jdbcType=VARCHAR}, #{valuelength, jdbcType=INTEGER}, #{texttitle, jdbcType=VARCHAR}, #{texttail, jdbcType=VARCHAR}, #{valuelist, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
 		insert into com_param_info (<include refid="column_list"><property name="tab" value=""/></include>) 
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.paramgroup, jdbcType=VARCHAR}, #{item.edittype, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.valuelist, jdbcType=VARCHAR})
+		(#{item.paramid, jdbcType=INTEGER}, #{item.paramname, jdbcType=VARCHAR}, #{item.edittype, jdbcType=VARCHAR}, #{item.initvalue, jdbcType=VARCHAR}, #{item.valuelength, jdbcType=INTEGER}, #{item.texttitle, jdbcType=VARCHAR}, #{item.texttail, jdbcType=VARCHAR}, #{item.valuelist, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -62,7 +61,6 @@
     <update id="updateById" parameterType="org.oversky.dreamland.entity.com.ComParamInfo">
         update com_param_info set 
                paramname = #{paramname, jdbcType=VARCHAR}, 
-               paramgroup = #{paramgroup, jdbcType=VARCHAR}, 
                edittype = #{edittype, jdbcType=VARCHAR}, 
                initvalue = #{initvalue, jdbcType=VARCHAR}, 
                valuelength = #{valuelength, jdbcType=INTEGER}, 
@@ -77,9 +75,6 @@
 		<set>
 		    <if test="paramname != null">
 				paramname = #{paramname, jdbcType=VARCHAR},
-		    </if>
-		    <if test="paramgroup != null">
-				paramgroup = #{paramgroup, jdbcType=VARCHAR},
 		    </if>
 		    <if test="edittype != null">
 				edittype = #{edittype, jdbcType=VARCHAR},
@@ -108,9 +103,6 @@
 		<set>
 		    <if test="field.paramname != null and field.paramname != ''">
 				paramname = #{field.paramname, jdbcType=VARCHAR},
-		    </if>
-		    <if test="field.paramgroup != null and field.paramgroup != ''">
-				paramgroup = #{field.paramgroup, jdbcType=VARCHAR},
 		    </if>
 		    <if test="field.edittype != null and field.edittype != ''">
 				edittype = #{field.edittype, jdbcType=VARCHAR},
@@ -144,16 +136,6 @@
 	                </if>
 	                <if test="item.paramname == null">
 	                    when paramid = #{item.paramid} then paramname
-	                </if>
-	            </foreach>
-	        </trim>
-	        <trim prefix="paramgroup = case" suffix="end,">
-	            <foreach collection="list" item="item" index="index">
-	                <if test="item.paramgroup != null">
-	                    when paramid = #{item.paramid} then #{item.paramgroup, jdbcType=VARCHAR}
-	                </if>
-	                <if test="item.paramgroup == null">
-	                    when paramid = #{item.paramid} then paramgroup
 	                </if>
 	            </foreach>
 	        </trim>
@@ -233,7 +215,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}paramid, ${tab}paramname, ${tab}paramgroup, ${tab}edittype, ${tab}initvalue, ${tab}valuelength, ${tab}texttitle, ${tab}texttail, ${tab}valuelist
+        ${tab}paramid, ${tab}paramname, ${tab}edittype, ${tab}initvalue, ${tab}valuelength, ${tab}texttitle, ${tab}texttail, ${tab}valuelist
 	</sql>
 	
 	<sql id="where_all_list">
@@ -243,9 +225,6 @@
 			</if>
 			<if test="paramname != null and paramname != ''">
 				and paramname = #{paramname, jdbcType=VARCHAR}
-			</if>
-			<if test="paramgroup != null and paramgroup != ''">
-				and paramgroup = #{paramgroup, jdbcType=VARCHAR}
 			</if>
 			<if test="edittype != null and edittype != ''">
 				and edittype = #{edittype, jdbcType=VARCHAR}
@@ -275,9 +254,6 @@
 			</if>
 			<if test="condition.paramname != null and condition.paramname != ''">
 				and paramname = #{condition.paramname, jdbcType=VARCHAR}
-			</if>
-			<if test="condition.paramgroup != null and condition.paramgroup != ''">
-				and paramgroup = #{condition.paramgroup, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.edittype != null and condition.edittype != ''">
 				and edittype = #{condition.edittype, jdbcType=VARCHAR}

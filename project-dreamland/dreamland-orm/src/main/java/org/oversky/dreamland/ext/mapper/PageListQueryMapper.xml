@@ -7,7 +7,7 @@
         <include refid="org.oversky.dreamland.dao.cust.CustInfoDao.column_list"><property name="tab" value="a."/></include>
 	</sql>
   
-    <select id="findCusts" parameterType="org.oversky.dreamland.entity.cust.CustInfo" resultMap="org.oversky.dreamland.dao.cust.CustInfoDao.BaseResultMap">
+    <select id="findCustList" parameterType="org.oversky.dreamland.entity.cust.CustInfo" resultMap="org.oversky.dreamland.dao.cust.CustInfoDao.BaseResultMap">
         select <include refid="custinfo_column_list"/>
           from cust_info a
 		<where>
@@ -23,6 +23,30 @@
 			</if>
 			<if test="mobileno != null and mobileno != ''">
 				and a.mobileno like CONCAT('%',#{mobileno},'%')
+			</if>
+		</where>
+    </select>
+  
+	<sql id="gameinfo_column_list">
+        <include refid="org.oversky.dreamland.dao.game.GameInfoDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findGameList" parameterType="org.oversky.dreamland.entity.game.GameInfo" resultMap="org.oversky.dreamland.dao.game.GameInfoDao.BaseResultMap">
+        select <include refid="gameinfo_column_list"/>
+          from game_info a
+		<where>
+			<if test="gamecode != null and gamecode != ''">
+				and a.gamecode = #{gamecode}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and a.unioncode = #{unioncode}
+			</if>
+			<if test="status != null and status != ''">
+				and a.status = #{status}
+			</if>
+			<if test="gamename != null and gamename != ''">
+				<bind name="_gamename" value="'%' + gamename + '%'"/>
+				and a.gamename like #{_gamename}
 			</if>
 		</where>
     </select>

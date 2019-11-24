@@ -39,20 +39,19 @@ INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, st
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1300', 1, '复核设置', '', '1000', 0, 1, 0, null);
                                                                                                                           
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1400', 1, '日常', '', '1000', 0, 1, 0, null);
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1410', 1, '我的日历', '', '1400', 0, 1, 0, null);
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1420', 1, '待办事项', '', '1400', 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1410', 1, '我的日历', 'syswork/calendar', '1400', 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1420', 1, '待办事项', 'syswork/todo', '1400', 0, 1, 0, null);
                                                                                                                           
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1900', 1, '查询', '', '1000', 0, 1, 0, null);
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1910', 1, '登录日志', '', '1900', 0, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('1910', 1, '登录日志', 'syslog/login', '1900', 0, 1, 0, null);
                                                                                                                           
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2000', 2, '游戏管理系统', '', null, 0, 1, 0, null);
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2100', 2, '客户', '', '2000', 0, 1, 0, null);
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2110', 2, '客户管理', 'custinfo/list', '2100', 1, 1, 0, null);
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2111', 2, '客户详情', 'custinfo/detail', '2110', 2, 1, 0, null);
-                                                                                                                      
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2120', 2, '账号管理', 'custacct/list', '2100', 1, 1, 0, null);
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2121', 2, '账号冻结', 'custacct/freeze', '2120', 2, 1, 0, null);
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2122', 2, '账号解冻', 'custacct/unfreeze', '2120', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2111', 2, '客户详情', 'custinfo/detail', '2110', 2, 1, 0, null);                                                                                                                      
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2112', 2, '客户冻结', 'custinfo/freeze', '2110', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2113', 2, '客户解冻', 'custinfo/unfreeze', '2110', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2114', 2, '密码重置', 'custinfo/resetpassword', '2110', 2, 1, 0, null);
                                                                                                                       
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2200', 2, '游戏中心', '', '2000', 0, 1, 0, null);
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2210', 2, '游戏管理', 'gameinfo/list', '2200', 1, 1, 0, null);

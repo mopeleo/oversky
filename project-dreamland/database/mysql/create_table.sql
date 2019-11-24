@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/13 19:05:15                          */
+/* Created on:     2019/11/24 21:39:27                          */
 /*==============================================================*/
 
 
@@ -14,9 +14,9 @@ drop table if exists cust_info;
 
 drop table if exists cust_info_ext;
 
-drop table if exists cust_pay_acct;
+drop table if exists cust_log_login;
 
-drop table if exists cust_pay_log;
+drop table if exists cust_log_trans;
 
 drop table if exists game_actor_info;
 
@@ -111,7 +111,6 @@ create table com_param_info
 (
    paramid              numeric(4,0) not null default 0 comment '参数ID',
    paramname            varchar(32) not null comment '参数名称',
-   paramgroup           char(1) not null default '0' comment '所属分组，字典',
    edittype             char(1) not null default '0' comment '1 只读无法修改，2 input 修改，3 select 修改',
    initvalue            varchar(32) not null comment '初始值',
    valuelength          numeric(4,0) default 0 comment '输入值长度,0-不检查长度，其他值效验长度',
@@ -174,23 +173,27 @@ create table cust_info_ext
 alter table cust_info_ext comment ' 客户信息扩展表';
 
 /*==============================================================*/
-/* Table: cust_pay_acct                                         */
+/* Table: cust_log_login                                        */
 /*==============================================================*/
-create table cust_pay_acct
+create table cust_log_login
 (
-   acctno               bigint not null auto_increment comment '账户编号[identity]',
-   custno               bigint not null default 0,
-   paytype              char(1) not null default '0' comment '支付方式，0，银行卡，1微信，2，支付宝',
-   payno                varchar(32) not null comment '支付账号',
-   primary key (acctno)
+   logid                bigint not null comment '[identity]',
+   unioncode            varchar(8) not null default '0000',
+   custno               bigint not null,
+   logindate            varchar(8) comment '登录日期',
+   logintime            varchar(6) comment '登录时间',
+   loginpasswd          char(32) not null comment '登录密码',
+   loginip              varchar(16) comment '登录IP',
+   logintype            char(1) not null default '0' comment '登录方式（0-pc，1-手机）',
+   loginresult          char(1) not null default '0' comment '登录是否成功 0-失败，1-成功',
+   summary              varchar(32) comment '说明',
+   primary key (logid)
 );
 
-alter table cust_pay_acct comment '客户支付账户';
-
 /*==============================================================*/
-/* Table: cust_pay_log                                          */
+/* Table: cust_log_trans                                        */
 /*==============================================================*/
-create table cust_pay_log
+create table cust_log_trans
 (
    logid                bigint not null auto_increment comment '[identity]',
    custno               bigint not null default 0,
@@ -207,7 +210,7 @@ create table cust_pay_log
    primary key (logid)
 );
 
-alter table cust_pay_log comment '客户支付流水';
+alter table cust_log_trans comment '客户交易流水';
 
 /*==============================================================*/
 /* Table: game_actor_info                                       */
@@ -316,9 +319,14 @@ create table game_info
 (
    gameid               bigint not null auto_increment comment '[identity]',
    unioncode            varchar(8) not null default '0000',
-   gamecode             varchar(32) not null comment '游戏代码',
+   gamecode             varchar(16) not null comment '游戏代码',
    gamename             varchar(32) not null comment '游戏名称',
    fullname             varchar(64) comment '游戏全称',
+   englishname          varchar(32),
+   alphatest            varchar(8),
+   betatest             varchar(8),
+   status               char(1) not null default '0' comment '游戏状态，0-开发中，1-内测，2-公测，3-发行，4-终止',
+   summary              varchar(256),
    primary key (gameid)
 );
 

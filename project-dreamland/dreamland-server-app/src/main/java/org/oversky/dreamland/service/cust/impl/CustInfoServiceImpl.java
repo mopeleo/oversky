@@ -281,7 +281,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 		log.info("开始分页查询客户信息，req : {}", custReq.toString());
 		Page<CustInfoRes> page = PageHelper.startPage(custReq.getPageNum(), custReq.getPageSize());
 		CustInfo where = BeanCopyUtils.convert(custReq, CustInfo.class);
-		List<CustInfo> custList = pageQueryDao.findCusts(where);
+		List<CustInfo> custList = pageQueryDao.findCustList(where);
 		List<CustInfoRes> custResList = BeanCopyUtils.convertList(custList, CustInfoRes.class);
 		
 		BaseResListDto<CustInfoRes> resList = new BaseResListDto<CustInfoRes>();

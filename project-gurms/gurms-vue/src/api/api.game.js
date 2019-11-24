@@ -69,7 +69,7 @@ export default {
             params: {custno: custno}
         });
     },
-    // 修改密码
+    // 重置密码
     custInfoResetPasswd (params) {
         return axios.post(`${baseURL}/custinfo/resetpassword`, params);
     },
