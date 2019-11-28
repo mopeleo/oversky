@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.commons.lang3.StringUtils;
+import org.oversky.util.common.CommonUtils;
 import org.oversky.valid.GSAValid.FilterType;
 
 public class GSAValidInterceptor implements MethodInterceptor {
@@ -35,7 +35,7 @@ public class GSAValidInterceptor implements MethodInterceptor {
 				}
 			}
 			
-			if(StringUtils.isNotBlank(validMsg)){
+			if(CommonUtils.isNotEmpty(validMsg)){
 				throw new GSAValidException(validMsg);
 			}
 		}

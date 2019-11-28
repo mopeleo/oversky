@@ -3,8 +3,8 @@ package org.oversky.valid;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.oversky.util.bean.ReflectionUtils;
+import org.oversky.util.common.CommonUtils;
 import org.oversky.valid.GSAValid.FilterType;
 import org.oversky.valid.GSAValidRule.Rule;
 
@@ -36,7 +36,7 @@ public class GSAValidator {
 		            break;
 		        }
 		    }
-		    if(allowEmpty && StringUtils.isBlank(fieldValue)){
+		    if(allowEmpty && CommonUtils.isEmpty(fieldValue)){
 		        continue;
 		    }
 		    

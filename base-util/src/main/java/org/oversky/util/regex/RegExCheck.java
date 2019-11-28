@@ -2,7 +2,7 @@ package org.oversky.util.regex;
 
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
+import org.oversky.util.common.CommonUtils;
 
 public class RegExCheck {
 	
@@ -25,7 +25,7 @@ public class RegExCheck {
 	 * @return
 	 */
 	public static boolean isNumber(String str) {
-		if(StringUtils.isEmpty(str)) {
+		if(CommonUtils.isEmpty(str)) {
 			return false;
 		}
 		Pattern pattern = Pattern.compile("^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$");
