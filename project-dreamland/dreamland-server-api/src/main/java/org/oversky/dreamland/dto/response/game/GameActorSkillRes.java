@@ -6,25 +6,25 @@ public class GameActorSkillRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String actorid;    //角色ID
-	private String skillid;    //技能ID
+	private Long actorid;    //角色ID
+	private Long skillid;    //技能ID
 	private Integer unlocklevel;    //解锁等级
 	private String extendflag;    //是否可继承(0-否，1-是）
 	private Integer sno;    //排序号，从上到下，从小到大，小在上
 
-	public String getActorid() {
+	public Long getActorid() {
 		return this.actorid;
 	}
 
-	public void setActorid(String actorid) {
+	public void setActorid(Long actorid) {
 		this.actorid = actorid;
 	}
 
-	public String getSkillid() {
+	public Long getSkillid() {
 		return this.skillid;
 	}
 
-	public void setSkillid(String skillid) {
+	public void setSkillid(Long skillid) {
 		this.skillid = skillid;
 	}
 

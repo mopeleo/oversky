@@ -6,7 +6,7 @@ public class ServerMsgReceiveRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long msgid;    //消息ID
+	private Long msgid;    //消息ID[identity]
 	private String serverid;    //
 	private Long custno;    //客户号
 	private String isread;    //已读标志

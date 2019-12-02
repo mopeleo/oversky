@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2019/11/24 21:39:27                          */
+/* Created on:     2019/12/1 23:08:58                           */
 /*==============================================================*/
 
 
@@ -18,47 +18,51 @@ drop table if exists cust_log_login;
 
 drop table if exists cust_log_trans;
 
-drop table if exists game_actor_info;
+drop table if exists game_actor;
 
 drop table if exists game_actor_skill;
 
-drop table if exists game_attribute_info;
+drop table if exists game_attribute;
 
-drop table if exists game_equip_info;
+drop table if exists game_channel;
+
+drop table if exists game_equip;
 
 drop table if exists game_equip_skill;
 
 drop table if exists game_info;
 
-drop table if exists game_item_info;
+drop table if exists game_item;
 
-drop table if exists game_level_info;
+drop table if exists game_level;
 
-drop table if exists game_meun_info;
+drop table if exists game_meun;
 
-drop table if exists game_promotion_info;
+drop table if exists game_promotion;
 
-drop table if exists game_scene_info;
+drop table if exists game_scene;
 
 drop table if exists game_scene_menu;
 
-drop table if exists game_skill_info;
+drop table if exists game_skill;
+
+drop table if exists game_suit;
 
 drop table if exists game_suit_equip;
-
-drop table if exists game_suit_info;
 
 drop table if exists server_bulletin;
 
 drop table if exists server_info;
 
-drop table if exists server_league_info;
+drop table if exists server_league;
 
 drop table if exists server_msg_receive;
 
 drop table if exists server_msg_send;
 
 drop table if exists server_param;
+
+drop table if exists server_player;
 
 drop table if exists server_player_actor;
 
@@ -71,8 +75,6 @@ drop table if exists server_player_equip;
 drop table if exists server_player_equip_attribute;
 
 drop table if exists server_player_friend;
-
-drop table if exists server_player_info;
 
 drop table if exists server_player_package;
 
@@ -147,6 +149,7 @@ create table cust_info
    loginerror           numeric(4,0) not null default 0 comment '连续登录失败次数',
    regdate              varchar(8) comment '注册日期',
    canceldate           varchar(8) comment '注销日期',
+   channelid            numeric(4,0) comment '客户渠道',
    primary key (custno)
 );
 
@@ -196,6 +199,7 @@ create table cust_log_login
 create table cust_log_trans
 (
    logid                bigint not null auto_increment comment '[identity]',
+   unioncode            varchar(8) not null default '0000',
    custno               bigint not null default 0,
    serverid             char(8) not null,
    direction            char(1) not null default '0' comment '方向，0 支付，1，退款',
@@ -213,18 +217,20 @@ create table cust_log_trans
 alter table cust_log_trans comment '客户交易流水';
 
 /*==============================================================*/
-/* Table: game_actor_info                                       */
+/* Table: game_actor                                            */
 /*==============================================================*/
-create table game_actor_info
+create table game_actor
 (
    actorid              bigint not null auto_increment comment '角色ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    actorname            varchar(32) not null comment '角色名称',
    sex                  numeric(8,0) not null default 0 comment '性别',
    race                 char(1) not null default '0' comment '种族1-人类，2-兽人，3-精灵，4-影，5-机械，6-恶魔',
    profession           char(1) not null default '0' comment '职业1-战士，2-剑客，3-猎人，4-盗贼，5-刺客，6-牧师，7-魔导士，8-召唤师，9-',
    actorscene           numeric(1,0) not null default 0 comment '角色存在场景(1- 第一场景，2-第二场景)',
    str                  numeric(8,0) not null default 0 comment '初始力量',
-   intelligence         numeric(8,0) not null default 0 comment '初始智力',
+   magic                numeric(8,0) not null default 0 comment '初始魔力',
    hp                   numeric(8,0) not null default 0 comment '初始生命值',
    mp                   numeric(8,0) not null default 0 comment '初始魔法值',
    agl                  numeric(8,0) not null default 0 comment '初始敏捷',
@@ -233,7 +239,7 @@ create table game_actor_info
    maxrank              numeric(8,0) not null default 0 comment '最大星级',
    ratiotype            char(1) not null default '0' comment '成长系数类型(0-固定，1-动态)',
    ratiostr             numeric(6,4) not null default 0.00 comment '默认力量成长率',
-   ratioint             numeric(6,4) not null default 0.00 comment '默认智力成长率',
+   ratiomagic           numeric(6,4) not null default 0.00 comment '默认魔力成长率',
    ratiohp              numeric(6,4) not null default 0.00 comment '默认HP成长率',
    ratiomp              numeric(6,4) not null default 0.00 comment '默认MP成长率',
    ratioagl             numeric(6,4) not null default 0.00 comment '默认敏捷成长率',
@@ -243,7 +249,7 @@ create table game_actor_info
    primary key (actorid)
 );
 
-alter table game_actor_info comment '角色基本信息表';
+alter table game_actor comment '角色基本信息表';
 
 /*==============================================================*/
 /* Table: game_actor_skill                                      */
@@ -261,11 +267,13 @@ create table game_actor_skill
 alter table game_actor_skill comment '角色技能表';
 
 /*==============================================================*/
-/* Table: game_attribute_info                                   */
+/* Table: game_attribute                                        */
 /*==============================================================*/
-create table game_attribute_info
+create table game_attribute
 (
    attrid               bigint not null auto_increment comment '属性ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    attrtype             char(1) not null default '0' comment '属性类型（0-基本属性，1-附加属性，2-套装属性）',
    attrfield            numeric(4,0) not null default 0 comment '属性附加字段（0-力量，1-智力，2-hp,3-mp,4-敏捷，5-幸运，6-物攻，7-魔攻，8-物防，9-法防，10-攻速，11-闪避，12-暴击，13-技能等级）',
    unlockflag           char(1) not null default '0' comment '解锁条件，套装属性用',
@@ -279,14 +287,30 @@ create table game_attribute_info
    primary key (attrid)
 );
 
-alter table game_attribute_info comment '附加属性信息';
+alter table game_attribute comment '附加属性信息';
 
 /*==============================================================*/
-/* Table: game_equip_info                                       */
+/* Table: game_channel                                          */
 /*==============================================================*/
-create table game_equip_info
+create table game_channel
+(
+   channelid            numeric(4,0) not null,
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null,
+   channelname          varchar(32) not null,
+   primary key (channelid)
+);
+
+alter table game_channel comment '游戏渠道';
+
+/*==============================================================*/
+/* Table: game_equip                                            */
+/*==============================================================*/
+create table game_equip
 (
    equipid              bigint not null auto_increment comment '装备ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    equipname            varchar(32) not null comment '装备名称',
    icon                 varchar(32) not null comment '图标',
    position             char(1) not null default '0' comment '部位（1-武器，2-头饰，3-衣服，4-裤子，5-腰带，6-鞋子，7-项链，8-戒指）',
@@ -296,7 +320,7 @@ create table game_equip_info
    primary key (equipid)
 );
 
-alter table game_equip_info comment '装备信息表';
+alter table game_equip comment '装备信息表';
 
 /*==============================================================*/
 /* Table: game_equip_skill                                      */
@@ -333,11 +357,13 @@ create table game_info
 alter table game_info comment '游戏信息表';
 
 /*==============================================================*/
-/* Table: game_item_info                                        */
+/* Table: game_item                                             */
 /*==============================================================*/
-create table game_item_info
+create table game_item
 (
    itemid               bigint not null auto_increment comment '道具ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    itemname             varchar(32) not null comment '道具名称',
    icon                 varchar(32) not null comment '图标',
    itemtype             char(1) not null default '0' comment '道具类型（0-加经验，1-加血，2-加mp，3-剧情道具）',
@@ -347,11 +373,13 @@ create table game_item_info
 );
 
 /*==============================================================*/
-/* Table: game_level_info                                       */
+/* Table: game_level                                            */
 /*==============================================================*/
-create table game_level_info
+create table game_level
 (
    levelid              bigint not null auto_increment comment '等级ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    levelname            varchar(32) not null comment '等级名称',
    nextlevel            numeric(8,0) not null default 0 comment '下一等级',
    icon                 varchar(32) not null comment '等级图标',
@@ -363,38 +391,44 @@ create table game_level_info
 );
 
 /*==============================================================*/
-/* Table: game_meun_info                                        */
+/* Table: game_meun                                             */
 /*==============================================================*/
-create table game_meun_info
+create table game_meun
 (
    menuid               bigint not null auto_increment comment '[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    menuname             varchar(32) not null,
    icon                 varchar(32) not null,
    url                  varchar(32) not null,
    primary key (menuid)
 );
 
-alter table game_meun_info comment '功能点菜单表';
+alter table game_meun comment '功能点菜单表';
 
 /*==============================================================*/
-/* Table: game_promotion_info                                   */
+/* Table: game_promotion                                        */
 /*==============================================================*/
-create table game_promotion_info
+create table game_promotion
 (
    promid               bigint not null auto_increment,
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    promname             varchar(32) not null,
    remark               varchar(256),
    primary key (promid)
 );
 
-alter table game_promotion_info comment '促销活动';
+alter table game_promotion comment '促销活动';
 
 /*==============================================================*/
-/* Table: game_scene_info                                       */
+/* Table: game_scene                                            */
 /*==============================================================*/
-create table game_scene_info
+create table game_scene
 (
    sceneid              bigint not null auto_increment comment '场景ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    scenename            varchar(32) not null comment '场景名称',
    primary key (sceneid)
 );
@@ -410,11 +444,13 @@ create table game_scene_menu
 );
 
 /*==============================================================*/
-/* Table: game_skill_info                                       */
+/* Table: game_skill                                            */
 /*==============================================================*/
-create table game_skill_info
+create table game_skill
 (
    skillid              bigint not null auto_increment comment '技能ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
    skillname            varchar(32) not null comment '技能名称',
    icon                 varchar(32) not null comment '技能图标',
    skilltype            char(1) not null default '0' comment '技能类型（0-角色，1-装备）',
@@ -435,7 +471,24 @@ create table game_skill_info
    primary key (skillid)
 );
 
-alter table game_skill_info comment '技能信息表';
+alter table game_skill comment '技能信息表';
+
+/*==============================================================*/
+/* Table: game_suit                                             */
+/*==============================================================*/
+create table game_suit
+(
+   suitid               bigint not null auto_increment comment '套装ID[identity]',
+   unioncode            varchar(8) not null default '0000',
+   gameid               bigint not null comment '游戏ID',
+   suitname             varchar(32) not null comment '套装名称',
+   profession           varchar(32) not null comment '适用职业，多个职业用逗号分隔',
+   unlocklevel          numeric(4,0) not null default 0 comment '解锁等级',
+   summary              varchar(256) comment '描述',
+   primary key (suitid)
+);
+
+alter table game_suit comment '套装信息表';
 
 /*==============================================================*/
 /* Table: game_suit_equip                                       */
@@ -448,21 +501,6 @@ create table game_suit_equip
 );
 
 alter table game_suit_equip comment '套装装备关联表';
-
-/*==============================================================*/
-/* Table: game_suit_info                                        */
-/*==============================================================*/
-create table game_suit_info
-(
-   suitid               bigint not null auto_increment comment '套装ID[identity]',
-   suitname             varchar(32) not null comment '套装名称',
-   profession           varchar(32) not null comment '适用职业，多个职业用逗号分隔',
-   unlocklevel          numeric(4,0) not null default 0 comment '解锁等级',
-   summary              varchar(256) comment '描述',
-   primary key (suitid)
-);
-
-alter table game_suit_info comment '套装信息表';
 
 /*==============================================================*/
 /* Table: server_bulletin                                       */
@@ -498,9 +536,9 @@ create table server_info
 );
 
 /*==============================================================*/
-/* Table: server_league_info                                    */
+/* Table: server_league                                         */
 /*==============================================================*/
-create table server_league_info
+create table server_league
 (
    leagueid             bigint not null auto_increment comment '[identity]',
    serverid             char(8) not null,
@@ -514,7 +552,7 @@ create table server_league_info
    primary key (leagueid)
 );
 
-alter table server_league_info comment '联盟';
+alter table server_league comment '联盟';
 
 /*==============================================================*/
 /* Table: server_msg_receive                                    */
@@ -560,6 +598,22 @@ create table server_param
 );
 
 alter table server_param comment '服务器系统参数表';
+
+/*==============================================================*/
+/* Table: server_player                                         */
+/*==============================================================*/
+create table server_player
+(
+   serverid             char(8) not null,
+   custno               bigint not null default 0,
+   nickname             varchar(32) not null,
+   logindate            varchar(8) not null,
+   logintime            varchar(6) not null,
+   playerlevel          numeric(8,0) not null default 0 comment '玩家等级',
+   viplevel             numeric(8,0) not null default 0 comment '会员等级',
+   crystal              numeric(8,0) not null default 0 comment '水晶数量，游戏货币',
+   primary key (serverid, custno)
+);
 
 /*==============================================================*/
 /* Table: server_player_actor                                   */
@@ -647,22 +701,6 @@ create table server_player_friend
    friendlist           varchar(2048) not null comment '好友列表逗号分隔',
    friendnum            numeric(8,0) not null default 0 comment '好友数量，上限60',
    primary key (serverid)
-);
-
-/*==============================================================*/
-/* Table: server_player_info                                    */
-/*==============================================================*/
-create table server_player_info
-(
-   serverid             char(8) not null,
-   custno               bigint not null default 0,
-   nickname             varchar(32) not null,
-   logindate            varchar(8) not null,
-   logintime            varchar(6) not null,
-   playerlevel          numeric(8,0) not null default 0 comment '玩家等级',
-   viplevel             numeric(8,0) not null default 0 comment '会员等级',
-   crystal              numeric(8,0) not null default 0 comment '水晶数量，游戏货币',
-   primary key (serverid, custno)
 );
 
 /*==============================================================*/

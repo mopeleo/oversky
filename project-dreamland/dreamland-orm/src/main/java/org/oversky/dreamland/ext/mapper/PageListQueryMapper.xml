@@ -3,6 +3,18 @@
 <mapper namespace="org.oversky.dreamland.ext.dao.PageListQueryDao">
 
 	<!-- ========================================================================================= -->
+	<sql id="comparaminfo_column_list">
+        <include refid="org.oversky.dreamland.dao.com.ComParamInfoDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findParams" resultMap="org.oversky.dreamland.dao.com.ComParamInfoDao.BaseResultMap">
+        select <include refid="comparaminfo_column_list"/>
+          from com_param_info a
+         where exists (select 1 from com_param b where a.paramid=b.paramid and b.unioncode = #{param1})
+      order by a.paramid
+    </select>
+  
+	<!-- ========================================================================================= -->
 	<sql id="custinfo_column_list">
         <include refid="org.oversky.dreamland.dao.cust.CustInfoDao.column_list"><property name="tab" value="a."/></include>
 	</sql>
@@ -47,6 +59,48 @@
 			<if test="gamename != null and gamename != ''">
 				<bind name="_gamename" value="'%' + gamename + '%'"/>
 				and a.gamename like #{_gamename}
+			</if>
+		</where>
+    </select>
+  
+	<sql id="gameactor_column_list">
+        <include refid="org.oversky.dreamland.dao.game.GameActorDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findGameActorList" parameterType="org.oversky.dreamland.entity.game.GameActor" resultMap="org.oversky.dreamland.dao.game.GameActorDao.BaseResultMap">
+        select <include refid="gameactor_column_list"/>
+          from game_actor a
+		<where>
+			<if test="gameid != null">
+				and a.gameid = #{gameid}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and a.unioncode = #{unioncode}
+			</if>
+			<if test="actorname != null and actorname != ''">
+				<bind name="_actorname" value="'%' + actorname + '%'"/>
+				and a.actorname like #{_actorname}
+			</if>
+		</where>
+    </select>
+  
+	<sql id="gameequip_column_list">
+        <include refid="org.oversky.dreamland.dao.game.GameEquipDao.column_list"><property name="tab" value="a."/></include>
+	</sql>
+  
+    <select id="findGameEquipList" parameterType="org.oversky.dreamland.entity.game.GameEquip" resultMap="org.oversky.dreamland.dao.game.GameEquipDao.BaseResultMap">
+        select <include refid="gameequip_column_list"/>
+          from game_equip a
+		<where>
+			<if test="equipid != null">
+				and a.equipid = #{equipid}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and a.unioncode = #{unioncode}
+			</if>
+			<if test="equipname != null and equipname != ''">
+				<bind name="_equipname" value="'%' + equipname + '%'"/>
+				and a.equipname like #{_equipname}
 			</if>
 		</where>
     </select>

@@ -39,8 +39,8 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter{
 		if(!ignore) {
 			//从数据库获取
 			SysMenuRes menu = menuService.getMenuByUrl(requestUrl);
-			if(menu != null && !DictConsts.DICT2011_ACCESSTYPE_ANY.equals(menu.getAccesstype())) {
-				if(DictConsts.DICT2011_ACCESSTYPE_AUTH.equals(menu.getAccesstype())) {
+			if(menu != null && !DictConsts.DICT1211_ACCESSTYPE_ANY.equals(menu.getAccesstype())) {
+				if(DictConsts.DICT1211_ACCESSTYPE_AUTH.equals(menu.getAccesstype())) {
 					String authToken = request.getHeader("Authorization");
 					String subject = null;
 					try {
@@ -70,7 +70,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter{
 			return false;
 		}
 		
-		if(DictConsts.DICT2010_MENYTYPE_DIRECTORY.equals(menus.getMenutype())){
+		if(DictConsts.DICT1210_MENYTYPE_DIRECTORY.equals(menus.getMenutype())){
 			for(SysMenuRes m : menus.getSubMenus()){
 				if(hasPrivilege(menuId, m)){
 					return true;

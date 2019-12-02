@@ -6,22 +6,22 @@ public class GameSuitEquipReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String suitid;    //
-	private String equipid;    //
+	private Long suitid;    //
+	private Long equipid;    //
 
-	public String getSuitid() {
+	public Long getSuitid() {
 		return this.suitid;
 	}
 
-	public void setSuitid(String suitid) {
+	public void setSuitid(Long suitid) {
 		this.suitid = suitid;
 	}
 
-	public String getEquipid() {
+	public Long getEquipid() {
 		return this.equipid;
 	}
 
-	public void setEquipid(String equipid) {
+	public void setEquipid(Long equipid) {
 		this.equipid = equipid;
 	}
 

@@ -8,7 +8,6 @@ public class ComParamInfoReq extends BaseReqDto {
 
 	private Integer paramid;    //参数ID
 	private String paramname;    //参数名称
-	private String paramgroup;    //所属分组，字典
 	private String edittype;    //1 只读无法修改，2 input 修改，3 select 修改
 	private String initvalue;    //初始值
 	private Integer valuelength;    //输入值长度,0-不检查长度，其他值效验长度
@@ -30,14 +29,6 @@ public class ComParamInfoReq extends BaseReqDto {
 
 	public void setParamname(String paramname) {
 		this.paramname = paramname;
-	}
-
-	public String getParamgroup() {
-		return this.paramgroup;
-	}
-
-	public void setParamgroup(String paramgroup) {
-		this.paramgroup = paramgroup;
 	}
 
 	public String getEdittype() {
@@ -94,7 +85,6 @@ public class ComParamInfoReq extends BaseReqDto {
         StringBuilder sb = new StringBuilder();
 		sb.append("paramid=").append(paramid).append(", ");
 		sb.append("paramname=").append(paramname).append(", ");
-		sb.append("paramgroup=").append(paramgroup).append(", ");
 		sb.append("edittype=").append(edittype).append(", ");
 		sb.append("initvalue=").append(initvalue).append(", ");
 		sb.append("valuelength=").append(valuelength).append(", ");

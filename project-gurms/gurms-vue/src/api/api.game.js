@@ -97,11 +97,63 @@ export default {
     },
     // 游戏详情
     gameInfoDetail (gameid) {
-        return axios.get(`${baseURL}/gameinfo/detail/${gameid}`);
+        return axios.get(`${baseURL}/gameinfo/detail`, {
+            params: {gameid: gameid}
+        });
     },
     // 游戏删除
-    gameInfoDelete (gameid) {
-        return axios.get(`${baseURL}/gameinfo/delete/${gameid}`);
+    gameInfoDelete (params) {
+        return axios.post(`${baseURL}/gameinfo/delete`, params);
+    },
+
+
+    //========================================================
+    // 游戏角色列表
+    gameActorList (params) {
+        return axios.post(`${baseURL}/gameactor/list`, params);
+    },
+    // 游戏角色新增
+    gameActorAdd (params) {
+        return axios.post(`${baseURL}/gameactor/add`, params);
+    },
+    // 游戏角色编辑
+    gameActorUpdate (params) {
+        return axios.post(`${baseURL}/gameactor/update`, params);
+    },
+    // 游戏角色详情
+    gameActorDetail (actorid) {
+        return axios.get(`${baseURL}/gameactor/detail`, {
+            params: {actorid: actorid}
+        });
+    },
+    // 游戏角色删除
+    gameActorDelete (params) {
+        return axios.post(`${baseURL}/gameactor/delete`, params);
+    },
+
+
+    //========================================================
+    // 游戏装备列表
+    gameEquipList (params) {
+        return axios.post(`${baseURL}/gameequip/list`, params);
+    },
+    // 游戏装备新增
+    gameEquipAdd (params) {
+        return axios.post(`${baseURL}/gameequip/add`, params);
+    },
+    // 游戏装备编辑
+    gameEquipUpdate (params) {
+        return axios.post(`${baseURL}/gameequip/update`, params);
+    },
+    // 游戏装备详情
+    gameEquipDetail (equipid) {
+        return axios.get(`${baseURL}/gameequip/detail`, {
+            params: {equipid: equipid}
+        });
+    },
+    // 游戏装备删除
+    gameEquipDelete (params) {
+        return axios.post(`${baseURL}/gameequip/delete`, params);
     },
 
 

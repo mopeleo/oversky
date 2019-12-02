@@ -9,7 +9,7 @@ public class ServerPlayerPackageReq extends BaseReqDto {
 	private String serverid;    //
 	private Long custno;    //
 	private String itemtype;    //物品类型，0-道具，1-装备，2-技能
-	private String itemid;    //物品ID
+	private Long itemid;    //物品ID
 	private Integer itemnum;    //物品数量
 
 	public String getServerid() {
@@ -36,11 +36,11 @@ public class ServerPlayerPackageReq extends BaseReqDto {
 		this.itemtype = itemtype;
 	}
 
-	public String getItemid() {
+	public Long getItemid() {
 		return this.itemid;
 	}
 
-	public void setItemid(String itemid) {
+	public void setItemid(Long itemid) {
 		this.itemid = itemid;
 	}
 

@@ -6,11 +6,11 @@ public class ServerPlayerEquipRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long peid;    //自动生产的流水ID
+	private Long peid;    //自动生产的流水ID[identity]
 	private String serverid;    //
 	private Long custno;    //
-	private String equipid;    //
-	private String actorid;    //若actorid为空，则放在背包，不为空，则装备在角色身上
+	private Long equipid;    //
+	private Long actorid;    //若actorid为空，则放在背包，不为空，则装备在角色身上
 	private Integer equiplevel;    //武器等级
 	private Integer proficiency;    //武器熟练度
 
@@ -38,19 +38,19 @@ public class ServerPlayerEquipRes extends BaseResDto {
 		this.custno = custno;
 	}
 
-	public String getEquipid() {
+	public Long getEquipid() {
 		return this.equipid;
 	}
 
-	public void setEquipid(String equipid) {
+	public void setEquipid(Long equipid) {
 		this.equipid = equipid;
 	}
 
-	public String getActorid() {
+	public Long getActorid() {
 		return this.actorid;
 	}
 
-	public void setActorid(String actorid) {
+	public void setActorid(Long actorid) {
 		this.actorid = actorid;
 	}
 

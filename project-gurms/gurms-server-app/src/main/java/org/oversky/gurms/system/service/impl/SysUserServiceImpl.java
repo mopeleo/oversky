@@ -77,7 +77,7 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser user = BeanCopyUtils.convert(userReq, SysUser.class);
 		user.setSalt(BizFunc.createPasswdSalt());
-		user.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		user.setStatus(DictConsts.DICT1201_USER_STATUS_NORMAL);
 		user.setLoginerror(0);
 		user.setOpendate(DateUtils.getNowDate());
 		user.setPasswdvaliddate(BizFunc.passwordInvalidDate());
@@ -113,7 +113,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 		
-		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
+		if(!DictConsts.DICT1201_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能删除");
 			log.warn(res.getReturnmsg());
 			return res;
@@ -170,8 +170,8 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 		
-		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())
-				&& !DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
+		if(!DictConsts.DICT1201_USER_STATUS_NORMAL.equals(user.getStatus())
+				&& !DictConsts.DICT1201_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能重置密码");
 			log.warn(res.getReturnmsg());
 			return res;
@@ -184,8 +184,8 @@ public class SysUserServiceImpl implements SysUserService{
 		updateUser.setLoginpasswd(BizFunc.encryptPassword(md5Password, updateUser.getSalt()));
 		updateUser.setLoginerror(0);
 		updateUser.setPasswdvaliddate(BizFunc.passwordInvalidDate());
-		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
-			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		if(DictConsts.DICT1201_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
+			updateUser.setStatus(DictConsts.DICT1201_USER_STATUS_NORMAL);
 		}
 		sysUserDao.dynamicUpdateById(updateUser);
 		res.success("重置密码成功");
@@ -218,7 +218,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 
-		if(DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())) {
+		if(DictConsts.DICT1201_USER_STATUS_FROZEN.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]被冻结，不能修改密码");
 			log.warn(res.getReturnmsg());
 			return res;
@@ -230,8 +230,8 @@ public class SysUserServiceImpl implements SysUserService{
 		updateUser.setLoginpasswd(newPassword);
 		updateUser.setLoginerror(0);
 		updateUser.setPasswdvaliddate(BizFunc.passwordInvalidDate());
-		if(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
-			updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		if(DictConsts.DICT1201_USER_STATUS_PASSWDLOCK.equals(user.getStatus())) {
+			updateUser.setStatus(DictConsts.DICT1201_USER_STATUS_NORMAL);
 		}
 		sysUserDao.dynamicUpdateById(updateUser);
 		
@@ -252,7 +252,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 		
-		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
+		if(!DictConsts.DICT1201_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]状态异常，不能冻结");
 			log.warn(res.getReturnmsg());
 			return res;
@@ -260,7 +260,7 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser updateUser = new SysUser();
 		updateUser.setUserid(userReq.getUserid());
-		updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_FROZEN);
+		updateUser.setStatus(DictConsts.DICT1201_USER_STATUS_FROZEN);
 		sysUserDao.dynamicUpdateById(updateUser);
 		res.success("冻结用户账号成功");
 		log.info("冻结用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());
@@ -279,7 +279,7 @@ public class SysUserServiceImpl implements SysUserService{
 			return res;
 		}
 		
-		if(!DictConsts.DICT2001_USER_STATUS_FROZEN.equals(user.getStatus())) {
+		if(!DictConsts.DICT1201_USER_STATUS_FROZEN.equals(user.getStatus())) {
 			res.failure("用户[" + userReq.getUserid() + "]不为冻结状态，不能冻结");
 			log.warn(res.getReturnmsg());
 			return res;
@@ -287,7 +287,7 @@ public class SysUserServiceImpl implements SysUserService{
 		
 		SysUser updateUser = new SysUser();
 		updateUser.setUserid(userReq.getUserid());
-		updateUser.setStatus(DictConsts.DICT2001_USER_STATUS_NORMAL);
+		updateUser.setStatus(DictConsts.DICT1201_USER_STATUS_NORMAL);
 		sysUserDao.dynamicUpdateById(updateUser);
 		res.success("解冻用户账号成功");
 		log.info("解冻用户[userid={}]结束: {}", userReq.getUserid(), res.getReturnmsg());

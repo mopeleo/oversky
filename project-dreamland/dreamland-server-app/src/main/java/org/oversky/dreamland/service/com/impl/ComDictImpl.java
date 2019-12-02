@@ -1,13 +1,16 @@
 package org.oversky.dreamland.service.com.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.oversky.base.service.BaseResListDto;
 import org.oversky.base.service.BaseResMapDto;
 import org.oversky.dreamland.dao.com.ComDictDao;
+import org.oversky.dreamland.dao.game.GameInfoDao;
 import org.oversky.dreamland.dto.response.com.ComDictRes;
 import org.oversky.dreamland.entity.com.ComDict;
+import org.oversky.dreamland.entity.game.GameInfo;
 import org.oversky.dreamland.service.com.ComDictService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @CacheConfig(cacheNames = "ComDict")
@@ -26,6 +30,9 @@ public class ComDictImpl implements ComDictService {
 	@Autowired
 	private ComDictDao dictDao;
 	
+	@Autowired
+	private GameInfoDao gameInfoDao;
+
 	@Override
 	@Cacheable(key = "'getDictList_' + #p0")
 	public BaseResListDto<ComDictRes> getDictList(Integer dictcode) {
@@ -63,8 +70,22 @@ public class ComDictImpl implements ComDictService {
 		BaseResListDto<ComDictRes> resList = new BaseResListDto<>();
 		List<ComDictRes> dictResList = null;
 		switch(type) {
-			case "T01":
-				log.info("转换机构[sys_org]信息为字典");
+			case "T20":
+				log.info("转换游戏[game_info]信息为字典");
+				GameInfo where = new GameInfo();
+				where.setUnioncode(req.get("unioncode"));
+				List<GameInfo> gameList = gameInfoDao.selectWhere(where);
+				if(CollectionUtils.isEmpty(gameList)) {
+					break;
+				}
+				dictResList = new ArrayList<>(gameList.size());
+				for(GameInfo game : gameList) {
+					ComDictRes res = new ComDictRes();
+					res.setItemcode(game.getGameid().toString());
+					res.setItemname(game.getGamename());
+					
+					dictResList.add(res);
+				}
 				break;
 			default:
 				log.warn("错误的字典类型 : type = {}", type);

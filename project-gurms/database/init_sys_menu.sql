@@ -60,13 +60,29 @@ INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, st
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2213', 2, '游戏修改', 'gameinfo/update', '2210', 2, 1, 0, null);
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2214', 2, '游戏删除', 'gameinfo/delete', '2210', 2, 1, 0, null);
                                                                                                                     
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2220', 2, '场景维护', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2220', 2, '场景维护', 'gamescene/list', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2221', 2, '场景详情', 'gamescene/detail', '2220', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2222', 2, '场景新增', 'gamescene/add', '2220', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2223', 2, '场景修改', 'gamescene/update', '2220', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2224', 2, '场景删除', 'gamescene/delete', '2220', 2, 1, 0, null);
                                                                                                                    
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2230', 2, '角色维护', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2230', 2, '角色维护', 'gameactor/list', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2231', 2, '角色详情', 'gameactor/detail', '2230', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2232', 2, '角色新增', 'gameactor/add', '2230', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2233', 2, '角色修改', 'gameactor/update', '2230', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2234', 2, '角色删除', 'gameactor/delete', '2230', 2, 1, 0, null);
                                                                                                                   
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2240', 2, '装备维护', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2240', 2, '装备维护', 'gameequip/list', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2241', 2, '装备详情', 'gameequip/detail', '2240', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2242', 2, '装备新增', 'gameequip/add', '2240', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2243', 2, '装备修改', 'gameequip/update', '2240', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2244', 2, '装备删除', 'gameequip/delete', '2240', 2, 1, 0, null);
                                                                                                                       
-INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2250', 2, '道具维护', '', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2250', 2, '道具维护', 'gameitem/list', '2200', 1, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2251', 2, '道具详情', 'gameitem/detail', '2250', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2252', 2, '道具新增', 'gameitem/add', '2250', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2253', 2, '道具修改', 'gameitem/update', '2250', 2, 1, 0, null);
+INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2254', 2, '道具删除', 'gameitem/delete', '2250', 2, 1, 0, null);
                                                                                                                     
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2300', 2, '运营', '', '2000', 0, 1, 0, null);
 INSERT INTO sys_menu (menuid, sysid, menuname, menuurl, parentmenu, menutype, status, accesstype, menucss) VALUES ('2400', 2, '复核', '', '2000', 0, 1, 0, null);

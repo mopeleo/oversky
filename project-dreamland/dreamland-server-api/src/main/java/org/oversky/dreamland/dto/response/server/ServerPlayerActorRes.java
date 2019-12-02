@@ -6,7 +6,7 @@ public class ServerPlayerActorRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long paid;    //自动生成，客户角色ID
+	private Long paid;    //自动生成，客户角色ID[identity]
 	private String serverid;    //
 	private Long custno;    //
 	private String actorid;    //角色ID

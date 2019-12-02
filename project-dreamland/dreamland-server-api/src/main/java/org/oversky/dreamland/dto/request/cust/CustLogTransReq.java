@@ -7,6 +7,7 @@ public class CustLogTransReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private Long logid;    //[identity]
+	private String unioncode;    //
 	private Long custno;    //
 	private String serverid;    //
 	private String direction;    //方向，0 支付，1，退款
@@ -25,6 +26,14 @@ public class CustLogTransReq extends BaseReqDto {
 
 	public void setLogid(Long logid) {
 		this.logid = logid;
+	}
+
+	public String getUnioncode() {
+		return this.unioncode;
+	}
+
+	public void setUnioncode(String unioncode) {
+		this.unioncode = unioncode;
 	}
 
 	public Long getCustno() {
@@ -120,6 +129,7 @@ public class CustLogTransReq extends BaseReqDto {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 		sb.append("logid=").append(logid).append(", ");
+		sb.append("unioncode=").append(unioncode).append(", ");
 		sb.append("custno=").append(custno).append(", ");
 		sb.append("serverid=").append(serverid).append(", ");
 		sb.append("direction=").append(direction).append(", ");

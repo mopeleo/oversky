@@ -36,4 +36,26 @@ public class WebUtils {
 
 		return ip;
 	}
+
+	public static String getClientIp(HttpServletRequest httpRequest) {
+		String ip = "";
+
+		if (httpRequest != null) {
+			ip = httpRequest.getHeader("x-forwarded-for");
+			if (ip == null || "".equals(ip) || "unknown".equalsIgnoreCase(ip)) {
+				ip = httpRequest.getHeader("Proxy-Client-IP");
+			}
+			if (ip == null || "".equals(ip) || "unknown".equalsIgnoreCase(ip)) {
+				ip = httpRequest.getHeader("WL-Proxy-Client-IP");
+			}
+			if (ip == null || "".equals(ip) || "unknown".equalsIgnoreCase(ip)) {
+				ip = httpRequest.getHeader("X-Real-IP");
+			}
+			if (ip == null || "".equals(ip) || "unknown".equalsIgnoreCase(ip)) {
+				ip = httpRequest.getRemoteAddr();
+			}
+		}
+
+		return ip;
+	}
 }

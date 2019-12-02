@@ -73,7 +73,7 @@
                             <el-col :span="10">
                                 <el-form-item label="机构类型" prop="orgtype">
                                     <el-select v-model="sysorg.orgtype" value-key="itemcode" placeholder="请选择">
-                                        <el-option v-for="item in dictCache['2012']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
+                                        <el-option v-for="item in dictCache['1212']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
@@ -172,7 +172,7 @@ export default {
         }
     },
     mounted() {
-        tools.loadDict('2012', this.dictCache);
+        tools.loadDict('1212', this.dictCache);
         this.loadOrgTree();
         this.getParam('1000');
     },

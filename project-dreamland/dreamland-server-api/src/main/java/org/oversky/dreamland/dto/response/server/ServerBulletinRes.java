@@ -6,7 +6,7 @@ public class ServerBulletinRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;    //
+	private Long id;    //[identity]
 	private String serverid;    //服务器ID
 	private String title;    //公告标题
 	private String content;    //公告内容

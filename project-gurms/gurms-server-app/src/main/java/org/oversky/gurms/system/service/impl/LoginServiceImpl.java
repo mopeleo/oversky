@@ -86,7 +86,7 @@ public class LoginServiceImpl implements LoginService{
 			return res;
 		}
 		
-		if(!DictConsts.DICT2001_USER_STATUS_NORMAL.equals(user.getStatus())) {
+		if(!DictConsts.DICT1201_USER_STATUS_NORMAL.equals(user.getStatus())) {
 			res.failure("用户状态异常:" + user.getStatus());
 			log.warn(res.getReturnmsg());
 			
@@ -144,7 +144,7 @@ public class LoginServiceImpl implements LoginService{
 			upUser.setLoginerror(user.getLoginerror() + 1);
 			String maxPasswdErr = ParamConsts.getParam(user.getUnioncode(), ParamConsts.PARAM1003_PASSWD_ERROR_TIMES);
 			if(upUser.getLoginerror() >= Integer.parseInt(maxPasswdErr)) {
-				upUser.setStatus(DictConsts.DICT2001_USER_STATUS_PASSWDLOCK);
+				upUser.setStatus(DictConsts.DICT1201_USER_STATUS_PASSWDLOCK);
 			}
 		}
 		sysUserDao.dynamicUpdateById(upUser);
@@ -160,7 +160,7 @@ public class LoginServiceImpl implements LoginService{
 		}		
 		String payloadString = JacksonUtils.bean2JsonIgnoreNull(payload);
 
-		int days = Integer.parseInt(ParamConsts.getParam(userInfo.getUnioncode(), ParamConsts.PARAM2001_JWT_VALID_DAYS));
+		int days = Integer.parseInt(ParamConsts.getParam(userInfo.getUnioncode(), ParamConsts.PARAM1008_JWT_VALID_DAYS));
 		String token = JwtTokenUtil.generateToken(payloadString, days);
 		
 		return token;

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameMeunDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameMeun">
+        <id column="menuid" jdbcType="DECIMAL" property="menuid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="gameid" jdbcType="DECIMAL" property="gameid" />
+        <result column="menuname" jdbcType="VARCHAR" property="menuname" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameMeun" useGeneratedKeys="true" keyProperty="menuid">
+        insert into game_meun (unioncode, gameid, menuname, icon, url)
+        values (#{unioncode, jdbcType=VARCHAR}, #{gameid, jdbcType=DECIMAL}, #{menuname, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR}, #{url, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="menuid">
+		insert into game_meun (unioncode, gameid, menuname, icon, url)
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.gameid, jdbcType=DECIMAL}, #{item.menuname, jdbcType=VARCHAR}, #{item.icon, jdbcType=VARCHAR}, #{item.url, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameMeun" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_meun 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameMeun">
+        delete from game_meun 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameMeun">
+        select count(1) from game_meun <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_meun
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_meun
+         where menuid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_meun
+         where menuid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameMeun">
+        update game_meun set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
+               gameid = #{gameid, jdbcType=DECIMAL}, 
+               menuname = #{menuname, jdbcType=VARCHAR}, 
+               icon = #{icon, jdbcType=VARCHAR}, 
+               url = #{url, jdbcType=VARCHAR}
+		where menuid = #{menuid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameMeun">
+		update game_meun
+		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="gameid != null">
+				gameid = #{gameid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="menuname != null">
+				menuname = #{menuname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="icon != null">
+				icon = #{icon, jdbcType=VARCHAR},
+		    </if>
+		    <if test="url != null">
+				url = #{url, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where menuid = #{menuid, jdbcType=DECIMAL}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_meun
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.gameid != null">
+				gameid = #{field.gameid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.menuname != null and field.menuname != ''">
+				menuname = #{field.menuname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.icon != null and field.icon != ''">
+				icon = #{field.icon, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.url != null and field.url != ''">
+				url = #{field.url, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update game_meun
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when menuid = #{item.menuid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when menuid = #{item.menuid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="gameid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.gameid != null">
+	                    when menuid = #{item.menuid} then #{item.gameid, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.gameid == null">
+	                    when menuid = #{item.menuid} then gameid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="menuname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.menuname != null">
+	                    when menuid = #{item.menuid} then #{item.menuname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.menuname == null">
+	                    when menuid = #{item.menuid} then menuname
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="icon = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.icon != null">
+	                    when menuid = #{item.menuid} then #{item.icon, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.icon == null">
+	                    when menuid = #{item.menuid} then icon
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="url = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.url != null">
+	                    when menuid = #{item.menuid} then #{item.url, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.url == null">
+	                    when menuid = #{item.menuid} then url
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where menuid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.menuid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from game_meun
+	     where menuid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}menuid, ${tab}unioncode, ${tab}gameid, ${tab}menuname, ${tab}icon, ${tab}url
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="menuid != null">
+				and menuid = #{menuid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="gameid != null">
+				and gameid = #{gameid, jdbcType=DECIMAL}
+			</if>
+			<if test="menuname != null and menuname != ''">
+				and menuname = #{menuname, jdbcType=VARCHAR}
+			</if>
+			<if test="icon != null and icon != ''">
+				and icon = #{icon, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null and url != ''">
+				and url = #{url, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.menuid != null">
+				and menuid = #{condition.menuid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.gameid != null">
+				and gameid = #{condition.gameid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.menuname != null and condition.menuname != ''">
+				and menuname = #{condition.menuname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.icon != null and condition.icon != ''">
+				and icon = #{condition.icon, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.url != null and condition.url != ''">
+				and url = #{condition.url, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

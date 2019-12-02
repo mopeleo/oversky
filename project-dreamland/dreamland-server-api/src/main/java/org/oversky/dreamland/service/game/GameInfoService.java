@@ -8,7 +8,7 @@ public interface GameInfoService {
 
 	GameInfoRes getById(Long gameid);
 	
-	GameInfoRes delete(GameInfoReq roleReq);
+	GameInfoRes delete(GameInfoReq gameReq);
 
 	GameInfoRes insert(GameInfoReq gameReq);
 	

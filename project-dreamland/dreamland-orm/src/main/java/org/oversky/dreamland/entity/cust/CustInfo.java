@@ -26,6 +26,7 @@ public class CustInfo extends BaseEntity{
 	private Integer loginerror;    //连续登录失败次数
 	private String regdate;    //注册日期
 	private String canceldate;    //注销日期
+	private Integer channelid;    //客户渠道
 
 	public Long getCustno() {
 		return this.custno;
@@ -187,6 +188,14 @@ public class CustInfo extends BaseEntity{
 		this.canceldate = canceldate;
 	}
 
+	public Integer getChannelid() {
+		return this.channelid;
+	}
+
+	public void setChannelid(Integer channelid) {
+		this.channelid = channelid;
+	}
+
 	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("CustInfo");
 		return build.append("#custno:").append(this.custno).toString();
@@ -224,6 +233,7 @@ public class CustInfo extends BaseEntity{
 		sb.append("loginerror=").append(loginerror).append(", ");
 		sb.append("regdate=").append(regdate).append(", ");
 		sb.append("canceldate=").append(canceldate).append(", ");
+		sb.append("channelid=").append(channelid).append(", ");
         sb.append(super.toString());
         return sb.toString();
 	}

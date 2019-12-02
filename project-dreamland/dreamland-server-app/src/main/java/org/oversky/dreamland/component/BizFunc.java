@@ -18,7 +18,7 @@ public class BizFunc {
 	}
 	
 	public static String passwordInvalidDate(String unioncode) {
-		String days = ParamConsts.getParam(unioncode, ParamConsts.PARAM1004_PASSWD_INVAILD_DAYS);
+		String days = ParamConsts.getParam(unioncode, ParamConsts.PARAM2004_PASSWD_INVAILD_DAYS);
 		String date = DateUtils.addDays(DateUtils.getNowDate(), Integer.parseInt(days));
 		return date;
 	}

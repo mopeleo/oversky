@@ -6,22 +6,22 @@ public class GameSceneMenuReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer sceneid;    //
-	private String menuid;    //
+	private Long sceneid;    //
+	private Long menuid;    //
 
-	public Integer getSceneid() {
+	public Long getSceneid() {
 		return this.sceneid;
 	}
 
-	public void setSceneid(Integer sceneid) {
+	public void setSceneid(Long sceneid) {
 		this.sceneid = sceneid;
 	}
 
-	public String getMenuid() {
+	public Long getMenuid() {
 		return this.menuid;
 	}
 
-	public void setMenuid(String menuid) {
+	public void setMenuid(Long menuid) {
 		this.menuid = menuid;
 	}
 

@@ -6,8 +6,8 @@ public class ServerPlayerActorSkillReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long paid;    //player actor id
-	private String skillid;    //
+	private Long paid;    //[identity]
+	private Long skillid;    //
 	private Integer skilllevel;    //
 
 	public Long getPaid() {
@@ -18,11 +18,11 @@ public class ServerPlayerActorSkillReq extends BaseReqDto {
 		this.paid = paid;
 	}
 
-	public String getSkillid() {
+	public Long getSkillid() {
 		return this.skillid;
 	}
 
-	public void setSkillid(String skillid) {
+	public void setSkillid(Long skillid) {
 		this.skillid = skillid;
 	}
 

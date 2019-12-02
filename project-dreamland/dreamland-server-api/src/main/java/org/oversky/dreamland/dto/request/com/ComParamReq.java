@@ -10,6 +10,8 @@ public class ComParamReq extends BaseReqDto {
 	private Integer paramid;    //
 	private String paramvalue;    //
 
+	private String paramlist;
+	
 	public String getUnioncode() {
 		return this.unioncode;
 	}
@@ -34,13 +36,21 @@ public class ComParamReq extends BaseReqDto {
 		this.paramvalue = paramvalue;
 	}
 
+    public String getParamlist() {
+		return paramlist;
+	}
 
-    @Override
+	public void setParamlist(String paramlist) {
+		this.paramlist = paramlist;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 		sb.append("unioncode=").append(unioncode).append(", ");
 		sb.append("paramid=").append(paramid).append(", ");
 		sb.append("paramvalue=").append(paramvalue).append(", ");
+		sb.append("paramlist=").append(paramlist).append(", ");
         sb.append(super.toString());
         return sb.toString();
 	}

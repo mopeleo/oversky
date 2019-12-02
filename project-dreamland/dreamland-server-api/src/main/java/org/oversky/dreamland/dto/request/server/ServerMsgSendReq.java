@@ -6,7 +6,7 @@ public class ServerMsgSendReq extends BaseReqDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long msgid;    //消息ID
+	private Long msgid;    //消息ID[identity]
 	private String serverid;    //
 	private Long custno;    //作者
 	private String content;    //消息内容

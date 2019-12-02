@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameChannelDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameChannel">
+        <id column="channelid" jdbcType="INTEGER" property="channelid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="gameid" jdbcType="DECIMAL" property="gameid" />
+        <result column="channelname" jdbcType="VARCHAR" property="channelname" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameChannel">
+        insert into game_channel (<include refid="column_list"><property name="tab" value=""/></include>)
+        values (#{channelid, jdbcType=INTEGER}, #{unioncode, jdbcType=VARCHAR}, #{gameid, jdbcType=DECIMAL}, #{channelname, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into game_channel (<include refid="column_list"><property name="tab" value=""/></include>) 
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+		(#{item.channelid, jdbcType=INTEGER}, #{item.unioncode, jdbcType=VARCHAR}, #{item.gameid, jdbcType=DECIMAL}, #{item.channelname, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameChannel" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_channel 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameChannel">
+        delete from game_channel 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameChannel">
+        select count(1) from game_channel <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_channel
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_channel
+         where channelid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_channel
+         where channelid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameChannel">
+        update game_channel set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
+               gameid = #{gameid, jdbcType=DECIMAL}, 
+               channelname = #{channelname, jdbcType=VARCHAR}
+		where channelid = #{channelid, jdbcType=INTEGER}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameChannel">
+		update game_channel
+		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="gameid != null">
+				gameid = #{gameid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="channelname != null">
+				channelname = #{channelname, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where channelid = #{channelid, jdbcType=INTEGER}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_channel
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.gameid != null">
+				gameid = #{field.gameid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.channelname != null and field.channelname != ''">
+				channelname = #{field.channelname, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update game_channel
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when channelid = #{item.channelid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when channelid = #{item.channelid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="gameid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.gameid != null">
+	                    when channelid = #{item.channelid} then #{item.gameid, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.gameid == null">
+	                    when channelid = #{item.channelid} then gameid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="channelname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.channelname != null">
+	                    when channelid = #{item.channelid} then #{item.channelname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.channelname == null">
+	                    when channelid = #{item.channelid} then channelname
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where channelid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.channelid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from game_channel
+	     where channelid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}channelid, ${tab}unioncode, ${tab}gameid, ${tab}channelname
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="channelid != null">
+				and channelid = #{channelid, jdbcType=INTEGER}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="gameid != null">
+				and gameid = #{gameid, jdbcType=DECIMAL}
+			</if>
+			<if test="channelname != null and channelname != ''">
+				and channelname = #{channelname, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.channelid != null">
+				and channelid = #{condition.channelid, jdbcType=INTEGER}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.gameid != null">
+				and gameid = #{condition.gameid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.channelname != null and condition.channelname != ''">
+				and channelname = #{condition.channelname, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

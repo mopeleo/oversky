@@ -6,7 +6,7 @@ public class CustInfoRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long custno;    //客户号，自动生成
+	private Long custno;    //客户号，自动生成[identity]
 	private String unioncode;    //
 	private String custname;    //客户名称
 	private String custtype;    //客户类型，0，机构；1，个人
@@ -26,18 +26,7 @@ public class CustInfoRes extends BaseResDto {
 	private Integer loginerror;    //连续登录失败次数
 	private String regdate;    //注册日期
 	private String canceldate;    //注销日期
-
-	private String sex;    //性别（0-女，1-男）
-	private String birthday;    //生日
-	private String address;    //联系地址
-	private String postcode;    //邮政编码
-	private String phone;    //备用电话
-	private String nationality;    //国籍
-	private String province;    //所在省份
-	private String city;    //所在城市
-	private String education;    //教育程度
-	private String ethnicity;    //民族
-	private String profession;    //职业
+	private Integer channelid;    //客户渠道
 
 	public Long getCustno() {
 		return this.custno;
@@ -199,95 +188,16 @@ public class CustInfoRes extends BaseResDto {
 		this.canceldate = canceldate;
 	}
 
-    public String getSex() {
-		return sex;
+	public Integer getChannelid() {
+		return this.channelid;
 	}
 
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setChannelid(Integer channelid) {
+		this.channelid = channelid;
 	}
 
-	public String getBirthday() {
-		return birthday;
-	}
 
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getNationality() {
-		return nationality;
-	}
-
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getEducation() {
-		return education;
-	}
-
-	public void setEducation(String education) {
-		this.education = education;
-	}
-
-	public String getEthnicity() {
-		return ethnicity;
-	}
-
-	public void setEthnicity(String ethnicity) {
-		this.ethnicity = ethnicity;
-	}
-
-	public String getProfession() {
-		return profession;
-	}
-
-	public void setProfession(String profession) {
-		this.profession = profession;
-	}
-
-	@Override
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 		sb.append("custno=").append(custno).append(", ");
@@ -310,6 +220,7 @@ public class CustInfoRes extends BaseResDto {
 		sb.append("loginerror=").append(loginerror).append(", ");
 		sb.append("regdate=").append(regdate).append(", ");
 		sb.append("canceldate=").append(canceldate).append(", ");
+		sb.append("channelid=").append(channelid).append(", ");
         sb.append(super.toString());
         return sb.toString();
 	}

@@ -15,7 +15,7 @@
                 <el-col :span="5">
                     <el-form-item label="用户状态">
                         <el-select v-model="userReq.status" value-key="itemcode" clearable placeholder="请选择">
-                            <el-option v-for="item in dictCache['2001']"
+                            <el-option v-for="item in dictCache['1201']"
                                 :key="item.itemcode"
                                 :label="item.itemcode + ' - ' + item.itemname"
                                 :value="item.itemcode">
@@ -137,7 +137,7 @@
                     <el-col :span="10">
                         <el-form-item label="证件类型" prop="idtype">
                             <el-select v-model="sysuser.idtype" value-key="itemcode" clearable placeholder="请选择">
-                                <el-option v-for="item in dictCache['2004']"
+                                <el-option v-for="item in dictCache['1204']"
                                     :key="item.itemcode"
                                     :label="item.itemcode + ' - ' + item.itemname"
                                     :value="item.itemcode">
@@ -225,7 +225,7 @@
                         <el-col :span="10">
                             <el-form-item label="证件类型" prop="idtype">
                                 <el-select v-model="sysuser.idtype" value-key="itemcode" clearable placeholder="请选择">
-                                    <el-option v-for="item in dictCache['2004']"
+                                    <el-option v-for="item in dictCache['1204']"
                                         :key="item.itemcode"
                                         :label="item.itemcode + ' - ' + item.itemname"
                                         :value="item.itemcode">
@@ -249,7 +249,7 @@
                         <el-col :span="10">
                             <el-form-item label="性别" prop="sex">
                                 <el-select v-model="sysuser.sex" value-key="itemcode" placeholder="请选择">
-                                    <el-option v-for="item in dictCache['2000']"
+                                    <el-option v-for="item in dictCache['1200']"
                                         :key="item.itemcode"
                                         :label="item.itemcode + ' - ' + item.itemname"
                                         :value="item.itemcode">
@@ -341,7 +341,7 @@ export default{
         }
     },
     mounted(){
-        tools.loadDict('2000,2001,2004', this.dictCache);
+        tools.loadDict('1200,1201,1204', this.dictCache);
         this.loadOrgTree();
         this.loadDict({type:'T01'});
         this.loadData();
@@ -372,7 +372,7 @@ export default{
             return val;
         },
         formatUserSex:function(row){
-            let dict = this.dictCache['2000'];
+            let dict = this.dictCache['1200'];
             let val = row.status;
             for(var i = 0; i < dict.length; i++){
                 if(dict[i].itemcode == val){
@@ -382,7 +382,7 @@ export default{
             return val;
         },
         formatUserStatus:function(row){
-            let dict = this.dictCache['2001'];
+            let dict = this.dictCache['1201'];
             let val = row.status;
             for(var i = 0; i < dict.length; i++){
                 if(dict[i].itemcode == val){
@@ -562,7 +562,7 @@ export default{
             tools.confirmTip("是否确定删除用户?", ()=>{
                 this.sysuser = {
                     userid : row.userid
-                },
+                };
                 this.$api.Gurms.userDelete(this.sysuser).then((res)=>{
                     tools.succTip(res.returnmsg);
                     this.$options.methods.loadData.bind(this)();

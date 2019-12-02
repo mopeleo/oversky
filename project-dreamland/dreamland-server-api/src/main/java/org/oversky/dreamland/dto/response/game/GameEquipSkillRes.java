@@ -6,24 +6,24 @@ public class GameEquipSkillRes extends BaseResDto {
 
 	private static final long serialVersionUID = 1L;
 
-	private String equipid;    //
-	private String skillid;    //
+	private Long equipid;    //
+	private Long skillid;    //
 	private Integer proficiency;    //解锁熟练度
 	private Integer sno;    //排序号，从上到下，从小到大，小在上
 
-	public String getEquipid() {
+	public Long getEquipid() {
 		return this.equipid;
 	}
 
-	public void setEquipid(String equipid) {
+	public void setEquipid(Long equipid) {
 		this.equipid = equipid;
 	}
 
-	public String getSkillid() {
+	public Long getSkillid() {
 		return this.skillid;
 	}
 
-	public void setSkillid(String skillid) {
+	public void setSkillid(Long skillid) {
 		this.skillid = skillid;
 	}
 

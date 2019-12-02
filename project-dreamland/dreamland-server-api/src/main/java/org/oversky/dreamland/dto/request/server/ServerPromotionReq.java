@@ -7,7 +7,7 @@ public class ServerPromotionReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private String serverid;    //
-	private Integer promid;    //
+	private Long promid;    //
 	private String startdate;    //
 	private String starttime;    //
 	private String enddate;    //
@@ -21,11 +21,11 @@ public class ServerPromotionReq extends BaseReqDto {
 		this.serverid = serverid;
 	}
 
-	public Integer getPromid() {
+	public Long getPromid() {
 		return this.promid;
 	}
 
-	public void setPromid(Integer promid) {
+	public void setPromid(Long promid) {
 		this.promid = promid;
 	}
 

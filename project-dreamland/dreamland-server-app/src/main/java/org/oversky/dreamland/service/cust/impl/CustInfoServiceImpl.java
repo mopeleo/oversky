@@ -79,7 +79,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 		cust.setPasswdvaliddate(BizFunc.passwordInvalidDate(cust.getUnioncode()));
 		String md5Password = cust.getLoginpasswd();
 		if(StringUtils.isEmpty(md5Password)) {
-			String initPw = ParamConsts.getParam(cust.getUnioncode(), ParamConsts.PARAM1002_PASSWD_INIT);
+			String initPw = ParamConsts.getParam(cust.getUnioncode(), ParamConsts.PARAM2002_PASSWD_INIT);
 			md5Password = EncryptUtils.md5Encode(initPw);
 		}
 		cust.setLoginpasswd(BizFunc.encryptPassword(md5Password, cust.getSalt()));
@@ -162,7 +162,7 @@ public class CustInfoServiceImpl implements CustInfoService {
 		CustInfo updateUser = new CustInfo();
 		updateUser.setCustno(custInfoReq.getCustno());
 		updateUser.setSalt(BizFunc.createPasswdSalt());
-		String md5Password = EncryptUtils.md5Encode(ParamConsts.getParam(cust.getUnioncode(), ParamConsts.PARAM1002_PASSWD_INIT));
+		String md5Password = EncryptUtils.md5Encode(ParamConsts.getParam(cust.getUnioncode(), ParamConsts.PARAM2002_PASSWD_INIT));
 		updateUser.setLoginpasswd(BizFunc.encryptPassword(md5Password, updateUser.getSalt()));
 		updateUser.setLoginerror(0);
 		updateUser.setPasswdvaliddate(BizFunc.passwordInvalidDate(custInfoReq.getUnioncode()));

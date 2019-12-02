@@ -7,9 +7,9 @@ public final class ParamConsts {
 	
 	private static ComParamDao comParamDao = SpringBeanUtils.getBean(ComParamDao.class);
 
-	public final static Integer PARAM1002_PASSWD_INIT = 1002;			//初始化密码
-	public final static Integer PARAM1003_PASSWD_ERROR_TIMES = 1003;	//密码错误次数
-	public final static Integer PARAM1004_PASSWD_INVAILD_DAYS = 1004;	//密码失效天数
+	public final static Integer PARAM2002_PASSWD_INIT = 2002;			//初始化密码
+	public final static Integer PARAM2003_PASSWD_ERROR_TIMES = 2003;	//密码错误次数
+	public final static Integer PARAM2004_PASSWD_INVAILD_DAYS = 2004;	//密码失效天数
 	
 
 	public static String getParam(String unioncode, Integer paramid) {		

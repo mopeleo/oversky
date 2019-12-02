@@ -88,87 +88,87 @@ insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) v
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1017, '0', '失败');
 insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1017, '1', '成功');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2000, '性别', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2000, '0', '女');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2000, '1', '男');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1200, '性别', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1200, '0', '女');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1200, '1', '男');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2001, '账户状态', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2001, '1', '正常');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2001, '2', '密码锁定');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2001, '3', '冻结');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1201, '账户状态', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1201, '1', '正常');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1201, '2', '密码锁定');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1201, '3', '冻结');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2002, '学历', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '1', '研究生');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '2', '本科');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '3', '专科');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '4', '中专');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '5', '技校');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '6', '高中');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '7', '初中');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '8', '小学');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2002, '9', '文盲或半文盲');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1202, '学历', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '1', '研究生');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '2', '本科');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '3', '专科');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '4', '中专');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '5', '技校');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '6', '高中');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '7', '初中');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '8', '小学');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1202, '9', '文盲或半文盲');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2003, '国籍', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2003, '156', '中国');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2003, '840', '美国');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1203, '国籍', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1203, '156', '中国');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1203, '840', '美国');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2004, '个人证件类型', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '0', '身份证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '1', '户口本');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '2', '护照');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '3', '军官证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '4', '士兵证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '5', '港澳居民来往内地通行证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '6', '台湾同胞来往内地通行证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '7', '临时身份证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '8', '外国人居留证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, '9', '警官证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2004, 'X', '其他证件');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1204, '个人证件类型', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '0', '身份证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '1', '户口本');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '2', '护照');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '3', '军官证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '4', '士兵证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '5', '港澳居民来往内地通行证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '6', '台湾同胞来往内地通行证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '7', '临时身份证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '8', '外国人居留证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, '9', '警官证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1204, 'X', '其他证件');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2005, '机构证件类型', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '0', '组织机构代码证');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '1', '营业执照');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '2', '行政机关');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '3', '社会团体');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '4', '军队');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '5', '武警');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '6', '下属机构(具有主管单位批文号)');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '7', '基金会');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2005, '8', '其它');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1205, '机构证件类型', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '0', '组织机构代码证');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '1', '营业执照');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '2', '行政机关');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '3', '社会团体');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '4', '军队');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '5', '武警');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '6', '下属机构(具有主管单位批文号)');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '7', '基金会');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1205, '8', '其它');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2006, '公私标志', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2006, '0', '公共');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2006, '1', '私有');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1206, '公私标志', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1206, '0', '公共');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1206, '1', '私有');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2007, '用户类型', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2007, '0', '机构');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2007, '1', '个人');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1207, '用户类型', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1207, '0', '机构');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1207, '1', '个人');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2008, '小数位数处理方式', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2008, '0', '四舍五入');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2008, '1', '截位');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2008, '2', '进位');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1208, '小数位数处理方式', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1208, '0', '四舍五入');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1208, '1', '截位');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1208, '2', '进位');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2009, '区间头尾算法', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2009, '0', '不算头不算尾');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2009, '1', '算头不算尾');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2009, '2', '不算头算尾');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2009, '3', '算头算尾');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1209, '区间头尾算法', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1209, '0', '不算头不算尾');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1209, '1', '算头不算尾');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1209, '2', '不算头算尾');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1209, '3', '算头算尾');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2010, '菜单类型', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2010, '0', '目录');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2010, '1', '页面');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2010, '2', '页面元素');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1210, '菜单类型', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1210, '0', '目录');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1210, '1', '页面');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1210, '2', '页面元素');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2011, '菜单访问权限', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2011, '0', '可任意访问');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2011, '1', '登录可访问');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2011, '2', '需授权访问');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1211, '菜单访问权限', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1211, '0', '可任意访问');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1211, '1', '登录可访问');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1211, '2', '需授权访问');
 
-insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 2012, '机构类型', 1, '2');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2012, '1', '总');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2012, '2', '分');
-insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 2012, '3', '支');
+insert into sys_dict_index(unioncode, dictcode, dictname, editflag, dictgroup) values ('0000', 1212, '机构类型', 1, '2');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1212, '1', '总');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1212, '2', '分');
+insert into sys_dict_value(unioncode, dictcode, itemcode, itemname) values ('0000', 1212, '3', '支');
 
 commit;
 

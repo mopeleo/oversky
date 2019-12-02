@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oversky.dreamland.dao.game.GameSuitDao">
+    <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.game.GameSuit">
+        <id column="suitid" jdbcType="DECIMAL" property="suitid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
+        <result column="gameid" jdbcType="DECIMAL" property="gameid" />
+        <result column="suitname" jdbcType="VARCHAR" property="suitname" />
+        <result column="profession" jdbcType="VARCHAR" property="profession" />
+        <result column="unlocklevel" jdbcType="INTEGER" property="unlocklevel" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+    </resultMap>
+
+    <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameSuit" useGeneratedKeys="true" keyProperty="suitid">
+        insert into game_suit (unioncode, gameid, suitname, profession, unlocklevel, summary)
+        values (#{unioncode, jdbcType=VARCHAR}, #{gameid, jdbcType=DECIMAL}, #{suitname, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{unlocklevel, jdbcType=INTEGER}, #{summary, jdbcType=VARCHAR})
+    </insert>
+  
+	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="suitid">
+		insert into game_suit (unioncode, gameid, suitname, profession, unlocklevel, summary)
+		values 
+		<foreach item="item" index="index" collection="list" separator=",">
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.gameid, jdbcType=DECIMAL}, #{item.suitname, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.unlocklevel, jdbcType=INTEGER}, #{item.summary, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+    <select id="selectWhere" parameterType="org.oversky.dreamland.entity.game.GameSuit" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_suit 
+          <include refid="where_all_list" />
+          <include refid="orderby_list" />
+    </select>
+
+    <delete id="deleteWhere" parameterType="org.oversky.dreamland.entity.game.GameSuit">
+        delete from game_suit 
+          <include refid="where_all_list" />
+    </delete>
+
+	<select id="count" resultType="int" parameterType="org.oversky.dreamland.entity.game.GameSuit">
+        select count(1) from game_suit <include refid="where_all_list" />
+	</select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_suit
+          <include refid="orderby_list" />
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select <include refid="column_list"><property name="tab" value=""/></include>
+          from game_suit
+         where suitid = #{param1}
+    </select>
+
+    <delete id="deleteById">
+        delete from game_suit
+         where suitid = #{param1}
+    </delete>
+  
+    <update id="updateById" parameterType="org.oversky.dreamland.entity.game.GameSuit">
+        update game_suit set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
+               gameid = #{gameid, jdbcType=DECIMAL}, 
+               suitname = #{suitname, jdbcType=VARCHAR}, 
+               profession = #{profession, jdbcType=VARCHAR}, 
+               unlocklevel = #{unlocklevel, jdbcType=INTEGER}, 
+               summary = #{summary, jdbcType=VARCHAR}
+		where suitid = #{suitid, jdbcType=DECIMAL}
+    </update>
+
+	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.game.GameSuit">
+		update game_suit
+		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="gameid != null">
+				gameid = #{gameid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="suitname != null">
+				suitname = #{suitname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="profession != null">
+				profession = #{profession, jdbcType=VARCHAR},
+		    </if>
+		    <if test="unlocklevel != null">
+				unlocklevel = #{unlocklevel, jdbcType=INTEGER},
+		    </if>
+		    <if test="summary != null">
+				summary = #{summary, jdbcType=VARCHAR},
+		    </if>
+		</set>
+		where suitid = #{suitid, jdbcType=DECIMAL}
+	</update>
+
+	<update id="dynamicUpdateWhere" parameterType="map">
+		update game_suit
+		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.gameid != null">
+				gameid = #{field.gameid, jdbcType=DECIMAL},
+		    </if>
+		    <if test="field.suitname != null and field.suitname != ''">
+				suitname = #{field.suitname, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.profession != null and field.profession != ''">
+				profession = #{field.profession, jdbcType=VARCHAR},
+		    </if>
+		    <if test="field.unlocklevel != null">
+				unlocklevel = #{field.unlocklevel, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.summary != null and field.summary != ''">
+				summary = #{field.summary, jdbcType=VARCHAR},
+		    </if>
+		</set>
+        <include refid="where_all_list_criteria" />
+	</update>
+
+	<update id="updateBatch" parameterType="java.util.List">
+	    update game_suit
+	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when suitid = #{item.suitid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when suitid = #{item.suitid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="gameid = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.gameid != null">
+	                    when suitid = #{item.suitid} then #{item.gameid, jdbcType=DECIMAL}
+	                </if>
+	                <if test="item.gameid == null">
+	                    when suitid = #{item.suitid} then gameid
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="suitname = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.suitname != null">
+	                    when suitid = #{item.suitid} then #{item.suitname, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.suitname == null">
+	                    when suitid = #{item.suitid} then suitname
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="profession = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.profession != null">
+	                    when suitid = #{item.suitid} then #{item.profession, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.profession == null">
+	                    when suitid = #{item.suitid} then profession
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="unlocklevel = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unlocklevel != null">
+	                    when suitid = #{item.suitid} then #{item.unlocklevel, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.unlocklevel == null">
+	                    when suitid = #{item.suitid} then unlocklevel
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="summary = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.summary != null">
+	                    when suitid = #{item.suitid} then #{item.summary, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.summary == null">
+	                    when suitid = #{item.suitid} then summary
+	                </if>
+	            </foreach>
+	        </trim>
+	    </trim>
+	    where suitid in
+	    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+	        #{item.suitid}
+	    </foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+	    delete from game_suit
+	     where suitid in
+	    <foreach collection="array" item="id" separator="," open="(" close=")">
+	        #{id}
+	    </foreach>
+	</delete>
+
+	<sql id="column_list">
+        ${tab}suitid, ${tab}unioncode, ${tab}gameid, ${tab}suitname, ${tab}profession, ${tab}unlocklevel, ${tab}summary
+	</sql>
+	
+	<sql id="where_all_list">
+		<where>
+			<if test="suitid != null">
+				and suitid = #{suitid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="gameid != null">
+				and gameid = #{gameid, jdbcType=DECIMAL}
+			</if>
+			<if test="suitname != null and suitname != ''">
+				and suitname = #{suitname, jdbcType=VARCHAR}
+			</if>
+			<if test="profession != null and profession != ''">
+				and profession = #{profession, jdbcType=VARCHAR}
+			</if>
+			<if test="unlocklevel != null">
+				and unlocklevel = #{unlocklevel, jdbcType=INTEGER}
+			</if>
+			<if test="summary != null and summary != ''">
+				and summary = #{summary, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="where_all_list_criteria">
+		<where>
+			<if test="condition.suitid != null">
+				and suitid = #{condition.suitid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.gameid != null">
+				and gameid = #{condition.gameid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.suitname != null and condition.suitname != ''">
+				and suitname = #{condition.suitname, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.profession != null and condition.profession != ''">
+				and profession = #{condition.profession, jdbcType=VARCHAR}
+			</if>
+			<if test="condition.unlocklevel != null">
+				and unlocklevel = #{condition.unlocklevel, jdbcType=INTEGER}
+			</if>
+			<if test="condition.summary != null and condition.summary != ''">
+				and summary = #{condition.summary, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="orderby_list">
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+	</sql>
+</mapper>

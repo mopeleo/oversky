@@ -33,9 +33,9 @@ insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1007, '1')
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, valuelist, valuelength, texttitle, texttail) 
 values (1007, '删除用户是删除还是注销', '1', '1', '3', '0|注销;1|删除', 1, '', '');
 
-insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 2001, '7');
+insert into sys_param(unioncode, paramid, paramvalue) values ('0000', 1008, '7');
 insert into sys_param_info(paramid, paramname, initvalue, paramgroup, edittype, valuelist, valuelength, texttitle, texttail) 
-values (2001, '身份Token有效期天数', '7', '1', '2', '', 2, '', '');
+values (1008, '身份Token有效期天数', '7', '1', '2', '', 2, '', '');
 
 
 commit;

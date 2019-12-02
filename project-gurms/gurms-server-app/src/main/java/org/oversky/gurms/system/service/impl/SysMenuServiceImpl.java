@@ -109,13 +109,13 @@ public class SysMenuServiceImpl implements SysMenuService {
 		if(children != null && children.size() > 0) {
 			List<SysMenuRes> childrenRes = BeanCopyUtils.convertList(children, SysMenuRes.class);
 			if(menuRes.getMenutype() == null) {
-				menuRes.setMenutype(DictConsts.DICT2010_MENYTYPE_DIRECTORY);
+				menuRes.setMenutype(DictConsts.DICT1210_MENYTYPE_DIRECTORY);
 			}
 			menuRes.setSubMenus(childrenRes);
 			menuRes.setTree(true);
 			for(SysMenuRes child : childrenRes) {
 				//不是按钮，继续向下查询
-				if(!DictConsts.DICT2010_MENYTYPE_ELEMENT.equals(child.getMenutype())) {
+				if(!DictConsts.DICT1210_MENYTYPE_ELEMENT.equals(child.getMenutype())) {
 					getSubMenus(child);
 				}
 			}

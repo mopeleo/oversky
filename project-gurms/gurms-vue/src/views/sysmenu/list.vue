@@ -42,7 +42,7 @@
                             <el-col :span="10">
                                 <el-form-item label="菜单类型" prop="menutype">
                                     <el-select v-model="sysmenu.menutype" value-key="itemcode" placeholder="请选择">
-                                        <el-option v-for="item in dictCache['2010']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
+                                        <el-option v-for="item in dictCache['1210']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
@@ -60,7 +60,7 @@
                             <el-col :span="10">
                                 <el-form-item label="访问控制" prop="accesstype">
                                     <el-select v-model="sysmenu.accesstype" value-key="itemcode" placeholder="请选择">
-                                        <el-option v-for="item in dictCache['2011']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
+                                        <el-option v-for="item in dictCache['1211']" :key="item.itemcode" :label="item.itemcode + ' - ' + item.itemname" :value="item.itemcode">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
@@ -116,7 +116,7 @@ export default {
         }
     },
     mounted() {
-        tools.loadDict('1003,2010,2011', this.dictCache);
+        tools.loadDict('1003,1210,1211', this.dictCache);
         this.loadMenuTree();
     },
     watch: {

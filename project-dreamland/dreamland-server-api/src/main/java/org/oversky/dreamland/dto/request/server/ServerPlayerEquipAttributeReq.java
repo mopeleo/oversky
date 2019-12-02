@@ -7,7 +7,7 @@ public class ServerPlayerEquipAttributeReq extends BaseReqDto {
 	private static final long serialVersionUID = 1L;
 
 	private Long peid;    //玩家装备ID
-	private String attrid;    //属性ID
+	private Long attrid;    //属性ID
 	private Double attrval;    //属性值
 
 	public Long getPeid() {
@@ -18,11 +18,11 @@ public class ServerPlayerEquipAttributeReq extends BaseReqDto {
 		this.peid = peid;
 	}
 
-	public String getAttrid() {
+	public Long getAttrid() {
 		return this.attrid;
 	}
 
-	public void setAttrid(String attrid) {
+	public void setAttrid(Long attrid) {
 		this.attrid = attrid;
 	}
 

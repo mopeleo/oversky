@@ -3,6 +3,7 @@
 <mapper namespace="org.oversky.dreamland.dao.cust.CustLogTransDao">
     <resultMap id="BaseResultMap" type="org.oversky.dreamland.entity.cust.CustLogTrans">
         <id column="logid" jdbcType="DECIMAL" property="logid" />
+        <result column="unioncode" jdbcType="VARCHAR" property="unioncode" />
         <result column="custno" jdbcType="DECIMAL" property="custno" />
         <result column="serverid" jdbcType="VARCHAR" property="serverid" />
         <result column="direction" jdbcType="VARCHAR" property="direction" />
@@ -17,15 +18,15 @@
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.cust.CustLogTrans" useGeneratedKeys="true" keyProperty="logid">
-        insert into cust_log_trans (custno, serverid, direction, amt, inacct, outacct, busitype, status, paydate, paytime, summary)
-        values (#{custno, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{direction, jdbcType=VARCHAR}, #{amt, jdbcType=DOUBLE}, #{inacct, jdbcType=VARCHAR}, #{outacct, jdbcType=VARCHAR}, #{busitype, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{paydate, jdbcType=VARCHAR}, #{paytime, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR})
+        insert into cust_log_trans (unioncode, custno, serverid, direction, amt, inacct, outacct, busitype, status, paydate, paytime, summary)
+        values (#{unioncode, jdbcType=VARCHAR}, #{custno, jdbcType=DECIMAL}, #{serverid, jdbcType=VARCHAR}, #{direction, jdbcType=VARCHAR}, #{amt, jdbcType=DOUBLE}, #{inacct, jdbcType=VARCHAR}, #{outacct, jdbcType=VARCHAR}, #{busitype, jdbcType=VARCHAR}, #{status, jdbcType=VARCHAR}, #{paydate, jdbcType=VARCHAR}, #{paytime, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="logid">
-		insert into cust_log_trans (custno, serverid, direction, amt, inacct, outacct, busitype, status, paydate, paytime, summary)
+		insert into cust_log_trans (unioncode, custno, serverid, direction, amt, inacct, outacct, busitype, status, paydate, paytime, summary)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.custno, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.direction, jdbcType=VARCHAR}, #{item.amt, jdbcType=DOUBLE}, #{item.inacct, jdbcType=VARCHAR}, #{item.outacct, jdbcType=VARCHAR}, #{item.busitype, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.paydate, jdbcType=VARCHAR}, #{item.paytime, jdbcType=VARCHAR}, #{item.summary, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.custno, jdbcType=DECIMAL}, #{item.serverid, jdbcType=VARCHAR}, #{item.direction, jdbcType=VARCHAR}, #{item.amt, jdbcType=DOUBLE}, #{item.inacct, jdbcType=VARCHAR}, #{item.outacct, jdbcType=VARCHAR}, #{item.busitype, jdbcType=VARCHAR}, #{item.status, jdbcType=VARCHAR}, #{item.paydate, jdbcType=VARCHAR}, #{item.paytime, jdbcType=VARCHAR}, #{item.summary, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -64,6 +65,7 @@
   
     <update id="updateById" parameterType="org.oversky.dreamland.entity.cust.CustLogTrans">
         update cust_log_trans set 
+               unioncode = #{unioncode, jdbcType=VARCHAR}, 
                custno = #{custno, jdbcType=DECIMAL}, 
                serverid = #{serverid, jdbcType=VARCHAR}, 
                direction = #{direction, jdbcType=VARCHAR}, 
@@ -81,6 +83,9 @@
 	<update id="dynamicUpdateById" parameterType="org.oversky.dreamland.entity.cust.CustLogTrans">
 		update cust_log_trans
 		<set>
+		    <if test="unioncode != null">
+				unioncode = #{unioncode, jdbcType=VARCHAR},
+		    </if>
 		    <if test="custno != null">
 				custno = #{custno, jdbcType=DECIMAL},
 		    </if>
@@ -121,6 +126,9 @@
 	<update id="dynamicUpdateWhere" parameterType="map">
 		update cust_log_trans
 		<set>
+		    <if test="field.unioncode != null and field.unioncode != ''">
+				unioncode = #{field.unioncode, jdbcType=VARCHAR},
+		    </if>
 		    <if test="field.custno != null">
 				custno = #{field.custno, jdbcType=DECIMAL},
 		    </if>
@@ -161,6 +169,16 @@
 	<update id="updateBatch" parameterType="java.util.List">
 	    update cust_log_trans
 	    <trim prefix="set" suffixOverrides=",">	
+	        <trim prefix="unioncode = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.unioncode != null">
+	                    when logid = #{item.logid} then #{item.unioncode, jdbcType=VARCHAR}
+	                </if>
+	                <if test="item.unioncode == null">
+	                    when logid = #{item.logid} then unioncode
+	                </if>
+	            </foreach>
+	        </trim>
 	        <trim prefix="custno = case" suffix="end,">
 	            <foreach collection="list" item="item" index="index">
 	                <if test="item.custno != null">
@@ -287,13 +305,16 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}logid, ${tab}custno, ${tab}serverid, ${tab}direction, ${tab}amt, ${tab}inacct, ${tab}outacct, ${tab}busitype, ${tab}status, ${tab}paydate, ${tab}paytime, ${tab}summary
+        ${tab}logid, ${tab}unioncode, ${tab}custno, ${tab}serverid, ${tab}direction, ${tab}amt, ${tab}inacct, ${tab}outacct, ${tab}busitype, ${tab}status, ${tab}paydate, ${tab}paytime, ${tab}summary
 	</sql>
 	
 	<sql id="where_all_list">
 		<where>
 			<if test="logid != null">
 				and logid = #{logid, jdbcType=DECIMAL}
+			</if>
+			<if test="unioncode != null and unioncode != ''">
+				and unioncode = #{unioncode, jdbcType=VARCHAR}
 			</if>
 			<if test="custno != null">
 				and custno = #{custno, jdbcType=DECIMAL}
@@ -335,6 +356,9 @@
 		<where>
 			<if test="condition.logid != null">
 				and logid = #{condition.logid, jdbcType=DECIMAL}
+			</if>
+			<if test="condition.unioncode != null and condition.unioncode != ''">
+				and unioncode = #{condition.unioncode, jdbcType=VARCHAR}
 			</if>
 			<if test="condition.custno != null">
 				and custno = #{condition.custno, jdbcType=DECIMAL}

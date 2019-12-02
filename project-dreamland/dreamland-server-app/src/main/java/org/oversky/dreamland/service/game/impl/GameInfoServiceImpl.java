@@ -22,7 +22,7 @@ import com.github.pagehelper.PageHelper;
 
 @Service
 public class GameInfoServiceImpl implements GameInfoService {
-    private static Logger log = LoggerFactory.getLogger(GameInfoService.class);
+    private static Logger log = LoggerFactory.getLogger(GameInfoServiceImpl.class);
 
     @Autowired
     private GameInfoDao gameInfoDao;
@@ -34,13 +34,16 @@ public class GameInfoServiceImpl implements GameInfoService {
 	@Override
 	public GameInfoRes getById(Long gameid) {
 		log.info("开始查询游戏信息[gameid={}]信息...", gameid);
-		GameInfo gameInfo = gameInfoDao.getById(gameid);
 		GameInfoRes res = new GameInfoRes();
+		GameInfo gameInfo = gameInfoDao.getById(gameid);
 		if(gameInfo == null) {
 			res.failure("游戏信息不存在");
 			log.warn(res.getReturnmsg());
 			return res;
 		}
+		
+		BeanCopyUtils.copy(gameInfo, res);
+		res.success();
 		log.info("查询游戏信息[gameid={}]结束: {}", gameid, res.getReturnmsg());
 		return res;
 	}
@@ -49,7 +52,8 @@ public class GameInfoServiceImpl implements GameInfoService {
 	public GameInfoRes delete(GameInfoReq gameReq) {
 		log.info("开始删除游戏[gameid={}]", gameReq.getGameid());
 		GameInfoRes res = new GameInfoRes();
-		
+		gameInfoDao.deleteById(gameReq.getGameid());
+		res.success();
 		log.info("删除游戏[gameid={}]结束 : {}", gameReq.getGameid(), res.getReturnmsg());
 		return res;
 	}
@@ -64,6 +68,7 @@ public class GameInfoServiceImpl implements GameInfoService {
 		
 		GameInfo game = BeanCopyUtils.convert(gameReq, GameInfo.class);
 		gameInfoDao.insert(game);
+		res.success("新增游戏成功");
 		
 		log.info("新增游戏结束 : {}", res.getReturnmsg());
 		return res;
