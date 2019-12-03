@@ -4,15 +4,15 @@ import org.oversky.base.service.BaseResListDto;
 import org.oversky.dreamland.dto.request.game.GameEquipReq;
 import org.oversky.dreamland.dto.response.game.GameEquipRes;
 
-public interface GameEquipService {
+public interface GameEquipService{
 
-	GameEquipRes getById(Long gameid);
+	GameEquipRes getById(Long equipid);
 	
-	GameEquipRes delete(GameEquipReq roleReq);
+	GameEquipRes delete(GameEquipReq req);
 
-	GameEquipRes insert(GameEquipReq gameReq);
+	GameEquipRes insert(GameEquipReq req);
 	
-	GameEquipRes update(GameEquipReq gameReq);
+	GameEquipRes update(GameEquipReq req);
 
-	BaseResListDto<GameEquipRes> pageGameEquip(GameEquipReq gameReq);
+	BaseResListDto<GameEquipRes> pageGameEquip(GameEquipReq req);
 }

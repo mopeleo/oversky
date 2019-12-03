@@ -12,12 +12,13 @@ public class Table {
 	private String group;
 	private String originCode;
 	private String dbms;
-	private Column identityCol;
-	private boolean cache;
+	private Column identityCol;	//自增长列
+	private boolean cache;		//是否开启缓存
+	private boolean ignore;		//是否忽略生成
 	
-	private List<Column> columns = new ArrayList<Column>();
-    private List<Column> keys = new ArrayList<Column>();
-    private List<Column> colsExceptKey = new ArrayList<Column>();
+	private List<Column> columns = new ArrayList<Column>();			//所有列
+    private List<Column> keys = new ArrayList<Column>();			//所有主键
+    private List<Column> colsExceptKey = new ArrayList<Column>();	//所有去除主键的列
 	
 	public void addColumn(Column col){
 		columns.add(col);
@@ -113,5 +114,13 @@ public class Table {
 
 	public void setCache(boolean cache) {
 		this.cache = cache;
+	}
+
+	public boolean isIgnore() {
+		return ignore;
+	}
+
+	public void setIgnore(boolean ignore) {
+		this.ignore = ignore;
 	}	
 }

@@ -168,6 +168,9 @@ public class PDMParser {
                     if(table.getComment().toLowerCase().indexOf("[cache]") >= 0) {
                     	table.setCache(true);
                     }
+                    if(table.getComment().toLowerCase().indexOf("[ignore]") >= 0) {
+                    	table.setIgnore(true);
+                    }
 				}
 				
 				//解析c:PrimaryKey节点

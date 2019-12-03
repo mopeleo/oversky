@@ -214,6 +214,9 @@ public class CodeGenerator {
         params.put("tables", tables);
 
         for(Table table : tables){
+        	if(table.isIgnore()) {
+        		continue;
+        	}
             params.put("table", table);            
             String[] types = getGenerateType().split(",");
             for(String type : types){
@@ -225,7 +228,11 @@ public class CodeGenerator {
             	}
             	params.put("package", pkg);
             	params.put(type + "_package", pkg);
-                outFile = getOutPath(getOutput(type), pkg, table.getCode() + getFilesuffix(type));
+            	if("".equals(getPackage(type))) {
+            		outFile = getOutPath(getOutput(type), table.getCode().toLowerCase(), getFilesuffix(type));
+            	}else {
+            		outFile = getOutPath(getOutput(type), pkg, table.getCode() + getFilesuffix(type));
+            	}
                 //若配置为不覆盖
                 if(this.getOverride(type) == false) {
                 	File f = new File(outFile);

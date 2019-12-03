@@ -90,6 +90,28 @@ insert into com_dict(dictcode, itemcode, itemname) values (2014, '2', '开发');
 insert into com_dict(dictcode, itemcode, itemname) values (2014, '3', '内测');
 insert into com_dict(dictcode, itemcode, itemname) values (2014, '4', '公测');
 
+-- 2015 游戏角色种族
+insert into com_dict(dictcode, itemcode, itemname) values (2015, '1', '人类');
+insert into com_dict(dictcode, itemcode, itemname) values (2015, '2', '兽人');
+insert into com_dict(dictcode, itemcode, itemname) values (2015, '3', '精灵');
+insert into com_dict(dictcode, itemcode, itemname) values (2015, '4', '影');
+insert into com_dict(dictcode, itemcode, itemname) values (2015, '5', '机械');
+insert into com_dict(dictcode, itemcode, itemname) values (2015, '6', '恶魔');
+
+-- 2016 游戏角色职业
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '1', '战士');
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '2', '剑士');
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '3', '猎人');
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '4', '盗贼');
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '5', '刺客');
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '6', '牧师');
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '7', '法师');
+insert into com_dict(dictcode, itemcode, itemname) values (2016, '8', '召唤师');
+
+-- 2017 角色成长系数
+insert into com_dict(dictcode, itemcode, itemname) values (2017, '0', '固定');
+insert into com_dict(dictcode, itemcode, itemname) values (2017, '1', '随机');
+
 commit;
 
 

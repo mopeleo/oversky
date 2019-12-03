@@ -28,7 +28,19 @@ public class CustInfoReq extends BaseReqDto {
 	private String canceldate;    //注销日期
 	private Integer channelid;    //客户渠道
 	private String newpasswd;
-	
+
+	private String sex;    //性别（0-女，1-男）
+	private String birthday;    //生日
+	private String address;    //联系地址
+	private String postcode;    //邮政编码
+	private String phone;    //备用电话
+	private String nationality;    //国籍
+	private String province;    //所在省份
+	private String city;    //所在城市
+	private String education;    //教育程度
+	private String ethnicity;    //民族
+	private String profession;    //职业
+
 	public Long getCustno() {
 		return this.custno;
 	}
@@ -206,6 +218,94 @@ public class CustInfoReq extends BaseReqDto {
 		this.newpasswd = newpasswd;
 	}
 
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getEthnicity() {
+		return ethnicity;
+	}
+
+	public void setEthnicity(String ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
 	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -230,6 +330,17 @@ public class CustInfoReq extends BaseReqDto {
 		sb.append("regdate=").append(regdate).append(", ");
 		sb.append("canceldate=").append(canceldate).append(", ");
 		sb.append("channelid=").append(channelid).append(", ");
+		sb.append("sex=").append(sex).append(", ");
+		sb.append("birthday=").append(birthday).append(", ");
+		sb.append("address=").append(address).append(", ");
+		sb.append("postcode=").append(postcode).append(", ");
+		sb.append("phone=").append(phone).append(", ");
+		sb.append("nationality=").append(nationality).append(", ");
+		sb.append("province=").append(province).append(", ");
+		sb.append("city=").append(city).append(", ");
+		sb.append("education=").append(education).append(", ");
+		sb.append("ethnicity=").append(ethnicity).append(", ");
+		sb.append("profession=").append(profession).append(", ");
         sb.append(super.toString());
         return sb.toString();
 	}

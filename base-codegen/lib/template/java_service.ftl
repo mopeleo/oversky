@@ -1,15 +1,19 @@
+<#macro type datatype><#if datatype=="string">String<#elseif datatype=="int">Integer<#elseif datatype=="double">Double<#else>Long</#if></#macro>
 package ${package};
 
-import java.util.List;
-import ${java_dto_package}.${table.code}DTO;
+import org.oversky.base.service.BaseResListDto;
+import ${dto_req_package}.${table.code}Req;
+import ${dto_res_package}.${table.code}Res;
 
 public interface ${table.code}Service{
 
-	public ResultDTO<${table.code}DTO> query(${table.code}DTO request);
+	${table.code}Res getById(<#list table.keys as column><@type datatype=column.datatype /> ${column.code}<#if column_has_next>, </#if></#list>);
 	
-	public ResultDTO<${table.code}DTO> getById(String id);
-	
-    public ResultDTO<${table.code}DTO> save(${table.code}DTO dto);
+	${table.code}Res delete(${table.code}Req req);
 
-	public ResultDTO<${table.code}DTO> delete(String id);
+	${table.code}Res insert(${table.code}Req req);
+	
+	${table.code}Res update(${table.code}Req req);
+
+	BaseResListDto<${table.code}Res> page${table.code}(${table.code}Req req);
 }

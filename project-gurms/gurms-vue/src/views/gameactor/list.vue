@@ -8,14 +8,14 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="5">
-                    <el-form-item label="所属游戏">
-                        <el-input v-model="gameActorReq.mobileno" placeholder="手机号码" style="width:200px"></el-input>
+                    <el-form-item label="角色ID">
+                        <el-input v-model="gameActorReq.actorid" placeholder="角色ID" style="width:200px"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="5">
                     <el-form-item label="所属游戏">
-                        <el-select v-model="gameActorReq.status" value-key="itemcode" clearable placeholder="请选择">
-                            <el-option v-for="item in dictCache['2001']"
+                        <el-select v-model="gameActorReq.gameid" value-key="itemcode" clearable placeholder="请选择">
+                            <el-option v-for="item in dictGame"
                                 :key="item.itemcode"
                                 :label="item.itemcode + ' - ' + item.itemname"
                                 :value="item.itemcode">
@@ -32,17 +32,21 @@
             </el-row>
 
             <el-table border stripe :data="tableData.results" :highlight-current-row="true" style="width:100%">
-                <el-table-column type="index" width="50"></el-table-column>
-                <el-table-column prop="actorname" label="角色名称" sortable></el-table-column>
-                <el-table-column prop="gameid" label="所属游戏" sortable></el-table-column>
-                <el-table-column prop="sex" width="100" label="角色性别" :formatter="((row)=>formatTableCol(row.custtype, '2007'))"></el-table-column>
-                <el-table-column prop="race" width="100" label="种族" :formatter="((row)=>formatTableCol(row.custtype, '2007'))"></el-table-column>
-                <el-table-column prop="profession" width="100" label="职业" :formatter="((row)=>formatTableCol(row.status, '2001'))"></el-table-column>
-                <el-table-column prop="str" width="120" label="初始力量"></el-table-column>
-                <el-table-column prop="magic" width="120" label="初始魔力"></el-table-column>
-                <el-table-column prop="hp" width="100" label="初始生命值"></el-table-column>
+                <el-table-column type="index" width="30"></el-table-column>
+                <el-table-column prop="actorid" label="角色ID" width="70"></el-table-column>
+                <el-table-column prop="actorname" label="角色名称"></el-table-column>
+                <el-table-column prop="gameid" label="所属游戏" :formatter="formatGameName"></el-table-column>
+                <el-table-column prop="sex" width="80" label="角色性别" :formatter="((row)=>formatTableCol(row.sex, '2000'))"></el-table-column>
+                <el-table-column prop="race" width="100" label="种族" :formatter="((row)=>formatTableCol(row.race, '2015'))"></el-table-column>
+                <el-table-column prop="profession" width="100" label="职业" :formatter="((row)=>formatTableCol(row.profession, '2016'))"></el-table-column>
+                <el-table-column prop="ratiotype" width="100" label="成长系数" :formatter="((row)=>formatTableCol(row.ratiotype, '2017'))"></el-table-column>
+                <el-table-column prop="str" label="初始力量"></el-table-column>
+                <el-table-column prop="magic" label="初始魔力"></el-table-column>
+                <el-table-column prop="hp" label="初始生命值"></el-table-column>
                 <el-table-column prop="mp" label="初始魔法值"></el-table-column>
-                <el-table-column fixed="right" width="180" label="操作">
+                <el-table-column prop="agl" label="初始敏捷"></el-table-column>
+                <el-table-column prop="luck" label="初始幸运"></el-table-column>
+                <el-table-column fixed="right" width="220" label="操作">
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="handleDetail(scope.$index, scope.row)">查看</el-button>
                         <el-button size="mini" type="primary" v-permission="$permission.game.gameinfo.edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -69,28 +73,56 @@
             <div class="box">
             <el-scrollbar>
                 <el-form ref="drawerForm" :model="gameactor" label-width="120px" :disabled="editType === this.$pubdefine.EDIT_TYPE_DETAIL">
-                    <el-row :gutter="20">
+                    <el-row>
                         <el-col :span="10">
-                            <el-form-item label="角色ID" prop="actorid">
-                                <el-input v-model="gameactor.actorid" :disabled="true"></el-input>
+                            <el-form-item label="角色图片" prop="picurl">
+                                <el-upload class="upload-demo"
+                                    action="/dreamland/upload"
+                                    :limit="1" list-type="picture">
+                                    <el-button size="small" type="primary">点击上传</el-button>
+                                </el-upload>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10">
-                            <el-form-item label="角色姓名" prop="actorname">
-                                <el-input v-model="gameactor.actorname"></el-input>
-                            </el-form-item>
+                            <el-row>
+                                <el-form-item label="角色ID" prop="actorid">
+                                    <el-input v-model="gameactor.actorid" :disabled="true"></el-input>
+                                </el-form-item>
+                            </el-row>
+                            <el-row>
+                                <el-form-item label="角色姓名" prop="actorname">
+                                    <el-input v-model="gameactor.actorname"></el-input>
+                                </el-form-item>
+                            </el-row>
+                            <el-row>
+                                <el-form-item label="角色性别" prop="sex">
+                                    <el-select v-model="gameactor.sex" value-key="itemcode" placeholder="请选择">
+                                        <el-option v-for="item in dictCache['2000']"
+                                            :key="item.itemcode"
+                                            :label="item.itemcode + ' - ' + item.itemname"
+                                            :value="item.itemcode">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-row>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20">
                         <el-col :span="10">
                             <el-form-item label="所属游戏" prop="gameid">
-                                <el-input v-model="gameactor.gameid"></el-input>
+                                    <el-select v-model="gameactor.gameid" value-key="itemcode" placeholder="请选择">
+                                        <el-option v-for="item in dictGame"
+                                            :key="item.itemcode"
+                                            :label="item.itemcode + ' - ' + item.itemname"
+                                            :value="item.itemcode">
+                                        </el-option>
+                                    </el-select>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10">
-                            <el-form-item label="角色性别" prop="sex">
-                                <el-select v-model="gameactor.sex" value-key="itemcode" placeholder="请选择">
-                                    <el-option v-for="item in dictCache['2000']"
+                            <el-form-item label="成长系数" prop="ratiotype">
+                                <el-select v-model="gameactor.ratiotype" value-key="itemcode" placeholder="请选择">
+                                    <el-option v-for="item in dictCache['2017']"
                                         :key="item.itemcode"
                                         :label="item.itemcode + ' - ' + item.itemname"
                                         :value="item.itemcode">
@@ -103,7 +135,7 @@
                         <el-col :span="10">
                             <el-form-item label="角色种族" prop="race">
                                 <el-select v-model="gameactor.race" value-key="itemcode" placeholder="请选择">
-                                    <el-option v-for="item in dictCache['2007']"
+                                    <el-option v-for="item in dictCache['2015']"
                                         :key="item.itemcode"
                                         :label="item.itemcode + ' - ' + item.itemname"
                                         :value="item.itemcode">
@@ -113,8 +145,8 @@
                         </el-col>
                         <el-col :span="10">
                             <el-form-item label="职业" prop="profession">
-                                <el-select v-model="gameactor.profession" value-key="itemcode" clearable placeholder="请选择">
-                                    <el-option v-for="item in dictIdType"
+                                <el-select v-model="gameactor.profession" value-key="itemcode" placeholder="请选择">
+                                    <el-option v-for="item in dictCache['2016']"
                                         :key="item.itemcode"
                                         :label="item.itemcode + ' - ' + item.itemname"
                                         :value="item.itemcode">
@@ -172,16 +204,6 @@
                             <el-form-item label="最大星级" prop="maxrank">
                                 <el-input v-model="gameactor.maxrank"></el-input>
                             </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="20">
-                        <el-col :span="10">
-                            <el-form-item label="成长系数" prop="ratiotype">
-                                <el-input v-model="gameactor.ratiotype"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10">
-
                         </el-col>
                     </el-row>
                     <el-row :gutter="20">
@@ -257,7 +279,7 @@ export default{
             tableData: {},
             //当前页面字典
             dictCache: {},
-            dictIdType:[],
+            dictGame: [],
             //查询条件及分页参数
             gameActorReq: {
                 pageSize: this.$pubdefine.PAGE_SIZE,
@@ -296,8 +318,9 @@ export default{
         }
     },
     mounted(){
-        tools.loadComDict('2000,2001,2004,2005,2007', this.dictCache);
+        tools.loadComDict('2000,2015,2016,2017', this.dictCache);
         this.loadData();
+        this.loadDict({type:'T20'});
     },
     methods:{
         loadData:function(){
@@ -306,6 +329,23 @@ export default{
             }).catch((err)=>{
                 tools.errTip(err);
             });
+        },
+        loadDict:function(keys){
+            this.$api.Game.getDictType(keys).then((res)=>{
+                this.dictGame = res.results;
+            }).catch((err)=>{
+                tools.errTip(err);
+            });
+        },
+        formatGameName:function(row){
+            let dict = this.dictGame;
+            let val = row.gameid;
+            for(var i = 0; i < dict.length; i++){
+                if(dict[i].itemcode == val){
+                    return val + " - " + dict[i].itemname;
+                }
+            }
+            return val;
         },
         formatTableCol:function(val, dictcode){
             let dict = this.dictCache[dictcode];
@@ -359,6 +399,7 @@ export default{
             this.$api.Game.gameActorDetail(row.actorid).then(res =>{
                 this.detailDrawer = true;
                 this.gameactor = res;
+                this.gameactor.gameid = res.gameid + "";
                 this.editType = this.$pubdefine.EDIT_TYPE_DETAIL;
             }).catch((err)=>{
                 tools.errTip(err);
