@@ -12,10 +12,12 @@ public class GameActor extends BaseEntity{
 	private String actorname;    //角色名称
 	private Integer sex;    //性别
 	private String race;    //种族1-人类，2-兽人，3-精灵，4-影，5-机械，6-恶魔
-	private String profession;    //职业1-战士，2-剑客，3-猎人，4-盗贼，5-刺客，6-牧师，7-魔导士，8-召唤师，9-
+	private String profession;    //职业1-战士，2-剑客，3-猎人，4-盗贼，5-刺客，6-牧师，7-法师，8-召唤师，9-
 	private Integer actorscene;    //角色存在场景(1- 第一场景，2-第二场景)
 	private Integer str;    //初始力量
 	private Integer magic;    //初始魔力
+	private Integer def;    //物理防御
+	private Integer mdf;    //魔法防御
 	private Integer hp;    //初始生命值
 	private Integer mp;    //初始魔法值
 	private Integer agl;    //初始敏捷
@@ -110,6 +112,22 @@ public class GameActor extends BaseEntity{
 
 	public void setMagic(Integer magic) {
 		this.magic = magic;
+	}
+
+	public Integer getDef() {
+		return this.def;
+	}
+
+	public void setDef(Integer def) {
+		this.def = def;
+	}
+
+	public Integer getMdf() {
+		return this.mdf;
+	}
+
+	public void setMdf(Integer mdf) {
+		this.mdf = mdf;
 	}
 
 	public Integer getHp() {
@@ -259,6 +277,8 @@ public class GameActor extends BaseEntity{
 		sb.append("actorscene=").append(actorscene).append(", ");
 		sb.append("str=").append(str).append(", ");
 		sb.append("magic=").append(magic).append(", ");
+		sb.append("def=").append(def).append(", ");
+		sb.append("mdf=").append(mdf).append(", ");
 		sb.append("hp=").append(hp).append(", ");
 		sb.append("mp=").append(mp).append(", ");
 		sb.append("agl=").append(agl).append(", ");

@@ -13,8 +13,8 @@ import org.oversky.dreamland.dto.request.cust.CustInfoReq;
 import org.oversky.dreamland.dto.response.cust.CustInfoRes;
 import org.oversky.dreamland.entity.cust.CustInfo;
 import org.oversky.dreamland.entity.cust.CustInfoExt;
-import org.oversky.dreamland.ext.dao.PageListQueryDao;
-import org.oversky.dreamland.ext.dao.UniqueCheckDao;
+import org.oversky.dreamland.ext.dao.DreamLandPageQueryDao;
+import org.oversky.dreamland.ext.dao.DreamLandUniqueCheckDao;
 import org.oversky.dreamland.service.cust.CustInfoService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.oversky.util.date.DateUtils;
@@ -37,9 +37,9 @@ public class CustInfoServiceImpl implements CustInfoService {
     @Autowired
     private CustInfoExtDao custInfoExtDao;
 	@Autowired
-	private PageListQueryDao pageQueryDao;
+	private DreamLandPageQueryDao pageQueryDao;
 	@Autowired
-	private UniqueCheckDao uniqueCheckDao;
+	private DreamLandUniqueCheckDao uniqueCheckDao;
 
 	@Override
 	public CustInfoRes login(CustInfoReq req) {

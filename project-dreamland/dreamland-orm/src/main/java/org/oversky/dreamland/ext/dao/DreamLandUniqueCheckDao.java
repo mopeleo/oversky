@@ -1,6 +1,6 @@
 package org.oversky.dreamland.ext.dao;
 
-public interface UniqueCheckDao {
+public interface DreamLandUniqueCheckDao {
 
 	int existLoginId(String loginId);
 	

@@ -8,7 +8,7 @@ import org.oversky.dreamland.entity.game.GameActor;
 import org.oversky.dreamland.entity.game.GameEquip;
 import org.oversky.dreamland.entity.game.GameInfo;
 
-public interface PageListQueryDao {
+public interface DreamLandPageQueryDao {
 
 	List<ComParamInfo> findParams(String unioncode);
 

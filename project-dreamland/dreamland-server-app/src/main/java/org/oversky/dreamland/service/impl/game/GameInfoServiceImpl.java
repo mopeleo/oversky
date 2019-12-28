@@ -8,8 +8,8 @@ import org.oversky.dreamland.dao.game.GameInfoDao;
 import org.oversky.dreamland.dto.request.game.GameInfoReq;
 import org.oversky.dreamland.dto.response.game.GameInfoRes;
 import org.oversky.dreamland.entity.game.GameInfo;
-import org.oversky.dreamland.ext.dao.PageListQueryDao;
-import org.oversky.dreamland.ext.dao.UniqueCheckDao;
+import org.oversky.dreamland.ext.dao.DreamLandPageQueryDao;
+import org.oversky.dreamland.ext.dao.DreamLandUniqueCheckDao;
 import org.oversky.dreamland.service.game.GameInfoService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
@@ -27,9 +27,9 @@ public class GameInfoServiceImpl implements GameInfoService {
     @Autowired
     private GameInfoDao gameInfoDao;
 	@Autowired
-	private PageListQueryDao pageQueryDao;
+	private DreamLandPageQueryDao pageQueryDao;
 	@Autowired
-	private UniqueCheckDao uniqueCheckDao;
+	private DreamLandUniqueCheckDao uniqueCheckDao;
 
 	@Override
 	public GameInfoRes getById(Long gameid) {

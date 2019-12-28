@@ -26,6 +26,7 @@ public class GameSkill extends BaseEntity{
 	private Double upvalue;    //每级增加属性值
 	private String princetype;    //定价类型（0-金币，1-钻石）
 	private Integer prince;    //价格（购买时才有）
+	private Integer cooltime;    //技能冷却时间
 
 	public Long getSkillid() {
 		return this.skillid;
@@ -187,6 +188,14 @@ public class GameSkill extends BaseEntity{
 		this.prince = prince;
 	}
 
+	public Integer getCooltime() {
+		return this.cooltime;
+	}
+
+	public void setCooltime(Integer cooltime) {
+		this.cooltime = cooltime;
+	}
+
 	public String buildEntityKey(){
 		StringBuilder build = new StringBuilder("GameSkill");
 		return build.append("#skillid:").append(this.skillid).toString();
@@ -224,6 +233,7 @@ public class GameSkill extends BaseEntity{
 		sb.append("upvalue=").append(upvalue).append(", ");
 		sb.append("princetype=").append(princetype).append(", ");
 		sb.append("prince=").append(prince).append(", ");
+		sb.append("cooltime=").append(cooltime).append(", ");
         sb.append(super.toString());
         return sb.toString();
 	}

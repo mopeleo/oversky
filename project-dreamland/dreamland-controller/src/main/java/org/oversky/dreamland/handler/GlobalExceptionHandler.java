@@ -9,14 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
-@RestController
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 	
 	private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -61,4 +59,19 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(restfulResult);
 	}
 
+    /**
+     	* 处理所有不可知的异常
+     */
+    @ExceptionHandler(Throwable.class)
+    public Object handleException(Throwable e){
+		log.error("服务器发生未知错误异常", e);
+		BaseResDto restfulResult = new BaseResDto();
+		restfulResult.setReturncode(PubDefine.RETCODE_FAILURE);
+		String msg = e.getMessage();
+		if(StringUtils.isEmpty(msg)) {
+			msg = "服务器发生未知错误异常";
+		}
+		restfulResult.setReturnmsg(msg);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(restfulResult);
+    }
 }

@@ -12,7 +12,7 @@ import org.oversky.dreamland.dto.response.com.ComParamInfoRes;
 import org.oversky.dreamland.dto.response.com.ComParamRes;
 import org.oversky.dreamland.entity.com.ComParam;
 import org.oversky.dreamland.entity.com.ComParamInfo;
-import org.oversky.dreamland.ext.dao.PageListQueryDao;
+import org.oversky.dreamland.ext.dao.DreamLandPageQueryDao;
 import org.oversky.dreamland.service.com.ComParamService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class ComParamServiceImpl implements ComParamService {
 	private ComParamDao paramDao;
 	
 	@Autowired
-	private PageListQueryDao pageQueryDao;
+	private DreamLandPageQueryDao pageQueryDao;
 	
 	@Override
 	public ComParamRes getParam(String unioncode, Integer paramId) {

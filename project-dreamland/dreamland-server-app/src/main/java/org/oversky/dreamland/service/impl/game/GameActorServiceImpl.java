@@ -7,7 +7,7 @@ import org.oversky.dreamland.dao.game.GameActorDao;
 import org.oversky.dreamland.dto.request.game.GameActorReq;
 import org.oversky.dreamland.dto.response.game.GameActorRes;
 import org.oversky.dreamland.entity.game.GameActor;
-import org.oversky.dreamland.ext.dao.PageListQueryDao;
+import org.oversky.dreamland.ext.dao.DreamLandPageQueryDao;
 import org.oversky.dreamland.service.game.GameActorService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class GameActorServiceImpl implements GameActorService {
     @Autowired
     private GameActorDao gameActorDao;
 	@Autowired
-	private PageListQueryDao pageQueryDao;
+	private DreamLandPageQueryDao pageQueryDao;
 
 	@Override
 	public GameActorRes getById(Long actorid) {

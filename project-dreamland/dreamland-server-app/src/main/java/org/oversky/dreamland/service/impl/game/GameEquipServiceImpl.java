@@ -7,7 +7,7 @@ import org.oversky.dreamland.dao.game.GameEquipDao;
 import org.oversky.dreamland.dto.request.game.GameEquipReq;
 import org.oversky.dreamland.dto.response.game.GameEquipRes;
 import org.oversky.dreamland.entity.game.GameEquip;
-import org.oversky.dreamland.ext.dao.PageListQueryDao;
+import org.oversky.dreamland.ext.dao.DreamLandPageQueryDao;
 import org.oversky.dreamland.service.game.GameEquipService;
 import org.oversky.util.bean.BeanCopyUtils;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class GameEquipServiceImpl implements GameEquipService {
 	@Autowired
 	private GameEquipDao gameEquipDao;
 	@Autowired
-	private PageListQueryDao pageQueryDao;
+	private DreamLandPageQueryDao pageQueryDao;
 	
 	@Override
 	public GameEquipRes getById(Long equipid) {

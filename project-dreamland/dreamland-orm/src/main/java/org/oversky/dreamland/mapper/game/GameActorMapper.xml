@@ -12,6 +12,8 @@
         <result column="actorscene" jdbcType="INTEGER" property="actorscene" />
         <result column="str" jdbcType="INTEGER" property="str" />
         <result column="magic" jdbcType="INTEGER" property="magic" />
+        <result column="def" jdbcType="INTEGER" property="def" />
+        <result column="mdf" jdbcType="INTEGER" property="mdf" />
         <result column="hp" jdbcType="INTEGER" property="hp" />
         <result column="mp" jdbcType="INTEGER" property="mp" />
         <result column="agl" jdbcType="INTEGER" property="agl" />
@@ -30,15 +32,15 @@
     </resultMap>
 
     <insert id="insert" parameterType="org.oversky.dreamland.entity.game.GameActor" useGeneratedKeys="true" keyProperty="actorid">
-        insert into game_actor (unioncode, gameid, actorname, sex, race, profession, actorscene, str, magic, hp, mp, agl, luck, initrank, maxrank, ratiotype, ratiostr, ratiomagic, ratiohp, ratiomp, ratioagl, ratioluck, father, mother)
-        values (#{unioncode, jdbcType=VARCHAR}, #{gameid, jdbcType=DECIMAL}, #{actorname, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER}, #{race, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{actorscene, jdbcType=INTEGER}, #{str, jdbcType=INTEGER}, #{magic, jdbcType=INTEGER}, #{hp, jdbcType=INTEGER}, #{mp, jdbcType=INTEGER}, #{agl, jdbcType=INTEGER}, #{luck, jdbcType=INTEGER}, #{initrank, jdbcType=INTEGER}, #{maxrank, jdbcType=INTEGER}, #{ratiotype, jdbcType=VARCHAR}, #{ratiostr, jdbcType=DOUBLE}, #{ratiomagic, jdbcType=DOUBLE}, #{ratiohp, jdbcType=DOUBLE}, #{ratiomp, jdbcType=DOUBLE}, #{ratioagl, jdbcType=DOUBLE}, #{ratioluck, jdbcType=DOUBLE}, #{father, jdbcType=VARCHAR}, #{mother, jdbcType=VARCHAR})
+        insert into game_actor (unioncode, gameid, actorname, sex, race, profession, actorscene, str, magic, def, mdf, hp, mp, agl, luck, initrank, maxrank, ratiotype, ratiostr, ratiomagic, ratiohp, ratiomp, ratioagl, ratioluck, father, mother)
+        values (#{unioncode, jdbcType=VARCHAR}, #{gameid, jdbcType=DECIMAL}, #{actorname, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER}, #{race, jdbcType=VARCHAR}, #{profession, jdbcType=VARCHAR}, #{actorscene, jdbcType=INTEGER}, #{str, jdbcType=INTEGER}, #{magic, jdbcType=INTEGER}, #{def, jdbcType=INTEGER}, #{mdf, jdbcType=INTEGER}, #{hp, jdbcType=INTEGER}, #{mp, jdbcType=INTEGER}, #{agl, jdbcType=INTEGER}, #{luck, jdbcType=INTEGER}, #{initrank, jdbcType=INTEGER}, #{maxrank, jdbcType=INTEGER}, #{ratiotype, jdbcType=VARCHAR}, #{ratiostr, jdbcType=DOUBLE}, #{ratiomagic, jdbcType=DOUBLE}, #{ratiohp, jdbcType=DOUBLE}, #{ratiomp, jdbcType=DOUBLE}, #{ratioagl, jdbcType=DOUBLE}, #{ratioluck, jdbcType=DOUBLE}, #{father, jdbcType=VARCHAR}, #{mother, jdbcType=VARCHAR})
     </insert>
   
 	<insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="actorid">
-		insert into game_actor (unioncode, gameid, actorname, sex, race, profession, actorscene, str, magic, hp, mp, agl, luck, initrank, maxrank, ratiotype, ratiostr, ratiomagic, ratiohp, ratiomp, ratioagl, ratioluck, father, mother)
+		insert into game_actor (unioncode, gameid, actorname, sex, race, profession, actorscene, str, magic, def, mdf, hp, mp, agl, luck, initrank, maxrank, ratiotype, ratiostr, ratiomagic, ratiohp, ratiomp, ratioagl, ratioluck, father, mother)
 		values 
 		<foreach item="item" index="index" collection="list" separator=",">
-        (#{item.unioncode, jdbcType=VARCHAR}, #{item.gameid, jdbcType=DECIMAL}, #{item.actorname, jdbcType=VARCHAR}, #{item.sex, jdbcType=INTEGER}, #{item.race, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.actorscene, jdbcType=INTEGER}, #{item.str, jdbcType=INTEGER}, #{item.magic, jdbcType=INTEGER}, #{item.hp, jdbcType=INTEGER}, #{item.mp, jdbcType=INTEGER}, #{item.agl, jdbcType=INTEGER}, #{item.luck, jdbcType=INTEGER}, #{item.initrank, jdbcType=INTEGER}, #{item.maxrank, jdbcType=INTEGER}, #{item.ratiotype, jdbcType=VARCHAR}, #{item.ratiostr, jdbcType=DOUBLE}, #{item.ratiomagic, jdbcType=DOUBLE}, #{item.ratiohp, jdbcType=DOUBLE}, #{item.ratiomp, jdbcType=DOUBLE}, #{item.ratioagl, jdbcType=DOUBLE}, #{item.ratioluck, jdbcType=DOUBLE}, #{item.father, jdbcType=VARCHAR}, #{item.mother, jdbcType=VARCHAR})
+        (#{item.unioncode, jdbcType=VARCHAR}, #{item.gameid, jdbcType=DECIMAL}, #{item.actorname, jdbcType=VARCHAR}, #{item.sex, jdbcType=INTEGER}, #{item.race, jdbcType=VARCHAR}, #{item.profession, jdbcType=VARCHAR}, #{item.actorscene, jdbcType=INTEGER}, #{item.str, jdbcType=INTEGER}, #{item.magic, jdbcType=INTEGER}, #{item.def, jdbcType=INTEGER}, #{item.mdf, jdbcType=INTEGER}, #{item.hp, jdbcType=INTEGER}, #{item.mp, jdbcType=INTEGER}, #{item.agl, jdbcType=INTEGER}, #{item.luck, jdbcType=INTEGER}, #{item.initrank, jdbcType=INTEGER}, #{item.maxrank, jdbcType=INTEGER}, #{item.ratiotype, jdbcType=VARCHAR}, #{item.ratiostr, jdbcType=DOUBLE}, #{item.ratiomagic, jdbcType=DOUBLE}, #{item.ratiohp, jdbcType=DOUBLE}, #{item.ratiomp, jdbcType=DOUBLE}, #{item.ratioagl, jdbcType=DOUBLE}, #{item.ratioluck, jdbcType=DOUBLE}, #{item.father, jdbcType=VARCHAR}, #{item.mother, jdbcType=VARCHAR})
 		</foreach>
 	</insert>
 	
@@ -86,6 +88,8 @@
                actorscene = #{actorscene, jdbcType=INTEGER}, 
                str = #{str, jdbcType=INTEGER}, 
                magic = #{magic, jdbcType=INTEGER}, 
+               def = #{def, jdbcType=INTEGER}, 
+               mdf = #{mdf, jdbcType=INTEGER}, 
                hp = #{hp, jdbcType=INTEGER}, 
                mp = #{mp, jdbcType=INTEGER}, 
                agl = #{agl, jdbcType=INTEGER}, 
@@ -133,6 +137,12 @@
 		    </if>
 		    <if test="magic != null">
 				magic = #{magic, jdbcType=INTEGER},
+		    </if>
+		    <if test="def != null">
+				def = #{def, jdbcType=INTEGER},
+		    </if>
+		    <if test="mdf != null">
+				mdf = #{mdf, jdbcType=INTEGER},
 		    </if>
 		    <if test="hp != null">
 				hp = #{hp, jdbcType=INTEGER},
@@ -212,6 +222,12 @@
 		    </if>
 		    <if test="field.magic != null">
 				magic = #{field.magic, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.def != null">
+				def = #{field.def, jdbcType=INTEGER},
+		    </if>
+		    <if test="field.mdf != null">
+				mdf = #{field.mdf, jdbcType=INTEGER},
 		    </if>
 		    <if test="field.hp != null">
 				hp = #{field.hp, jdbcType=INTEGER},
@@ -352,6 +368,26 @@
 	                </if>
 	                <if test="item.magic == null">
 	                    when actorid = #{item.actorid} then magic
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="def = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.def != null">
+	                    when actorid = #{item.actorid} then #{item.def, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.def == null">
+	                    when actorid = #{item.actorid} then def
+	                </if>
+	            </foreach>
+	        </trim>
+	        <trim prefix="mdf = case" suffix="end,">
+	            <foreach collection="list" item="item" index="index">
+	                <if test="item.mdf != null">
+	                    when actorid = #{item.actorid} then #{item.mdf, jdbcType=INTEGER}
+	                </if>
+	                <if test="item.mdf == null">
+	                    when actorid = #{item.actorid} then mdf
 	                </if>
 	            </foreach>
 	        </trim>
@@ -521,7 +557,7 @@
 	</delete>
 
 	<sql id="column_list">
-        ${tab}actorid, ${tab}unioncode, ${tab}gameid, ${tab}actorname, ${tab}sex, ${tab}race, ${tab}profession, ${tab}actorscene, ${tab}str, ${tab}magic, ${tab}hp, ${tab}mp, ${tab}agl, ${tab}luck, ${tab}initrank, ${tab}maxrank, ${tab}ratiotype, ${tab}ratiostr, ${tab}ratiomagic, ${tab}ratiohp, ${tab}ratiomp, ${tab}ratioagl, ${tab}ratioluck, ${tab}father, ${tab}mother
+        ${tab}actorid, ${tab}unioncode, ${tab}gameid, ${tab}actorname, ${tab}sex, ${tab}race, ${tab}profession, ${tab}actorscene, ${tab}str, ${tab}magic, ${tab}def, ${tab}mdf, ${tab}hp, ${tab}mp, ${tab}agl, ${tab}luck, ${tab}initrank, ${tab}maxrank, ${tab}ratiotype, ${tab}ratiostr, ${tab}ratiomagic, ${tab}ratiohp, ${tab}ratiomp, ${tab}ratioagl, ${tab}ratioluck, ${tab}father, ${tab}mother
 	</sql>
 	
 	<sql id="where_all_list">
@@ -555,6 +591,12 @@
 			</if>
 			<if test="magic != null">
 				and magic = #{magic, jdbcType=INTEGER}
+			</if>
+			<if test="def != null">
+				and def = #{def, jdbcType=INTEGER}
+			</if>
+			<if test="mdf != null">
+				and mdf = #{mdf, jdbcType=INTEGER}
 			</if>
 			<if test="hp != null">
 				and hp = #{hp, jdbcType=INTEGER}
@@ -635,6 +677,12 @@
 			</if>
 			<if test="condition.magic != null">
 				and magic = #{condition.magic, jdbcType=INTEGER}
+			</if>
+			<if test="condition.def != null">
+				and def = #{condition.def, jdbcType=INTEGER}
+			</if>
+			<if test="condition.mdf != null">
+				and mdf = #{condition.mdf, jdbcType=INTEGER}
 			</if>
 			<if test="condition.hp != null">
 				and hp = #{condition.hp, jdbcType=INTEGER}
