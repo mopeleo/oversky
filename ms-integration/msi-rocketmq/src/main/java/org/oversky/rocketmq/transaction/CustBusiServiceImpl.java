@@ -33,10 +33,11 @@ public class CustBusiServiceImpl implements CustBusiService{
 	}
 	
 	public boolean checkBusiness(String transactionId) {
-		System.out.println("CustBusiServiceImpl checkBusiness begin ......");
+		System.out.println("CustBusiServiceImpl checkBusiness begin ......" + transactionId);
 		ComMqTransactionLog where  = new ComMqTransactionLog();
 		where.setTransactionId(transactionId);
 		int cnt = mqLogDao.count(where);
+		System.out.println("cnt ===> " + cnt);
 		return cnt > 0;
 	}
 }

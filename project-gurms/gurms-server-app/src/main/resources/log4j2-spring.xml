@@ -6,7 +6,7 @@
 <configuration status="warn" monitorInterval="30">
 
 	<properties>
-		<property name="LOG_HOME">./logs</property>
+		<property name="LOG_HOME">../logs</property>
 		<!-- 输出格式说明： 
 		 %F - java源文件名
 		 %C/%class - java类名（包含包路径）a.b.c.DClass,%C{1} 输出最后一个元素 DClass

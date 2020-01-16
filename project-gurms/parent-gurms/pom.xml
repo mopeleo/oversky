@@ -51,6 +51,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+		
+		<!-- spring-boot-starter和spring-boot-starter-web都要排除logback的依赖 -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+				<!-- 排除自带的logback依赖 -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
   	</dependencies>
   	
 	<dependencyManagement>
@@ -90,13 +103,13 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
 					<configuration>
-						<!-- 过滤掉不希望包含在jar中的文件  -->
+						<!-- 过滤掉不希望包含在jar中的文件，exclude的目录不是src下面的，是以编译结果classes为根目录计算的  -->
 						<excludes>
-							<exclude>*.properties</exclude>
-							<exclude>*.xml</exclude>
-							<exclude>*.yml</exclude>
-							<exclude>spring/**</exclude>
-							<exclude>config/**</exclude>
+							<exclude>/*.properties</exclude>
+							<exclude>/*.xml</exclude>
+							<exclude>/*.yml</exclude>
+							<exclude>/spring/**</exclude>
+							<exclude>/config/**</exclude>
 						</excludes>
 					</configuration>
 				</plugin>

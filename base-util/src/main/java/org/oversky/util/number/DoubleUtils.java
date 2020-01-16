@@ -116,6 +116,16 @@ public class DoubleUtils {
 		return f.compareTo(s) == 0;
 	}
 	
+	/**
+	 * 四舍五入转换字符串，不会出现科学计数法
+	 * @param value
+	 * @param scale
+	 * @return
+	 */
+	public static String toString(double value, int scale) {
+		String pattern = "%." + scale + "f";
+		return String.format(pattern, value);
+	}
 	
 	public static void main(String[] args) {
 		double rst = 5.2456576323888888888888888124433;
@@ -127,9 +137,16 @@ public class DoubleUtils {
 		String s = String.format("%.2f",rst);
 		System.out.println(s);
 		double first = 1.2;
-		double second = 1.199999999999;
+		double second = 1.195999999999;
 		System.out.println("lt : " + lt(first, second));
 		System.out.println("gt : " + gt(first, second));
 		System.out.println("eq : " + eq(first, second));
+		double kx = 1e8;
+		System.out.println(kx);
+		System.out.println(toString(second,2));
+		double zs = 100;
+		System.out.println(String.format("%.2f",zs));
+		int intz = 100000000;
+		System.out.println(intz);
 	}
 }

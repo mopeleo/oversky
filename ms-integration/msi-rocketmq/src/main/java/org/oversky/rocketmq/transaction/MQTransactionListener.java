@@ -21,13 +21,16 @@ public class MQTransactionListener implements TransactionListener {
 	public LocalTransactionState executeLocalTransaction(Message msg, Object arg) {
 		System.out.println("begin execute local tranaction......");
 		LocalTransactionState state = LocalTransactionState.UNKNOW;
-		try {
-			CustInfoExt cust =  JSON.parseObject(msg.getBody(), CustInfoExt.class);	
-			state = custService.doBusiness(cust, msg.getTransactionId()) ? LocalTransactionState.COMMIT_MESSAGE: LocalTransactionState.ROLLBACK_MESSAGE;
-		}catch(Exception e) {
-			e.printStackTrace();
-			state = LocalTransactionState.ROLLBACK_MESSAGE;
-		}
+		CustInfoExt cust =  JSON.parseObject(msg.getBody(), CustInfoExt.class);	
+		state = custService.doBusiness(cust, msg.getTransactionId()) ? LocalTransactionState.COMMIT_MESSAGE: LocalTransactionState.ROLLBACK_MESSAGE;
+
+//		try {
+//			CustInfoExt cust =  JSON.parseObject(msg.getBody(), CustInfoExt.class);	
+//			state = custService.doBusiness(cust, msg.getTransactionId()) ? LocalTransactionState.COMMIT_MESSAGE: LocalTransactionState.ROLLBACK_MESSAGE;
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			state = LocalTransactionState.ROLLBACK_MESSAGE;
+//		}
 		return state;
 	}
 

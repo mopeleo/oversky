@@ -1,16 +1,83 @@
+# eureka(最)简单单点开发配置。支持yml与properties两种，yml文件后缀必须为yml，不能是yaml，否则找不到该文件，使用默认配置。
+# yml文件大小写敏感；
+# 每个级别至少用1个空格缩进，也可多个，但同级别的必须一致，不支持tab，本项目按照eclipse的插件（spring官方Spring Tool Suite3.9.3）统一使用两个空格；
+# 属性值与冒号间必须有一个空格。比如port:5000则不会生效。
 spring:
   application:
     name: eureka-server
+# 指定生效的配置
+  profiles:
+    active: dev
 
 server:
-  port: 5000
+  port: 5000  # eureka服务器端口号。尽管无论官网还是大部分参考书都使用8761，但默认是8080
+
+eureka:
+  # 默认情况下，eureka server同时也是eureka client，用于相互注册形成高可用eureka服务。
+  client:
+    # 单点时，如果registerWithEureka配置为true，则eureka server会报错Cannot execute request on any known server
+    registerWithEureka: false   # 是否注册到eureka服务，默认为true，当前已为eureka server，且单点eureka，故配置为false
+    fetchRegistry: false  # 是否在本地缓存注册表信息，默认为true，当前为单点eureka server，不需要从其他eureka除获取注册表信息，更谈不上缓存，故配置为false
+
+#security:                           # 开启服务注册认证机制
+#   user:
+#      name: eureka                  # 认证时，使用的用户名
+#      password: eureka              # 认证时，使用的密码
+
+# 用三个连接符进行profile分割，根据active的profiles选择执行哪一段，上面没有profiles的表示公共执行部分
+---
+# 本地开发环境
+spring:
+  profiles: dev
+
+eureka:
+  # 详见EurekaServerConfigBean，需要注意与Client和Instance在client的jar包不同，Server是在server的jar包。
+  # eureka的各项配置可见EurekaXXXConfigBean。
+  server:
+    # 自我保护机制，默认true。打开后，心跳失败在15分钟内低于85%(renewalPercentThreshold)的服务，也不进行剔除。
+    # 关闭后，主页提示：RENEWALS ARE LESSER THAN THE THRESHOLD. THE SELF PRESERVATION MODE IS TURNED OFF. THIS MAY NOT PROTECT INSTANCE EXPIRY IN CASE OF NETWORK/OTHER PROBLEMS.
+    enableSelfPreservation: true # 本地调试时可fasle关闭。但生产建议打开，可防止因网络不稳定等原因导致误剔除服务。
+    renewalPercentThreshold: 0.85 # 默认85%
+  client:
+    serviceUrl:
+      # registerWithEureka关闭后，defaultZone没有配置的必要。如果打开，即使配置为本机一样报错。
+      # 也就是说defaultZone任何时候都没有配置为localhost的必要。这个属性默认配置是http://localhost:8761/eureka，也就是当你没有用户名密码安全认证时，本机调试时，客户端可以不配置，
+      # 但对于server来说，这个默认没有什么作用。对于client来说，也只有调试的时候有点作用。
+      defaultZone: http://localhost:${server.port}/eureka 
+
+---
+# 测试环境。profiles配置为主机名，根据主机名进行激活，需在启动脚本中--spring.profiles.active=${HOST_NAME}，
+# 因为启动脚本的优先级比本文件的active优先级高。
+# 多台eureka高可用环境下，每台eureka的defaultZone配置都不一样，因为不能把自己也配置上，因为为了保证每台eureka的代码配置一致方便发布，
+# 需要采取yml的---分隔，然后通过主机名启动这种模式进行。
+spring:
+  profiles: test
 
 eureka:
   instance:
-    hostname: localhost
+     hostname: testhost
+  server:
+     # eureka server刷新readCacheMap的时间，注意，client读取的是readCacheMap，这个时间决定了多久会把readWriteCacheMap的缓存更新到readCacheMap上
+     # 默认30秒，eclipse提示默认0应该是错误的，源代码中responseCacheUpdateIntervalMs = 30 * 1000。
+     response-cache-update-interval-ms: 3000 # 网上很多专家的博客错误写成responseCacheUpdateInvervalMs，请注意。这里配置为3秒。
+     # eureka server缓存readWriteCacheMap失效时间，这个只有在这个时间过去后缓存才会失效，失效前不会更新，
+     # 过期后从registry重新读取注册服务信息，registry是一个ConcurrentHashMap。
+     # 由于启用了evict其实就用不太上改这个配置了，默认180s
+     responseCacheAutoExpirationInSeconds: 180
+     # 启用主动失效，并且每次主动失效检测间隔为3s。源码evictionIntervalTimerInMs = 60 * 1000，默认一分钟。
+     # 需要注意的是该配置会打印INFO日志，增加info日志量，修改后从每60秒打印一次变成3秒打印一次。
+     evictionIntervalTimerInMs: 3000 # 注意不要写成EvictionIntervalTimerInMs，yml大小写敏感。
   client:
-    registerWithEureka: false
-    fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      # 配置其他eureka的地址，如果多台则逗号分隔。
+      defaultZone: http://192.168.1.115:${server.port}/eureka
+    healthcheck:
+      enabled: true
+    registerWithEureka: true # eureka的高可用，需要互相注册，配置为true，覆盖本文件最上面的默认配置false。
+    fetchRegistry: false # eureka之间如果网络不稳定，客户端一般也会缓存了注册列表，因此eureka服务可以不缓存，我觉得更能确保eureka之间的一致。
 
+
+
+
+
+      

@@ -35,6 +35,7 @@ public class TransactionProducer implements InitializingBean {
             public Thread newThread(Runnable r) {
                 Thread thread = new Thread(r);
                 thread.setName("client-transaction-msg-check-thread");
+                System.out.println("threadPoolExecutor : " + System.currentTimeMillis() + " , threadName : " + thread.getName());
                 return thread;
             }
         });

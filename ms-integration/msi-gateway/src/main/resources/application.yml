@@ -1,3 +1,22 @@
+server:
+  port: 5001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5000/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
+
 spring:
   application:
     name: gateway-server
@@ -42,24 +61,5 @@ spring:
           filters:
             - StripPrefix=1
 
-
-server:
-  port: 5001
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:5000/eureka/
-
-feign:
-  hystrix:
-    enabled: true
-
-logging:
-  level:
-    org.springframework.cloud.gateway: trace
-    org.springframework.http.server.reactive: debug
-    org.springframework.web.reactive: debug
-    reactor.ipc.netty: debug
 
 
