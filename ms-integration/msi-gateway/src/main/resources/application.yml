@@ -3,6 +3,7 @@ server:
 
 eureka:
   client:
+    registerWithEureka: false   #没有必要在Eureka中注册网关的应用程序
     serviceUrl:
       defaultZone: http://localhost:5000/eureka/
 
@@ -18,7 +19,7 @@ spring:
     gateway:
       discovery:
         locator:      #路由访问方式：http://gateway_host:gateway_port/server_name/**，其中微服务应用名默认大写访问。
-          enabled: true               #开启服务注册和发现的功能,默认为false.自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
+          enabled: true               #开启服务发现的功能,默认为false.自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
           lowerCaseServiceId: true    #默认false，server_name必须大写。
       default-filters:
       routes:
