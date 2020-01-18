@@ -10,13 +10,6 @@ feign:
   hystrix:
     enabled: true
 
-logging:
-  level:
-    org.springframework.cloud.gateway: trace
-    org.springframework.http.server.reactive: debug
-    org.springframework.web.reactive: debug
-    reactor.ipc.netty: debug
-
 spring:
   application:
     name: gateway-server
@@ -27,6 +20,7 @@ spring:
         locator:      #路由访问方式：http://gateway_host:gateway_port/server_name/**，其中微服务应用名默认大写访问。
           enabled: true               #开启服务注册和发现的功能,默认为false.自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
           lowerCaseServiceId: true    #默认false，server_name必须大写。
+      default-filters:
       routes:
         - id: 163                     #网关路由到网易官网
           uri: http://news.163.com/
@@ -55,11 +49,38 @@ spring:
           filters:
             - StripPrefix=2
         - id: gurms-server            #网关路由到用户服务gurms-server
-          uri: lb://gurms-server
+#          uri: lb://gurms-server-load-balanced
+          uri: lb://gurms-server1
           predicates:
             - Path=/gurms/**
           filters:
             - StripPrefix=1
+            - name: Hystrix # Hystrix Filter的名称、设置成默认的
+              args: # Hystrix 配置参数
+                name: fallbackcmd # HystrixCommand 的名字
+                fallbackUri: forward:/fallback # fallback对用的uri
 
+# Hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000  #Hystrix 默认的熔断时间是 1s
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000 # 超时时间，若不设置超时时间则有可能无法触发熔断
+  threadpool:
+    default:
+      coreSize: 100 # Hystrix 更改默认并发数配置
 
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
 
