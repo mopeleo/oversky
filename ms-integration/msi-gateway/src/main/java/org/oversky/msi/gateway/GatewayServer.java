@@ -8,6 +8,11 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 
+/**
+  *       为了提升网关的性能，SpringCloud Gateway是基于WebFlux框架实现的，而WebFlux框架底层则使用了高性能的Reactor模式通信框架Netty
+ * @author Blue
+ *
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 public class GatewayServer {
